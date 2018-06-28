@@ -24,10 +24,9 @@ public class MainMenu extends AppCompatActivity {
 
 
     //Make a intent to move to this activity
-    public Intent makeIntent(Context context){
+    public static Intent makeIntent(Context context){
         Intent intent = new Intent( context, MainMenu.class );
         return intent;
-
     }
 
 
