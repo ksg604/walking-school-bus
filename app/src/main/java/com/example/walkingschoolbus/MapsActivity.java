@@ -1,5 +1,7 @@
 package com.example.walkingschoolbus;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 
@@ -24,7 +26,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
     }
 
-
+    //TODO add dynamic location and delete this static ref to Sydney
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
@@ -42,5 +44,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         LatLng sydney = new LatLng(-34, 151);
         mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+    }
+
+    public static Intent makeIntent(Context context){
+        Intent intent = new Intent(context, MapsActivity.class);
+        return intent;
     }
 }
