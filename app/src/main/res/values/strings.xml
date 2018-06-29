@@ -5,4 +5,8 @@
     <string name="menu_group">Group</string>
     <string name="menu_map">Map</string>
     <string name="menu_setting">Setting</string>
+
+    <!--Welcome Screen-->
+    <string name="sign_up">SIGN UP</string>
+    <!--Sign up-->
 </resources>
