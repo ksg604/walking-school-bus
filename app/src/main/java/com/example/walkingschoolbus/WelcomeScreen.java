@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.view.View;
+import android.widget.Button;
 
 public class WelcomeScreen extends AppCompatActivity {
 
@@ -13,6 +15,19 @@ public class WelcomeScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome_screen);
+
+        setupDebugButton();
+    }
+//TODO Remove this before submission
+    private void setupDebugButton() {
+        Button btn = (Button) findViewById(R.id.buttonDebug);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = MainMenu.makeIntent(WelcomeScreen.this);
+                startActivity(intent);
+            }
+        });
         setupSignUpButton();
     }
 
