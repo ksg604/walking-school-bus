@@ -11,9 +11,9 @@
     <!--Welcome Screen-->
     <string name="sign_up">SIGN UP</string>
     <!--Sign up-->
-    <string name ="name">Full Name: </string>
-    <string name ="password">Password: </string>
-    <string name ="re_enter_pass">Re-enter Password: </string>
-    <string name ="email">Email Address: </string>
-    <string name = "create_user">CREATE USER</string>
+    <string name="name">Full Name: </string>
+    <string name="password">Password: </string>
+    <string name="re_enter_pass">Re-enter Password: </string>
+    <string name="email">Email Address: </string>
+    <string name="create_user">CREATE USER</string>
 </resources>

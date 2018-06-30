@@ -20,7 +20,23 @@ public class MainMenu extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle( R.string.main_menu );
 
+        setupLayoutGroups();
         setupLayoutMaps();
+    }
+
+    /**
+     * setup linear layout to redirect to group management page on click
+     */
+    private void setupLayoutGroups() {
+        LinearLayout group = (LinearLayout)findViewById(R.id.linearLayoutGroup);
+        group.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent intent = GroupManagementActivity.makeIntent(MainMenu.this);
+                startActivity(intent);
+                Log.i("Sprint1","Group Activity Launched");
+            }
+        });
     }
 
     /**setup linear layout to redirect to map activity
