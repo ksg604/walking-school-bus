@@ -2,19 +2,28 @@
     <string name="api_key">D71A0AC3-1AD3-42BE-87C1-833457D63B4D9</string>
     <string name="app_name">Walking SchoolBus</string>
     <string name="main_menu">Main Menu</string>
-    <string name="login_email">E-mail</string>
-    <string name="login_username">User Name</string>
-    <string name="login_password">Password</string>
-    <string name="menu_monitor">Monitor</string>
-    <string name="menu_group">Group</string>
-    <string name="menu_map">Map</string>
-    <string name="login_signup_text">Don\'t have an account? Sign up</string>
-    <string name="menu_setting">Setting</string>
+
+
+
     <string name="title_activity_maps">Map</string>
 
 
     <!--Welcome Screen-->
     <string name="sign_up">SIGN UP</string>
+    <string name="sign_in">SIGN IN</string>
+    <string name="login_email">E-mail</string>
+    <string name="login_username">Name</string>
+    <string name="login_password">Password</string>
+    <string name="login_signup_text">Don\'t have an account? Sign up</string>
+
+
+    <!--Main Menu-->
+    <string name="menu_monitor">Monitor</string>
+    <string name="menu_group">Group</string>
+    <string name="menu_map">Map</string>
+    <string name="menu_setting">Setting</string>
+
+
     <!--Sign up-->
     <string name ="name">Full Name: </string>
     <string name ="password">Password: </string>
