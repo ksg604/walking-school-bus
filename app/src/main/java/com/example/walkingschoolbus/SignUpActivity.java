@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.example.walkingschoolbus.model.User;
 import com.example.walkingschoolbus.proxy.ProxyBuilder;
@@ -22,6 +23,7 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
         proxy = ProxyBuilder.getProxy(getString(R.string.api_key), null);
+        setupNewUserButton();
 
     }
 
@@ -44,10 +46,13 @@ public class SignUpActivity extends AppCompatActivity {
             public void onClick(View view) {
                 // Build new user (with random email to avoid conflicts)
                 User user = User.getInstance();
-                int random = (int) (Math.random() * 100000);
-                user.setEmail("testuser"+random+"@test.com");
-                user.setName("I. B. Rocking");
-                user.setPassword("1");
+                //int random = (int) (Math.random() * 100000);
+                EditText name = (EditText) findViewById( R.id.edtTxtName );
+                EditText email = (EditText) findViewById( R.id.edtTxtEmail );
+                EditText password = (EditText) findViewById( R.id.edtTxtPassword2 );
+                user.setName(name.toString());
+                user.setEmail(email.toString());
+                user.setPassword(password.toString());
                // user.setCurrentPoints(100);
                // user.setTotalPointsEarned(2500);
                // user.setRewards(new EarnedRewards());
@@ -61,8 +66,8 @@ public class SignUpActivity extends AppCompatActivity {
     }
     private void response(User user) {
         //notifyUserViaLogAndToast("Server replied with user: " + user.toString());
-        long userId = user.getId();
-        String userEmail = user.getEmail();
+        //long userId = user.getId();
+        //String userEmail = user.getEmail();
 
 
     }
