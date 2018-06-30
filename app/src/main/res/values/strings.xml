@@ -1,4 +1,5 @@
 <resources>
+    <string name="api_key">D71A0AC3-1AD3-42BE-87C1-833457D63B4D9</string>
     <string name="app_name">Walking SchoolBus</string>
     <string name="main_menu">Main Menu</string>
     <string name="menu_monitor">Monitor</string>
