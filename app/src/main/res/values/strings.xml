@@ -16,4 +16,10 @@
     <string name="re_enter_pass">Re-enter Password: </string>
     <string name="email">Email Address: </string>
     <string name="create_user">CREATE USER</string>
+
+    <!--Group Management-->
+    <string name="group_layout_title">My Groups</string>
+    <string name="add_group">NEW/FIND</string>
+    <string name="modify_group">MODIFY/REMOVE</string>
+
 </resources>
