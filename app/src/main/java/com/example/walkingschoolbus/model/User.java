@@ -47,11 +47,9 @@ public class User {
 
     /*
     Singleton Support
-     */
+*/
     private static User instance;
-    private User() {
 
-    }
     public static User getInstance(){
         if(instance == null){
             instance = new User();
@@ -59,8 +57,14 @@ public class User {
         return instance;
     }
 
+    public User(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
+//Constructor
+    public User() {
 
-    //Constructor
+    }
 
     public User( String name, String email, String password) {
         //to do
@@ -235,7 +239,7 @@ public class User {
     public void setRewards(EarnedRewards rewards) {
         this.rewards = rewards;
     }
-
+    */
     // Utility Functions
     // -------------------------------------------------------------------------------------------
     @Override
@@ -245,8 +249,8 @@ public class User {
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
-                ", currentPoints=" + currentPoints +
-                ", totalPointsEarned=" + totalPointsEarned +
+               // ", currentPoints=" + currentPoints +
+                //", totalPointsEarned=" + totalPointsEarned +
                 ", monitoredByUsers=" + monitoredByUsers +
                 ", monitorsUsers=" + monitorsUsers +
                 ", memberOfGroups=" + memberOfGroups +
@@ -257,6 +261,5 @@ public class User {
     }
 }
 
-    */
 
-}
+

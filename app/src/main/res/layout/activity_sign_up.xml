@@ -33,8 +33,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="textPersonName"
-                android:text="Name" />
+                android:hint="Name"
+                android:inputType="textPersonName" />
         </TableRow>
 
         <TableRow
@@ -52,8 +52,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="textPersonName"
-                android:text="Email" />
+                android:hint="Email"
+                android:inputType="textPersonName" />
         </TableRow>
 
         <TableRow
@@ -71,8 +71,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="textPersonName"
-                android:text="Password" />
+                android:hint="Password"
+                android:inputType="textPersonName" />
         </TableRow>
 
         <TableRow
@@ -90,8 +90,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="textPersonName"
-                android:text="Password" />
+                android:hint="Password"
+                android:inputType="textPersonName" />
         </TableRow>
 
     </TableLayout>

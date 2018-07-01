@@ -17,7 +17,7 @@ import retrofit2.Call;
 public class SignUpActivity extends AppCompatActivity {
 
     private static WGServerProxy proxy;
-
+    private User user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,22 +45,27 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // Build new user (with random email to avoid conflicts)
-                User user = User.getInstance();
+                user = User.getInstance();
                 //int random = (int) (Math.random() * 100000);
                 EditText name = (EditText) findViewById( R.id.edtTxtName );
                 EditText email = (EditText) findViewById( R.id.edtTxtEmail );
                 EditText password = (EditText) findViewById( R.id.edtTxtPassword2 );
-                user.setName(name.toString());
-                user.setEmail(email.toString());
-                user.setPassword(password.toString());
+                user.setName(name.getText().toString());
+                user.setEmail(email.getText().toString());
+                user.setPassword(password.getText().toString());
                // user.setCurrentPoints(100);
                // user.setTotalPointsEarned(2500);
                // user.setRewards(new EarnedRewards());
 
                 // Make call
 
-                Call<User> caller = proxy.createNewUser(user);
+                Call<User> caller = proxy.createUser(user);
                 ProxyBuilder.callProxy(SignUpActivity.this, caller, returnedUser -> response(returnedUser));
+
+                //switch
+
+                Intent intent = WelcomeScreen.makeIntent(SignUpActivity.this);
+                startActivity(intent);
             }
         });
     }
