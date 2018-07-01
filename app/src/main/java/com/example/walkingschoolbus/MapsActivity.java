@@ -51,7 +51,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
     }
 
-    //TODO add dynamic location and delete this static ref to Sydney
 
     /**
      * Manipulates the map once available.
@@ -74,6 +73,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
             mMap.setMyLocationEnabled(true);
         }
+
+        //Hardcoded destination for now.
+        //Need to change destinationLatLng to get the walking destination of the user's group.
+        //Also need to mark locations of other groups
+        LatLng destinationLatLng = new LatLng(49.278059,-122.919926);
+        MarkerOptions destinationMarker = new MarkerOptions()
+                .position(destinationLatLng)
+                .title("Destination");
+        mMap.addMarker(destinationMarker);
+
+
 
         /*
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -110,7 +120,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
-
+    /**
+     * Retrieves the user's location and marks it on the map.
+     */
     private void getUserLocation(){
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
@@ -130,15 +142,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
-    /*
-     *Moves the camera to a location.
+    /**
+     * Centers the screen to the specified position.
+     * @param latLng Position coordinates of the location
+     * @param zoom Zooms on the location by a specified amount.
      */
     private void moveCamera(LatLng latLng,float zoom){
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, DEFAULT_ZOOM));
     }
 
-    /*
-     *Explicitly checks location permissions.
+    /**
+     * Requests permission from the user to allow location services for the map.
      */
     private void getUserLocationPermission(){
         String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION};
@@ -157,8 +171,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
-    /*
-     *Check request permission results
+    /**
+     *
+     * @param requestCode The code passed by getUserLocationMethod providing the results of whether user denied or allowed location services.
+     * @param permissions The array of requested permissions.
+     * @param grantResults Grant results for the requested permissions.  Either PERMISSION_GRANTED or PERMISSION_DENIED.
      */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
