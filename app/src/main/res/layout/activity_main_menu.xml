@@ -69,6 +69,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayoutGroup"
         android:layout_width="161dp"
         android:layout_height="95dp"
         android:layout_marginBottom="56dp"
