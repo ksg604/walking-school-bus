@@ -15,6 +15,9 @@ import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.walkingschoolbus.model.User;
+import com.example.walkingschoolbus.proxy.ProxyBuilder;
+import com.example.walkingschoolbus.proxy.WGServerProxy;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -34,13 +37,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Boolean mLocationPermissionsGranted = false;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 0;
     private static final float DEFAULT_ZOOM = 14f;
+    private ProxyBuilder proxyBuilder;
+    private User user = User.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-
+        WGServerProxy proxy = proxyBuilder.getProxy(Integer.toString(R.string.api_key));
+        user.getMemberOfGroups();
         getUserLocationPermission();
 
     }
