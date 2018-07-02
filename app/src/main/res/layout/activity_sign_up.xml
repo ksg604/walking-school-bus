@@ -34,7 +34,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:text="Name" />
+                android:hint="Name" />
         </TableRow>
 
         <TableRow
@@ -53,7 +53,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:text="Email" />
+                android:hint="Email" />
         </TableRow>
 
         <TableRow
@@ -72,7 +72,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:text="Password" />
+                android:hint="Password" />
         </TableRow>
 
         <TableRow
@@ -91,7 +91,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:text="Password" />
+                android:hint="Password" />
         </TableRow>
 
     </TableLayout>

@@ -8,6 +8,7 @@ import com.example.walkingschoolbus.model.User;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -22,10 +23,11 @@ public interface WGServerProxy {
     Call<String> getApiKey(@Query("groupName") String groupName);
 
     @POST("/users/signup")
-    Call<User> createNewUser(@Body User user);
+    Call<User> createUser(@Body User user);
 
     @POST("/login")
-    Call<Void> login(@Body User userWithEmailAndPassword);
+    Call <User> login(@Body User user);
+
 
     @GET("/users")
     Call<List<User>> getUsers();

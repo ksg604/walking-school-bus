@@ -235,9 +235,9 @@ public class User {
     public void setRewards(EarnedRewards rewards) {
         this.rewards = rewards;
     }
-
-    // Utility Functions
-    // -------------------------------------------------------------------------------------------
+    */
+     //Utility Functions
+     //-------------------------------------------------------------------------------------------
     @Override
     public String toString() {
         return "User{" +
@@ -245,8 +245,8 @@ public class User {
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
-                ", currentPoints=" + currentPoints +
-                ", totalPointsEarned=" + totalPointsEarned +
+                //", currentPoints=" + currentPoints +
+                //", totalPointsEarned=" + totalPointsEarned +
                 ", monitoredByUsers=" + monitoredByUsers +
                 ", monitorsUsers=" + monitorsUsers +
                 ", memberOfGroups=" + memberOfGroups +
@@ -257,6 +257,5 @@ public class User {
     }
 }
 
-    */
 
-}
+
