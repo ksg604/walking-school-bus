@@ -105,6 +105,8 @@ public class WelcomeScreen extends AppCompatActivity {
         // Replace the current proxy with one that uses the token!
         Log.w(TAG, "   --> NOW HAVE TOKEN: " + token);
         proxy = ProxyBuilder.getProxy(getString(R.string.api_key), token);
+        Intent intent = new Intent(getApplicationContext(),MapsActivity.class);
+        intent.putExtra("Token",token);
     }
 
     // Login actually completes by calling this; nothing to do as it was all done
