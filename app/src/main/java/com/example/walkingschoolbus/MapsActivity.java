@@ -89,41 +89,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .title("Destination");
         mMap.addMarker(destinationMarker);
 
-
-
-        /*
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        Location myLocation = locationManager.getLastKnownLocation(locationManager.NETWORK_PROVIDER);
-        
-        //onLocationChanged(myLocation);
-
-        //LocationManager lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
-        //Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-
-        double myLongitude = myLocation.getLongitude();
-        double myLatitude = myLocation.getLatitude();
-        LatLng myLatLng = new LatLng(myLatitude,myLongitude);
-
-
-
-
-       // LatLng sydney = new LatLng(49,-123);
-        mMap.addMarker(new MarkerOptions().position(myLatLng));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(myLatLng));
-        */
-
-
     }
 
     /**
