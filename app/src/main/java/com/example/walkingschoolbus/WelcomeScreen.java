@@ -1,5 +1,6 @@
 package com.example.walkingschoolbus;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,6 +10,8 @@ import android.widget.Button;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+import android.widget.WrapperListAdapter;
 
 import com.example.walkingschoolbus.model.User;
 import com.example.walkingschoolbus.proxy.ProxyBuilder;
@@ -20,10 +23,16 @@ public class WelcomeScreen extends AppCompatActivity {
     private User user;
     private WGServerProxy proxy;
 
+    private static final String TAG = "ServerTest";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome_screen);
+
+        proxy = ProxyBuilder.getProxy(getString(R.string.api_key), null);
+
         setupSignInButton();
         setupDebugButton();
     }
@@ -62,14 +71,21 @@ public class WelcomeScreen extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // Build new user
-                EditText userName = (EditText) findViewById( R.id.nameInput );
+                //EditText userName = (EditText) findViewById( R.id.nameInput );
                 EditText userEmail = (EditText) findViewById( R.id.emailInput);
                 EditText userPassword = (EditText) findViewById( R.id.passwordInput );
 
-                user = User.getInstance();
-                user.setName(userName.toString());
-                user.setEmail(userEmail.toString());
-                user.setPassword(userPassword.toString());
+
+               user = new User();
+
+               user.setEmail(userEmail.getText().toString());
+               user.setPassword(userPassword.getText().toString());
+
+
+
+
+              // Toast.makeText(WelcomeScreen.this, message1, Toast.LENGTH_LONG).show();
+                //user.setEmail(userEmail.getText().toString());
 
                 // Register for token received:
                 ProxyBuilder.setOnTokenReceiveCallback( token -> onReceiveToken(token));
@@ -77,6 +93,9 @@ public class WelcomeScreen extends AppCompatActivity {
                 // Make call
                 Call<Void> caller = proxy.login(user);
                 ProxyBuilder.callProxy(WelcomeScreen.this, caller, returnedNothing -> response(returnedNothing));
+
+               Intent intent = MainMenu.makeIntent(WelcomeScreen.this);
+               startActivity(intent);
             }
         });
     }
@@ -84,18 +103,27 @@ public class WelcomeScreen extends AppCompatActivity {
     // Handle the token by generating a new Proxy which is encoded with it.
     private void onReceiveToken(String token) {
         // Replace the current proxy with one that uses the token!
-        //Log.w(TAG, "   --> NOW HAVE TOKEN: " + token);
+        Log.w(TAG, "   --> NOW HAVE TOKEN: " + token);
         proxy = ProxyBuilder.getProxy(getString(R.string.api_key), token);
     }
 
     // Login actually completes by calling this; nothing to do as it was all done
     // when we got the token.
     private void response(Void returnedNothing) {
-        //notifyUserViaLogAndToast("Server replied to login request (no content was expected).");
-        Intent intent = MainMenu.makeIntent(WelcomeScreen.this);
-        startActivity(intent);
+        notifyUserViaLogAndToast("Server replied to login request (no content was expected).");
+    }
 
+    private void notifyUserViaLogAndToast(String message) {
+        Log.w(TAG, message);
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 
 
+
+
+
+    public static Intent makeIntent(Context context){
+        Intent intent = new Intent( context, WelcomeScreen.class );
+        return intent;
+    }
 }
