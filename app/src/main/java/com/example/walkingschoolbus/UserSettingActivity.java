@@ -18,6 +18,19 @@ public class UserSettingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user_setting);
         userToken2 = extractDataFromIntent();
         setupMonitoringListButton();
+        setupMonitoredListButton();
+    }
+
+    private void setupMonitoredListButton() {
+        Button btnMonitoring = (Button) findViewById(R.id.btnMonitoredList);
+        btnMonitoring.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = MonitoredListActivity.makeIntent(UserSettingActivity.this, userToken2);
+                Log.w("UserSettingTest", "   --> NOW HAVE TOKEN(output4): " + userToken2);
+                startActivity(intent);
+            }
+        });
     }
 
     private String extractDataFromIntent() {

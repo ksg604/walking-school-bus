@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 import android.widget.WrapperListAdapter;
 
+//import com.example.walkingschoolbus.model.Session;
 import com.example.walkingschoolbus.model.User;
 import com.example.walkingschoolbus.proxy.ProxyBuilder;
 import com.example.walkingschoolbus.proxy.WGServerProxy;
@@ -22,6 +23,7 @@ import retrofit2.Call;
 public class WelcomeScreen extends AppCompatActivity {
     private User user;
     private WGServerProxy proxy;
+    //private  Session tokenSession;
 
     private static final String TAG = "ServerTest";
 
@@ -105,6 +107,8 @@ public class WelcomeScreen extends AppCompatActivity {
     // Handle the token by generating a new Proxy which is encoded with it.
     private void onReceiveToken(String token) {
         // Replace the current proxy with one that uses the token!
+        Log.w(TAG, "   --> NOW HAVE TOKEN: " + token);
+       // tokenSession.setToken(token);
         Log.w(TAG, "   --> NOW HAVE TOKEN (output1): " + token);
         proxy = ProxyBuilder.getProxy(getString(R.string.api_key), token);
         tempToken = token;
