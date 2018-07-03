@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.example.walkingschoolbus.model.User;
 import com.example.walkingschoolbus.proxy.ProxyBuilder;
@@ -17,10 +16,10 @@ import com.example.walkingschoolbus.proxy.WGServerProxy;
 import retrofit2.Call;
 
 public class SignUpActivity extends AppCompatActivity {
-    private static User user;
-    private static WGServerProxy proxy;
-    private String TAG = "Signup";
 
+    private static WGServerProxy proxy;
+    private User user;
+    private String tempToken0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,51 +46,41 @@ public class SignUpActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Build new user
+                // Build new user (with random email to avoid conflicts)
                 user = User.getInstance();
-
+                //int random = (int) (Math.random() * 100000);
                 EditText name = (EditText) findViewById( R.id.edtTxtName );
                 EditText email = (EditText) findViewById( R.id.edtTxtEmail );
-                EditText password1 = (EditText) findViewById( R.id.edtTxtPassword1 );
-                EditText password2 = (EditText) findViewById( R.id.edtTxtPassword2 );
-
+                EditText password = (EditText) findViewById( R.id.edtTxtPassword2 );
                 user.setName(name.getText().toString());
                 user.setEmail(email.getText().toString());
-                if( password1.getText().toString().equals( password2.getText().toString() )){
-                    user.setPassword(password1.getText().toString());
-                    Intent intent = WelcomeScreen.makeIntent( SignUpActivity.this );
-                    startActivity( intent );
-
-
-                }else{
-                    Toast.makeText(SignUpActivity.this,"invalid password",Toast.LENGTH_LONG).show();
-                }
-
-
+                user.setPassword(password.getText().toString());
                // user.setCurrentPoints(100);
                // user.setTotalPointsEarned(2500);
                // user.setRewards(new EarnedRewards());
 
+
                 // Make call
+
                 Call<User> caller = proxy.createUser(user);
                 ProxyBuilder.callProxy(SignUpActivity.this, caller, returnedUser -> response(returnedUser));
+
+                //switch
+
+                Intent intent = WelcomeScreen.makeIntent(SignUpActivity.this);
+                startActivity(intent);
             }
         });
     }
-    private void response(User user) {
 
-        notifyUserViaLogAndToast("Server replied with user: " + user.toString());
+
+    private void response(User user) {
+        //notifyUserViaLogAndToast("Server replied with user: " + user.toString());
         //long userId = user.getId();
         //String userEmail = user.getEmail();
 
 
     }
-
-    private void notifyUserViaLogAndToast(String message) {
-        Log.w(TAG, message);
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
-    }
-
 
 
 

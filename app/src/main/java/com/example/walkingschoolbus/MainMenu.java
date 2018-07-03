@@ -10,8 +10,13 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import java.util.List;
+
 public class MainMenu extends AppCompatActivity {
 
+    public static final String USER_TOKEN = "User token";
+
+    private String userToken1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
@@ -20,8 +25,27 @@ public class MainMenu extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle( R.string.main_menu );
 
+        userToken1 = extractDataFromIntent();
         setupLayoutGroups();
         setupLayoutMaps();
+        setupLayoutSetting();
+    }
+
+    private String extractDataFromIntent() {
+        Intent intent = getIntent();
+        return intent.getStringExtra(USER_TOKEN);
+    }
+
+    private void setupLayoutSetting() {
+        LinearLayout setting = (LinearLayout) findViewById(R.id.linearLayoutSetting);
+        setting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = UserSettingActivity.makeIntent(MainMenu.this, userToken1);
+                Log.w("Maintest", "   --> NOW HAVE TOKEN(output3): " + userToken1);
+                startActivity(intent);
+            }
+        });
     }
 
     /**
@@ -60,8 +84,9 @@ public class MainMenu extends AppCompatActivity {
      * @param context
      * @return
      */
-    public static Intent makeIntent(Context context){
+    public static Intent makeIntent(Context context, String tokenToPass){
         Intent intent = new Intent( context, MainMenu.class );
+        intent.putExtra(USER_TOKEN, tokenToPass);
         return intent;
     }
 
