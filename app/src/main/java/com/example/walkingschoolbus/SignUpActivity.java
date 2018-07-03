@@ -19,6 +19,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     private static WGServerProxy proxy;
     private User user;
+    private String tempToken0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
