@@ -4,6 +4,8 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.walkingschoolbus.model.User;
+
 import java.io.IOException;
 
 import okhttp3.Interceptor;
@@ -27,7 +29,22 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
  */
 public class ProxyBuilder {
     // Select a server (top one is production one; others are for testing)
-    private static final String SERVER_URL = "https://cmpt276-1177-bf.cmpt.sfu.ca:8184/";
+    private static final String SERVER_URL = "https://cmpt276-1177-bf.cmpt.sfu.ca:8184";
+
+    /*
+   Singleton Support
+*/
+    private static ProxyBuilder instance;
+
+    public static ProxyBuilder getInstance(){
+        if(instance == null){
+            instance = new ProxyBuilder();
+        }
+        return instance;
+    }
+    private ProxyBuilder() {
+
+    }
 
 
     // Allow client-code to register callback for when the token is received.
