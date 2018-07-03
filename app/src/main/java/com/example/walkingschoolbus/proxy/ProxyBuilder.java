@@ -1,6 +1,7 @@
 package com.example.walkingschoolbus.proxy;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -17,6 +18,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * General support for getting the Retrofit proxy object.
@@ -46,13 +49,13 @@ public class ProxyBuilder {
 
     }
 
-
     // Allow client-code to register callback for when the token is received.
     // NOTE: the current proxy does not upgrade to using the token!
     private static SimpleCallback<String> receivedTokenCallback;
     public static void setOnTokenReceiveCallback(SimpleCallback<String> callback) {
         receivedTokenCallback = callback;
     }
+
 
     /**
      * Return the proxy that client code can use to call server.
@@ -166,9 +169,6 @@ public class ProxyBuilder {
             }
         });
     }
-
-
-
 
 
 

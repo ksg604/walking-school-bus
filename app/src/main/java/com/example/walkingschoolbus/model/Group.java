@@ -37,6 +37,11 @@ public class Group {
     //Constructor
 
 
+
+    public Group(long id, String name, Location location) {
+        this.id = id;
+        this.Name = name;
+    }
     public Group(String name, Location location, Location meetingPlace) {
         Name = name;
         this.location = location;
