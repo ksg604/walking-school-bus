@@ -22,7 +22,7 @@ public class SignUpActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
-        proxy = ProxyBuilder.getProxy(getString(R.string.api_key), null);
+        proxy = ProxyBuilder.getProxy(getString(R.string.api_key),null);
         setupNewUserButton();
 
     }

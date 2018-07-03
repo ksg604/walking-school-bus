@@ -15,7 +15,7 @@ public class Group {
 
     private long id;
     private String Name;
-    private Location location;
+    private GpsLocation location;
     private Boolean hasFullData;
     private String href;
     private Location meetingPlace;
@@ -24,7 +24,7 @@ public class Group {
     Singleton Support
      */
     private static Group instance;
-    private Group() {
+    public Group() {
 
     }
     public static Group getInstance() {
@@ -37,10 +37,12 @@ public class Group {
     //Constructor
 
 
-    public Group(String name, Location location, Location meetingPlace) {
-        Name = name;
+
+    public Group(long id, String name, GpsLocation location) {
+        this.id = id;
+        this.Name = name;
         this.location = location;
-        this.meetingPlace = meetingPlace;
+        //this.meetingPlace = meetingPlace;
     }
 
     // Check if full data
@@ -79,15 +81,15 @@ public class Group {
     public void setName(String name) {
         Name = name;
     }
-
+    /*
     public Location getLocation() {
         return location;
     }
 
-    public void setLocation(Location location) {
+    public void setLocation(GPSLocation location) {
         this.location = location;
     }
-
+    */
     public Location getMeetingPlace() {
         return meetingPlace;
     }

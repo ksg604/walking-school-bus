@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 import android.widget.WrapperListAdapter;
 
+import com.example.walkingschoolbus.model.Session;
 import com.example.walkingschoolbus.model.User;
 import com.example.walkingschoolbus.proxy.ProxyBuilder;
 import com.example.walkingschoolbus.proxy.WGServerProxy;
@@ -22,6 +23,7 @@ import retrofit2.Call;
 public class WelcomeScreen extends AppCompatActivity {
     private User user;
     private WGServerProxy proxy;
+    private static Session tokenSession;
 
     private static final String TAG = "ServerTest";
 
@@ -76,15 +78,15 @@ public class WelcomeScreen extends AppCompatActivity {
                 EditText userPassword = (EditText) findViewById( R.id.passwordInput );
 
 
-               user = new User();
+                user = new User();
 
-               user.setEmail(userEmail.getText().toString());
-               user.setPassword(userPassword.getText().toString());
-
-
+                user.setEmail(userEmail.getText().toString());
+                user.setPassword(userPassword.getText().toString());
 
 
-              // Toast.makeText(WelcomeScreen.this, message1, Toast.LENGTH_LONG).show();
+
+
+                // Toast.makeText(WelcomeScreen.this, message1, Toast.LENGTH_LONG).show();
                 //user.setEmail(userEmail.getText().toString());
 
                 // Register for token received:
@@ -94,16 +96,20 @@ public class WelcomeScreen extends AppCompatActivity {
                 Call<Void> caller = proxy.login(user);
                 ProxyBuilder.callProxy(WelcomeScreen.this, caller, returnedNothing -> response(returnedNothing));
 
-               Intent intent = MainMenu.makeIntent(WelcomeScreen.this);
-               startActivity(intent);
+                Intent intent = MainMenu.makeIntent(WelcomeScreen.this);
+                startActivity(intent);
             }
         });
     }
+
+
+
 
     // Handle the token by generating a new Proxy which is encoded with it.
     private void onReceiveToken(String token) {
         // Replace the current proxy with one that uses the token!
         Log.w(TAG, "   --> NOW HAVE TOKEN: " + token);
+        tokenSession.setToken(token);
         proxy = ProxyBuilder.getProxy(getString(R.string.api_key), token);
     }
 
