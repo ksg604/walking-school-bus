@@ -27,12 +27,13 @@ public class WelcomeScreen extends AppCompatActivity {
 
     private static final String TAG = "ServerTest";
 
+    public String tempToken;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome_screen);
-
+        //String tempToken;
         proxy = ProxyBuilder.getProxy(getString(R.string.api_key), null);
 
         setupSignInButton();
@@ -44,7 +45,7 @@ public class WelcomeScreen extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = MainMenu.makeIntent(WelcomeScreen.this);
+                Intent intent = MainMenu.makeIntent(WelcomeScreen.this, tempToken);
                 startActivity(intent);
             }
         });
@@ -56,7 +57,7 @@ public class WelcomeScreen extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = SignUpActivity.makeIntent(WelcomeScreen.this);
+                Intent intent = SignUpActivity.makeIntent(WelcomeScreen.this); //maybe should change this make intent
                 startActivity(intent);
                 Log.i("Sprint1","Sign up activity launched from welcome screen");
             }
@@ -78,15 +79,15 @@ public class WelcomeScreen extends AppCompatActivity {
                 EditText userPassword = (EditText) findViewById( R.id.passwordInput );
 
 
-                user = new User();
+               user = User.getInstance();
 
-                user.setEmail(userEmail.getText().toString());
-                user.setPassword(userPassword.getText().toString());
-
-
+               user.setEmail(userEmail.getText().toString());
+               user.setPassword(userPassword.getText().toString());
 
 
-                // Toast.makeText(WelcomeScreen.this, message1, Toast.LENGTH_LONG).show();
+
+
+              // Toast.makeText(WelcomeScreen.this, message1, Toast.LENGTH_LONG).show();
                 //user.setEmail(userEmail.getText().toString());
 
                 // Register for token received:
@@ -96,21 +97,27 @@ public class WelcomeScreen extends AppCompatActivity {
                 Call<Void> caller = proxy.login(user);
                 ProxyBuilder.callProxy(WelcomeScreen.this, caller, returnedNothing -> response(returnedNothing));
 
-                Intent intent = MainMenu.makeIntent(WelcomeScreen.this);
-                startActivity(intent);
+               // Log.i("Welcome test1:",tempToken);
+
+
             }
         });
     }
-
-
-
 
     // Handle the token by generating a new Proxy which is encoded with it.
     private void onReceiveToken(String token) {
         // Replace the current proxy with one that uses the token!
         Log.w(TAG, "   --> NOW HAVE TOKEN: " + token);
         tokenSession.setToken(token);
+        Log.w(TAG, "   --> NOW HAVE TOKEN (output1): " + token);
         proxy = ProxyBuilder.getProxy(getString(R.string.api_key), token);
+        tempToken = token;
+        Intent intent = MainMenu.makeIntent(WelcomeScreen.this, tempToken);
+
+
+        Log.w(TAG, "   --> NOW HAVE TOKEN(output2): " + tempToken);
+        startActivity(intent);
+
     }
 
     // Login actually completes by calling this; nothing to do as it was all done
@@ -130,6 +137,10 @@ public class WelcomeScreen extends AppCompatActivity {
 
     public static Intent makeIntent(Context context){
         Intent intent = new Intent( context, WelcomeScreen.class );
+       //intent.putExtra("User Token", tokenToPass);
         return intent;
     }
+
+
+
 }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,6 +19,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     private static WGServerProxy proxy;
     private User user;
+    private String tempToken0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +59,7 @@ public class SignUpActivity extends AppCompatActivity {
                // user.setTotalPointsEarned(2500);
                // user.setRewards(new EarnedRewards());
 
+
                 // Make call
 
                 Call<User> caller = proxy.createUser(user);
@@ -69,6 +72,8 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
     }
+
+
     private void response(User user) {
         //notifyUserViaLogAndToast("Server replied with user: " + user.toString());
         //long userId = user.getId();

@@ -49,6 +49,7 @@ public class User {
     /*
     Singleton Support
 */
+
     private static User instance;
 
     public static User getInstance(){
@@ -63,7 +64,7 @@ public class User {
         this.password = password;
     }
 //Constructor
-    public User() {
+    private User() {
 
     }
 

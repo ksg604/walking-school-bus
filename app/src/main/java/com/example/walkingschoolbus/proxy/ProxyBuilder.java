@@ -32,7 +32,22 @@ import static android.content.Context.MODE_PRIVATE;
  */
 public class ProxyBuilder {
     // Select a server (top one is production one; others are for testing)
-    private static final String SERVER_URL = "https://cmpt276-1177-bf.cmpt.sfu.ca:8184/";
+    private static final String SERVER_URL = "https://cmpt276-1177-bf.cmpt.sfu.ca:8184";
+
+    /*
+   Singleton Support
+*/
+    private static ProxyBuilder instance;
+
+    public static ProxyBuilder getInstance(){
+        if(instance == null){
+            instance = new ProxyBuilder();
+        }
+        return instance;
+    }
+    private ProxyBuilder() {
+
+    }
 
     // Allow client-code to register callback for when the token is received.
     // NOTE: the current proxy does not upgrade to using the token!
