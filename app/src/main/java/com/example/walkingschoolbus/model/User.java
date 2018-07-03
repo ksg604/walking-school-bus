@@ -23,6 +23,7 @@ import java.util.List;
 // This is needed for the server to be able to change without breaking your app!
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class User {
+    private String token;
 
     // Data fields for the user.
     // -------------------------------------------------------------------------------------------
@@ -131,6 +132,12 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public void setToken(String token) { this.token = token; }
+
+    public String getToken () { return token; }
+
+
 
     // Monitoring
     // -------------------------------------------------------------------------------------------
