@@ -1,7 +1,5 @@
 package com.example.walkingschoolbus.proxy;
 
-import android.support.annotation.RequiresPermission;
-import android.util.JsonToken;
 import android.webkit.PermissionRequest;
 
 import java.util.List;
@@ -9,16 +7,11 @@ import java.util.List;
 import com.example.walkingschoolbus.model.GpsLocation;
 import com.example.walkingschoolbus.model.Group;
 import com.example.walkingschoolbus.model.User;
-
-import org.json.JSONObject;
-
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
-import retrofit2.http.Field;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
-import retrofit2.http.HeaderMap;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -29,11 +22,8 @@ import retrofit2.http.Query;
  * This is a Retrofit interface.
  */
 public interface WGServerProxy {
-
     @GET("getApiKey")
     Call<String> getApiKey(@Query("groupName") String groupName);
-
-
 
     // -----------------------------
     // Users
@@ -42,7 +32,7 @@ public interface WGServerProxy {
     Call<User> createUser(@Body User user);
 
     @POST("/login")
-    Call<Void> login(@Body User user);
+    Call<Void> login(@Body User userWithEmailAndPassword);
 
     @GET("/users")
     Call<List<User>> getUsers();
