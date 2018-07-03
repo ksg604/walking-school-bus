@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 import android.widget.WrapperListAdapter;
 
+
 import com.example.walkingschoolbus.model.Session;
 import com.example.walkingschoolbus.model.User;
 import com.example.walkingschoolbus.proxy.ProxyBuilder;
@@ -23,7 +24,7 @@ import retrofit2.Call;
 public class WelcomeScreen extends AppCompatActivity {
     private User user;
     private WGServerProxy proxy;
-    private static Session tokenSession;
+    private static Session tokenSession = new Session();
 
     private static final String TAG = "ServerTest";
 
