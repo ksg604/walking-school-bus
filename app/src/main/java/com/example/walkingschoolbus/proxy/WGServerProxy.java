@@ -32,7 +32,7 @@ public interface WGServerProxy {
     Call<User> createUser(@Body User user);
 
     @POST("/login")
-    Call <User> login(@Body User user);
+    Call <Void> login(@Body User user);
 
 
     @GET("/users")
