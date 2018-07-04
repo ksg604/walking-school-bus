@@ -10,16 +10,14 @@
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="161dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="139dp"
+        android:layout_height="95dp"
+        android:layout_marginBottom="24dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="232dp"
         android:background="#F9A825"
         android:orientation="vertical"
         android:weightSum="3"
-        app:layout_constraintBottom_toTopOf="@+id/btnLogOut"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayoutGroup"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="spread_inside">
 
         <ImageView
@@ -45,13 +43,13 @@
         android:id="@+id/linearLayoutMaps"
         android:layout_width="161dp"
         android:layout_height="95dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="232dp"
+        android:layout_marginBottom="24dp"
+        android:layout_marginStart="27dp"
         android:background="#728a74"
         android:orientation="vertical"
         android:weightSum="3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintBottom_toTopOf="@+id/linearLayoutSetting"
+        app:layout_constraintStart_toEndOf="@+id/linearLayout">
 
         <ImageView
             android:layout_width="25dp"
@@ -108,12 +106,12 @@
         android:layout_width="161dp"
         android:layout_height="95dp"
         android:layout_marginBottom="56dp"
-        android:layout_marginEnd="19dp"
+        android:layout_marginStart="27dp"
         android:background="#E53935"
         android:orientation="vertical"
         android:weightSum="3"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintStart_toEndOf="@+id/linearLayoutGroup">
 
         <ImageView
             android:layout_width="25dp"
@@ -143,6 +141,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:layout_constraintVertical_bias="1.0" />
 
 </android.support.constraint.ConstraintLayout>
