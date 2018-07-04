@@ -14,7 +14,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class Group {
 
     private long id;
-    private String Name;
+    private String groupDescription;
     private Location location;
     private Boolean hasFullData;
     private String href;
@@ -40,11 +40,15 @@ public class Group {
 
     public Group(long id, String name, Location location) {
         this.id = id;
-        this.Name = name;
+        this.groupDescription = name;
+        this.location =location;
     }
-    public Group(String name, Location location, Location meetingPlace) {
-        Name = name;
+    public Group(long id, String name, Location location, String href, Location meetingPlace) {
+
+        this.groupDescription = name;
         this.location = location;
+        this.hasFullData = true;
+        this.href=href;
         this.meetingPlace = meetingPlace;
     }
 
@@ -78,11 +82,11 @@ public class Group {
     }
 
     public String getName() {
-        return Name;
+        return this.groupDescription;
     }
 
     public void setName(String name) {
-        Name = name;
+        this.groupDescription = name;
     }
 
     public Location getLocation() {

@@ -10,8 +10,8 @@
         android:id="@+id/btnMonitoringList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="44dp"
-        android:layout_marginTop="108dp"
+        android:layout_marginStart="116dp"
+        android:layout_marginTop="176dp"
         android:text="Monitoring_list"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -20,9 +20,9 @@
         android:id="@+id/btnMonitoredList"
         android:layout_width="150dp"
         android:layout_height="53dp"
-        android:layout_marginStart="52dp"
-        android:layout_marginTop="184dp"
+        android:layout_marginEnd="116dp"
+        android:layout_marginTop="284dp"
         android:text="Monitored_LIst"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>
