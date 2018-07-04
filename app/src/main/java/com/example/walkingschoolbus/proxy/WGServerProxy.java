@@ -11,6 +11,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -31,7 +32,8 @@ public interface WGServerProxy {
     Call<User> createUser(@Body User user);
 
     @POST("/login")
-    Call<Void> login(@Body User userWithEmailAndPassword);
+    Call <User> login(@Body User user);
+
 
     @GET("/users")
     Call<List<User>> getUsers();
