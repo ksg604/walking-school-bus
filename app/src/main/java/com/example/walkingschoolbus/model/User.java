@@ -7,6 +7,8 @@ import android.util.Log;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,7 +31,9 @@ public class User {
     // -------------------------------------------------------------------------------------------
     // NOTE: Make numbers Long/Integer, not long/int because only the former will
     //       deserialize if the value is null from the server.
+
     private Long id;
+
     private Boolean hasFullData;
     private String name;
     private String email;
@@ -62,6 +66,11 @@ public class User {
     public User(String email, String password) {
         this.email = email;
         this.password = password;
+    }
+
+    public User(Long id, String href) {
+        this.id = id;
+        this.href = href;
     }
 //Constructor
     private User() {

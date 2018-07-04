@@ -54,7 +54,8 @@ import static android.Manifest.permission.ACCESS_FINE_LOCATION;
  *   see /res/values/google_maps_api.xml
  * - More notes at the end of this file.
  */
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+
+ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
 
@@ -66,12 +67,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     WGServerProxy proxy;
     private User user = User.getInstance();
     private FusedLocationProviderClient client;
-
+    private Group group;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+
 
 
         proxy = ProxyBuilder.getProxy(getString(R.string.api_key),null);
@@ -100,18 +102,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         for(int i = 0; i < returnedGroupList.size(); i++){
             Group group = returnedGroupList.get(i);
-            LatLng groupMeetingLocation = new LatLng(group.getMeetingPlace().getLatitude(),group.getMeetingPlace().getLongitude());
+            LatLng groupMeetingLocation = new LatLng(group.getRouteLatArray().get(1),group.getRouteLngArray().get(1));
             MarkerOptions groupMeetingLocationMarker = new MarkerOptions()
                     .position(groupMeetingLocation)
-                    .title("Group: "+group.getName())
+                    .title("Group: "+group.getGroupDescription())
                     //Differentiate group meeting location markers from current location markers with a different marker opacity (alpha).
                     .alpha(2);
             mMap.addMarker(groupMeetingLocationMarker);
 
-            LatLng groupCurrentLocation = new LatLng(group.getLocation().getLatitude(),group.getLocation().getLongitude());
+            LatLng groupCurrentLocation = new LatLng(group.getRouteLatArray().get(0),group.getRouteLngArray().get(0));
             MarkerOptions groupLocationMarker = new MarkerOptions()
                     .position(groupMeetingLocation)
-                    .title("Group: "+group.getName())
+                    .title("Group: "+group.getGroupDescription())
                     .alpha(3);
             mMap.addMarker(groupLocationMarker);
         }
@@ -125,18 +127,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         for(int i = 0; i < userGroupList.size(); i++){
             //Unsure of whether to use singleton here.
             Group group = userGroupList.get(i);
-            LatLng groupMeetingLocation = new LatLng(group.getMeetingPlace().getLatitude(),group.getMeetingPlace().getLongitude());
+            LatLng groupMeetingLocation = new LatLng(group.getRouteLatArray().get(1),group.getRouteLngArray().get(1));
             MarkerOptions groupMeetingLocationMarker = new MarkerOptions()
                     .position(groupMeetingLocation)
-                    .title("Group: "+group.getName())
+                    .title("Group: "+group.getGroupDescription())
                     //Differentiate group meeting location markers from current location markers with a different marker opacity (alpha).
                     .alpha(2);
             mMap.addMarker(groupMeetingLocationMarker);
 
-            LatLng groupCurrentLocation = new LatLng(group.getLocation().getLatitude(),group.getLocation().getLongitude());
+            LatLng groupCurrentLocation = new LatLng(group.getRouteLatArray().get(0),group.getRouteLngArray().get(0));
             MarkerOptions groupLocationMarker = new MarkerOptions()
                     .position(groupMeetingLocation)
-                    .title("Group: "+group.getName())
+                    .title("Group: "+group.getGroupDescription())
                     .alpha(3);
             mMap.addMarker(groupLocationMarker);
         }
@@ -188,9 +190,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     /**
-     * Retrieves the user's location and marks it on the map.
-     * The map will automatically centre on to the user's location upon initiation of the map.
-     * There is a button on the top right corner of the map that will centre on to the user's location if clicked.
+     * Retrieves the phones location and marks it on the map.
+     * The map will automatically centre on to the phone location upon initiation of the map.
+     * There is a button on the top right corner of the map that will centre on to the phones's location if clicked.
      */
     private void getUserLocation(){
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
@@ -202,7 +204,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 public void onComplete(@NonNull Task task) {
                     if(task.isSuccessful()){
                         Location currentLocation = (Location) task.getResult();
-                        moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()),DEFAULT_ZOOM);
+
+                        moveCamera(new LatLng(currentLocation.getLatitude(),currentLocation.getLongitude()),DEFAULT_ZOOM);
                     }
                 }
             });
@@ -271,4 +274,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         return intent;
     }
 }
+
+
 

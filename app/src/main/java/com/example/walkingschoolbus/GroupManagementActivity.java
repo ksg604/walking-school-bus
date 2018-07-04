@@ -34,7 +34,10 @@ public class GroupManagementActivity extends AppCompatActivity {
     public static final String USER_TOKEN = "User Token";
     private String userToken;
     private static WGServerProxy proxy;
-    ArrayList<String> stringGroupList = new ArrayList< >( );
+    List<String> stringGroupList = new ArrayList< >( );
+    List<Group> groupList = new ArrayList<>();
+    List<Long> groupIdList = new ArrayList<>();
+
 
 
     private static final String TAG = "GroupManagementActivity";
@@ -57,10 +60,11 @@ public class GroupManagementActivity extends AppCompatActivity {
 
         List<Group> groupList = new ArrayList<>();
 
+        //Make call
+        Call<User> caller = proxy.getUserById(temp_id);
+        ProxyBuilder.callProxy(GroupManagementActivity.this, caller, returnedUser -> responseForUser(returnedUser));
 
-        // Make call
-        Call<List<Group>> caller = proxy.getGroups();
-        ProxyBuilder.callProxy(GroupManagementActivity.this, caller, returnedGroupList -> response(returnedGroupList));
+
 
 
 
@@ -73,6 +77,20 @@ public class GroupManagementActivity extends AppCompatActivity {
         //populateListView();
 
     }
+
+    private void responseForUser(User returnedUser) {
+
+        groupList = returnedUser.getMemberOfGroups();
+        for( Group group : groupList ){
+            groupIdList.add(group.getId());
+        }
+        // Make call
+        Call<List<Group>> caller = proxy.getGroups();
+        ProxyBuilder.callProxy(GroupManagementActivity.this, caller, returnedGroupList -> responseForGroup(returnedGroupList));
+
+
+    }
+
 
 
 
@@ -93,7 +111,7 @@ public class GroupManagementActivity extends AppCompatActivity {
 
         //grab names of all groups member belongs too
         for(int i =0; i<groups.size();i++){
-            groupNames[i]=groups.get(i).getName();
+            //groupNames[i]=groups.get(i).getName();
         }
         //create array adaptor
         ArrayAdapter<String> adaptor = new ArrayAdapter<>(this, R.layout.groups_listview,
@@ -131,24 +149,31 @@ public class GroupManagementActivity extends AppCompatActivity {
 
 
    //get response List<Group> objects to save data into StringGroupList
-    private void response(List<Group> returnedGroups) {
+    private void responseForGroup(List<Group> returnedGroups) {
         notifyUserViaLogAndToast("Got list of " + returnedGroups.size() + " users! See logcat.");
         Log.w(TAG, "All Users:");
-        SwipeMenuListView groupListListView = (SwipeMenuListView) findViewById(R.id.groupList);
+
+        SwipeMenuListView groupListView = (SwipeMenuListView) findViewById(R.id.groupList);
+
+
         for (Group group : returnedGroups) {
-            Log.w( TAG, "    Group: " + group.getId());
+
+            if (groupIdList.contains( group.getId() )){
+                Log.w( TAG, "    Group: " + group.getId() );
 
 
-            String groupInfo = "group ID: " + group.getId();
-            stringGroupList.add( groupInfo );
-            ArrayAdapter adapter = new ArrayAdapter(GroupManagementActivity.this, R.layout.groups_listview, stringGroupList);
+                String groupInfo = "group description: " + group.getGroupDescription();
+                stringGroupList.add( groupInfo );
 
-            groupListListView.setAdapter(adapter);
+            }
+            ArrayAdapter adapter = new ArrayAdapter( GroupManagementActivity.this, R.layout.groups_listview, stringGroupList );
 
+            groupListView.setAdapter( adapter );
 
 
 
         }
+
 
         SwipeMenuCreator creator = new SwipeMenuCreator() {
 
@@ -175,9 +200,9 @@ public class GroupManagementActivity extends AppCompatActivity {
         };
 
         // set creator
-        groupListListView.setMenuCreator(creator);
+        groupListView.setMenuCreator(creator);
 
-        groupListListView.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
+        groupListView.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
                 @Override
                 public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
                     switch (index) {
