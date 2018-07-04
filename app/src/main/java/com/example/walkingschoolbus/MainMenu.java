@@ -8,27 +8,48 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
+
+import com.example.walkingschoolbus.model.Session;
 
 import java.util.List;
 
 public class MainMenu extends AppCompatActivity {
 
     public static final String USER_TOKEN = "User token";
+    Session session = Session.getInstance();
 
     private String userToken1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate( savedInstanceState );
-        setContentView( R.layout.activity_main_menu );
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main_menu);
 
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle( R.string.main_menu );
+        actionBar.setTitle(R.string.main_menu);
 
         userToken1 = extractDataFromIntent();
         setupLayoutGroups();
         setupLayoutMaps();
         setupLayoutSetting();
+        setupLogOutButton();
+    }
+
+    private void setupLogOutButton(){
+    Button btn = findViewById(R.id.btnLogOut);
+    btn.setOnClickListener(new View.OnClickListener(){
+        @Override
+        public void onClick(View v){
+            session.deleteToken();
+            session.storeSession(MainMenu.this);
+            Intent intent = WelcomeScreen.makeIntent(MainMenu.this);
+            startActivity(intent);
+            finish();
+        }
+    });
+
     }
 
     private String extractDataFromIntent() {

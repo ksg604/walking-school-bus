@@ -24,7 +24,7 @@ import retrofit2.Call;
 public class WelcomeScreen extends AppCompatActivity {
     private User user;
     private WGServerProxy proxy;
-    private static Session tokenSession = new Session();
+    //private static Session tokenSession = Session.getInstance();
 
     private static final String TAG = "ServerTest";
 
@@ -34,7 +34,16 @@ public class WelcomeScreen extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome_screen);
-        //String tempToken;
+
+        Session.getStoredSession(this);
+        Session tokenSession = Session.getInstance();
+        String savedToken = tokenSession.getToken();
+        if(savedToken != null){
+            logIn(savedToken);
+            Log.i(TAG, "Existing token found. AutoLog in");
+        } else{
+            Log.i(TAG, "No Existing token found. No auto login ");
+        }
         proxy = ProxyBuilder.getProxy(getString(R.string.api_key), null);
 
         setupSignInButton();
@@ -107,10 +116,13 @@ public class WelcomeScreen extends AppCompatActivity {
 
     // Handle the token by generating a new Proxy which is encoded with it.
     private void onReceiveToken(String token) {
+        Session tokenSession = Session.getInstance();
         // Replace the current proxy with one that uses the token!
         Log.w(TAG, "   --> NOW HAVE TOKEN: " + token);
         tokenSession.setToken(token);
-        Log.w(TAG, "   --> NOW HAVE TOKEN (output1): " + token);
+        tokenSession.storeSession(this);
+        String tokenSessionToken = tokenSession.getToken();
+        Log.w(TAG, "   --> NOW HAVE TOKEN (output1): " + tokenSessionToken);
         proxy = ProxyBuilder.getProxy(getString(R.string.api_key), token);
         tempToken = token;
         Intent intent = MainMenu.makeIntent(WelcomeScreen.this, tempToken);
@@ -119,6 +131,17 @@ public class WelcomeScreen extends AppCompatActivity {
         Log.w(TAG, "   --> NOW HAVE TOKEN(output2): " + tempToken);
         startActivity(intent);
 
+    }
+
+    /** Setup proxy with user token and move to main menu
+     *
+     * @param token
+     */
+    private void logIn(String token){
+        proxy = ProxyBuilder.getProxy(getString(R.string.api_key), token);
+        Intent intent = MainMenu.makeIntent(WelcomeScreen.this, tempToken);
+        startActivity(intent);
+        WelcomeScreen.this.finish();
     }
 
     // Login actually completes by calling this; nothing to do as it was all done
