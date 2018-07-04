@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.walkingschoolbus.model.Session;
 import com.example.walkingschoolbus.model.User;
 
 import java.io.IOException;
@@ -38,6 +39,7 @@ public class ProxyBuilder {
    Singleton Support
 */
     private static ProxyBuilder instance;
+    private Session tokenSession  = Session.getInstance();
 
     public static ProxyBuilder getInstance(){
         if(instance == null){
