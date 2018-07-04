@@ -21,6 +21,7 @@
     <string name="menu_group">Group</string>
     <string name="menu_map">Map</string>
     <string name="menu_setting">Setting</string>
+    <string name = "log_out">LOG OUT</string>
 
 
     <!--Sign up-->
