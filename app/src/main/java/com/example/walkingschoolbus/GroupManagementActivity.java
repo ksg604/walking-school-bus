@@ -76,15 +76,8 @@ public class GroupManagementActivity extends AppCompatActivity {
         createGroupButton.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                group = Group.getInstance();
-
-                // Make call
-
-
-                Call< Group> caller = proxy.createGroup(group);
-                ProxyBuilder.callProxy(GroupManagementActivity.this, caller, returnedGroup -> response(returnedGroup));
-
+                Intent intent = PlacePickerActivity.makeIntent(GroupManagementActivity.this);
+                startActivity(intent);
             }
         } );
 

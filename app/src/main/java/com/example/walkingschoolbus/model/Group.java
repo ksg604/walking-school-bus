@@ -41,6 +41,7 @@ public class Group {
     public Group(long id, String name, Location location) {
         this.id = id;
         this.Name = name;
+        this.location =location;
     }
     public Group(String name, Location location, Location meetingPlace) {
         Name = name;
