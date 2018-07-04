@@ -14,7 +14,7 @@
         android:text="@string/location" />
 
     <TextView
-        android:id="@+id/txtViewPlace1"
+        android:id="@+id/txtViewPrimaryLoc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp" />
@@ -23,10 +23,29 @@
         android:id="@+id/btnMeetingLoc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/meet_up_location" />
+        android:text="@string/meet_up_location"
+        android:layout_marginTop="40dp"/>
     <TextView
+        android:id="@+id/txtViewMeetupLoc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"/>
+
+    <EditText
+        android:id="@+id/editTxtGroupName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/group_name_edit"
+        android:inputType="textPersonName"
+        android:layout_marginTop="20dp"/>
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="@string/create_group"
+        android:layout_marginTop="170dp"
+        android:layout_marginLeft="10dp"/>
 
 </LinearLayout>
