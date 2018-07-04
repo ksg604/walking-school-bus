@@ -27,6 +27,8 @@ public class UserSettingActivity extends AppCompatActivity {
     private static final String TAG = "UserSetting";
     private String userEmail;
     long temp_id = 932;
+    private int addToMonitoringFlag;
+    private int addToMonitoredFlag;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,17 +52,16 @@ public class UserSettingActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                addToMonitoringFlag = 1;
                 TextView user_Email = (TextView) findViewById(R.id.emailAddress);
                 userEmail = user_Email.getText().toString();
                 Call<User> callerForGettingUser = proxy.getUserByEmail(userEmail);
                 Log.w("Test the pushed email:", userEmail);
                 ProxyBuilder.callProxy(UserSettingActivity.this, callerForGettingUser,
                         returnedUsers -> response(returnedUsers));
-               // if (userEmail.toString() == returnedUsers)
+
             }
         });
-
-
 
     }
     private User response(User returnedUsers) {
@@ -68,9 +69,15 @@ public class UserSettingActivity extends AppCompatActivity {
         if(userEmail.equals(returnedUsers.getEmail()) ) {
 
             // Make call
-            Call<List<User>> caller = proxy.addToMonitorsUsers(temp_id, returnedUsers);
-            ProxyBuilder.callProxy(UserSettingActivity.this, caller, returnedUser -> response(returnedUser));
+            if(addToMonitoringFlag ==1) {
+                Call<List<User>> caller = proxy.addToMonitorsUsers(temp_id, returnedUsers);
+                ProxyBuilder.callProxy(UserSettingActivity.this, caller, returnedUser -> response(returnedUser));
+            }
+            if(addToMonitoredFlag == 1) {
+                Call<List<User>> caller = proxy.addToMonitoredByUsers(temp_id, returnedUsers);
+                ProxyBuilder.callProxy(UserSettingActivity.this, caller, returnedUser -> response(returnedUser));
 
+            }
             //       returnedUsers -> response(returnedUsers));
         }
         return returnedUsers;
@@ -83,7 +90,26 @@ public class UserSettingActivity extends AppCompatActivity {
 
     private void setupAddToMonitoredButton() {
 
+        Button button = (Button) findViewById(R.id.btnAddMonitoredList);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addToMonitoredFlag = 1;
+                TextView user_Email = (TextView) findViewById(R.id.emailAddress);
+                userEmail = user_Email.getText().toString();
+                Call<User> callerForGettingUser = proxy.getUserByEmail(userEmail);
+                Log.w("Test the pushed email:", userEmail);
+                ProxyBuilder.callProxy(UserSettingActivity.this, callerForGettingUser,
+                        returnedMonitoredUsers -> response(returnedMonitoredUsers));
+
+            }
+        });
+
     }
+
+
+
+
 
     private void setupMonitoredListButton() {
         Button btnMonitoring = (Button) findViewById(R.id.btnMonitoredList);
