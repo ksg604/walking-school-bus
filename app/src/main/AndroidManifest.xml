@@ -38,9 +38,10 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
+
         <meta-data
             android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
+            android:value="@integer/google_play_services_version"/>
 
         <activity
             android:name=".MapsActivity"
@@ -49,7 +50,10 @@
         <activity android:name=".GroupManagementActivity" />
         <activity android:name=".UserSettingActivity" />
         <activity android:name=".MonitoringListActivity" />
-        <activity android:name=".PlacePickerActivity"></activity>
+        <activity android:name=".PlacePickerActivity"/>
+        <activity android:name=".MonitoredListActivity"></activity>
     </application>
+
+
 
 </manifest>

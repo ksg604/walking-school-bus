@@ -23,34 +23,34 @@ import java.util.List;
 
 import retrofit2.Call;
 
-public class MonitoringListActivity extends AppCompatActivity {
+public class MonitoredListActivity extends AppCompatActivity {
 
 
-    private static final String TAG = "MonitoringListActivity";
+    private static final String TAG = "MonitoredListActivity";
     public static final String USER_TOKEN = "User Token";
-    private String userToken3;
+    private String userToken4;
     //private User user;
     private static WGServerProxy proxy;
 
-    ArrayList<String> monitoringUser = new ArrayList<>();
+    ArrayList<String> monitoredUser = new ArrayList<>();
     //SwipeMenuListView monitoringList = (SwipeMenuListView) findViewById(R.id.monitoringList);
     long temp_id = 932;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-       // User user = User.getInstance();
+        // User user = User.getInstance();
         //long temp_id = 932;
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_monitoring_list);
+        setContentView(R.layout.activity_monitored_list);
 
-        userToken3 = extractDataFromIntent();
+        userToken4 = extractDataFromIntent();
         // Build the server proxy
-        proxy = ProxyBuilder.getProxy(getString(R.string.api_key),userToken3);
+        proxy = ProxyBuilder.getProxy(getString(R.string.api_key),userToken4);
 
 
         // Make call
-        Call<List<User>> caller = proxy.getMonitorsUsers(temp_id);
-        ProxyBuilder.callProxy(MonitoringListActivity.this, caller, returnedUsers -> response(returnedUsers));
+        Call<List<User>> caller = proxy.getMonitoredByUsers(temp_id);
+        ProxyBuilder.callProxy(MonitoredListActivity.this, caller, returnedUsers -> response(returnedUsers));
 
 
     }
@@ -64,7 +64,7 @@ public class MonitoringListActivity extends AppCompatActivity {
         notifyUserViaLogAndToast("Got list of " + returnedUsers.size() + " users! See logcat.");
         Log.w(TAG, "All Users:");
 
-        SwipeMenuListView monitoringList = (SwipeMenuListView) findViewById(R.id.monitoringList);
+        SwipeMenuListView monitoredList = (SwipeMenuListView) findViewById(R.id.monitoredList);
         //List<String> monitoringUser = new ArrayList<>();
         //List<Integer> child_ID = new ArrayList<Integer>();
         for (User user : returnedUsers) {
@@ -72,9 +72,9 @@ public class MonitoringListActivity extends AppCompatActivity {
             String userInfo = "User Email: "+ user.getEmail() + "   " + "User Name: " + user.getName()
                     + "User ID: "+ user.getId();
 
-            monitoringUser.add(userInfo);
-            ArrayAdapter adapter = new ArrayAdapter(MonitoringListActivity.this, R.layout.da_items, monitoringUser);
-            monitoringList.setAdapter(adapter);
+            monitoredUser.add(userInfo);
+            ArrayAdapter adapter = new ArrayAdapter(MonitoredListActivity.this, R.layout.da_items, monitoredUser);
+            monitoredList.setAdapter(adapter);
 
         }
 
@@ -103,18 +103,18 @@ public class MonitoringListActivity extends AppCompatActivity {
         };
 
 // set creator
-        monitoringList.setMenuCreator(creator);
+        monitoredList.setMenuCreator(creator);
 
-        monitoringList.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
+        monitoredList.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
                 switch (index) {
                     case 0:
                         // Make call
-                        Call<Void> caller = proxy.removeFromMonitorsUsers(temp_id, returnedUsers.get(position).getId());
-                        ProxyBuilder.callProxy(MonitoringListActivity.this, caller, returnedNothing -> response(returnedNothing));
-                        monitoringList.removeViewsInLayout(position,1);
-                       // finish();
+                        Call<Void> caller = proxy.removeFromMonitoredByUsers(temp_id, returnedUsers.get(position).getId());
+                        ProxyBuilder.callProxy(MonitoredListActivity.this, caller, returnedNothing -> response(returnedNothing));
+                        monitoredList.removeViewsInLayout(position,1);
+                        // finish();
                         //ArrayAdapter adapter = new ArrayAdapter(MonitoringListActivity.this, R.layout.da_items, monitoringUser);
                         //monitoringList.setAdapter(adapter);
 
@@ -132,7 +132,7 @@ public class MonitoringListActivity extends AppCompatActivity {
 
 
     private void response(Void returnedNothing) {
-        notifyUserViaLogAndToast(" You cannot monitor this user anymore.");
+        notifyUserViaLogAndToast(" You will not be monitored by this user anymore.");
     }
 
 
@@ -140,7 +140,7 @@ public class MonitoringListActivity extends AppCompatActivity {
 
 
     public static Intent makeIntent(Context context, String tokenToPass) {
-        Intent intent = new Intent(context, MonitoringListActivity.class);
+        Intent intent = new Intent(context, MonitoredListActivity.class);
         intent.putExtra(USER_TOKEN, tokenToPass);
         return intent;
     }

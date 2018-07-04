@@ -77,9 +77,9 @@ public class MainMenu extends AppCompatActivity {
         group.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                Intent intent = GroupManagementActivity.makeIntent(MainMenu.this);
+                Intent intent = GroupManagementActivity.makeIntent(MainMenu.this, userToken1);
                 startActivity(intent);
-                Log.i("Sprint1","Group Activity Launched");
+                Log.w("Sprint1","Group Activity Launched");
             }
         });
     }

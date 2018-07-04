@@ -7,35 +7,39 @@
     tools:context=".GroupManagementActivity"
     tools:layout_editor_absoluteY="81dp">
 
+    <com.baoyz.swipemenulistview.SwipeMenuListView
+        android:id="@+id/groupList"
+        android:layout_width="326dp"
+        android:layout_height="359dp"
+        android:layout_marginBottom="30dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="55dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.089">
+
+    </com.baoyz.swipemenulistview.SwipeMenuListView>
+
     <TextView
         android:id="@+id/txtViewGroupTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="240dp"
         android:layout_marginTop="16dp"
         android:text="@string/group_layout_title"
         android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="@+id/listViewGroups"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ListView
-        android:id="@+id/listViewGroups"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="19dp"
-        android:layout_marginEnd="26dp"
-        android:layout_marginStart="26dp"
-        android:layout_marginTop="9dp"
-        app:layout_constraintBottom_toTopOf="@+id/btnRemoveGroup"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtViewGroupTitle" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btnAddGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="29dp"
-        android:layout_marginStart="26dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginStart="28dp"
         android:text="@string/add_group"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -44,8 +48,8 @@
         android:id="@+id/btnRemoveGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="29dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="28dp"
         android:text="@string/modify_group"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
