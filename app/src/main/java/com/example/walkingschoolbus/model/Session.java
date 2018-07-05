@@ -10,6 +10,11 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 
+/**
+ * This class holds basic info from the loged in user such as name, id, token, and email
+ * - Used to auto log in and log out
+ * - Singleton used to pass information around the activities.
+ */
 public class Session {
     private String token;
     private String name;
@@ -99,7 +104,7 @@ public class Session {
         prefsEditor.putString(SHAREDPREF_SESSION,json);
         //System.out.print(json);
         prefsEditor.apply();
-        Log.i(TAG,"in store Session" );
+        Log.i(TAG,"session stored: " + name );
     }
 
     /**
@@ -111,7 +116,7 @@ public class Session {
         Gson gson = new Gson();
         String json = prefs.getString(SHAREDPREF_SESSION, null);
         instance = gson.fromJson(json, Session.class);
-        Log.i(TAG,"in get Session" );
+        Log.i(TAG,"Session grabbed");
     }
 
 
