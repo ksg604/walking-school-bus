@@ -34,11 +34,16 @@ public class GroupManagementActivity extends AppCompatActivity {
     public static final String USER_TOKEN = "User Token";
     private String userToken;
     private static WGServerProxy proxy;
-    List<String> stringGroupList = new ArrayList< >( );
-    List<Group> groupList = new ArrayList<>();
-    List<Long> groupIdList = new ArrayList<>();
+    List<String> stringMemberGroupList = new ArrayList< >( );
+    List<String> stringLeaderGroupList = new ArrayList< >( );
+    List<Group> groupLeaderList = new ArrayList<>();
+    List<Long> groupIdLeaderList = new ArrayList<>();
+
+    List<Group> groupMemberList = new ArrayList<>();
+    List<Long> groupIdMemberList = new ArrayList<>();
     private Session tokenSession = Session.getInstance();
-    private User user;
+    private static Group group;
+    private  User user;
     private static final String TAG = "GroupManagementActivity";
 
     @Override
@@ -69,15 +74,22 @@ public class GroupManagementActivity extends AppCompatActivity {
      */
     private void responseForUser(User returnedUser) {
 
-        groupList = returnedUser.getMemberOfGroups();
-        for( Group group : groupList ){
-            groupIdList.add(group.getId());
+        groupLeaderList = returnedUser.getLeadsGroups();
+        for(Group group : groupLeaderList ){
+            groupIdLeaderList.add(group.getId());
+
         }
+
+        groupMemberList = returnedUser.getMemberOfGroups();
+        for( Group group : groupMemberList ){
+            groupIdMemberList.add(group.getId());
+        }
+
+        user.setId(returnedUser.getId());
+
         // Make call
         Call<List<Group>> caller = proxy.getGroups();
         ProxyBuilder.callProxy(GroupManagementActivity.this, caller, returnedGroupList -> responseForGroup(returnedGroupList));
-
-
     }
 
 
@@ -103,26 +115,45 @@ public class GroupManagementActivity extends AppCompatActivity {
         notifyUserViaLogAndToast("Got list of " + returnedGroups.size() + " users! See logcat.");
         Log.w(TAG, "All Users:");
 
-        SwipeMenuListView groupListView = (SwipeMenuListView) findViewById(R.id.groupList);
+
+        SwipeMenuListView groupAsLeaderListView = (SwipeMenuListView) findViewById( R.id.groupAsLeaderList);
+        SwipeMenuListView groupAsMemberListView = (SwipeMenuListView) findViewById(R.id.groupAsMemberList);
+
 
         for (Group group : returnedGroups) {
 
-            if (groupIdList.contains( group.getId() )){
+            if (groupIdMemberList.contains( group.getId() )){
                 Log.w( TAG, "    Group: " + group.getId() );
 
 
-                String groupInfo = "group Description: " + group.getGroupDescription();
-                stringGroupList.add( groupInfo );
+                String groupInfo = "Group : " + group.getGroupDescription();
+                stringMemberGroupList.add( groupInfo );
+
+            }else if( groupIdLeaderList.contains(group.getId())){
+                Log.w( TAG, "    Group: " + group.getId() );
+
+                String groupInfo = "Group : " + group.getGroupDescription();
+                stringLeaderGroupList.add( groupInfo );
+
 
             }
-            ArrayAdapter adapter = new ArrayAdapter( GroupManagementActivity.this, R.layout.da_items, stringGroupList );
 
-            groupListView.setAdapter( adapter );
+            ArrayAdapter adapterLeader = new ArrayAdapter( GroupManagementActivity.this, R.layout.da_items, stringLeaderGroupList );
+
+            groupAsLeaderListView.setAdapter( adapterLeader );
+
+            ArrayAdapter adapterMember = new ArrayAdapter( GroupManagementActivity.this, R.layout.da_items, stringMemberGroupList );
+
+            groupAsMemberListView.setAdapter( adapterMember );
+
+
+
+
 
         }
 
 
-    SwipeMenuCreator creator = new SwipeMenuCreator() {
+        SwipeMenuCreator creatorForLeader = new SwipeMenuCreator() {
 
             @Override
             public void create(SwipeMenu menu) {
@@ -150,7 +181,7 @@ public class GroupManagementActivity extends AppCompatActivity {
                 // set item width
                 deleteItem.setWidth(180);
                 // set item title
-                deleteItem.setTitle("DELETE");
+                deleteItem.setTitle("Delete");
                 // set item title fontsize
                 deleteItem.setTitleSize(18);
                 // set item title font color
@@ -161,33 +192,89 @@ public class GroupManagementActivity extends AppCompatActivity {
             }
         };
 
-        // set creator
-        groupListView.setMenuCreator(creator);
+        // set creatorForLeader
+        groupAsLeaderListView.setMenuCreator(creatorForLeader);
 
-        groupListView.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
+        /*
+         make swipeMenuListView to show groups I am a member of
+         I can remove group from this this list
+         */
+        groupAsLeaderListView.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
+                switch (index) {
+
+                    case 0:
+
+                        group = returnedGroups.get(position);
+                        Intent intent = LeaderActivity.makeIntent( GroupManagementActivity.this );
+                        startActivity( intent );
+
+
+                    case 1:
+
+                         //make Call
+                         Call<Void> caller = proxy.deleteGroup( returnedGroups.get(position).getId());
+                         ProxyBuilder.callProxy(GroupManagementActivity.this, caller, returnedNothing -> response(returnedNothing));
+                         groupAsLeaderListView.removeViewsInLayout(position,1);
+                         finish();
+                         ArrayAdapter adapter = new ArrayAdapter(GroupManagementActivity.this, R.layout.da_items, stringLeaderGroupList);
+                         groupAsLeaderListView.setAdapter(adapter);
+
+                }
+
+
+                // false : close the menu; true : not close the menu
+                return false;
+            }
+        });
+
+        SwipeMenuCreator creatorForMember = new SwipeMenuCreator() {
+
+            @Override
+            public void create(SwipeMenu menu) {
+
+
+                // create "delete" item
+                SwipeMenuItem deleteItem = new SwipeMenuItem( getApplicationContext());
+                // set item background
+                deleteItem.setBackground(new ColorDrawable( Color.rgb(220, 20, 60)));
+                // set item width
+                deleteItem.setWidth(180);
+                // set item title
+                deleteItem.setTitle("Delete");
+                // set item title fontsize
+                deleteItem.setTitleSize(18);
+                // set item title font color
+                deleteItem.setTitleColor(Color.WHITE);
+                // add to menu
+                menu.addMenuItem(deleteItem);
+
+            }
+        };
+
+        // set creatorForMember
+        groupAsMemberListView.setMenuCreator(creatorForMember);
+
+        /*
+         make swipeMenuListView to show groups I am a member of
+         I can remove group from this this list
+         */
+        groupAsMemberListView.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
                 @Override
                 public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
                     switch (index) {
-                        /*
-                         open group I want to see
-                         */
+
                         case 0:
-
-                        case 1:
-                            /*// Make call
-                             *Call<Void> caller = proxy.removeFromMonitoredByUsers(temp_id, returnedUsers.get(position).getId());
-                             *ProxyBuilder.callProxy(MonitoredListActivity.this, caller, returnedNothing -> response(returnedNothing));
-                             *monitoredList.removeViewsInLayout(position,1);
-                             * finish();
-                             *ArrayAdapter adapter = new ArrayAdapter(MonitoringListActivity.this, R.layout.da_items, monitoringUser);
-                             *monitoringList.setAdapter(adapter);
-                             */
-
-
+                            // Make call
+                             Call<Void> caller = proxy.removeGroupMember(returnedGroups.get(position).getId(), user.getId());
+                             ProxyBuilder.callProxy(GroupManagementActivity.this, caller, returnedNothing -> response(returnedNothing));
+                             groupAsMemberListView.removeViewsInLayout(position,1);
+                             finish();
+                             ArrayAdapter adapter = new ArrayAdapter(GroupManagementActivity.this, R.layout.da_items, stringMemberGroupList);
+                             groupAsMemberListView.setAdapter(adapter);
 
                     }
-
-
                     // false : close the menu; true : not close the menu
                     return false;
                 }

@@ -1,5 +1,7 @@
 package com.example.walkingschoolbus;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
@@ -61,7 +63,7 @@ public class LeaderActivity extends AppCompatActivity {
         notifyUserViaLogAndToast("Got list of " + returnedUsers.size() + " users! See logcat.");
         Log.w(TAG, "Got all users of this group!!");
 
-        SwipeMenuListView groupListView = (SwipeMenuListView) findViewById(R.id.userList);
+        SwipeMenuListView userListView = (SwipeMenuListView) findViewById(R.id.userList);
 
         for (User member : returnedUsers) {
 
@@ -74,7 +76,7 @@ public class LeaderActivity extends AppCompatActivity {
 
                 ArrayAdapter adapter = new ArrayAdapter( LeaderActivity.this, R.layout.da_items, stringUserList );
 
-                groupListView.setAdapter( adapter );
+                userListView.setAdapter( adapter );
             }
         }
 
@@ -90,7 +92,7 @@ public class LeaderActivity extends AppCompatActivity {
                 // set item width
                 deleteItem.setWidth(180);
                 // set item title
-                deleteItem.setTitle("REMOVE");
+                deleteItem.setTitle("Delete");
                 // set item title fontsize
                 deleteItem.setTitleSize(18);
                 // set item title font color
@@ -102,22 +104,22 @@ public class LeaderActivity extends AppCompatActivity {
         };
 
         // set creator
-        groupListView.setMenuCreator(creator);
+        userListView.setMenuCreator(creator);
 
-        groupListView.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
+        userListView.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
                 switch (index) {
 
                     case 0:
-                        /*// Make call
-                         *Call<Void> caller = proxy.removeFromMonitoredByUsers(temp_id, returnedUsers.get(position).getId());
-                         *ProxyBuilder.callProxy(MonitoredListActivity.this, caller, returnedNothing -> response(returnedNothing));
-                         *monitoredList.removeViewsInLayout(position,1);
-                         * finish();
-                         *ArrayAdapter adapter = new ArrayAdapter(MonitoringListActivity.this, R.layout.da_items, monitoringUser);
-                         *monitoringList.setAdapter(adapter);
-                         */
+
+                         Call<Void> caller = proxy.removeFromMonitoredByUsers(group.getId(), returnedUsers.get(position).getId());
+                         ProxyBuilder.callProxy(LeaderActivity.this, caller, returnedNothing -> response(returnedNothing));
+                         userListView.removeViewsInLayout(position,1);
+                         finish();
+                         ArrayAdapter adapter = new ArrayAdapter(LeaderActivity.this, R.layout.da_items, stringUserList);
+                         userListView.setAdapter(adapter);
+
 
 
 
@@ -132,10 +134,25 @@ public class LeaderActivity extends AppCompatActivity {
 
     }
 
+    private void response(Void returnedNothing) {
+        notifyUserViaLogAndToast(" You will not be monitored by this user anymore.");
+    }
+
 
     private void notifyUserViaLogAndToast(String message) {
         Log.w(TAG, message);
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
+
+    /**Make intent for main menu activity
+     *
+     * @param context
+     * @return
+     */
+    public static Intent makeIntent(Context context){
+        Intent intent = new Intent( context, LeaderActivity.class );
+        return intent;
+    }
+
 
 }

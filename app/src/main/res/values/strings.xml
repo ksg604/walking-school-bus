@@ -35,6 +35,9 @@
     <string name="group_layout_title">MY GROUPS</string>
     <string name="add_group">NEW/FIND</string>
     <string name="modify_group">MODIFY/REMOVE</string>
+    <string name="leader_group">As a leader</string>
+    <string name="member_group">As a member</string>
+
 
     <!-- Place Picker -->
     <string name="location">SELECT LOCATION</string>
