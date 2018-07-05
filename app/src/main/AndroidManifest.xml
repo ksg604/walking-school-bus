@@ -50,6 +50,7 @@
         <activity android:name=".GroupManagementActivity" />
         <activity android:name=".UserSettingActivity" />
         <activity android:name=".MonitoringListActivity" />
+        <activity android:name=".PlacePickerActivity"/>
         <activity android:name=".MonitoredListActivity"></activity>
     </application>
 

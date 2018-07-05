@@ -21,7 +21,7 @@
     <string name="menu_group">Group</string>
     <string name="menu_map">Map</string>
     <string name="menu_setting">Setting</string>
-    <string name = "log_out">LOG OUT</string>
+    <string name="log_out">LOG OUT</string>
 
 
     <!--Sign up-->
@@ -35,5 +35,11 @@
     <string name="group_layout_title">My Groups</string>
     <string name="add_group">NEW/FIND</string>
     <string name="modify_group">MODIFY/REMOVE</string>
+
+    <!-- Place Picker -->
+    <string name = "location">SELECT LOCATION</string>
+    <string name = "meet_up_location">SELECT MEET-UP SPOT</string>
+    <string name = "group_name_edit">GROUP NAME</string>
+    <string name = "create_group">CREATE GROUP</string>
 
 </resources>
