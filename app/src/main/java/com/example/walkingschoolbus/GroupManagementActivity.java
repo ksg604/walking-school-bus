@@ -46,16 +46,12 @@ public class GroupManagementActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_management);
 
+        //get token from session
         userToken = tokenSession.getToken();
         // Build the server proxy
         proxy = ProxyBuilder.getProxy(getString( R.string.api_key),userToken);
 
-
         user = User.getInstance();
-
-
-        List<Group> groupList = new ArrayList<>();
-
         //Make call
         Call<User> caller = proxy.getUserByEmail(user.getEmail());
         ProxyBuilder.callProxy(GroupManagementActivity.this, caller, returnedUser -> responseForUser(returnedUser));
@@ -63,10 +59,14 @@ public class GroupManagementActivity extends AppCompatActivity {
         // proxy = ProxyBuilder.getProxy( getString( R.string.api_key ));
         setupCreateGroupButton();
 
-        //populateListView();
+
 
     }
 
+    /*
+     * get user to obtain memeberOfGroups
+     * call the list of groups and then return the groups that user is in.
+     */
     private void responseForUser(User returnedUser) {
 
         groupList = returnedUser.getMemberOfGroups();
@@ -78,35 +78,6 @@ public class GroupManagementActivity extends AppCompatActivity {
         ProxyBuilder.callProxy(GroupManagementActivity.this, caller, returnedGroupList -> responseForGroup(returnedGroupList));
     }
 
-
-    private String extractDataFromIntent() {
-        Intent intent = getIntent();
-        return intent.getStringExtra(USER_TOKEN);
-    }
-
-
-    /**
-     * Populate the list view of groups user belongs to
-     */
-    private void populateListView() {
-        User user = User.getInstance();
-        List<Group> groups;
-        groups = user.getMemberOfGroups();
-        String[] groupNames = new String[groups.size()];
-
-        //grab names of all groups member belongs too
-        for(int i =0; i<groups.size();i++){
-            //groupNames[i]=groups.get(i).getName();
-        }
-        //create array adaptor
-        ArrayAdapter<String> adaptor = new ArrayAdapter<>(this, R.layout.groups_listview,
-                groupNames);
-
-
-        //configure list view for layout
-        //ListView list = findViewById(R.id.listViewGroups);
-        //list.setAdapter(adaptor);
-    }
 
     /**
      * set up the button to create group
@@ -122,7 +93,10 @@ public class GroupManagementActivity extends AppCompatActivity {
         } );
     }
 
-   //get response List<Group> objects to save data into StringGroupList
+   /**get response List<Group> objects to save data into stringGroupList
+    * A user stores a group when the user belongs to that group
+    *
+    */
     private void responseForGroup(List<Group> returnedGroups) {
         notifyUserViaLogAndToast("Got list of " + returnedGroups.size() + " users! See logcat.");
         Log.w(TAG, "All Users:");
@@ -138,9 +112,8 @@ public class GroupManagementActivity extends AppCompatActivity {
                 String groupInfo = "group Description: " + group.getGroupDescription();
                 stringGroupList.add( groupInfo );
 
-
             }
-            ArrayAdapter adapter = new ArrayAdapter( GroupManagementActivity.this, R.layout.groups_listview, stringGroupList );
+            ArrayAdapter adapter = new ArrayAdapter( GroupManagementActivity.this, R.layout.da_items, stringGroupList );
 
             groupListView.setAdapter( adapter );
 
@@ -151,12 +124,27 @@ public class GroupManagementActivity extends AppCompatActivity {
 
             @Override
             public void create(SwipeMenu menu) {
-                // create "delete" item
-                SwipeMenuItem deleteItem = new SwipeMenuItem(
-                        getApplicationContext());
+
+                // create "open" item
+                SwipeMenuItem openItem = new SwipeMenuItem( getApplicationContext());
                 // set item background
-                deleteItem.setBackground(new ColorDrawable( Color.rgb(0xC9, 0xC9,
-                        0xCE)));
+                openItem.setBackground(new ColorDrawable(Color.rgb(0xC9, 0xC9, 0xCE)));
+                // set item width
+                openItem.setWidth(180);
+                // set item title
+                openItem.setTitle("Open");
+                // set item title fontsize
+                openItem.setTitleSize(18);
+                // set item title font color
+                openItem.setTitleColor(Color.WHITE);
+                // add to menu
+                menu.addMenuItem(openItem);
+
+
+                // create "delete" item
+                SwipeMenuItem deleteItem = new SwipeMenuItem( getApplicationContext());
+                // set item background
+                deleteItem.setBackground(new ColorDrawable( Color.rgb(220, 20, 60)));
                 // set item width
                 deleteItem.setWidth(180);
                 // set item title
@@ -178,17 +166,22 @@ public class GroupManagementActivity extends AppCompatActivity {
                 @Override
                 public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
                     switch (index) {
+                        /*
+                         open group I want to see
+                         */
                         case 0:
 
-
+                        case 1:
                             /*// Make call
-                            *Call<Void> caller = proxy.removeFromMonitoredByUsers(temp_id, returnedUsers.get(position).getId());
-                            *ProxyBuilder.callProxy(MonitoredListActivity.this, caller, returnedNothing -> response(returnedNothing));
-                            *monitoredList.removeViewsInLayout(position,1);
-                            * finish();
-                            *ArrayAdapter adapter = new ArrayAdapter(MonitoringListActivity.this, R.layout.da_items, monitoringUser);
-                            *monitoringList.setAdapter(adapter);
-                            */
+                             *Call<Void> caller = proxy.removeFromMonitoredByUsers(temp_id, returnedUsers.get(position).getId());
+                             *ProxyBuilder.callProxy(MonitoredListActivity.this, caller, returnedNothing -> response(returnedNothing));
+                             *monitoredList.removeViewsInLayout(position,1);
+                             * finish();
+                             *ArrayAdapter adapter = new ArrayAdapter(MonitoringListActivity.this, R.layout.da_items, monitoringUser);
+                             *monitoringList.setAdapter(adapter);
+                             */
+
+
 
                     }
 
@@ -199,6 +192,8 @@ public class GroupManagementActivity extends AppCompatActivity {
         });
 
     }
+
+
 
     private void response(Void returnedNothing) {
         notifyUserViaLogAndToast(" You will not be monitored by this user anymore.");
