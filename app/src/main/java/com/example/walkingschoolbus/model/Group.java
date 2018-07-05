@@ -3,6 +3,13 @@ package com.example.walkingschoolbus.model;
 import android.location.Location;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Store information about the walking groups.
@@ -14,11 +21,22 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class Group {
 
     private long id;
+
     private String groupDescription;
-    private Location location;
+
+    private List<Double> routeLatArray = new ArrayList<>();
+
+    private List<Double> routeLngArray = new ArrayList<>();
+
+    private User leader;
+
+    private List<User> memberUsers = new ArrayList<>();
+
+    //private JSONObject customJson = new JSONObject(  );
+
     private Boolean hasFullData;
+
     private String href;
-    private Location meetingPlace;
 
     /*
     Singleton Support
@@ -37,19 +55,35 @@ public class Group {
     //Constructor
 
 
+    /*
+    *public Group(long id, String name, Location location) {
+    *    this.id = id;
+    *    this.groupDescription = name;
+    *    this.location =location;
+    *}
+    *
 
-    public Group(long id, String name, Location location) {
-        this.id = id;
-        this.groupDescription = name;
-        this.location =location;
-    }
-    public Group(long id, String name, Location location, String href, Location meetingPlace) {
+    public Group(long id, String groupDescrip, Location location, String href, Location meetingPlace) {
 
         this.groupDescription = name;
         this.location = location;
         this.hasFullData = true;
         this.href=href;
         this.meetingPlace = meetingPlace;
+    }
+    */
+
+    public Group(long id, String groupDescription, List<Double> routeLatArray,
+                 List<Double> routeLngArray, User leader, List<User> memberUsers, String href) {
+        this.id = id;
+        this.groupDescription = groupDescription;
+        this.routeLatArray = routeLatArray;
+        this.routeLngArray = routeLngArray;
+        this.leader = leader;
+        this.memberUsers = memberUsers;
+        this.hasFullData = true;
+        this.href=href;
+        //this.meetingPlace = meetingPlace;
     }
 
     // Check if full data
@@ -81,14 +115,51 @@ public class Group {
         this.href = href;
     }
 
-    public String getName() {
+    public String getGroupDescription() {
         return this.groupDescription;
     }
 
-    public void setName(String name) {
+    public void setGroupDescription(String name) {
         this.groupDescription = name;
     }
 
+    public List<Double> getRouteLatArray() {
+        return routeLatArray;
+    }
+
+
+    public void setRouteLatArray(List<Double> routeLatArray) {
+        this.routeLatArray = routeLatArray;
+    }
+
+    public List<Double> getRouteLngArray() {
+        return routeLngArray;
+    }
+
+    public void setRouteLngArray(List<Double> routeLngArray) {
+        this.routeLngArray = routeLngArray;
+    }
+
+    public User getLeader() {
+        return leader;
+    }
+
+    public void setLeader(User leader) {
+        this.leader = leader;
+    }
+
+
+    public List<User> getMemberUsers() {
+        return memberUsers;
+    }
+
+    public void setMemberUsers(List<User> memberUsers) {
+        this.memberUsers = memberUsers;
+    }
+
+
+
+/*
     public Location getLocation() {
         return location;
     }
@@ -103,6 +174,23 @@ public class Group {
 
     public void setMeetingPlace(Location meetingPlace) {
         this.meetingPlace = meetingPlace;
+    }*/
+
+
+    @Override
+    public String toString() {
+        return "Group{" +
+                "id=" + id +
+                ", groupDescription='" + groupDescription + '\'' +
+                ", routeLatArray='" + routeLatArray + '\'' +
+                ", routeLngArray='" + routeLngArray + '\'' +
+                // ", currentPoints=" + currentPoints +
+                //", totalPointsEarned=" + totalPointsEarned +
+                ", leader=" + leader +
+                ", memberOfGroups=" + memberUsers +
+                ", hasFullData=" + hasFullData +
+                ", href='" + href + '\'' +
+                '}';
     }
 }
 
