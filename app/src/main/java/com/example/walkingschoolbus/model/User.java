@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -29,7 +30,9 @@ public class User {
     // -------------------------------------------------------------------------------------------
     // NOTE: Make numbers Long/Integer, not long/int because only the former will
     //       deserialize if the value is null from the server.
+
     private Long id;
+
     private Boolean hasFullData;
     private String name;
     private String email;
@@ -63,20 +66,22 @@ public class User {
         this.email = email;
         this.password = password;
     }
+
+
 //Constructor
     private User() {
 
     }
 
-    public User( String name, String email, String password) {
+    public User( Long id, String name, String email, String password) {
         //to do
-        //this.id = randomUniqueIdGenerator();
+        this.id = id;
 
         this.hasFullData = true;
         this.name = name;
         this.email = email;
         this.password = password;
-       // this.monitoredByUsers = monitoredByUsers;
+        //this.monitoredByUsers = monitoredByUsers;
         //this.monitorsUsers = monitorsUsers;
         //this.memberOfGroups = memberOfGroups;
         //this.leadsGroups = leadsGroups;
@@ -133,9 +138,6 @@ public class User {
         this.password = password;
     }
 
-   // public void setToken(String token) { this.token = token; }
-
-  //  public String getToken () { return token; }
 
 
 
