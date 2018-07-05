@@ -7,8 +7,7 @@ import android.util.Log;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
+
 
 import java.io.File;
 import java.io.IOException;
@@ -68,24 +67,21 @@ public class User {
         this.password = password;
     }
 
-    public User(Long id, String href) {
-        this.id = id;
-        this.href = href;
-    }
+
 //Constructor
     private User() {
 
     }
 
-    public User( String name, String email, String password) {
+    public User( Long id, String name, String email, String password) {
         //to do
-        //this.id = randomUniqueIdGenerator();
+        this.id = id;
 
         this.hasFullData = true;
         this.name = name;
         this.email = email;
         this.password = password;
-       // this.monitoredByUsers = monitoredByUsers;
+        //this.monitoredByUsers = monitoredByUsers;
         //this.monitorsUsers = monitorsUsers;
         //this.memberOfGroups = memberOfGroups;
         //this.leadsGroups = leadsGroups;
@@ -142,9 +138,6 @@ public class User {
         this.password = password;
     }
 
-   // public void setToken(String token) { this.token = token; }
-
-  //  public String getToken () { return token; }
 
 
 

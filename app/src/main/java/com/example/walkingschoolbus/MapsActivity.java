@@ -22,6 +22,7 @@ import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
 import com.example.walkingschoolbus.model.Group;
+import com.example.walkingschoolbus.model.Session;
 import com.example.walkingschoolbus.model.User;
 import com.example.walkingschoolbus.proxy.ProxyBuilder;
 import com.example.walkingschoolbus.proxy.WGServerProxy;
@@ -68,15 +69,17 @@ import static android.Manifest.permission.ACCESS_FINE_LOCATION;
     private User user = User.getInstance();
     private FusedLocationProviderClient client;
     private Group group;
+    private Session token = Session.getInstance();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
+        String tokenValue= token.getToken();
 
-
-        proxy = ProxyBuilder.getProxy(getString(R.string.api_key),null);
+        proxy = ProxyBuilder.getProxy(getString(R.string.api_key),tokenValue);
         getUserLocationPermission();
 
     }
@@ -98,24 +101,27 @@ import static android.Manifest.permission.ACCESS_FINE_LOCATION;
      * Server response is to return server groups and then display all of their current locations and
      * meeting locations on the map.
      */
-    private void response(List<Group> returnedGroupList){
+    private void response(List<Group> returnedGroupList) {
 
-        for(int i = 0; i < returnedGroupList.size(); i++){
-            Group group = returnedGroupList.get(i);
-            LatLng groupMeetingLocation = new LatLng(group.getRouteLatArray().get(1),group.getRouteLngArray().get(1));
-            MarkerOptions groupMeetingLocationMarker = new MarkerOptions()
-                    .position(groupMeetingLocation)
-                    .title("Group: "+group.getGroupDescription())
-                    //Differentiate group meeting location markers from current location markers with a different marker opacity (alpha).
-                    .alpha(2);
-            mMap.addMarker(groupMeetingLocationMarker);
+        //for(int i = 0; i < returnedGroupList.size(); i++){
+        for (Group group : returnedGroupList) {
+            //Group group = returnedGroupList.get(i);
+            if(group.getRouteLatArray().size() == 2 && group.getRouteLngArray().size() == 2){
+                LatLng groupMeetingLocation = new LatLng( group.getRouteLatArray().get( 1 ), group.getRouteLngArray().get( 1 ) );
+                MarkerOptions groupMeetingLocationMarker = new MarkerOptions()
+                        .position( groupMeetingLocation )
+                        .title( "Group: " + group.getGroupDescription() )
+                        //Differentiate group meeting location markers from current location markers with a different marker opacity (alpha).
+                        .alpha( 2 );
+                mMap.addMarker( groupMeetingLocationMarker );
 
-            LatLng groupCurrentLocation = new LatLng(group.getRouteLatArray().get(0),group.getRouteLngArray().get(0));
-            MarkerOptions groupLocationMarker = new MarkerOptions()
-                    .position(groupMeetingLocation)
-                    .title("Group: "+group.getGroupDescription())
-                    .alpha(3);
-            mMap.addMarker(groupLocationMarker);
+                LatLng groupCurrentLocation = new LatLng( group.getRouteLatArray().get( 0 ), group.getRouteLngArray().get( 0 ) );
+                MarkerOptions groupLocationMarker = new MarkerOptions()
+                        .position( groupMeetingLocation )
+                        .title( "Group: " + group.getGroupDescription() )
+                        .alpha( 3 );
+                mMap.addMarker( groupLocationMarker );
+            }
         }
     }
 
@@ -204,8 +210,7 @@ import static android.Manifest.permission.ACCESS_FINE_LOCATION;
                 public void onComplete(@NonNull Task task) {
                     if(task.isSuccessful()){
                         Location currentLocation = (Location) task.getResult();
-
-                        moveCamera(new LatLng(currentLocation.getLatitude(),currentLocation.getLongitude()),DEFAULT_ZOOM);
+                        moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()),DEFAULT_ZOOM);
                     }
                 }
             });
