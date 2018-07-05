@@ -187,7 +187,7 @@ public class Group {
                 // ", currentPoints=" + currentPoints +
                 //", totalPointsEarned=" + totalPointsEarned +
                 ", leader=" + leader +
-                ", memberOfGroups=" + memberUsers +
+                ", memberUsers=" + memberUsers +
                 ", hasFullData=" + hasFullData +
                 ", href='" + href + '\'' +
                 '}';
