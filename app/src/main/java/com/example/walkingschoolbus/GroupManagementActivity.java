@@ -64,15 +64,8 @@ public class GroupManagementActivity extends AppCompatActivity {
         Call<User> caller = proxy.getUserById(temp_id);
         ProxyBuilder.callProxy(GroupManagementActivity.this, caller, returnedUser -> responseForUser(returnedUser));
 
-
-
-
-
-
         // proxy = ProxyBuilder.getProxy( getString( R.string.api_key ));
         setupCreateGroupButton();
-
-
 
         //populateListView();
 
@@ -90,8 +83,6 @@ public class GroupManagementActivity extends AppCompatActivity {
 
 
     }
-
-
 
 
     private String extractDataFromIntent() {
@@ -123,30 +114,19 @@ public class GroupManagementActivity extends AppCompatActivity {
         //list.setAdapter(adaptor);
     }
 
-
-
     /**
      * set up the button to create group
      */
     private void setupCreateGroupButton() {
-
-        Button createGroupButton = (Button) findViewById( R.id.btnAddGroup );
+        Button createGroupButton = findViewById( R.id.btnAddGroup );
         createGroupButton.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                group = Group.getInstance();
-
-                // Make call
-
+                Intent intent = PlacePickerActivity.makeIntent(GroupManagementActivity.this);
+                startActivity(intent);
             }
         } );
-
-
-
     }
-
-
 
    //get response List<Group> objects to save data into StringGroupList
     private void responseForGroup(List<Group> returnedGroups) {
@@ -155,27 +135,26 @@ public class GroupManagementActivity extends AppCompatActivity {
 
         SwipeMenuListView groupListView = (SwipeMenuListView) findViewById(R.id.groupList);
 
-
         for (Group group : returnedGroups) {
 
             if (groupIdList.contains( group.getId() )){
                 Log.w( TAG, "    Group: " + group.getId() );
 
 
-                String groupInfo = "group description: " + group.getGroupDescription();
+                String groupInfo = "group ID: " + group.getId();
                 stringGroupList.add( groupInfo );
 
+                Intent intent = PlacePickerActivity.makeIntent(GroupManagementActivity.this);
+                startActivity(intent);
             }
             ArrayAdapter adapter = new ArrayAdapter( GroupManagementActivity.this, R.layout.groups_listview, stringGroupList );
 
             groupListView.setAdapter( adapter );
 
-
-
         }
 
 
-        SwipeMenuCreator creator = new SwipeMenuCreator() {
+    SwipeMenuCreator creator = new SwipeMenuCreator() {
 
             @Override
             public void create(SwipeMenu menu) {
@@ -226,15 +205,9 @@ public class GroupManagementActivity extends AppCompatActivity {
 
     }
 
-
-
-
-
     private void response(Void returnedNothing) {
         notifyUserViaLogAndToast(" You will not be monitored by this user anymore.");
     }
-
-
 
     private void notifyUserViaLogAndToast(String message) {
         Log.w(TAG, message);
