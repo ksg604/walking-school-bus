@@ -76,8 +76,6 @@ public class GroupManagementActivity extends AppCompatActivity {
         // Make call
         Call<List<Group>> caller = proxy.getGroups();
         ProxyBuilder.callProxy(GroupManagementActivity.this, caller, returnedGroupList -> responseForGroup(returnedGroupList));
-
-
     }
 
 

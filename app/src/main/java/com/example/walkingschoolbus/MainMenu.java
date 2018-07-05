@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.example.walkingschoolbus.model.Session;
 
@@ -35,6 +36,9 @@ public class MainMenu extends AppCompatActivity {
         setupLayoutMaps();
         setupLayoutSetting();
         setupLogOutButton();
+
+        //TODO: delete this before push to main
+        Toast.makeText(this, session.getEmail() +"||" +session.getName()+"||"+session.getid(),Toast.LENGTH_LONG).show();
     }
 
     private void setupLogOutButton(){
