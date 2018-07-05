@@ -6,15 +6,20 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.example.walkingschoolbus.model.Session;
 
 import java.util.List;
 
+/**
+ * Main menu screen to give users highest level option after log in
+ */
 public class MainMenu extends AppCompatActivity {
 
     public static final String USER_TOKEN = "User token";
@@ -35,6 +40,11 @@ public class MainMenu extends AppCompatActivity {
         setupLayoutMaps();
         setupLayoutSetting();
         setupLogOutButton();
+
+        //TODO: delete this before push to main
+        Toast toast = Toast.makeText(this, session.getEmail() +"||" + session.getName()+"||"+session.getid(),Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
+        toast.show();
     }
 
     private void setupLogOutButton(){
@@ -98,17 +108,9 @@ public class MainMenu extends AppCompatActivity {
             }
         });
     }
-
-
-    /**Make intent for main menu activity
-     *
-     * @param context
-     * @return
-     */
-    public static Intent makeIntent(Context context, String tokenToPass){
-        Intent intent = new Intent( context, MainMenu.class );
-        intent.putExtra(USER_TOKEN, tokenToPass);
-        return intent;
+    
+    public static Intent makeIntent(Context context){
+        return new Intent(context,MainMenu.class);
     }
 
 
