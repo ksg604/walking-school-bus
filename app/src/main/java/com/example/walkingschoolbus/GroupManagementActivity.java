@@ -37,31 +37,27 @@ public class GroupManagementActivity extends AppCompatActivity {
     List<String> stringGroupList = new ArrayList< >( );
     List<Group> groupList = new ArrayList<>();
     List<Long> groupIdList = new ArrayList<>();
-
-
-
-    private static final String TAG = "GroupManagementActivity";
-    private Group group;
+    private Session tokenSession = Session.getInstance();
     private User user;
+    private static final String TAG = "GroupManagementActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_management);
 
-        userToken = extractDataFromIntent();
+        userToken = tokenSession.getToken();
         // Build the server proxy
         proxy = ProxyBuilder.getProxy(getString( R.string.api_key),userToken);
 
 
-        long temp_id = 1011;
-
+        user = User.getInstance();
 
 
         List<Group> groupList = new ArrayList<>();
 
         //Make call
-        Call<User> caller = proxy.getUserById(temp_id);
+        Call<User> caller = proxy.getUserByEmail(user.getEmail());
         ProxyBuilder.callProxy(GroupManagementActivity.this, caller, returnedUser -> responseForUser(returnedUser));
 
         // proxy = ProxyBuilder.getProxy( getString( R.string.api_key ));
@@ -141,11 +137,10 @@ public class GroupManagementActivity extends AppCompatActivity {
                 Log.w( TAG, "    Group: " + group.getId() );
 
 
-                String groupInfo = "group ID: " + group.getId();
+                String groupInfo = "group Description: " + group.getGroupDescription();
                 stringGroupList.add( groupInfo );
 
-                Intent intent = PlacePickerActivity.makeIntent(GroupManagementActivity.this);
-                startActivity(intent);
+
             }
             ArrayAdapter adapter = new ArrayAdapter( GroupManagementActivity.this, R.layout.groups_listview, stringGroupList );
 
@@ -186,6 +181,8 @@ public class GroupManagementActivity extends AppCompatActivity {
                 public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
                     switch (index) {
                         case 0:
+
+
                             /*// Make call
                             *Call<Void> caller = proxy.removeFromMonitoredByUsers(temp_id, returnedUsers.get(position).getId());
                             *ProxyBuilder.callProxy(MonitoredListActivity.this, caller, returnedNothing -> response(returnedNothing));
