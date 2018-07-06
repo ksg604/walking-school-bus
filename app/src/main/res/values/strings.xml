@@ -50,14 +50,14 @@
 
     <!-- Dialog Fragment -->
 
-    <string name="YES">YES</string>
-    <string name="NO">NO</string>
-    <string name="groupName">Group name is: </string>
-    <string name="groupLeader">Group leader is: </string>
+    <string name="yes">YES</string>
+    <string name="no">NO</string>
+    <string name="group_name">Group name is: </string>
+    <string name="group_leader">Group leader is: </string>
 
     <!-- On Marker Click -->
 
-    <string name="PROMPT">Would you like to join this group? </string>
+    <string name="prompt">Would you like to join this group? </string>
 
 
 </resources>
