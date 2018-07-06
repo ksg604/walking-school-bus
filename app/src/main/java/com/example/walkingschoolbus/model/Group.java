@@ -72,18 +72,7 @@ public class Group {
         this.meetingPlace = meetingPlace;
     }
     */
-
-
-    public Group(String groupDescription, List<Double> routeLatArray,
-                 List<Double> routeLngArray, User leader){
-        this.groupDescription = groupDescription;
-        this.routeLatArray = routeLatArray;
-        this.routeLngArray = routeLngArray;
-        this.leader = leader;
-    }
-
-
-
+    
     public Group(long id, String groupDescription, List<Double> routeLatArray,
                  List<Double> routeLngArray, User leader, List<User> memberUsers, String href) {
         this.id = id;
