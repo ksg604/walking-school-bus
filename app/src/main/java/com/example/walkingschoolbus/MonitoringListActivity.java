@@ -57,7 +57,7 @@ public class MonitoringListActivity extends AppCompatActivity {
     }
 
     private void response(List<User> returnedUsers) {
-        notifyUserViaLogAndToast("Got list of " + returnedUsers.size() + " users! See logcat.");
+        Log.w(TAG, "All Users:");
 
         SwipeMenuListView monitoringList = (SwipeMenuListView) findViewById(R.id.monitoringList);
         //List<String> monitoringUser = new ArrayList<>();
@@ -139,7 +139,6 @@ public class MonitoringListActivity extends AppCompatActivity {
 
 
                 }
-
                 // false : close the menu; true : not close the menu
                 return false;
             }
@@ -164,12 +163,8 @@ public class MonitoringListActivity extends AppCompatActivity {
         return intent;
     }
 
-
-
     private void notifyUserViaLogAndToast(String message) {
         Log.w(TAG, message);
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
-
-
 }

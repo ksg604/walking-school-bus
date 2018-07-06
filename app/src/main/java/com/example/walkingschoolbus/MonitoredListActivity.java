@@ -50,8 +50,6 @@ public class MonitoredListActivity extends AppCompatActivity {
 
         // Build the server proxy
         proxy = ProxyBuilder.getProxy(getString(R.string.api_key),session.getToken());
-        setMonitoredTextView();
-
 
         // Make call
         Call<List<User>> caller = proxy.getMonitoredByUsers(user.getId());
@@ -123,15 +121,6 @@ public class MonitoredListActivity extends AppCompatActivity {
     private void response(Void returnedNothing) {
         notifyUserViaLogAndToast(MonitoredListActivity.this.getString(R.string.notify_delete));
     }
-
-
-    private void setMonitoredTextView() {
-        TextView monitoredList = (TextView) findViewById( R.id.monitoredListText );
-        String monitored = getString(R.string.monitored_title);
-        monitoredList.setText( monitored );
-
-    }
-
 
     public static Intent makeIntent(Context context) {
         Intent intent = new Intent(context, MonitoredListActivity.class);

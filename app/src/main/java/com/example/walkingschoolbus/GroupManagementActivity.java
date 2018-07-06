@@ -35,8 +35,6 @@ import retrofit2.Call;
  */
 public class GroupManagementActivity extends AppCompatActivity {
 
-
-
     private List<String> stringMemberGroupList = new ArrayList< >( );
     private List<String> stringLeaderGroupList = new ArrayList< >( );
     private List<Group> groupLeaderList = new ArrayList<>();
@@ -54,7 +52,6 @@ public class GroupManagementActivity extends AppCompatActivity {
     private static final String TAG = "GroupManagementActivity";
     private static final int REQUEST_CODE = 1004;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,13 +67,11 @@ public class GroupManagementActivity extends AppCompatActivity {
 
         //Make call
         Call<User> caller = proxy.getUserByEmail(user.getEmail());
-        ProxyBuilder.callProxy(GroupManagementActivity.this, caller, returnedUser -> responseForUser(returnedUser));
+        ProxyBuilder.callProxy(GroupManagementActivity.this, caller,
+                returnedUser -> responseForUser(returnedUser));
 
         // proxy = ProxyBuilder.getProxy( getString( R.string.api_key ));
         setupCreateGroupButton();
-
-
-
     }
 
     /*
@@ -88,7 +83,6 @@ public class GroupManagementActivity extends AppCompatActivity {
         groupLeaderList = returnedUser.getLeadsGroups();
         for(Group group : groupLeaderList ){
             groupIdLeaderList.add(group.getId());
-
         }
 
         groupMemberList = returnedUser.getMemberOfGroups();
@@ -100,9 +94,9 @@ public class GroupManagementActivity extends AppCompatActivity {
 
         // Make call
         Call<List<Group>> caller = proxy.getGroups();
-        ProxyBuilder.callProxy(GroupManagementActivity.this, caller, returnedGroupList -> responseForGroup(returnedGroupList));
+        ProxyBuilder.callProxy(GroupManagementActivity.this, caller,
+                returnedGroupList -> responseForGroup(returnedGroupList));
     }
-
 
     /**
      * set up the button to create group
@@ -114,10 +108,6 @@ public class GroupManagementActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = PlacePickerActivity.makeIntent(GroupManagementActivity.this);
                 startActivityForResult( intent, REQUEST_CODE);
-
-
-
-
             }
         } );
     }
@@ -127,13 +117,8 @@ public class GroupManagementActivity extends AppCompatActivity {
     *
     */
     private void responseForGroup(List<Group> returnedGroups) {
-        notifyUserViaLogAndToast("Got list of " + returnedGroups.size() + " users! See logcat.");
-
-
         SwipeMenuListView groupAsLeaderListView = (SwipeMenuListView) findViewById( R.id.groupAsLeaderList);
         SwipeMenuListView groupAsMemberListView = (SwipeMenuListView) findViewById(R.id.groupAsMemberList);
-
-
 
         for (Group group : returnedGroups) {
 
@@ -150,24 +135,15 @@ public class GroupManagementActivity extends AppCompatActivity {
                 modifiedGroupLeaderList.add(group);
                 String groupInfo = getString( R.string.group_list) + " " + group.getGroupDescription();
                 stringLeaderGroupList.add( groupInfo );
-
-
             }
 
-            ArrayAdapter adapterLeader = new ArrayAdapter( GroupManagementActivity.this, R.layout.da_items, stringLeaderGroupList );
-
+            ArrayAdapter adapterLeader = new ArrayAdapter( GroupManagementActivity.this,
+                    R.layout.da_items, stringLeaderGroupList );
             groupAsLeaderListView.setAdapter( adapterLeader );
-
-            ArrayAdapter adapterMember = new ArrayAdapter( GroupManagementActivity.this, R.layout.da_items, stringMemberGroupList );
-
+            ArrayAdapter adapterMember = new ArrayAdapter( GroupManagementActivity.this,
+                    R.layout.da_items, stringMemberGroupList );
             groupAsMemberListView.setAdapter( adapterMember );
-
-
-
-
-
         }
-
 
         SwipeMenuCreator creatorForLeader = new SwipeMenuCreator() {
 
@@ -189,7 +165,6 @@ public class GroupManagementActivity extends AppCompatActivity {
                 // add to menu
                 menu.addMenuItem(openItem);
 
-
                 // create "delete" item
                 SwipeMenuItem deleteItem = new SwipeMenuItem( getApplicationContext());
                 // set item background
@@ -204,7 +179,6 @@ public class GroupManagementActivity extends AppCompatActivity {
                 deleteItem.setTitleColor(Color.WHITE);
                 // add to menu
                 menu.addMenuItem(deleteItem);
-
             }
         };
 
@@ -221,7 +195,6 @@ public class GroupManagementActivity extends AppCompatActivity {
                 switch (index) {
 
                     case 0:
-
                         Long groupId = modifiedGroupLeaderList.get(position).getId();
 
                         group.setId(groupId);
@@ -231,19 +204,13 @@ public class GroupManagementActivity extends AppCompatActivity {
 
 
                     case 1:
-
                          //make Call
                          Call<Void> caller = proxy.deleteGroup( modifiedGroupLeaderList.get(position).getId());
                          ProxyBuilder.callProxy(GroupManagementActivity.this, caller, returnedNothing -> response(returnedNothing));
                          groupAsLeaderListView.removeViewsInLayout(position,1);
 
-
-
                          break;
-
                 }
-
-
                 // false : close the menu; true : not close the menu
                 return false;
             }
@@ -253,7 +220,6 @@ public class GroupManagementActivity extends AppCompatActivity {
 
             @Override
             public void create(SwipeMenu menu) {
-
 
                 // create "delete" item
                 SwipeMenuItem deleteItem = new SwipeMenuItem( getApplicationContext());
@@ -269,7 +235,6 @@ public class GroupManagementActivity extends AppCompatActivity {
                 deleteItem.setTitleColor(Color.WHITE);
                 // add to menu
                 menu.addMenuItem(deleteItem);
-
             }
         };
 
@@ -290,9 +255,7 @@ public class GroupManagementActivity extends AppCompatActivity {
                              Call<Void> caller = proxy.removeGroupMember(modifiedGroupMemberList.get(position).getId(), user.getId());
                              ProxyBuilder.callProxy(GroupManagementActivity.this, caller, returnedNothing -> response(returnedNothing));
                              groupAsMemberListView.removeViewsInLayout(position,1);
-
                              break;
-
                     }
                     // false : close the menu; true : not close the menu
                     return false;
@@ -300,8 +263,6 @@ public class GroupManagementActivity extends AppCompatActivity {
         });
 
     }
-
-
 
     private void response(Void returnedNothing) {
         notifyUserViaLogAndToast( getString( R.string.delete_message));
@@ -311,7 +272,6 @@ public class GroupManagementActivity extends AppCompatActivity {
         Log.w(TAG, message);
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
-
 
     /**
      * Create intent for this activity
@@ -340,8 +300,5 @@ public class GroupManagementActivity extends AppCompatActivity {
                 }
                 break;
         }
-
     }
-
-
 }

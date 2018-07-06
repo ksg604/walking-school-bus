@@ -86,11 +86,9 @@ public class PlacePickerActivity extends AppCompatActivity {
             makeGroupFromUserData();
             Intent intent = GroupManagementActivity.makeIntent( PlacePickerActivity.this );
             int resultCode = Activity.RESULT_OK;
-            makeIntentBack( PlacePickerActivity.this ,resultCode );
+            intent.putExtra("result",RESULT_OK);
+            setResult(Activity.RESULT_OK,intent);
             finish();
-
-
-
         }
     });
     }
