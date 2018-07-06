@@ -39,7 +39,7 @@ public class UserSettingActivity extends AppCompatActivity {
         session = Session.getInstance();
         user = User.getInstance();
 
-        //Log.w("TESTTEST:::",user.getId().toString());
+
 
         // Build the server proxy
         proxy = ProxyBuilder.getProxy(getString(R.string.api_key),session.getToken());

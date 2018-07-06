@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.baoyz.swipemenulistview.SwipeMenu;
@@ -37,19 +38,19 @@ public class MonitoredListActivity extends AppCompatActivity {
     private static WGServerProxy proxy;
     private Session session;
 
-    ArrayList<String> monitoredUser = new ArrayList<>();
+    private ArrayList<String> monitoredUser = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         user = User.getInstance();
         session = Session.getInstance();
 
-        //long temp_id = 932;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_monitored_list);
 
         // Build the server proxy
         proxy = ProxyBuilder.getProxy(getString(R.string.api_key),session.getToken());
+        setMonitoredTextView();
 
 
         // Make call
@@ -66,8 +67,7 @@ public class MonitoredListActivity extends AppCompatActivity {
 
         for (User user : returnedUsers) {
             Log.w(TAG, "    User: " + user.toString());
-            String userInfo = "User Email: "+ user.getEmail() + "   " + "User Name: " + user.getName()
-                    + "User ID: "+ user.getId();
+            String userInfo =  "User Name: " + user.getName()+"\nUser Email: " + user.getEmail();
 
             monitoredUser.add(userInfo);
             ArrayAdapter adapter = new ArrayAdapter(MonitoredListActivity.this, R.layout.da_items, monitoredUser);
@@ -83,11 +83,11 @@ public class MonitoredListActivity extends AppCompatActivity {
                 SwipeMenuItem deleteItem = new SwipeMenuItem(
                         getApplicationContext());
                 // set item background
-                deleteItem.setBackground(new ColorDrawable(Color.rgb(0xC9, 0xC9, 0xCE)));
+                deleteItem.setBackground(new ColorDrawable(Color.rgb(220, 20, 60)));
                 // set item width
                 deleteItem.setWidth(180);
                 // set item title
-                deleteItem.setTitle(MonitoredListActivity.this.getString(R.string.set_title_del));
+                deleteItem.setTitle(MonitoredListActivity.this.getString(R.string.delete_swipe));
                 // set item title fontsize
                 deleteItem.setTitleSize(18);
                 // set item title font color
@@ -98,7 +98,7 @@ public class MonitoredListActivity extends AppCompatActivity {
             }
         };
 
-// set creator
+        // set creator
         monitoredList.setMenuCreator(creator);
 
         monitoredList.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
@@ -110,9 +110,7 @@ public class MonitoredListActivity extends AppCompatActivity {
                         Call<Void> caller = proxy.removeFromMonitoredByUsers(user.getId(), returnedUsers.get(position).getId());
                         ProxyBuilder.callProxy(MonitoredListActivity.this, caller, returnedNothing -> response(returnedNothing));
                         monitoredList.removeViewsInLayout(position,1);
-                        // finish();
-                        //ArrayAdapter adapter = new ArrayAdapter(MonitoringListActivity.this, R.layout.da_items, monitoringUser);
-                        //monitoringList.setAdapter(adapter);
+
                         break;
                 }
                 // false : close the menu; true : not close the menu
@@ -125,6 +123,14 @@ public class MonitoredListActivity extends AppCompatActivity {
 
     private void response(Void returnedNothing) {
         notifyUserViaLogAndToast(MonitoredListActivity.this.getString(R.string.notify_delete));
+    }
+
+
+    private void setMonitoredTextView() {
+        TextView monitoredList = (TextView) findViewById( R.id.monitoredListText );
+        String monitored = getString(R.string.monitored_title);
+        monitoredList.setText( monitored );
+
     }
 
 
