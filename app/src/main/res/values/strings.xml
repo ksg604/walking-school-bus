@@ -58,4 +58,10 @@
     <string name="add_monitoring">Start Monitoring The Email Above</string>
     <string name="add_monitored_by">Starting Being Monitored By The Email Above</string>
 
+    <!--MonitoredListActivity-->
+    <string name="notify_delete"> You will not be monitored by this user anymore.</string>
+    <string name="set_title_del">DELETE</string>
+
+    <!--MonitoringListActivity-->
+    <string name="notify_not_monitor">You cannot monitor this user anymore.</string>
 </resources>

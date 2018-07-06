@@ -38,7 +38,6 @@ public class MainMenu extends AppCompatActivity {
         setupLayoutMaps();
         setupLayoutSetting();
         setupLogOutButton();
-
         setTextViewMessage();
 
     }

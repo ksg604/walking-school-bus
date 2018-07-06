@@ -30,16 +30,11 @@ import retrofit2.Call;
 public class MonitoringListActivity extends AppCompatActivity {
 
     private static final String TAG = "MonitoringListActivity";
-    public static final String USER_TOKEN = "User Token";
-    //private String userToken3;
     private Session session;
     private User user;
     private static WGServerProxy proxy;
 
     ArrayList<String> monitoringUser = new ArrayList<>();
-    //SwipeMenuListView monitoringList = (SwipeMenuListView) findViewById(R.id.monitoringList);
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         user = User.getInstance();
@@ -51,23 +46,13 @@ public class MonitoringListActivity extends AppCompatActivity {
         session = Session.getInstance();
         String savedToken = session.getToken();
 
-        //userToken3 = extractDataFromIntent();
-        // Build the server proxy
         proxy = ProxyBuilder.getProxy(getString(R.string.api_key),session.getToken());
-
-
+        
         // Make call
         Call<List<User>> caller = proxy.getMonitorsUsers(user.getId());
         ProxyBuilder.callProxy(MonitoringListActivity.this, caller, returnedUsers -> response(returnedUsers));
-
-
     }
-/*
-    private String extractDataFromIntent() {
-        Intent intent = getIntent();
-        return intent.getStringExtra(USER_TOKEN);
-    }
-*/
+
     private void response(List<User> returnedUsers) {
         notifyUserViaLogAndToast("Got list of " + returnedUsers.size() + " users! See logcat.");
         Log.w(TAG, "All Users:");
@@ -83,9 +68,7 @@ public class MonitoringListActivity extends AppCompatActivity {
             monitoringUser.add(userInfo);
             ArrayAdapter adapter = new ArrayAdapter(MonitoringListActivity.this, R.layout.da_items, monitoringUser);
             monitoringList.setAdapter(adapter);
-
         }
-
         SwipeMenuCreator creator = new SwipeMenuCreator() {
 
             @Override
@@ -129,23 +112,15 @@ public class MonitoringListActivity extends AppCompatActivity {
 
                 }
 
-
                 // false : close the menu; true : not close the menu
                 return false;
             }
         });
-
-
     }
-
 
     private void response(Void returnedNothing) {
-        notifyUserViaLogAndToast(" You cannot monitor this user anymore.");
+        notifyUserViaLogAndToast(MonitoringListActivity.this.getString(R.string.notify_not_monitor));
     }
-
-
-
-
 
     public static Intent makeIntent(Context context) {
         Intent intent = new Intent(context, MonitoringListActivity.class);
