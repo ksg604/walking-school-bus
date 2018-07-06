@@ -42,6 +42,9 @@ public class MainMenu extends AppCompatActivity {
 
     }
 
+    /**
+     * setup logout button to finish this app.
+     */
     private void setupLogOutButton(){
     Button btn = findViewById(R.id.btnLogOut);
     btn.setOnClickListener(new View.OnClickListener(){
@@ -57,6 +60,10 @@ public class MainMenu extends AppCompatActivity {
 
     }
 
+
+    /**
+     * setup linear layout to redirect to settings page on click
+     */
     private void setupLayoutSetting() {
         LinearLayout setting = (LinearLayout) findViewById(R.id.linearLayoutSetting);
         setting.setOnClickListener(new View.OnClickListener() {
@@ -84,8 +91,8 @@ public class MainMenu extends AppCompatActivity {
         });
     }
 
-    /**setup linear layout to redirect to map activity
-     *
+    /**
+     * setup linear layout to redirect to map activity
      */
     private void setupLayoutMaps() {
         LinearLayout maps = (LinearLayout)findViewById(R.id.linearLayoutMaps);

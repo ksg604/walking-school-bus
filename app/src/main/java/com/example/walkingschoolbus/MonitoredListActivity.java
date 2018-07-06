@@ -87,7 +87,7 @@ public class MonitoredListActivity extends AppCompatActivity {
                 // set item width
                 deleteItem.setWidth(180);
                 // set item title
-                deleteItem.setTitle(MonitoredListActivity.this.getString(R.string.set_title_del));
+                deleteItem.setTitle(MonitoredListActivity.this.getString(R.string.delete_swipe));
                 // set item title fontsize
                 deleteItem.setTitleSize(18);
                 // set item title font color
@@ -128,7 +128,7 @@ public class MonitoredListActivity extends AppCompatActivity {
 
     private void setMonitoredTextView() {
         TextView monitoredList = (TextView) findViewById( R.id.monitoredListText );
-        String monitored = getString(R.string.monitored);
+        String monitored = getString(R.string.monitored_title);
         monitoredList.setText( monitored );
 
     }

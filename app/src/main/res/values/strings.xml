@@ -60,7 +60,7 @@
     <string name="monitor_email_help">Add Email or User to Monitor/Be Monitored By</string>
     <string name="add_monitoring">Start Monitoring The Email Above</string>
     <string name="add_monitored_by">Starting Being Monitored By The Email Above</string>
-    <string name="monitored_titled">I MONITOR</string>
+    <string name="monitored_title">I MONITOR</string>
     <string name="monitoring_title">MY MONITORER</string>
 
 

@@ -125,7 +125,7 @@ public class MonitoringListActivity extends AppCompatActivity {
 
     private void setMonitoringTextView() {
         TextView monitoringList = (TextView) findViewById( R.id.monitoringListText );
-        String monitoring = getString(R.string.monitoring);
+        String monitoring = getString(R.string.monitoring_title);
         monitoringList.setText( monitoring );
 
     }
