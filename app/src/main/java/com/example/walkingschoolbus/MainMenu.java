@@ -72,7 +72,7 @@ public class MainMenu extends AppCompatActivity {
         setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = UserSettingActivity.makeIntent(MainMenu.this, token);
+                Intent intent = UserSettingActivity.makeIntent(MainMenu.this);
                 Log.w("Maintest", "   --> NOW HAVE TOKEN(output3): " + token);
                 startActivity(intent);
             }
@@ -87,7 +87,7 @@ public class MainMenu extends AppCompatActivity {
         group.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                Intent intent = GroupManagementActivity.makeIntent(MainMenu.this, token);
+                Intent intent = GroupManagementActivity.makeIntent(MainMenu.this);
                 startActivity(intent);
                 Log.w("Sprint1","Group Activity Launched");
             }
