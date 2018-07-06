@@ -35,7 +35,7 @@
 
     <!--Group Management-->
     <string name="group_layout_title">MY GROUPS</string>
-    <string name="add_group">NEW/FIND</string>
+    <string name="add_group">NEW GROUP</string>
     <string name="modify_group">MODIFY/REMOVE</string>
     <string name="leader_group">A leader of</string>
     <string name="member_group">A member of</string>
@@ -43,6 +43,7 @@
     <string name="delete_swipe">Delete</string>
     <string name="open_swipe">Open</string>
     <string name="group_list">Group: </string>
+    <string name="group_help_txt">Swipe left on group name for options.</string>
 
 
     <!-- Place Picker -->
