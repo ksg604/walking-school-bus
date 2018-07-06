@@ -71,7 +71,6 @@ public class MonitoringListActivity extends AppCompatActivity {
             ArrayAdapter adapter = new ArrayAdapter(MonitoringListActivity.this, R.layout.da_items, monitoringUser);
             monitoringList.setAdapter(adapter);
         }
-
         SwipeMenuCreator creator = new SwipeMenuCreator() {
 
             @Override
@@ -141,10 +140,10 @@ public class MonitoringListActivity extends AppCompatActivity {
                         Call<Void> caller = proxy.removeFromMonitorsUsers(user.getId(), returnedUsers.get(position).getId());
                         ProxyBuilder.callProxy(MonitoringListActivity.this, caller, returnedNothing -> response(returnedNothing));
                         monitoringList.removeViewsInLayout(position,1);
-
                     break;
 
                     case 1:
+                        //Intent intent = MonitorActivity.makeIntentt(MonitoringListActivity.this,
 
 
                         Intent intentForAdd = MonitorActivity.makeIntentt(MonitoringListActivity.this,
@@ -173,26 +172,13 @@ public class MonitoringListActivity extends AppCompatActivity {
         notifyUserViaLogAndToast(MonitoringListActivity.this.getString(R.string.notify_not_monitor));
     }
 
-
-    private void setMonitoringTextView() {
-        TextView monitoringList = (TextView) findViewById( R.id.monitoringListText );
-        String monitoring = getString(R.string.monitoring_title);
-        monitoringList.setText( monitoring );
-
-    }
-
-
     public static Intent makeIntent(Context context) {
         Intent intent = new Intent(context, MonitoringListActivity.class);
         return intent;
     }
 
-
-
     private void notifyUserViaLogAndToast(String message) {
         Log.w(TAG, message);
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
-
-
 }
