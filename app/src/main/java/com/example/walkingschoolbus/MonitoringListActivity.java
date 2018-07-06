@@ -14,6 +14,7 @@ import com.baoyz.swipemenulistview.SwipeMenu;
 import com.baoyz.swipemenulistview.SwipeMenuCreator;
 import com.baoyz.swipemenulistview.SwipeMenuItem;
 import com.baoyz.swipemenulistview.SwipeMenuListView;
+import com.example.walkingschoolbus.model.Session;
 import com.example.walkingschoolbus.model.User;
 import com.example.walkingschoolbus.proxy.ProxyBuilder;
 import com.example.walkingschoolbus.proxy.WGServerProxy;
@@ -28,38 +29,43 @@ public class MonitoringListActivity extends AppCompatActivity {
 
     private static final String TAG = "MonitoringListActivity";
     public static final String USER_TOKEN = "User Token";
-    private String userToken3;
-    //private User user;
+    //private String userToken3;
+    private Session session;
+    private User user;
     private static WGServerProxy proxy;
 
     ArrayList<String> monitoringUser = new ArrayList<>();
     //SwipeMenuListView monitoringList = (SwipeMenuListView) findViewById(R.id.monitoringList);
-    long temp_id = 932;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-       // User user = User.getInstance();
+        user = User.getInstance();
         //long temp_id = 932;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_monitoring_list);
 
-        userToken3 = extractDataFromIntent();
+        Session.getStoredSession(this);
+        session = Session.getInstance();
+        String savedToken = session.getToken();
+
+        //userToken3 = extractDataFromIntent();
         // Build the server proxy
-        proxy = ProxyBuilder.getProxy(getString(R.string.api_key),userToken3);
+        proxy = ProxyBuilder.getProxy(getString(R.string.api_key),session.getToken());
 
 
         // Make call
-        Call<List<User>> caller = proxy.getMonitorsUsers(temp_id);
+        Call<List<User>> caller = proxy.getMonitorsUsers(user.getId());
         ProxyBuilder.callProxy(MonitoringListActivity.this, caller, returnedUsers -> response(returnedUsers));
 
 
     }
-
+/*
     private String extractDataFromIntent() {
         Intent intent = getIntent();
         return intent.getStringExtra(USER_TOKEN);
     }
-
+*/
     private void response(List<User> returnedUsers) {
         notifyUserViaLogAndToast("Got list of " + returnedUsers.size() + " users! See logcat.");
         Log.w(TAG, "All Users:");
@@ -111,13 +117,13 @@ public class MonitoringListActivity extends AppCompatActivity {
                 switch (index) {
                     case 0:
                         // Make call
-                        Call<Void> caller = proxy.removeFromMonitorsUsers(temp_id, returnedUsers.get(position).getId());
+                        Call<Void> caller = proxy.removeFromMonitorsUsers(user.getId(), returnedUsers.get(position).getId());
                         ProxyBuilder.callProxy(MonitoringListActivity.this, caller, returnedNothing -> response(returnedNothing));
                         monitoringList.removeViewsInLayout(position,1);
                        // finish();
                         //ArrayAdapter adapter = new ArrayAdapter(MonitoringListActivity.this, R.layout.da_items, monitoringUser);
                         //monitoringList.setAdapter(adapter);
-
+                    break;
 
                 }
 
@@ -139,9 +145,9 @@ public class MonitoringListActivity extends AppCompatActivity {
 
 
 
-    public static Intent makeIntent(Context context, String tokenToPass) {
+    public static Intent makeIntent(Context context) {
         Intent intent = new Intent(context, MonitoringListActivity.class);
-        intent.putExtra(USER_TOKEN, tokenToPass);
+        //intent.putExtra(USER_TOKEN, tokenToPass);
         return intent;
     }
 

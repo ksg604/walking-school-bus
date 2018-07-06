@@ -215,9 +215,9 @@ public class GroupManagementActivity extends AppCompatActivity {
      * @param context
      * @return
      */
-    public static Intent makeIntent(Context context, String tokenToPass){
+    public static Intent makeIntent(Context context){
         Intent intent = new Intent(context,GroupManagementActivity.class);
-        intent.putExtra(USER_TOKEN, tokenToPass);
+        //intent.putExtra(USER_TOKEN, tokenToPass);
         return intent;
     }
 
