@@ -119,6 +119,7 @@ public class LeaderActivity extends AppCompatActivity {
                          finish();
                          ArrayAdapter adapter = new ArrayAdapter(LeaderActivity.this, R.layout.da_items, stringUserList);
                          userListView.setAdapter(adapter);
+                         startActivity( getIntent() );
 
 
 
@@ -135,7 +136,7 @@ public class LeaderActivity extends AppCompatActivity {
     }
 
     private void response(Void returnedNothing) {
-        notifyUserViaLogAndToast(" You will not be monitored by this user anymore.");
+        notifyUserViaLogAndToast(" Successful delete");
     }
 
 

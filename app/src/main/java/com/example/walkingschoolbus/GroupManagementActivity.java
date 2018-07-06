@@ -299,7 +299,7 @@ public class GroupManagementActivity extends AppCompatActivity {
 
 
     private void response(Void returnedNothing) {
-        notifyUserViaLogAndToast(" you deleted.");
+        notifyUserViaLogAndToast(" Successful delete");
     }
 
     private void notifyUserViaLogAndToast(String message) {
