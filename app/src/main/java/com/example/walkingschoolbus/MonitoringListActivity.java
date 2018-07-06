@@ -64,7 +64,7 @@ public class MonitoringListActivity extends AppCompatActivity {
         //List<Integer> child_ID = new ArrayList<Integer>();
         for (User user : returnedUsers) {
             Log.w(TAG, "    User: " + user.toString());
-            String userInfo = getString(R.string.monitoring_user_name) + " "  + user.getName() +
+            String userInfo = getString(R.string.monitoring_user_name) + " "  + user.getName() +"\n"+
                     getString(R.string.monitoring_user_email)+ " " + user.getEmail();
 
             monitoringUser.add(userInfo);
@@ -82,7 +82,7 @@ public class MonitoringListActivity extends AppCompatActivity {
                 // set item width
                 openItem.setWidth(180);
                 // set item title
-                openItem.setTitle("Delete");
+                openItem.setTitle(getString(R.string.delete_swipe));
                 // set item title fontsize
                 openItem.setTitleSize(18);
                 // set item title font color
@@ -100,7 +100,7 @@ public class MonitoringListActivity extends AppCompatActivity {
                 // set item width
                 deleteItem.setWidth(180);
                 // set item title
-                deleteItem.setTitle("Add To Group");
+                deleteItem.setTitle(getString(R.string.add_to_group_swipe));
                 // set item title fontsize
                 deleteItem.setTitleSize(18);
                 // set item title font color
@@ -118,7 +118,7 @@ public class MonitoringListActivity extends AppCompatActivity {
                 // set item width
                 goGroup.setWidth(180);
                 // set item title
-                goGroup.setTitle("Groups");
+                goGroup.setTitle(getString(R.string.gorup_swipe));
                 // set item title fontsize
                 goGroup.setTitleSize(18);
                 // set item title font color
@@ -146,7 +146,7 @@ public class MonitoringListActivity extends AppCompatActivity {
                         //Intent intent = MonitorActivity.makeIntentt(MonitoringListActivity.this,
 
 
-                        Intent intentForAdd = MonitorActivity.makeIntentt(MonitoringListActivity.this,
+                        Intent intentForAdd = MonitorActivity.makeIntent(MonitoringListActivity.this,
                                 returnedUsers.get(position).getEmail());
                         //intent.putExtra()
                         startActivity(intentForAdd);

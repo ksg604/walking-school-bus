@@ -85,6 +85,8 @@
     <string name="delete_swipe">Delete</string>
     <string name="leave_swipe">Leave</string>
     <string name="open_swipe">Open</string>
+    <string name="add_to_group_swipe">Add to group</string>
+    <string name="gorup_swipe">Groups</string>
     <string name="group_list">Group: </string>
     <string name="user_name_list">Name:</string>
     <string name="user_email_list">Email:</string>
