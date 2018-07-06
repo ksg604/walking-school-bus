@@ -47,7 +47,7 @@ public class MonitoringListActivity extends AppCompatActivity {
         Session.getStoredSession(this);
         session = Session.getInstance();
         String savedToken = session.getToken();
-        setMonitoringTextView();
+       // setMonitoringTextView();
 
         proxy = ProxyBuilder.getProxy(getString(R.string.api_key),session.getToken());
 
