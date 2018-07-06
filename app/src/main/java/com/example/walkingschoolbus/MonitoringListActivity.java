@@ -40,14 +40,14 @@ public class MonitoringListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         user = User.getInstance();
-        //long temp_id = 932;
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_monitoring_list);
 
         Session.getStoredSession(this);
         session = Session.getInstance();
         String savedToken = session.getToken();
-       // setMonitoringTextView();
+        setMonitoringTextView();
 
         proxy = ProxyBuilder.getProxy(getString(R.string.api_key),session.getToken());
 
@@ -57,15 +57,15 @@ public class MonitoringListActivity extends AppCompatActivity {
     }
 
     private void response(List<User> returnedUsers) {
-        notifyUserViaLogAndToast("Got list of " + returnedUsers.size() + " users! See logcat.");
-        Log.w(TAG, "All Users:");
+
 
         SwipeMenuListView monitoringList = (SwipeMenuListView) findViewById(R.id.monitoringList);
         //List<String> monitoringUser = new ArrayList<>();
         //List<Integer> child_ID = new ArrayList<Integer>();
         for (User user : returnedUsers) {
             Log.w(TAG, "    User: " + user.toString());
-            String userInfo = "User Name: " + user.getName() + "\nUser Email:" + user.getEmail();
+            String userInfo = getString(R.string.monitoring_user_name) + " "  + user.getName() +
+                    getString(R.string.monitoring_user_email)+ " " + user.getEmail();
 
             monitoringUser.add(userInfo);
             ArrayAdapter adapter = new ArrayAdapter(MonitoringListActivity.this, R.layout.da_items, monitoringUser);
@@ -171,6 +171,15 @@ public class MonitoringListActivity extends AppCompatActivity {
     private void response(Void returnedNothing) {
         notifyUserViaLogAndToast(MonitoringListActivity.this.getString(R.string.notify_not_monitor));
     }
+
+
+    private void setMonitoringTextView() {
+        TextView monitoringList = (TextView) findViewById( R.id.monitoringListText );
+        String monitoring = getString(R.string.monitoring_title);
+        monitoringList.setText( monitoring );
+
+    }
+
 
     public static Intent makeIntent(Context context) {
         Intent intent = new Intent(context, MonitoringListActivity.class);

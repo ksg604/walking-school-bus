@@ -53,9 +53,9 @@ public class OnMarkerClickActivity extends AppCompatActivity {
         group = returnedGroup;
         Log.i("debugTag2",""+returnedGroup.getGroupDescription());
         TextView groupName = findViewById(R.id.groupNameMarkerClick);
-        TextView groupLeader = findViewById(R.id.groupLeaderMarkerClick);
+
         groupName.setText(getString(R.string.group_name)+ " "+returnedGroup.getGroupDescription());
-        groupLeader.setText(getString(R.string.group_leader)+ " "+returnedGroup.getLeader().getName());
+
     }
 
     private void setupYesBtn(){

@@ -158,7 +158,7 @@ public class GroupManagementActivity extends AppCompatActivity {
                 openItem.setWidth(180);
                 // set item title
                 openItem.setTitle(getString( R.string.open_swipe ));
-                // set item title fontsize
+                // set item title font size
                 openItem.setTitleSize(18);
                 // set item title font color
                 openItem.setTitleColor(Color.WHITE);
@@ -173,7 +173,7 @@ public class GroupManagementActivity extends AppCompatActivity {
                 deleteItem.setWidth(180);
                 // set item title
                 deleteItem.setTitle(getString(R.string.delete_swipe));
-                // set item title fontsize
+                // set item title font size
                 deleteItem.setTitleSize(18);
                 // set item title font color
                 deleteItem.setTitleColor(Color.WHITE);
@@ -228,8 +228,8 @@ public class GroupManagementActivity extends AppCompatActivity {
                 // set item width
                 deleteItem.setWidth(180);
                 // set item title
-                deleteItem.setTitle(R.string.delete_swipe);
-                // set item title fontsize
+                deleteItem.setTitle(R.string.leave_swipe);
+                // set item title font size
                 deleteItem.setTitleSize(18);
                 // set item title font color
                 deleteItem.setTitleColor(Color.WHITE);

@@ -57,7 +57,9 @@ public class MonitorActivity extends AppCompatActivity {
 
     }
 
-
+    /*
+     *Setup a button to add a user in the List view to a group
+     */
     private void setupAddUserToGroups() {
 
         Button buttonAddUserToGroup = (Button) findViewById(R.id.btnAddUserToGroup);
@@ -83,6 +85,9 @@ public class MonitorActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * get a response from the server, which contains list of users I monitored
+     */
     private void responseForAdd(User returnedInputUser) {
 
 
@@ -93,23 +98,34 @@ public class MonitorActivity extends AppCompatActivity {
     }
 
 
-        private void notifyUserViaLogAndToast(String message) {
+    /**
+     * Push a toast to user with result
+     * @param message
+     */
+    private void notifyUserViaLogAndToast(String message) {
         Log.w(TAG, message);
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 
-
+    /**
+     *show log and toast that user has been added to the group I chose
+     */
     private void responseMessage(List<User> returnedUser) {
-        notifyUserViaLogAndToast("User has been added to group.");
+        notifyUserViaLogAndToast(getString( R.string.notify_user_added ));
     }
 
-    public static Intent makeIntentt(Context context, String userEmailToPass){
+    /*
+     * make intent to get to MonitorActivity
+     */
+    public static Intent makeIntent(Context context, String userEmailToPass){
         Intent intent = new Intent(context,MonitorActivity.class);
         intent.putExtra("E",userEmailToPass);
         return intent;
     }
 
-
+    /*
+     *make intent to get to MonitorActivity without save user email
+     */
     public static Intent makeIntent(Context context){
         Intent intent = new Intent(context,MonitorActivity.class);
         return intent;

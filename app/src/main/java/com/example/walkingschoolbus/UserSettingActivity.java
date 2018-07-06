@@ -134,7 +134,7 @@ public class UserSettingActivity extends AppCompatActivity {
 
 
     private void response(List<User> returnedUser) {
-        notifyUserViaLogAndToast("User added successfully.");
+        notifyUserViaLogAndToast(getString(R.string.notify_monitoring_user_added));
     }
 
     private void notifyUserViaLogAndToast(String message) {

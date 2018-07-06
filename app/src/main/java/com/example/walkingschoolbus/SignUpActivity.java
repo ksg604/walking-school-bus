@@ -82,7 +82,9 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
 
-
+    /*
+     *Set signup text view to show title
+     */
 
     private void setSignUpTextView() {
         TextView signup = (TextView) findViewById( R.id.signUpText );
@@ -97,7 +99,7 @@ public class SignUpActivity extends AppCompatActivity {
      *@param user
      */
     private void response(User user) {
-        notifyUserViaLogAndToast("Server replied with user: " + user.getName());
+
 
 
     }

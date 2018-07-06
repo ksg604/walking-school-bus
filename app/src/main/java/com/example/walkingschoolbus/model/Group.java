@@ -54,25 +54,6 @@ public class Group {
 
     //Constructor
 
-
-    /*
-    *public Group(long id, String name, Location location) {
-    *    this.id = id;
-    *    this.groupDescription = name;
-    *    this.location =location;
-    *}
-    *
-
-    public Group(long id, String groupDescrip, Location location, String href, Location meetingPlace) {
-
-        this.groupDescription = name;
-        this.location = location;
-        this.hasFullData = true;
-        this.href=href;
-        this.meetingPlace = meetingPlace;
-    }
-    */
-
     public Group(long id, String groupDescription, List<Double> routeLatArray,
                  List<Double> routeLngArray, User leader, List<User> memberUsers, String href) {
         this.id = id;
@@ -164,26 +145,9 @@ public class Group {
         this.memberUsers = memberUsers;
     }
 
-    public void clearGrouyp(){
+    public void clearGroup(){
 
     }
-
-/*
-    public Location getLocation() {
-        return location;
-    }
-
-    public void setLocation(Location location) {
-        this.location = location;
-    }
-
-    public Location getMeetingPlace() {
-        return meetingPlace;
-    }
-
-    public void setMeetingPlace(Location meetingPlace) {
-        this.meetingPlace = meetingPlace;
-    }*/
 
 
     @Override

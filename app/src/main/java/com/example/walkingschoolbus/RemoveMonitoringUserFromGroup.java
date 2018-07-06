@@ -166,7 +166,7 @@ public class RemoveMonitoringUserFromGroup extends AppCompatActivity {
 
 
     private void responseMessage(List<User> returnedUser) {
-        notifyUserViaLogAndToast("User has been added to group.");
+
     }
     public static Intent makeIntentt(Context context, String userEmailToPass){
         Intent intent = new Intent(context, RemoveMonitoringUserFromGroup.class);
