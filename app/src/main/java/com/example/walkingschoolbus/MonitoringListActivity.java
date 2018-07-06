@@ -75,23 +75,38 @@ public class MonitoringListActivity extends AppCompatActivity {
 
             @Override
             public void create(SwipeMenu menu) {
+                // create "open" item
+                SwipeMenuItem openItem = new SwipeMenuItem( getApplicationContext());
+                // set item background
+                openItem.setBackground(new ColorDrawable(Color.rgb(0xC9, 0xC9, 0xCE)));
+                // set item width
+                openItem.setWidth(180);
+                // set item title
+                openItem.setTitle("Delete");
+                // set item title fontsize
+                openItem.setTitleSize(18);
+                // set item title font color
+                openItem.setTitleColor(Color.WHITE);
+                // add to menu
+                menu.addMenuItem(openItem);
+
+
                 // create "delete" item
-                SwipeMenuItem deleteItem = new SwipeMenuItem(
-                        getApplicationContext());
+                SwipeMenuItem deleteItem = new SwipeMenuItem( getApplicationContext());
                 // set item background
                 deleteItem.setBackground(new ColorDrawable(Color.rgb(220, 20,
                         60)));
+
                 // set item width
                 deleteItem.setWidth(180);
                 // set item title
-                deleteItem.setTitle(getString(R.string.delete_swipe));
+                deleteItem.setTitle("Add To Group");
                 // set item title fontsize
                 deleteItem.setTitleSize(18);
                 // set item title font color
                 deleteItem.setTitleColor(Color.WHITE);
                 // add to menu
                 menu.addMenuItem(deleteItem);
-
             }
         };
 
@@ -109,6 +124,16 @@ public class MonitoringListActivity extends AppCompatActivity {
                         monitoringList.removeViewsInLayout(position,1);
 
                     break;
+
+                    case 1:
+
+
+                        Intent intent = MonitorActivity.makeIntentt(MonitoringListActivity.this,
+                                returnedUsers.get(position).getEmail());
+                        //intent.putExtra()
+                        startActivity(intent);
+
+                        break;
 
                 }
 
