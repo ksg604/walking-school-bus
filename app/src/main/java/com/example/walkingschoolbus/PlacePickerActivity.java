@@ -7,13 +7,25 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.walkingschoolbus.model.Group;
+import com.example.walkingschoolbus.model.Session;
+import com.example.walkingschoolbus.model.User;
+import com.example.walkingschoolbus.proxy.ProxyBuilder;
+import com.example.walkingschoolbus.proxy.WGServerProxy;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.android.gms.maps.model.LatLng;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
 
 public class PlacePickerActivity extends AppCompatActivity {
 
@@ -22,6 +34,11 @@ public class PlacePickerActivity extends AppCompatActivity {
     private final static String TAG = "Place Picker Activity";
     private LatLng primaryLocation;
     private LatLng meetupLocation;
+    private User user = User.getInstance();
+    private Session session = Session.getInstance();
+    private String token = session.getToken();
+    private static WGServerProxy proxy;
+
 
 
 
@@ -29,8 +46,10 @@ public class PlacePickerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_place_picker);
+        proxy = ProxyBuilder.getProxy(getString(R.string.api_key),token);
         setupPrimaryLocationButton();
         setupMeetupLocButton();
+        setupCreateGroupButton();
         }
 
     private void setupPrimaryLocationButton() {
@@ -52,6 +71,43 @@ public class PlacePickerActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void setupCreateGroupButton() {
+    Button btn = findViewById(R.id.btnCreateGroup);
+    btn.setOnClickListener(new View.OnClickListener(){
+        @Override
+        public void onClick(View v){
+            Log.i(TAG, "create group");
+            makeGroupFromUserData();
+        }
+    });
+    }
+
+    private void makeGroupFromUserData(){
+        EditText userEnteredName = (EditText)findViewById(R.id.editTxtGroupName) ;
+        List<Double> latArray = new ArrayList<>();
+        List<Double> lngArray = new ArrayList<>();
+
+        String groupDescription = userEnteredName.getText().toString();
+        latArray.add(primaryLocation.latitude);
+        latArray.add(meetupLocation.latitude);
+        lngArray.add(primaryLocation.longitude);
+        lngArray.add(meetupLocation.longitude);
+
+        Group group = new Group(groupDescription, latArray, lngArray, user);
+
+      Call<Group> caller = proxy.createGroup(group);
+      ProxyBuilder.callProxy(PlacePickerActivity.this, caller,returnedGroup ->response(returnedGroup));
+
+    }
+
+    private void response(Group group){
+        Toast.makeText(this, "Group " + group.getGroupDescription() + " created",
+                Toast.LENGTH_LONG).show();
+        user.getLeadsGroups();
+
+    }
+
 
     //Source https://www.youtube.com/channel/UCYN1_QmpaIGZNiwGSzFbE2w
     public void goPlacePicker(int reqCode){

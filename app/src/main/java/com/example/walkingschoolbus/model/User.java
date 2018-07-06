@@ -138,6 +138,10 @@ public class User {
         this.password = password;
     }
 
+    public void updateUserFromServer(){
+        //TODO implement this
+    }
+
 
 
 
