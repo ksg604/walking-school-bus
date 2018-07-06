@@ -151,7 +151,7 @@ public class WelcomeScreen extends AppCompatActivity {
      * @param returnedNothing
      */
     private void response(Void returnedNothing) {
-        notifyUserViaLogAndToast("Server replied to login request (no content was expected).");
+        notifyUserViaLogAndToast(WelcomeScreen.this.getString(R.string.login_success));
     }
 
 

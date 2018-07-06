@@ -39,15 +39,6 @@ public class MainMenu extends AppCompatActivity {
         setupLayoutSetting();
         setupLogOutButton();
 
-        //TODO: delete this before push to main
-        Toast toast = Toast.makeText(this, session.getEmail() +"||" + session.getName()+"||"+session.getid(),Toast.LENGTH_LONG);
-        toast.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
-        toast.show();
-
-        Toast toast2 = Toast.makeText(this, user.getEmail() +"||" + user.getName()+"||"+user.getId(),Toast.LENGTH_LONG);
-        toast2.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL, 0, 0);
-        toast2.show();
-
         setTextViewMessage();
 
     }
