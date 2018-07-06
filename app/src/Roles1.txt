@@ -1,0 +1,5 @@
+Roles1.txt
+SCRUM Master: Bryce Haley
+Project Owner: Hyukho Kwon
+Repo Manager: Steven Yang
+Team Member Kevin San Gabriel
