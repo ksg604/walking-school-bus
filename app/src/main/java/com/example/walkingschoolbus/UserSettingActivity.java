@@ -25,7 +25,6 @@ import retrofit2.http.Query;
  */
 public class UserSettingActivity extends AppCompatActivity {
 
-
     private WGServerProxy proxy;
     private static final String TAG = "UserSetting";
     private String userEmail;
@@ -39,8 +38,6 @@ public class UserSettingActivity extends AppCompatActivity {
         session = Session.getInstance();
         user = User.getInstance();
 
-
-
         // Build the server proxy
         proxy = ProxyBuilder.getProxy(getString(R.string.api_key),session.getToken());
 
@@ -49,7 +46,6 @@ public class UserSettingActivity extends AppCompatActivity {
         setupAddToMonitoringButton();
         setupAddToMonitoredButton();
     }
-
 
     private void setupMonitoredListButton() {
         Button btnMonitoring = (Button) findViewById(R.id.btnMonitoredList);
@@ -76,7 +72,6 @@ public class UserSettingActivity extends AppCompatActivity {
         });
     }
 
-
     private void setupAddToMonitoringButton() {
         Button button = (Button) findViewById(R.id.btnAddToMonitoringList);
         button.setOnClickListener(new View.OnClickListener() {
@@ -89,7 +84,6 @@ public class UserSettingActivity extends AppCompatActivity {
                 Log.w("Test the pushed email:", userEmail);
                 ProxyBuilder.callProxy(UserSettingActivity.this, callerForGettingUser,
                         returnedUsers -> responseForMonitors(returnedUsers));
-
             }
         });
 
@@ -132,7 +126,6 @@ public class UserSettingActivity extends AppCompatActivity {
         return returnedUsers;
     }
 
-
     private void response(List<User> returnedUser) {
         notifyUserViaLogAndToast(getString(R.string.notify_monitoring_user_added));
     }
@@ -146,5 +139,4 @@ public class UserSettingActivity extends AppCompatActivity {
         Intent intent = new Intent(context, UserSettingActivity.class);
         return intent;
     }
-
 }

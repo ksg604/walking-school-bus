@@ -2,6 +2,8 @@ package com.example.walkingschoolbus;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
+import android.os.SystemClock;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -38,6 +40,12 @@ public class MainMenu extends AppCompatActivity {
         setupLayoutMaps();
         setupLayoutSetting();
         setupLogOutButton();
+        new Handler().postDelayed(new Runnable(){
+            @Override
+            public void run(){
+                setTextViewMessage();
+            }
+        },2000);
         setTextViewMessage();
 
     }
@@ -111,8 +119,13 @@ public class MainMenu extends AppCompatActivity {
      */
     private void setTextViewMessage( )
     {
+        String welcomeMessage;
         TextView welcome = (TextView) findViewById( R.id.mainMenuMessage );
-        String welcomeMessage = getString( R.string.hello ) + " " + user.getName();
+        if(session.getName()!=null) {
+            welcomeMessage = getString(R.string.hello) + " " + session.getName();
+        }else{
+            welcomeMessage = getString(R.string.hello);
+        }
         welcome.setText( welcomeMessage );
 
     }
