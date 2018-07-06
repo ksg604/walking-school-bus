@@ -1,5 +1,6 @@
 package com.example.walkingschoolbus;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -79,6 +80,13 @@ public class PlacePickerActivity extends AppCompatActivity {
         public void onClick(View v){
             Log.i(TAG, "create group");
             makeGroupFromUserData();
+            Intent intent = GroupManagementActivity.makeIntent( PlacePickerActivity.this );
+            int resultCode = Activity.RESULT_OK;
+            makeIntentBack( PlacePickerActivity.this ,resultCode );
+            finish();
+
+
+
         }
     });
     }
@@ -157,4 +165,16 @@ public class PlacePickerActivity extends AppCompatActivity {
             return intent;
 
     }
+
+
+
+    private Intent makeIntentBack(Context context, int resultcode) {
+        Intent intent = new Intent(context, GroupManagementActivity.class );
+        setResult(resultcode, intent );
+        return intent;
+    }
+
+
+
+
 }

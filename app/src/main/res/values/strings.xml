@@ -20,8 +20,9 @@
     <string name="menu_monitor">Monitor</string>
     <string name="menu_group">Group</string>
     <string name="menu_map">Map</string>
-    <string name="menu_setting">Setting</string>
+    <string name="menu_setting">Settings</string>
     <string name="log_out">LOG OUT</string>
+    <string name= "hello">Hello,</string>
 
 
     <!--Sign up-->
@@ -35,8 +36,9 @@
     <string name="group_layout_title">MY GROUPS</string>
     <string name="add_group">NEW/FIND</string>
     <string name="modify_group">MODIFY/REMOVE</string>
-    <string name="leader_group">As a leader</string>
-    <string name="member_group">As a member</string>
+    <string name="leader_group">A leader of</string>
+    <string name="member_group">A member of</string>
+    <string name="delete_message">Delete successfully!</string>
 
 
     <!-- Place Picker -->

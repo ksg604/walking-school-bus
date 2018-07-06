@@ -7,9 +7,13 @@
     tools:context=".MonitoringListActivity">
 
     <com.baoyz.swipemenulistview.SwipeMenuListView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/monitoringList">
+        android:id="@+id/monitoringList"
+        android:layout_width="346dp"
+        android:layout_height="447dp"
+        android:layout_marginBottom="32dp"
+        android:layout_marginStart="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
     </com.baoyz.swipemenulistview.SwipeMenuListView>
 </android.support.constraint.ConstraintLayout>
