@@ -1,5 +1,6 @@
 package com.example.walkingschoolbus;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -31,7 +32,6 @@ import retrofit2.Call;
 public class GroupManagementActivity extends AppCompatActivity {
 
 
-    public static final String USER_TOKEN = "User Token";
     private String userToken;
     private static WGServerProxy proxy;
     List<String> stringMemberGroupList = new ArrayList< >( );
@@ -39,7 +39,7 @@ public class GroupManagementActivity extends AppCompatActivity {
     List<Group> groupLeaderList = new ArrayList<>();
     List<Group> modifiedGroupLeaderList = new ArrayList<>(  );
     List<Long> groupIdLeaderList = new ArrayList<>();
-
+    private static final int requestNum = 1234;
 
     List<Group> groupMemberList = new ArrayList<>();
     List<Group> modifiedGroupMemberList = new ArrayList<>( );
@@ -60,6 +60,8 @@ public class GroupManagementActivity extends AppCompatActivity {
         proxy = ProxyBuilder.getProxy(getString( R.string.api_key),userToken);
 
         user = User.getInstance();
+
+
         //Make call
         Call<User> caller = proxy.getUserByEmail(user.getEmail());
         ProxyBuilder.callProxy(GroupManagementActivity.this, caller, returnedUser -> responseForUser(returnedUser));
@@ -105,7 +107,11 @@ public class GroupManagementActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = PlacePickerActivity.makeIntent(GroupManagementActivity.this);
-                startActivity(intent);
+                startActivityForResult( intent, requestNum);
+
+
+
+
             }
         } );
     }
@@ -118,9 +124,9 @@ public class GroupManagementActivity extends AppCompatActivity {
         notifyUserViaLogAndToast("Got list of " + returnedGroups.size() + " users! See logcat.");
         Log.w(TAG, "All Users:");
 
-
         SwipeMenuListView groupAsLeaderListView = (SwipeMenuListView) findViewById( R.id.groupAsLeaderList);
         SwipeMenuListView groupAsMemberListView = (SwipeMenuListView) findViewById(R.id.groupAsMemberList);
+
 
 
         for (Group group : returnedGroups) {
@@ -299,7 +305,7 @@ public class GroupManagementActivity extends AppCompatActivity {
 
 
     private void response(Void returnedNothing) {
-        notifyUserViaLogAndToast(" Successful delete");
+        notifyUserViaLogAndToast("Delete successfully");
     }
 
     private void notifyUserViaLogAndToast(String message) {
@@ -315,8 +321,22 @@ public class GroupManagementActivity extends AppCompatActivity {
      */
     public static Intent makeIntent(Context context){
         Intent intent = new Intent(context,GroupManagementActivity.class);
-        //intent.putExtra(USER_TOKEN, tokenToPass);
         return intent;
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+
+        switch(requestCode){
+            case requestNum:
+                if (resultCode == Activity.RESULT_OK) {
+                    finish();
+                    startActivity(getIntent());
+                }
+                break;
+        }
+
     }
 
 

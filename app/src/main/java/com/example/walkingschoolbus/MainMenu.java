@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.walkingschoolbus.model.Session;
@@ -33,9 +34,6 @@ public class MainMenu extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
 
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(R.string.main_menu);
-
         setupLayoutGroups();
         setupLayoutMaps();
         setupLayoutSetting();
@@ -49,6 +47,8 @@ public class MainMenu extends AppCompatActivity {
         Toast toast2 = Toast.makeText(this, user.getEmail() +"||" + user.getName()+"||"+user.getId(),Toast.LENGTH_LONG);
         toast2.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL, 0, 0);
         toast2.show();
+
+        setTextViewMessage();
 
     }
 
@@ -108,7 +108,18 @@ public class MainMenu extends AppCompatActivity {
             }
         });
     }
-    
+
+    /**
+     *Show welcome message to the user loggged in
+     */
+    private void setTextViewMessage( )
+    {
+        TextView welcome = (TextView) findViewById( R.id.mainMenuMessage );
+        String welcomeMessage = getString( R.string.hello ) + " " + user.getName();
+        welcome.setText( welcomeMessage );
+
+    }
+
     public static Intent makeIntent(Context context){
         return new Intent(context,MainMenu.class);
     }
