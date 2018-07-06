@@ -31,6 +31,7 @@
     <string name="re_enter_pass">Re-enter Password: </string>
     <string name="email">Email Address: </string>
     <string name="create_user">CREATE USER</string>
+    <string name="login_toast">Server replied to login request (no content was expected).</string>
 
     <!--Group Management-->
     <string name="group_layout_title">MY GROUPS</string>
@@ -39,6 +40,9 @@
     <string name="leader_group">A leader of</string>
     <string name="member_group">A member of</string>
     <string name="delete_message">Delete successfully!</string>
+    <string name="delete_swipe">Delete</string>
+    <string name="open_swipe">Open</string>
+    <string name="group_list">Group: </string>
 
 
     <!-- Place Picker -->
@@ -49,6 +53,11 @@
 
     <!-- Leader -->
     <string name="members">MEMBERS</string>
+
+    <!-- Settings -->
+    <string name="monitored">I MONITOR</string>
+    <string name="monitoring">MY MONITORER</string>
+
 
 
 </resources>

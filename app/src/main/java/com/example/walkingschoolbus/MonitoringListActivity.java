@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.baoyz.swipemenulistview.SwipeMenu;
@@ -29,13 +30,13 @@ public class MonitoringListActivity extends AppCompatActivity {
 
     private static final String TAG = "MonitoringListActivity";
     public static final String USER_TOKEN = "User Token";
-    //private String userToken3;
+
     private Session session;
     private User user;
     private static WGServerProxy proxy;
 
     ArrayList<String> monitoringUser = new ArrayList<>();
-    //SwipeMenuListView monitoringList = (SwipeMenuListView) findViewById(R.id.monitoringList);
+
 
 
     @Override
@@ -48,8 +49,8 @@ public class MonitoringListActivity extends AppCompatActivity {
         Session.getStoredSession(this);
         session = Session.getInstance();
         String savedToken = session.getToken();
+        setMonitoringTextView();
 
-        //userToken3 = extractDataFromIntent();
         // Build the server proxy
         proxy = ProxyBuilder.getProxy(getString(R.string.api_key),session.getToken());
 
@@ -75,8 +76,7 @@ public class MonitoringListActivity extends AppCompatActivity {
         //List<Integer> child_ID = new ArrayList<Integer>();
         for (User user : returnedUsers) {
             Log.w(TAG, "    User: " + user.toString());
-            String userInfo = "User Email: "+ user.getEmail() + "   " + "User Name: " + user.getName()
-                    + "User ID: "+ user.getId();
+            String userInfo = "User Name: " + user.getName() + "\nUser Email:" + user.getEmail();
 
             monitoringUser.add(userInfo);
             ArrayAdapter adapter = new ArrayAdapter(MonitoringListActivity.this, R.layout.da_items, monitoringUser);
@@ -92,12 +92,12 @@ public class MonitoringListActivity extends AppCompatActivity {
                 SwipeMenuItem deleteItem = new SwipeMenuItem(
                         getApplicationContext());
                 // set item background
-                deleteItem.setBackground(new ColorDrawable(Color.rgb(0xC9, 0xC9,
-                        0xCE)));
+                deleteItem.setBackground(new ColorDrawable(Color.rgb(220, 20,
+                        60)));
                 // set item width
                 deleteItem.setWidth(180);
                 // set item title
-                deleteItem.setTitle("DELETE");
+                deleteItem.setTitle(R.string.delete_swipe);
                 // set item title fontsize
                 deleteItem.setTitleSize(18);
                 // set item title font color
@@ -108,7 +108,7 @@ public class MonitoringListActivity extends AppCompatActivity {
             }
         };
 
-// set creator
+        // set creator
         monitoringList.setMenuCreator(creator);
 
         monitoringList.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
@@ -120,9 +120,7 @@ public class MonitoringListActivity extends AppCompatActivity {
                         Call<Void> caller = proxy.removeFromMonitorsUsers(user.getId(), returnedUsers.get(position).getId());
                         ProxyBuilder.callProxy(MonitoringListActivity.this, caller, returnedNothing -> response(returnedNothing));
                         monitoringList.removeViewsInLayout(position,1);
-                       // finish();
-                        //ArrayAdapter adapter = new ArrayAdapter(MonitoringListActivity.this, R.layout.da_items, monitoringUser);
-                        //monitoringList.setAdapter(adapter);
+
                     break;
 
                 }
@@ -142,12 +140,16 @@ public class MonitoringListActivity extends AppCompatActivity {
     }
 
 
+    private void setMonitoringTextView() {
+        TextView monitoringList = (TextView) findViewById( R.id.monitoringListText );
+        String monitoring = getString(R.string.monitoring);
+        monitoringList.setText( monitoring );
 
+    }
 
 
     public static Intent makeIntent(Context context) {
         Intent intent = new Intent(context, MonitoringListActivity.class);
-        //intent.putExtra(USER_TOKEN, tokenToPass);
         return intent;
     }
 

@@ -30,8 +30,8 @@ import retrofit2.Call;
 
 public class PlacePickerActivity extends AppCompatActivity {
 
-    int PLACE_PICKER_LOC_REQUEST = 1;
-    int PLACE_PICKER_MEET_REQUEST =2;
+    private int PLACE_PICKER_LOC_REQUEST = 1;
+    private int PLACE_PICKER_MEET_REQUEST =2;
     private final static String TAG = "Place Picker Activity";
     private LatLng primaryLocation;
     private LatLng meetupLocation;
