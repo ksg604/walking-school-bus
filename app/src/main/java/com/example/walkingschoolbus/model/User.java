@@ -67,6 +67,24 @@ public class User {
         this.password = password;
     }
 
+    public void makeCopyOf(User oldUser){
+        this.id = oldUser.getId();
+
+        this.hasFullData = oldUser.getHasFullData();
+        this.name = oldUser.getName();
+        this.email = oldUser.getEmail();
+        this.password = oldUser.getPassword();
+
+
+        this.monitoredByUsers =oldUser.getMonitoredByUsers();// <-- TO BE IMPLEMENTED
+        this.monitorsUsers = oldUser.getMonitorsUsers();   // <-- TO BE IMPLEMENTED
+
+        this.memberOfGroups = oldUser.getMemberOfGroups(); // <-- TO BE IMPLEMENTED
+        this.leadsGroups = oldUser.getLeadsGroups();    // <-- TO BE IMPLEMENTED
+
+        this.href=oldUser.getHref();
+    }
+
 
 //Constructor
     private User() {
@@ -94,7 +112,7 @@ public class User {
     // If server sends back just an ID then it's a stub; otherwise you have full data about
     // *this* object. Objects it refers to, such as other users or groups, may not be filled in
     // (and hence those will have hasFullData set to false for them).
-    public Boolean hasFullData() {
+    public Boolean getHasFullData() {
         return hasFullData;
     }
 
