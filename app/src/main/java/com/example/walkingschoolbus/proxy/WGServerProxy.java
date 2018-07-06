@@ -102,6 +102,7 @@ public interface WGServerProxy {
 
     @POST("/groups/{id}/memberUsers")
     Call<List<User>> addGroupMember(@Path("id") Long groupId, @Body User user);
+    //Call<List<User>> addGroupMember(@Path("id") Long groupId, @Path("userId"));
 
     @DELETE("/groups/{id}/memberUsers/{userId}")
     Call<Void> removeGroupMember(@Path("id") Long groupId, @Path("userId") Long userId);

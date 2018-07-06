@@ -40,6 +40,7 @@ public class MainMenu extends AppCompatActivity {
         setupLayoutMaps();
         setupLayoutSetting();
         setupLogOutButton();
+        //setupMonitorButton();
 
         //TODO: delete this before push to main
         Toast toast = Toast.makeText(this, session.getEmail() +"||" + session.getName()+"||"+session.getid(),Toast.LENGTH_LONG);
@@ -52,20 +53,20 @@ public class MainMenu extends AppCompatActivity {
 
     }
 
-    private void setupLogOutButton(){
-    Button btn = findViewById(R.id.btnLogOut);
-    btn.setOnClickListener(new View.OnClickListener(){
-        @Override
-        public void onClick(View v){
-            session.deleteToken();
-            session.storeSession(MainMenu.this);
-            Intent intent = WelcomeScreen.makeIntent(MainMenu.this);
-            startActivity(intent);
-            finish();
-        }
-    });
+    private void setupMonitorButton() {
+        LinearLayout monitor = (LinearLayout) findViewById(R.id.linearLayoutMonitor);
+        monitor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = MonitorActivity.makeIntent(MainMenu.this);
+                startActivity(intent);
+
+            }
+        });
 
     }
+
+
 
     private void setupLayoutSetting() {
         LinearLayout setting = (LinearLayout) findViewById(R.id.linearLayoutSetting);
@@ -108,7 +109,23 @@ public class MainMenu extends AppCompatActivity {
             }
         });
     }
-    
+
+
+
+    private void setupLogOutButton(){
+        Button btn = findViewById(R.id.btnLogOut);
+        btn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                session.deleteToken();
+                session.storeSession(MainMenu.this);
+                Intent intent = WelcomeScreen.makeIntent(MainMenu.this);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+    }
     public static Intent makeIntent(Context context){
         return new Intent(context,MainMenu.class);
     }
