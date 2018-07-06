@@ -53,6 +53,8 @@ public interface WGServerProxy {
     @POST("/users/{id}/lastGpsLocation")
     Call<GpsLocation> setLastGpsLocation(@Path("id") Long userId, @Body GpsLocation location);
 
+   // @POST("/groups/{id}/")
+
 
     // -----------------------------
     // User Monitoring

@@ -72,6 +72,8 @@ import static android.Manifest.permission.ACCESS_FINE_LOCATION;
     private Session token = Session.getInstance();
 
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
