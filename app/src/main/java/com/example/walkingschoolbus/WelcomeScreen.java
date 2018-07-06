@@ -126,7 +126,7 @@ public class WelcomeScreen extends AppCompatActivity {
         String name = returnedUser.getName();
 
         //set singleton user to point to user pulled from server
-        user = returnedUser; //set singleton user to logged in user.
+        user.makeCopyOf(returnedUser); //set singleton user to logged in user.
         Log.i(TAG, "set user to: "+ user.getName());
 
         //set and save session data

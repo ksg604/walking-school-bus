@@ -83,8 +83,7 @@ public class Group {
         this.memberUsers = memberUsers;
         this.hasFullData = true;
         this.href=href;
-        //this.meetingPlace = meetingPlace;
-    }
+}
 
     public Group(String groupDescription, List<Double> routeLatArray,
                  List<Double> routeLngArray, User leader){
@@ -165,7 +164,9 @@ public class Group {
         this.memberUsers = memberUsers;
     }
 
+    public void clearGrouyp(){
 
+    }
 
 /*
     public Location getLocation() {
