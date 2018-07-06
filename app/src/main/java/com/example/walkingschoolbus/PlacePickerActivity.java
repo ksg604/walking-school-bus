@@ -106,6 +106,14 @@ public class PlacePickerActivity extends AppCompatActivity {
                 Toast.LENGTH_LONG).show();
         user.getLeadsGroups();
 
+        Call<User> caller = proxy.getUserById(session.getid());
+        ProxyBuilder.callProxy(PlacePickerActivity.this,caller,returnedUser->responseForUser(returnedUser));
+
+    }
+
+   private void responseForUser(User returnedUser){
+        Log.i(TAG, "updating user after creating new group");
+
     }
 
 
