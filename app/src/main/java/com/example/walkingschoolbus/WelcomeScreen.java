@@ -51,6 +51,7 @@ public class WelcomeScreen extends AppCompatActivity {
         }
         proxy = ProxyBuilder.getProxy(getString(R.string.api_key), null);
 
+        setupSignUpButton();
         setupSignInButton();
     }
 
@@ -90,7 +91,7 @@ public class WelcomeScreen extends AppCompatActivity {
 
                 // Register for token received:
                 ProxyBuilder.setOnTokenReceiveCallback( token -> onReceiveToken(token));
-                setupSignUpButton();
+                //setupSignUpButton();
                 // Make call
                 Call<Void> caller = proxy.login(loginUser);
                 ProxyBuilder.callProxy(WelcomeScreen.this, caller, returnedNothing -> response(returnedNothing));
