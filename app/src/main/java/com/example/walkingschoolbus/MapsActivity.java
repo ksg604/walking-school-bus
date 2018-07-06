@@ -193,9 +193,16 @@ import static android.Manifest.permission.ACCESS_FINE_LOCATION;
             location.addOnCompleteListener(new OnCompleteListener() {
                 @Override
                 public void onComplete(@NonNull Task task) {
-                    if(task.isSuccessful()){
+                    if(task.isSuccessful()) {
                         Location currentLocation = (Location) task.getResult();
-                        moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()),DEFAULT_ZOOM);
+                        if (currentLocation == null) {
+                            Location sfu = new Location("");
+                            sfu.setLatitude(49.27);
+                            sfu.setLongitude(-122.98);
+                            moveCamera(new LatLng(sfu.getLatitude(), sfu.getLongitude()), DEFAULT_ZOOM);
+                        } else{
+                            moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), DEFAULT_ZOOM);
+                        }
                     }
                 }
             });
