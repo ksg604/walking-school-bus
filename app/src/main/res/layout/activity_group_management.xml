@@ -7,19 +7,48 @@
     tools:context=".GroupManagementActivity"
     tools:layout_editor_absoluteY="81dp">
 
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginStart="20dp"
+        android:background="#000000"
+        android:text="@string/member_group"
+        android:textAppearance="@android:style/TextAppearance.Material.Medium"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/groupAsMemberList"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <com.baoyz.swipemenulistview.SwipeMenuListView
-        android:id="@+id/groupList"
-        android:layout_width="326dp"
-        android:layout_height="359dp"
+        android:id="@+id/groupAsLeaderList"
+        android:layout_width="315dp"
+        android:layout_height="136dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="100dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.517"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </com.baoyz.swipemenulistview.SwipeMenuListView>
+
+
+    <com.baoyz.swipemenulistview.SwipeMenuListView
+        android:id="@+id/groupAsMemberList"
+        android:layout_width="315dp"
+        android:layout_height="136dp"
         android:layout_marginBottom="30dp"
         android:layout_marginEnd="20dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="55dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.517"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.089">
+        app:layout_constraintVertical_bias="0.796">
 
     </com.baoyz.swipemenulistview.SwipeMenuListView>
 
@@ -27,10 +56,10 @@
         android:id="@+id/txtViewGroupTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="240dp"
+        android:layout_marginEnd="220dp"
         android:layout_marginTop="16dp"
         android:text="@string/group_layout_title"
-        android:textSize="24sp"
+        android:textAppearance="@android:style/TextAppearance.Material.Headline"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -53,5 +82,18 @@
         android:text="@string/modify_group"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="20dp"
+        android:background="#000000"
+        android:text="@string/leader_group"
+        android:textAppearance="@android:style/TextAppearance.Material.Medium"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/groupAsLeaderList"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
