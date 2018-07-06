@@ -42,8 +42,11 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Map;
 
 import retrofit2.Call;
 
@@ -59,7 +62,7 @@ import static android.Manifest.permission.ACCESS_FINE_LOCATION;
  * - More notes at the end of this file.
  */
 
- public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,GoogleMap.OnMarkerClickListener {
+ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
 
@@ -75,6 +78,8 @@ import static android.Manifest.permission.ACCESS_FINE_LOCATION;
     private Session token = Session.getInstance();
 
     private Marker groupFinalLocationMarker;
+    private List<Marker> markerArray = new ArrayList<>();
+    private Map<Marker, Long> markerLongHashMapMap = new HashMap<Marker, Long>();
 
 
 
@@ -108,26 +113,20 @@ import static android.Manifest.permission.ACCESS_FINE_LOCATION;
      * Server response is to return server groups and then display all of their current locations and
      * meeting locations on the map.
      */
+
     private void response(List<Group> returnedGroupList) {
 
-        //for(int i = 0; i < returnedGroupList.size(); i++){
         for (Group group : returnedGroupList) {
-            //Group group = returnedGroupList.get(i);
             if(group.getRouteLatArray().size() == 2 && group.getRouteLngArray().size() == 2){
                 LatLng groupFinalLocation = new LatLng( group.getRouteLatArray().get( 0 ), group.getRouteLngArray().get( 0 ) );
                 groupFinalLocationMarker = mMap.addMarker(new MarkerOptions()
                         .position( groupFinalLocation )
                         .title( "Group: " + group.getGroupDescription() ));
+                Log.i("Debug tag 0.8","group initial id is: "+group.getId());
+                markerLongHashMapMap.put(groupFinalLocationMarker,group.getId());
+
             }
         }
-    }
-
-    @Override
-    public boolean onMarkerClick(Marker marker) {
-        if(marker.equals(groupFinalLocationMarker)){
-            Toast.makeText(getBaseContext(),"hey",Toast.LENGTH_LONG);
-        }
-        return false;
     }
 
     private void initMap(){
@@ -162,22 +161,24 @@ import static android.Manifest.permission.ACCESS_FINE_LOCATION;
             }
             mMap.setMyLocationEnabled(true);
         }
-
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
-                if(marker.equals(groupFinalLocationMarker)){
-                    Toast.makeText(getApplicationContext(),"Hi",Toast.LENGTH_LONG)
-                            .show();
-                }
-                FragmentManager manager = getSupportFragmentManager();
-                DialogFragment dialog = new DialogFragment();
-                dialog.show(manager, "MessageDialog");
+
+                Long groupId = markerLongHashMapMap.get(marker);
+
+                Intent intent = OnMarkerClickActivity.makeIntent(getApplicationContext());
+                intent.putExtra("id",groupId);
+                startActivity(intent);
                 return false;
             }
         });
 
+
+
+
     }
+
 
     /**
      * Retrieves the phones location and marks it on the map.
