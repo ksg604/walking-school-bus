@@ -23,8 +23,9 @@
         android:id="@+id/btnMeetingLoc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/meet_up_location"
-        android:layout_marginTop="40dp"/>
+        android:layout_marginTop="40dp"
+        android:text="@string/meet_up_location" />
+
     <TextView
         android:id="@+id/txtViewMeetupLoc"
         android:layout_width="match_parent"
@@ -41,11 +42,11 @@
         android:layout_marginTop="20dp"/>
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/btnCreateGroup"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:text="@string/create_group"
+        android:layout_marginLeft="10dp"
         android:layout_marginTop="170dp"
-        android:layout_marginLeft="10dp"/>
+        android:text="@string/create_group" />
 
 </LinearLayout>

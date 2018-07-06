@@ -24,19 +24,20 @@ import java.util.List;
 
 import retrofit2.Call;
 
+/**
+ * MonitoredList activity provides user with list of persons who monitors me with options to remove.
+ */
 public class MonitoredListActivity extends AppCompatActivity {
 
 
     private static final String TAG = "MonitoredListActivity";
-    public static final String USER_TOKEN = "User Token";
-    //private String userToken4;
+
+
     private User user;
     private static WGServerProxy proxy;
     private Session session;
 
     ArrayList<String> monitoredUser = new ArrayList<>();
-    //SwipeMenuListView monitoringList = (SwipeMenuListView) findViewById(R.id.monitoringList);
-    //long temp_id = 932;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +48,6 @@ public class MonitoredListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_monitored_list);
 
-        //userToken4 = extractDataFromIntent();
         // Build the server proxy
         proxy = ProxyBuilder.getProxy(getString(R.string.api_key),session.getToken());
 
@@ -58,14 +58,8 @@ public class MonitoredListActivity extends AppCompatActivity {
 
 
     }
-/*
-    private String extractDataFromIntent() {
-        Intent intent = getIntent();
-        return intent.getStringExtra(USER_TOKEN);
-    }
-*/
+
     private void response(List<User> returnedUsers) {
-        notifyUserViaLogAndToast("Got list of " + returnedUsers.size() + " users! See logcat.");
         Log.w(TAG, "All Users:");
 
         SwipeMenuListView monitoredList = (SwipeMenuListView) findViewById(R.id.monitoredList);
@@ -93,7 +87,7 @@ public class MonitoredListActivity extends AppCompatActivity {
                 // set item width
                 deleteItem.setWidth(180);
                 // set item title
-                deleteItem.setTitle("DELETE");
+                deleteItem.setTitle(MonitoredListActivity.this.getString(R.string.set_title_del));
                 // set item title fontsize
                 deleteItem.setTitleSize(18);
                 // set item title font color
@@ -120,10 +114,7 @@ public class MonitoredListActivity extends AppCompatActivity {
                         //ArrayAdapter adapter = new ArrayAdapter(MonitoringListActivity.this, R.layout.da_items, monitoringUser);
                         //monitoringList.setAdapter(adapter);
                         break;
-
                 }
-
-
                 // false : close the menu; true : not close the menu
                 return false;
             }
@@ -132,13 +123,9 @@ public class MonitoredListActivity extends AppCompatActivity {
 
     }
 
-
     private void response(Void returnedNothing) {
-        notifyUserViaLogAndToast(" You will not be monitored by this user anymore.");
+        notifyUserViaLogAndToast(MonitoredListActivity.this.getString(R.string.notify_delete));
     }
-
-
-
 
 
     public static Intent makeIntent(Context context) {
@@ -147,12 +134,8 @@ public class MonitoredListActivity extends AppCompatActivity {
         return intent;
     }
 
-
-
     private void notifyUserViaLogAndToast(String message) {
         Log.w(TAG, message);
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
-
-
 }

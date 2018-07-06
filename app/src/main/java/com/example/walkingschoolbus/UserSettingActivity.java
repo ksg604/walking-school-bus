@@ -20,6 +20,9 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.http.Query;
 
+/**
+ * User settings activity allows user to change add/remove users they monitor from groups
+ */
 public class UserSettingActivity extends AppCompatActivity {
 
 

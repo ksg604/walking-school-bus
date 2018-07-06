@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.walkingschoolbus.model.Session;
@@ -33,40 +34,28 @@ public class MainMenu extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
 
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(R.string.main_menu);
-
         setupLayoutGroups();
         setupLayoutMaps();
         setupLayoutSetting();
         setupLogOutButton();
-        //setupMonitorButton();
-
-        //TODO: delete this before push to main
-        Toast toast = Toast.makeText(this, session.getEmail() +"||" + session.getName()+"||"+session.getid(),Toast.LENGTH_LONG);
-        toast.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
-        toast.show();
-
-        Toast toast2 = Toast.makeText(this, user.getEmail() +"||" + user.getName()+"||"+user.getId(),Toast.LENGTH_LONG);
-        toast2.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL, 0, 0);
-        toast2.show();
+        setTextViewMessage();
 
     }
 
-    private void setupMonitorButton() {
-        LinearLayout monitor = (LinearLayout) findViewById(R.id.linearLayoutMonitor);
-        monitor.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = MonitorActivity.makeIntent(MainMenu.this);
-                startActivity(intent);
-
-            }
-        });
+    private void setupLogOutButton(){
+    Button btn = findViewById(R.id.btnLogOut);
+    btn.setOnClickListener(new View.OnClickListener(){
+        @Override
+        public void onClick(View v){
+            session.deleteToken();
+            session.storeSession(MainMenu.this);
+            Intent intent = WelcomeScreen.makeIntent(MainMenu.this);
+            startActivity(intent);
+            finish();
+        }
+    });
 
     }
-
-
 
     private void setupLayoutSetting() {
         LinearLayout setting = (LinearLayout) findViewById(R.id.linearLayoutSetting);
@@ -110,22 +99,17 @@ public class MainMenu extends AppCompatActivity {
         });
     }
 
-
-
-    private void setupLogOutButton(){
-        Button btn = findViewById(R.id.btnLogOut);
-        btn.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                session.deleteToken();
-                session.storeSession(MainMenu.this);
-                Intent intent = WelcomeScreen.makeIntent(MainMenu.this);
-                startActivity(intent);
-                finish();
-            }
-        });
+    /**
+     *Show welcome message to the user loggged in
+     */
+    private void setTextViewMessage( )
+    {
+        TextView welcome = (TextView) findViewById( R.id.mainMenuMessage );
+        String welcomeMessage = getString( R.string.hello ) + " " + user.getName();
+        welcome.setText( welcomeMessage );
 
     }
+
     public static Intent makeIntent(Context context){
         return new Intent(context,MainMenu.class);
     }
