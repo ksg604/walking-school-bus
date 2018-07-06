@@ -14,6 +14,7 @@
     <string name="login_username">Name</string>
     <string name="login_password">Password</string>
     <string name="login_signup_text">Don\'t have an account? Sign up</string>
+    <string name="login_success">LOGIN SUCCESS</string>
 
 
     <!--Main Menu-->
@@ -50,5 +51,17 @@
     <!-- Leader -->
     <string name="members">MEMBERS</string>
 
+    <!--Settings-->
+    <string name="monitoring">List All Users I Monitor</string>
+    <string name="monitored_by">List All Users Who Monitor Me</string>
+    <string name="monitor_email_help">Add Email or User to Monitor/Be Monitored By</string>
+    <string name="add_monitoring">Start Monitoring The Email Above</string>
+    <string name="add_monitored_by">Starting Being Monitored By The Email Above</string>
 
+    <!--MonitoredListActivity-->
+    <string name="notify_delete"> You will not be monitored by this user anymore.</string>
+    <string name="set_title_del">DELETE</string>
+
+    <!--MonitoringListActivity-->
+    <string name="notify_not_monitor">You cannot monitor this user anymore.</string>
 </resources>
