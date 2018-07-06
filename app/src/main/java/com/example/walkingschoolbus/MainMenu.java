@@ -73,7 +73,7 @@ public class MainMenu extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = UserSettingActivity.makeIntent(MainMenu.this);
-                Log.w("Maintest", "   --> NOW HAVE TOKEN(output3): " + userToken1);
+                Log.w("Maintest", "   --> NOW HAVE TOKEN(output3): " + token);
                 startActivity(intent);
             }
         });
@@ -108,14 +108,12 @@ public class MainMenu extends AppCompatActivity {
             }
         });
     }
-
-
-
+    
     public static Intent makeIntent(Context context){
-        Intent intent = new Intent(context, MainMenu.class);
-        //intent.putExtra(USER_TOKEN, tokenToPass);
-        return intent;
+        return new Intent(context,MainMenu.class);
     }
+
+
 
 
 }
