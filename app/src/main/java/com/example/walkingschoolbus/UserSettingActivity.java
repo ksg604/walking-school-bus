@@ -20,6 +20,9 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.http.Query;
 
+/**
+ * User settings activity allows user to change add/remove users they monitor from groups
+ */
 public class UserSettingActivity extends AppCompatActivity {
 
 
@@ -36,7 +39,7 @@ public class UserSettingActivity extends AppCompatActivity {
         session = Session.getInstance();
         user = User.getInstance();
 
-        //Log.w("TESTTEST:::",user.getId().toString());
+
 
         // Build the server proxy
         proxy = ProxyBuilder.getProxy(getString(R.string.api_key),session.getToken());

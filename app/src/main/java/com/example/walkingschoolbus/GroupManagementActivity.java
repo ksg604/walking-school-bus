@@ -1,5 +1,6 @@
 package com.example.walkingschoolbus;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -28,26 +29,31 @@ import java.util.List;
 
 import retrofit2.Call;
 
+/**
+ * Class to list all groups related to logged in user with option to delete or move to place picker
+ * activity to create a new group.
+ */
 public class GroupManagementActivity extends AppCompatActivity {
 
 
-    public static final String USER_TOKEN = "User Token";
+
+    private List<String> stringMemberGroupList = new ArrayList< >( );
+    private List<String> stringLeaderGroupList = new ArrayList< >( );
+    private List<Group> groupLeaderList = new ArrayList<>();
+    private List<Group> modifiedGroupLeaderList = new ArrayList<>(  );
+    private List<Long> groupIdLeaderList = new ArrayList<>();
+
+    private List<Group> groupMemberList = new ArrayList<>();
+    private List<Group> modifiedGroupMemberList = new ArrayList<>( );
+    private List<Long> groupIdMemberList = new ArrayList<>();
+    private Session tokenSession = Session.getInstance();
+    private Group group = Group.getInstance();
+    private User user;
     private String userToken;
     private static WGServerProxy proxy;
-    List<String> stringMemberGroupList = new ArrayList< >( );
-    List<String> stringLeaderGroupList = new ArrayList< >( );
-    List<Group> groupLeaderList = new ArrayList<>();
-    List<Group> modifiedGroupLeaderList = new ArrayList<>(  );
-    List<Long> groupIdLeaderList = new ArrayList<>();
-
-
-    List<Group> groupMemberList = new ArrayList<>();
-    List<Group> modifiedGroupMemberList = new ArrayList<>( );
-    List<Long> groupIdMemberList = new ArrayList<>();
-    private Session tokenSession = Session.getInstance();
-    private  Group group = Group.getInstance();
-    private  User user;
     private static final String TAG = "GroupManagementActivity";
+    private static final int REQUEST_CODE = 1004;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +66,8 @@ public class GroupManagementActivity extends AppCompatActivity {
         proxy = ProxyBuilder.getProxy(getString( R.string.api_key),userToken);
 
         user = User.getInstance();
+
+
         //Make call
         Call<User> caller = proxy.getUserByEmail(user.getEmail());
         ProxyBuilder.callProxy(GroupManagementActivity.this, caller, returnedUser -> responseForUser(returnedUser));
@@ -105,7 +113,11 @@ public class GroupManagementActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = PlacePickerActivity.makeIntent(GroupManagementActivity.this);
-                startActivity(intent);
+                startActivityForResult( intent, REQUEST_CODE);
+
+
+
+
             }
         } );
     }
@@ -116,27 +128,27 @@ public class GroupManagementActivity extends AppCompatActivity {
     */
     private void responseForGroup(List<Group> returnedGroups) {
         notifyUserViaLogAndToast("Got list of " + returnedGroups.size() + " users! See logcat.");
-        Log.w(TAG, "All Users:");
 
 
         SwipeMenuListView groupAsLeaderListView = (SwipeMenuListView) findViewById( R.id.groupAsLeaderList);
         SwipeMenuListView groupAsMemberListView = (SwipeMenuListView) findViewById(R.id.groupAsMemberList);
 
 
+
         for (Group group : returnedGroups) {
 
             if (groupIdMemberList.contains( group.getId() )){
-                Log.w( TAG, "    Group: " + group.getId() );
+                Log.w( TAG, getString( R.string.group_list) + " " + group.getId() );
 
                 modifiedGroupMemberList.add(group);
-                String groupInfo = "Group : " + group.getGroupDescription();
+                String groupInfo = getString( R.string.group_list) + " " + group.getGroupDescription();
                 stringMemberGroupList.add( groupInfo );
 
             }else if( groupIdLeaderList.contains(group.getId())){
-                Log.w( TAG, "    Group: " + group.getId() );
+                Log.w( TAG, getString( R.string.group_list) + " " + group.getId() );
 
                 modifiedGroupLeaderList.add(group);
-                String groupInfo = "Group : " + group.getGroupDescription();
+                String groupInfo = getString( R.string.group_list) + " " + group.getGroupDescription();
                 stringLeaderGroupList.add( groupInfo );
 
 
@@ -169,7 +181,7 @@ public class GroupManagementActivity extends AppCompatActivity {
                 // set item width
                 openItem.setWidth(180);
                 // set item title
-                openItem.setTitle("Open");
+                openItem.setTitle(getString( R.string.open_swipe ));
                 // set item title fontsize
                 openItem.setTitleSize(18);
                 // set item title font color
@@ -185,7 +197,7 @@ public class GroupManagementActivity extends AppCompatActivity {
                 // set item width
                 deleteItem.setWidth(180);
                 // set item title
-                deleteItem.setTitle("Delete");
+                deleteItem.setTitle(getString(R.string.delete_swipe));
                 // set item title fontsize
                 deleteItem.setTitleSize(18);
                 // set item title font color
@@ -224,11 +236,7 @@ public class GroupManagementActivity extends AppCompatActivity {
                          Call<Void> caller = proxy.deleteGroup( modifiedGroupLeaderList.get(position).getId());
                          ProxyBuilder.callProxy(GroupManagementActivity.this, caller, returnedNothing -> response(returnedNothing));
                          groupAsLeaderListView.removeViewsInLayout(position,1);
-                         finish();
 
-                         ArrayAdapter adapter = new ArrayAdapter(GroupManagementActivity.this, R.layout.da_items, stringLeaderGroupList);
-                         groupAsLeaderListView.setAdapter(adapter);
-                         startActivity(getIntent());
 
 
                          break;
@@ -254,7 +262,7 @@ public class GroupManagementActivity extends AppCompatActivity {
                 // set item width
                 deleteItem.setWidth(180);
                 // set item title
-                deleteItem.setTitle("Delete");
+                deleteItem.setTitle(R.string.delete_swipe);
                 // set item title fontsize
                 deleteItem.setTitleSize(18);
                 // set item title font color
@@ -282,10 +290,7 @@ public class GroupManagementActivity extends AppCompatActivity {
                              Call<Void> caller = proxy.removeGroupMember(modifiedGroupMemberList.get(position).getId(), user.getId());
                              ProxyBuilder.callProxy(GroupManagementActivity.this, caller, returnedNothing -> response(returnedNothing));
                              groupAsMemberListView.removeViewsInLayout(position,1);
-                             finish();
-                             ArrayAdapter adapter = new ArrayAdapter(GroupManagementActivity.this, R.layout.da_items, stringMemberGroupList);
-                             groupAsMemberListView.setAdapter(adapter);
-                             startActivity(getIntent());
+
                              break;
 
                     }
@@ -299,7 +304,7 @@ public class GroupManagementActivity extends AppCompatActivity {
 
 
     private void response(Void returnedNothing) {
-        notifyUserViaLogAndToast(" Successful delete");
+        notifyUserViaLogAndToast( getString( R.string.delete_message));
     }
 
     private void notifyUserViaLogAndToast(String message) {
@@ -315,8 +320,27 @@ public class GroupManagementActivity extends AppCompatActivity {
      */
     public static Intent makeIntent(Context context){
         Intent intent = new Intent(context,GroupManagementActivity.class);
-        //intent.putExtra(USER_TOKEN, tokenToPass);
         return intent;
+    }
+
+    /**
+     * put the result from PlacePickerActivity on the listview to update
+     * @param requestCode arbitrary code number in this activity to get result from the other Activity
+     * @param resultCode the result code from the other Activity
+     * @param intent intent for going to another activity
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+
+        switch(requestCode){
+            case REQUEST_CODE:
+                if (resultCode == Activity.RESULT_OK) {
+                    finish();
+                    startActivity(getIntent());
+                }
+                break;
+        }
+
     }
 
 

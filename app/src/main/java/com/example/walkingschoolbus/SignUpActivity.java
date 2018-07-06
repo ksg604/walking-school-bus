@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.walkingschoolbus.model.User;
@@ -16,6 +17,9 @@ import com.example.walkingschoolbus.proxy.WGServerProxy;
 
 import retrofit2.Call;
 
+/**
+ * Signup Activity allows users to create a new account
+ */
 public class SignUpActivity extends AppCompatActivity {
 
     private static WGServerProxy proxy;
@@ -29,6 +33,7 @@ public class SignUpActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sign_up);
         proxy = ProxyBuilder.getProxy(getString(R.string.api_key),null);
         setupNewUserButton();
+        setSignUpTextView();
 
     }
 
@@ -51,7 +56,7 @@ public class SignUpActivity extends AppCompatActivity {
             public void onClick(View view) {
                 // Build new user (with random email to avoid conflicts)
                 user = User.getInstance();
-                //int random = (int) (Math.random() * 100000);
+
                 EditText name = (EditText) findViewById( R.id.edtTxtName );
                 EditText email = (EditText) findViewById( R.id.edtTxtEmail );
                 EditText password = (EditText) findViewById( R.id.edtTxtPassword2 );
@@ -76,6 +81,17 @@ public class SignUpActivity extends AppCompatActivity {
         });
     }
 
+
+
+
+    private void setSignUpTextView() {
+        TextView signup = (TextView) findViewById( R.id.signUpText );
+        String signUp = getString(R.string.sign_up);
+        signup.setText( signUp );
+
+    }
+
+
     /**
      *Get response of User
      *@param user
@@ -90,6 +106,8 @@ public class SignUpActivity extends AppCompatActivity {
         Log.w(TAG, message);
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
+
+
 
 
 }

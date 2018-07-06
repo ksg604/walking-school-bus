@@ -25,6 +25,10 @@ import java.util.List;
 
 import retrofit2.Call;
 
+/**
+ * LeaderActivity class to provide user with options related to groups he or her manages
+ * Such as adding or removing members.
+ */
 public class LeaderActivity extends AppCompatActivity {
 
     private Session tokenSession = Session.getInstance();
@@ -154,6 +158,8 @@ public class LeaderActivity extends AppCompatActivity {
         Intent intent = new Intent( context, LeaderActivity.class );
         return intent;
     }
+
+
 
 
 }

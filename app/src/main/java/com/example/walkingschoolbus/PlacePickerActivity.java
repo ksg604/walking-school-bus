@@ -1,5 +1,6 @@
 package com.example.walkingschoolbus;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -27,10 +28,14 @@ import java.util.List;
 
 import retrofit2.Call;
 
+/**
+ * Place picker activity allows user to select to locations on a map and use to that to generate
+ * a new walking group.
+ */
 public class PlacePickerActivity extends AppCompatActivity {
 
-    int PLACE_PICKER_LOC_REQUEST = 1;
-    int PLACE_PICKER_MEET_REQUEST =2;
+    private int PLACE_PICKER_LOC_REQUEST = 1;
+    private int PLACE_PICKER_MEET_REQUEST =2;
     private final static String TAG = "Place Picker Activity";
     private LatLng primaryLocation;
     private LatLng meetupLocation;
@@ -79,6 +84,13 @@ public class PlacePickerActivity extends AppCompatActivity {
         public void onClick(View v){
             Log.i(TAG, "create group");
             makeGroupFromUserData();
+            Intent intent = GroupManagementActivity.makeIntent( PlacePickerActivity.this );
+            int resultCode = Activity.RESULT_OK;
+            makeIntentBack( PlacePickerActivity.this ,resultCode );
+            finish();
+
+
+
         }
     });
     }
@@ -157,4 +169,16 @@ public class PlacePickerActivity extends AppCompatActivity {
             return intent;
 
     }
+
+
+
+    private Intent makeIntentBack(Context context, int resultcode) {
+        Intent intent = new Intent(context, GroupManagementActivity.class );
+        setResult(resultcode, intent );
+        return intent;
+    }
+
+
+
+
 }
