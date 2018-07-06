@@ -99,7 +99,7 @@ public class SignUpActivity extends AppCompatActivity {
      *@param user
      */
     private void response(User user) {
-        notifyUserViaLogAndToast("Server replied with user: " + user.getName());
+
 
 
     }

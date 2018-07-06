@@ -64,7 +64,7 @@ public class MonitoredListActivity extends AppCompatActivity {
 
         for (User user : returnedUsers) {
             Log.w(TAG, "    User: " + user.toString());
-            String userInfo =  "User Name: " + user.getName()+"\nUser Email: " + user.getEmail();
+            String userInfo =  getString( R.string.user_name_list )+ " " + user.getName()+"\n" + getString(R.string.user_email_list) + user.getEmail();
 
             monitoredUser.add(userInfo);
             ArrayAdapter adapter = new ArrayAdapter(MonitoredListActivity.this, R.layout.da_items, monitoredUser);

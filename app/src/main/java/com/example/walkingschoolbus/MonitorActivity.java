@@ -111,7 +111,7 @@ public class MonitorActivity extends AppCompatActivity {
      *show log and toast that user has been added to the group I chose
      */
     private void responseMessage(List<User> returnedUser) {
-        notifyUserViaLogAndToast("User has been added to group.");
+        notifyUserViaLogAndToast(getString( R.string.notify_user_added ));
     }
 
     /*

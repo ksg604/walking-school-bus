@@ -57,7 +57,7 @@ public class MonitoringListActivity extends AppCompatActivity {
     }
 
     private void response(List<User> returnedUsers) {
-        Log.w(TAG, "All Users:");
+
 
         SwipeMenuListView monitoringList = (SwipeMenuListView) findViewById(R.id.monitoringList);
         //List<String> monitoringUser = new ArrayList<>();
@@ -87,7 +87,7 @@ public class MonitoringListActivity extends AppCompatActivity {
                 // set item width
                 addItem.setWidth(180);
                 // set item title
-                addItem.setTitle("Add");
+                addItem.setTitle(getString(R.string.add_swipe));
                 // set item title font size
                 addItem.setTitleSize(18);
                 // set item title font color
@@ -102,7 +102,7 @@ public class MonitoringListActivity extends AppCompatActivity {
                 // set item width
                 deleteItem.setWidth(180);
                 // set item title
-                deleteItem.setTitle("Delete");
+                deleteItem.setTitle(getString(R.string.delete_swipe));
                 // set item title fontsize
                 deleteItem.setTitleSize(18);
                 // set item title font color

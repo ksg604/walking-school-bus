@@ -79,7 +79,8 @@ public class LeaderActivity extends AppCompatActivity {
             Log.w( TAG, "    member: " + member.getId() );
 
 
-            String userInfo = getString(R.string.member_is)+ " "+ member.getName() + "\n";
+            String userInfo = getString( R.string.user_name_list )+ " "+ member.getName() + "\n" +
+                    getString(R.string.user_email_list)+ " " + member.getEmail();
             stringUserList.add( userInfo );
 
             ArrayAdapter adapter = new ArrayAdapter( LeaderActivity.this, R.layout.da_items, stringUserList );
