@@ -40,6 +40,7 @@ public class MainMenu extends AppCompatActivity {
         setupLayoutMaps();
         setupLayoutSetting();
         setupLogOutButton();
+
         new Handler().postDelayed(new Runnable(){
             @Override
             public void run(){
@@ -47,7 +48,6 @@ public class MainMenu extends AppCompatActivity {
             }
         },2000);
         setTextViewMessage();
-
     }
 
     /**
