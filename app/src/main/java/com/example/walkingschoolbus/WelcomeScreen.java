@@ -113,7 +113,8 @@ public class WelcomeScreen extends AppCompatActivity {
     private void pullUser(String token, String email) {
         proxy =ProxyBuilder.getProxy(getString(R.string.api_key),token);
         Call<User> caller = proxy.getUserByEmail(email);
-        ProxyBuilder.callProxy(WelcomeScreen.this,caller,returnedUser ->responseForUser(returnedUser, token));
+        ProxyBuilder.callProxy(WelcomeScreen.this,caller,returnedUser ->
+                responseForUser(returnedUser, token));
         Log.i(TAG, "pull user");
     }
 

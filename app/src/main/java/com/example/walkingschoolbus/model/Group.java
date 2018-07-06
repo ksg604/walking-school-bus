@@ -96,6 +96,14 @@ public class Group {
         this.href=href;
 }
 
+    public Group(String groupDescription, List<Double> routeLatArray,
+                 List<Double> routeLngArray, User leader){
+        this.groupDescription = groupDescription;
+        this.routeLatArray = routeLatArray;
+        this.routeLngArray = routeLngArray;
+        this.leader = leader;
+    }
+
     // Check if full data
     // -------------------------------------------------------------------------------------------
     // Server often replies with stub objects instead of full data.

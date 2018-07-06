@@ -1,9 +1,14 @@
 package com.example.walkingschoolbus.model;
 
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.example.walkingschoolbus.R;
+import com.example.walkingschoolbus.WelcomeScreen;
+import com.example.walkingschoolbus.proxy.ProxyBuilder;
+import com.example.walkingschoolbus.proxy.WGServerProxy;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -13,6 +18,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
 
 /**
  * User class to store the data the server expects and returns.
@@ -155,9 +162,6 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
-
-
-
 
     // Monitoring
     // -------------------------------------------------------------------------------------------
