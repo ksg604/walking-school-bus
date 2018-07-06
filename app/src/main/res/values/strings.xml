@@ -35,7 +35,7 @@
 
     <!--Group Management-->
     <string name="group_layout_title">MY GROUPS</string>
-    <string name="add_group">NEW/FIND</string>
+    <string name="add_group">NEW GROUP</string>
     <string name="modify_group">MODIFY/REMOVE</string>
     <string name="leader_group">A leader of</string>
     <string name="member_group">A member of</string>
@@ -43,6 +43,7 @@
     <string name="delete_swipe">Delete</string>
     <string name="open_swipe">Open</string>
     <string name="group_list">Group: </string>
+    <string name="group_help_txt">Swipe left on group name for options.</string>
 
 
     <!-- Place Picker -->
@@ -60,8 +61,9 @@
     <string name="monitor_email_help">Add Email or User to Monitor/Be Monitored By</string>
     <string name="add_monitoring">Start Monitoring The Email Above</string>
     <string name="add_monitored_by">Starting Being Monitored By The Email Above</string>
-    <string name="monitored_title">I MONITOR</string>
-    <string name="monitoring_title">MY MONITORER</string>
+    <string name="monitored_title">I AM MONITORED BY:</string>
+    <string name="monitoring_title">I MONITOR:</string>
+    <string name="monitor_help_txt">Swipe left on user name for options.</string>
 
     <!-- Dialog Fragment -->
 
