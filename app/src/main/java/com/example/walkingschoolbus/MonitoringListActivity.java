@@ -47,7 +47,6 @@ public class MonitoringListActivity extends AppCompatActivity {
         Session.getStoredSession(this);
         session = Session.getInstance();
         String savedToken = session.getToken();
-        setMonitoringTextView();
 
         proxy = ProxyBuilder.getProxy(getString(R.string.api_key),session.getToken());
 
@@ -57,7 +56,6 @@ public class MonitoringListActivity extends AppCompatActivity {
     }
 
     private void response(List<User> returnedUsers) {
-        notifyUserViaLogAndToast("Got list of " + returnedUsers.size() + " users! See logcat.");
         Log.w(TAG, "All Users:");
 
         SwipeMenuListView monitoringList = (SwipeMenuListView) findViewById(R.id.monitoringList);
@@ -122,21 +120,16 @@ public class MonitoringListActivity extends AppCompatActivity {
                         Call<Void> caller = proxy.removeFromMonitorsUsers(user.getId(), returnedUsers.get(position).getId());
                         ProxyBuilder.callProxy(MonitoringListActivity.this, caller, returnedNothing -> response(returnedNothing));
                         monitoringList.removeViewsInLayout(position,1);
-
                     break;
 
                     case 1:
-
-
                         Intent intent = MonitorActivity.makeIntentt(MonitoringListActivity.this,
                                 returnedUsers.get(position).getEmail());
                         //intent.putExtra()
                         startActivity(intent);
 
                         break;
-
                 }
-
                 // false : close the menu; true : not close the menu
                 return false;
             }
@@ -147,26 +140,13 @@ public class MonitoringListActivity extends AppCompatActivity {
         notifyUserViaLogAndToast(MonitoringListActivity.this.getString(R.string.notify_not_monitor));
     }
 
-
-    private void setMonitoringTextView() {
-        TextView monitoringList = (TextView) findViewById( R.id.monitoringListText );
-        String monitoring = getString(R.string.monitoring_title);
-        monitoringList.setText( monitoring );
-
-    }
-
-
     public static Intent makeIntent(Context context) {
         Intent intent = new Intent(context, MonitoringListActivity.class);
         return intent;
     }
 
-
-
     private void notifyUserViaLogAndToast(String message) {
         Log.w(TAG, message);
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
-
-
 }
