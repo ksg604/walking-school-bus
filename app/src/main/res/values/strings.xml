@@ -62,6 +62,7 @@
     <string name="add_monitored_by">Starting Being Monitored By The Email Above</string>
     <string name="monitored_title">I AM MONITORED BY:</string>
     <string name="monitoring_title">I MONITOR:</string>
+    <string name="monitor_help_txt">Swipe left on user name for options.</string>
 
     <!-- Dialog Fragment -->
 
