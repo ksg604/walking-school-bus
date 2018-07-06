@@ -72,8 +72,8 @@ public class MainMenu extends AppCompatActivity {
         setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = UserSettingActivity.makeIntent(MainMenu.this, token);
-                Log.w("Maintest", "   --> NOW HAVE TOKEN(output3): " + token);
+                Intent intent = UserSettingActivity.makeIntent(MainMenu.this);
+                Log.w("Maintest", "   --> NOW HAVE TOKEN(output3): " + userToken1);
                 startActivity(intent);
             }
         });
@@ -87,7 +87,7 @@ public class MainMenu extends AppCompatActivity {
         group.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                Intent intent = GroupManagementActivity.makeIntent(MainMenu.this, token);
+                Intent intent = GroupManagementActivity.makeIntent(MainMenu.this);
                 startActivity(intent);
                 Log.w("Sprint1","Group Activity Launched");
             }
@@ -108,12 +108,14 @@ public class MainMenu extends AppCompatActivity {
             }
         });
     }
-    
+
+
+
     public static Intent makeIntent(Context context){
-        return new Intent(context,MainMenu.class);
+        Intent intent = new Intent(context, MainMenu.class);
+        //intent.putExtra(USER_TOKEN, tokenToPass);
+        return intent;
     }
-
-
 
 
 }

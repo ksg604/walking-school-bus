@@ -14,6 +14,7 @@ import com.baoyz.swipemenulistview.SwipeMenu;
 import com.baoyz.swipemenulistview.SwipeMenuCreator;
 import com.baoyz.swipemenulistview.SwipeMenuItem;
 import com.baoyz.swipemenulistview.SwipeMenuListView;
+import com.example.walkingschoolbus.model.Session;
 import com.example.walkingschoolbus.model.User;
 import com.example.walkingschoolbus.proxy.ProxyBuilder;
 import com.example.walkingschoolbus.proxy.WGServerProxy;
@@ -28,45 +29,47 @@ public class MonitoredListActivity extends AppCompatActivity {
 
     private static final String TAG = "MonitoredListActivity";
     public static final String USER_TOKEN = "User Token";
-    private String userToken4;
-    //private User user;
+    //private String userToken4;
+    private User user;
     private static WGServerProxy proxy;
+    private Session session;
 
     ArrayList<String> monitoredUser = new ArrayList<>();
     //SwipeMenuListView monitoringList = (SwipeMenuListView) findViewById(R.id.monitoringList);
-    long temp_id = 932;
+    //long temp_id = 932;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // User user = User.getInstance();
+        user = User.getInstance();
+        session = Session.getInstance();
+
         //long temp_id = 932;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_monitored_list);
 
-        userToken4 = extractDataFromIntent();
+        //userToken4 = extractDataFromIntent();
         // Build the server proxy
-        proxy = ProxyBuilder.getProxy(getString(R.string.api_key),userToken4);
+        proxy = ProxyBuilder.getProxy(getString(R.string.api_key),session.getToken());
 
 
         // Make call
-        Call<List<User>> caller = proxy.getMonitoredByUsers(temp_id);
+        Call<List<User>> caller = proxy.getMonitoredByUsers(user.getId());
         ProxyBuilder.callProxy(MonitoredListActivity.this, caller, returnedUsers -> response(returnedUsers));
 
 
     }
-
+/*
     private String extractDataFromIntent() {
         Intent intent = getIntent();
         return intent.getStringExtra(USER_TOKEN);
     }
-
+*/
     private void response(List<User> returnedUsers) {
         notifyUserViaLogAndToast("Got list of " + returnedUsers.size() + " users! See logcat.");
         Log.w(TAG, "All Users:");
 
         SwipeMenuListView monitoredList = (SwipeMenuListView) findViewById(R.id.monitoredList);
-        //List<String> monitoringUser = new ArrayList<>();
-        //List<Integer> child_ID = new ArrayList<Integer>();
+
         for (User user : returnedUsers) {
             Log.w(TAG, "    User: " + user.toString());
             String userInfo = "User Email: "+ user.getEmail() + "   " + "User Name: " + user.getName()
@@ -110,13 +113,13 @@ public class MonitoredListActivity extends AppCompatActivity {
                 switch (index) {
                     case 0:
                         // Make call
-                        Call<Void> caller = proxy.removeFromMonitoredByUsers(temp_id, returnedUsers.get(position).getId());
+                        Call<Void> caller = proxy.removeFromMonitoredByUsers(user.getId(), returnedUsers.get(position).getId());
                         ProxyBuilder.callProxy(MonitoredListActivity.this, caller, returnedNothing -> response(returnedNothing));
                         monitoredList.removeViewsInLayout(position,1);
                         // finish();
                         //ArrayAdapter adapter = new ArrayAdapter(MonitoringListActivity.this, R.layout.da_items, monitoringUser);
                         //monitoringList.setAdapter(adapter);
-
+                        break;
 
                 }
 
@@ -138,9 +141,9 @@ public class MonitoredListActivity extends AppCompatActivity {
 
 
 
-    public static Intent makeIntent(Context context, String tokenToPass) {
+    public static Intent makeIntent(Context context) {
         Intent intent = new Intent(context, MonitoredListActivity.class);
-        intent.putExtra(USER_TOKEN, tokenToPass);
+        //intent.putExtra(USER_TOKEN, tokenToPass);
         return intent;
     }
 
