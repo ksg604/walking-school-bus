@@ -14,6 +14,7 @@
     <string name="login_username">Name</string>
     <string name="login_password">Password</string>
     <string name="login_signup_text">Don\'t have an account? Sign up</string>
+    <string name="login_success">LOGIN SUCCESS</string>
 
 
     <!--Main Menu-->
@@ -31,7 +32,6 @@
     <string name="re_enter_pass">Re-enter Password: </string>
     <string name="email">Email Address: </string>
     <string name="create_user">CREATE USER</string>
-    <string name="login_toast">Server replied to login request (no content was expected).</string>
 
     <!--Group Management-->
     <string name="group_layout_title">MY GROUPS</string>
@@ -54,10 +54,20 @@
     <!-- Leader -->
     <string name="members">MEMBERS</string>
 
-    <!-- Settings -->
-    <string name="monitored">I MONITOR</string>
-    <string name="monitoring">MY MONITORER</string>
+    <!--Settings-->
+    <string name="monitoring">List All Users I Monitor</string>
+    <string name="monitored_by">List All Users Who Monitor Me</string>
+    <string name="monitor_email_help">Add Email or User to Monitor/Be Monitored By</string>
+    <string name="add_monitoring">Start Monitoring The Email Above</string>
+    <string name="add_monitored_by">Starting Being Monitored By The Email Above</string>
+    <string name="monitored_titled">I MONITOR</string>
+    <string name="monitoring_title">MY MONITORER</string>
 
 
 
+    <!--MonitoredListActivity-->
+    <string name="notify_delete"> You will not be monitored by this user anymore.</string>
+
+    <!--MonitoringListActivity-->
+    <string name="notify_not_monitor">You cannot monitor this user anymore.</string>
 </resources>

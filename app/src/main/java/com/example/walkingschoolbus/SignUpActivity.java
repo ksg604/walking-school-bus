@@ -17,6 +17,9 @@ import com.example.walkingschoolbus.proxy.WGServerProxy;
 
 import retrofit2.Call;
 
+/**
+ * Signup Activity allows users to create a new account
+ */
 public class SignUpActivity extends AppCompatActivity {
 
     private static WGServerProxy proxy;

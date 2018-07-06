@@ -29,6 +29,10 @@ import java.util.List;
 
 import retrofit2.Call;
 
+/**
+ * Class to list all groups related to logged in user with option to delete or move to place picker
+ * activity to create a new group.
+ */
 public class GroupManagementActivity extends AppCompatActivity {
 
 

@@ -21,6 +21,9 @@ import com.example.walkingschoolbus.proxy.WGServerProxy;
 
 import retrofit2.Call;
 
+/**
+ * Welcome screen allows user to log in using provided credentials or access the sign in page
+ */
 public class WelcomeScreen extends AppCompatActivity {
     private User user = User.getInstance();
     private WGServerProxy proxy;
@@ -49,8 +52,6 @@ public class WelcomeScreen extends AppCompatActivity {
         proxy = ProxyBuilder.getProxy(getString(R.string.api_key), null);
 
         setupSignInButton();
-        setupDebugButton();
-
     }
 
     /**
@@ -89,7 +90,7 @@ public class WelcomeScreen extends AppCompatActivity {
 
                 // Register for token received:
                 ProxyBuilder.setOnTokenReceiveCallback( token -> onReceiveToken(token));
-
+                setupSignUpButton();
                 // Make call
                 Call<Void> caller = proxy.login(loginUser);
                 ProxyBuilder.callProxy(WelcomeScreen.this, caller, returnedNothing -> response(returnedNothing));
@@ -148,7 +149,7 @@ public class WelcomeScreen extends AppCompatActivity {
      * @param returnedNothing
      */
     private void response(Void returnedNothing) {
-        notifyUserViaLogAndToast("Server replied to login request (no content was expected).");
+        notifyUserViaLogAndToast(WelcomeScreen.this.getString(R.string.login_success));
     }
 
 
@@ -171,18 +172,4 @@ public class WelcomeScreen extends AppCompatActivity {
         startActivity(intent);
         WelcomeScreen.this.finish();
     }
-
-    //TODO Remove this before submission
-    private void setupDebugButton() {
-        Button btn = (Button) findViewById(R.id.buttonDebug);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = MainMenu.makeIntent(WelcomeScreen.this);
-                startActivity(intent);
-            }
-        });
-        setupSignUpButton();
-    }
-
 }
