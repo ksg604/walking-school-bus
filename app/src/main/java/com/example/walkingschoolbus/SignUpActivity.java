@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.walkingschoolbus.model.User;
 import com.example.walkingschoolbus.proxy.ProxyBuilder;
@@ -20,6 +21,8 @@ public class SignUpActivity extends AppCompatActivity {
     private static WGServerProxy proxy;
     private User user;
     private String tempToken0;
+    private static final String TAG = "SignupActivity";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,15 +76,20 @@ public class SignUpActivity extends AppCompatActivity {
         });
     }
 
-
+    /**
+     *Get response of User
+     *@param user
+     */
     private void response(User user) {
-        //notifyUserViaLogAndToast("Server replied with user: " + user.toString());
-        //long userId = user.getId();
-        //String userEmail = user.getEmail();
+        notifyUserViaLogAndToast("Server replied with user: " + user.getName());
 
 
     }
 
+    private void notifyUserViaLogAndToast(String message) {
+        Log.w(TAG, message);
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+    }
 
 
 }
