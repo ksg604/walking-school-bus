@@ -21,6 +21,9 @@ import com.example.walkingschoolbus.proxy.WGServerProxy;
 
 import retrofit2.Call;
 
+/**
+ * Welcome screen allows user to log in using provided credentials or access the sign in page
+ */
 public class WelcomeScreen extends AppCompatActivity {
     private User user = User.getInstance();
     private WGServerProxy proxy;

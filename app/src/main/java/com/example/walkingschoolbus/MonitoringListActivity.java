@@ -24,8 +24,10 @@ import java.util.List;
 
 import retrofit2.Call;
 
+/**
+ * Activity lists users whom logged in users monitor with options to delete
+ */
 public class MonitoringListActivity extends AppCompatActivity {
-
 
     private static final String TAG = "MonitoringListActivity";
     public static final String USER_TOKEN = "User Token";
