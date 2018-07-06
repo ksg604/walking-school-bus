@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.walkingschoolbus.model.Session;
+import com.example.walkingschoolbus.model.User;
 
 import java.util.List;
 
@@ -24,8 +25,8 @@ public class MainMenu extends AppCompatActivity {
 
     public static final String USER_TOKEN = "User token";
     Session session = Session.getInstance();
-
-    private String userToken1;
+    User user = User.getInstance();
+    String token = session.getToken();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +36,6 @@ public class MainMenu extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(R.string.main_menu);
 
-        userToken1 = extractDataFromIntent();
         setupLayoutGroups();
         setupLayoutMaps();
         setupLayoutSetting();
@@ -45,6 +45,11 @@ public class MainMenu extends AppCompatActivity {
         Toast toast = Toast.makeText(this, session.getEmail() +"||" + session.getName()+"||"+session.getid(),Toast.LENGTH_LONG);
         toast.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
         toast.show();
+
+        Toast toast2 = Toast.makeText(this, user.getEmail() +"||" + user.getName()+"||"+user.getId(),Toast.LENGTH_LONG);
+        toast2.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL, 0, 0);
+        toast2.show();
+
     }
 
     private void setupLogOutButton(){
@@ -60,11 +65,6 @@ public class MainMenu extends AppCompatActivity {
         }
     });
 
-    }
-
-    private String extractDataFromIntent() {
-        Intent intent = getIntent();
-        return intent.getStringExtra(USER_TOKEN);
     }
 
     private void setupLayoutSetting() {
