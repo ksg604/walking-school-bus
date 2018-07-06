@@ -20,7 +20,7 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Group {
 
-    private long id;
+    private Long id;
 
     private String groupDescription;
 
@@ -101,10 +101,10 @@ public class Group {
 
     // Basic User Data
     // -------------------------------------------------------------------------------------------
-    public long getId() {
+    public Long getId() {
         return id;
     }
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

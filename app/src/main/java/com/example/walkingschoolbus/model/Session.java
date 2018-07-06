@@ -50,7 +50,6 @@ public class Session {
         prefsEditor.apply();
         Log.i(TAG,"in store Session" );
     }
-
     public static void getStoredSession(Context context){
         SharedPreferences prefs = context.getSharedPreferences(SHAREDPREF_SESSION, Context.MODE_PRIVATE);
         Gson gson = new Gson();

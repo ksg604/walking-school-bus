@@ -67,17 +67,17 @@ public class LeaderActivity extends AppCompatActivity {
 
         for (User member : returnedUsers) {
 
-            if(member.getId() != user.getId()) {
-                Log.w( TAG, "    member: " + member.getId() );
+
+            Log.w( TAG, "    member: " + member.getId() );
 
 
-                String userInfo = "Member : " + member.getName();
-                stringUserList.add( userInfo );
+            String userInfo = "Member : " + member.getName();
+            stringUserList.add( userInfo );
 
-                ArrayAdapter adapter = new ArrayAdapter( LeaderActivity.this, R.layout.da_items, stringUserList );
+            ArrayAdapter adapter = new ArrayAdapter( LeaderActivity.this, R.layout.da_items, stringUserList );
 
-                userListView.setAdapter( adapter );
-            }
+            userListView.setAdapter( adapter );
+
         }
 
         SwipeMenuCreator creator = new SwipeMenuCreator() {
@@ -113,7 +113,7 @@ public class LeaderActivity extends AppCompatActivity {
 
                     case 0:
 
-                         Call<Void> caller = proxy.removeFromMonitoredByUsers(group.getId(), returnedUsers.get(position).getId());
+                         Call<Void> caller = proxy.removeGroupMember(group.getId(), returnedUsers.get(position).getId());
                          ProxyBuilder.callProxy(LeaderActivity.this, caller, returnedNothing -> response(returnedNothing));
                          userListView.removeViewsInLayout(position,1);
                          finish();

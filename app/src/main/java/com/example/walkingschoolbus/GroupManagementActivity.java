@@ -37,12 +37,15 @@ public class GroupManagementActivity extends AppCompatActivity {
     List<String> stringMemberGroupList = new ArrayList< >( );
     List<String> stringLeaderGroupList = new ArrayList< >( );
     List<Group> groupLeaderList = new ArrayList<>();
+    List<Group> modifiedGroupLeaderList = new ArrayList<>(  );
     List<Long> groupIdLeaderList = new ArrayList<>();
 
+
     List<Group> groupMemberList = new ArrayList<>();
+    List<Group> modifiedGroupMemberList = new ArrayList<>( );
     List<Long> groupIdMemberList = new ArrayList<>();
     private Session tokenSession = Session.getInstance();
-    private static Group group;
+    private  Group group = Group.getInstance();
     private  User user;
     private static final String TAG = "GroupManagementActivity";
 
@@ -108,7 +111,7 @@ public class GroupManagementActivity extends AppCompatActivity {
     }
 
    /**get response List<Group> objects to save data into stringGroupList
-    * A user stores a group when the user belongs to that group
+    * to see group list on swipeMenuListView
     *
     */
     private void responseForGroup(List<Group> returnedGroups) {
@@ -125,13 +128,14 @@ public class GroupManagementActivity extends AppCompatActivity {
             if (groupIdMemberList.contains( group.getId() )){
                 Log.w( TAG, "    Group: " + group.getId() );
 
-
+                modifiedGroupMemberList.add(group);
                 String groupInfo = "Group : " + group.getGroupDescription();
                 stringMemberGroupList.add( groupInfo );
 
             }else if( groupIdLeaderList.contains(group.getId())){
                 Log.w( TAG, "    Group: " + group.getId() );
 
+                modifiedGroupLeaderList.add(group);
                 String groupInfo = "Group : " + group.getGroupDescription();
                 stringLeaderGroupList.add( groupInfo );
 
@@ -206,20 +210,28 @@ public class GroupManagementActivity extends AppCompatActivity {
 
                     case 0:
 
-                        group = returnedGroups.get(position);
+                        Long groupId = modifiedGroupLeaderList.get(position).getId();
+
+                        group.setId(groupId);
                         Intent intent = LeaderActivity.makeIntent( GroupManagementActivity.this );
                         startActivity( intent );
+                        break;
 
 
                     case 1:
 
                          //make Call
-                         Call<Void> caller = proxy.deleteGroup( returnedGroups.get(position).getId());
+                         Call<Void> caller = proxy.deleteGroup( modifiedGroupLeaderList.get(position).getId());
                          ProxyBuilder.callProxy(GroupManagementActivity.this, caller, returnedNothing -> response(returnedNothing));
                          groupAsLeaderListView.removeViewsInLayout(position,1);
                          finish();
+
                          ArrayAdapter adapter = new ArrayAdapter(GroupManagementActivity.this, R.layout.da_items, stringLeaderGroupList);
                          groupAsLeaderListView.setAdapter(adapter);
+                         startActivity(getIntent());
+
+
+                         break;
 
                 }
 
@@ -267,12 +279,14 @@ public class GroupManagementActivity extends AppCompatActivity {
 
                         case 0:
                             // Make call
-                             Call<Void> caller = proxy.removeGroupMember(returnedGroups.get(position).getId(), user.getId());
+                             Call<Void> caller = proxy.removeGroupMember(modifiedGroupMemberList.get(position).getId(), user.getId());
                              ProxyBuilder.callProxy(GroupManagementActivity.this, caller, returnedNothing -> response(returnedNothing));
                              groupAsMemberListView.removeViewsInLayout(position,1);
                              finish();
                              ArrayAdapter adapter = new ArrayAdapter(GroupManagementActivity.this, R.layout.da_items, stringMemberGroupList);
                              groupAsMemberListView.setAdapter(adapter);
+                             startActivity(getIntent());
+                             break;
 
                     }
                     // false : close the menu; true : not close the menu
@@ -285,7 +299,7 @@ public class GroupManagementActivity extends AppCompatActivity {
 
 
     private void response(Void returnedNothing) {
-        notifyUserViaLogAndToast(" You will not be monitored by this user anymore.");
+        notifyUserViaLogAndToast(" you deleted.");
     }
 
     private void notifyUserViaLogAndToast(String message) {
