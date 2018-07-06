@@ -41,6 +41,7 @@
     <string name="member_group">A member of</string>
     <string name="delete_message">Delete successfully!</string>
     <string name="delete_swipe">Delete</string>
+    <string name="leave_swipe">Leave</string>
     <string name="open_swipe">Open</string>
     <string name="group_list">Group: </string>
 
@@ -75,10 +76,15 @@
     <string name="prompt">Would you like to join this group? </string>
 
 
+    <!--Leader Activity-->
+    <string name= "member_is">Member : </string>
+
 
     <!--MonitoredListActivity-->
     <string name="notify_delete"> You will not be monitored by this user anymore.</string>
 
     <!--MonitoringListActivity-->
     <string name="notify_not_monitor">You cannot monitor this user anymore.</string>
+    <string name="monitoring_user_email">User Email: </string>
+    <string name="monitoring_user_name">User Name: </string>
 </resources>

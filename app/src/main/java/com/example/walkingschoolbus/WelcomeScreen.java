@@ -111,6 +111,11 @@ public class WelcomeScreen extends AppCompatActivity {
         moveToMainMenu();
     }
 
+    /**
+     * Pull user data to set into the user instance
+     * @param token
+     * @param email
+     */
     private void pullUser(String token, String email) {
         proxy =ProxyBuilder.getProxy(getString(R.string.api_key),token);
         Call<User> caller = proxy.getUserByEmail(email);
@@ -119,7 +124,9 @@ public class WelcomeScreen extends AppCompatActivity {
         Log.i(TAG, "pull user");
     }
 
-
+    /**
+     * get response from the user
+     */
     private void responseForUser(User returnedUser, String token) {
         Log.i(TAG,"responseForUser method called");
 
@@ -162,11 +169,19 @@ public class WelcomeScreen extends AppCompatActivity {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 
-
+    /**
+     * make intent to get to welcome screen
+     * @param context
+     */
     public static Intent makeIntent(Context context){
         Intent intent = new Intent( context, WelcomeScreen.class );
         return intent;
     }
+
+    /**
+     * move to main menu screen using intent
+     *
+     */
     private void moveToMainMenu(){
         Intent intent = MainMenu.makeIntent(WelcomeScreen.this);
         startActivity(intent);

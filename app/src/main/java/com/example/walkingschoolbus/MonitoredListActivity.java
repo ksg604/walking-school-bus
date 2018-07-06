@@ -61,7 +61,6 @@ public class MonitoredListActivity extends AppCompatActivity {
     }
 
     private void response(List<User> returnedUsers) {
-        Log.w(TAG, "All Users:");
 
         SwipeMenuListView monitoredList = (SwipeMenuListView) findViewById(R.id.monitoredList);
 

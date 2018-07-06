@@ -62,7 +62,11 @@ public class LeaderActivity extends AppCompatActivity {
 
 
     }
-
+    /**
+     * get response from the server to get a group member list as a leader
+     * @param returnedUsers the list of members of the group I want to get
+     *
+     */
     private void responseForList(List<User> returnedUsers) {
         notifyUserViaLogAndToast("Got list of " + returnedUsers.size() + " users! See logcat.");
         Log.w(TAG, "Got all users of this group!!");
@@ -75,7 +79,7 @@ public class LeaderActivity extends AppCompatActivity {
             Log.w( TAG, "    member: " + member.getId() );
 
 
-            String userInfo = "Member : " + member.getName();
+            String userInfo = getString(R.string.member_is)+ " "+ member.getName() + "\n";
             stringUserList.add( userInfo );
 
             ArrayAdapter adapter = new ArrayAdapter( LeaderActivity.this, R.layout.da_items, stringUserList );
@@ -139,6 +143,9 @@ public class LeaderActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * After delete the group, show user that group is deleted
+     */
     private void response(Void returnedNothing) {
         notifyUserViaLogAndToast(" Successful delete");
     }

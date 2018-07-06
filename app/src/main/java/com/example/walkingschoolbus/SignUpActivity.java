@@ -82,7 +82,9 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
 
-
+    /*
+     *Set signup text view to show title
+     */
 
     private void setSignUpTextView() {
         TextView signup = (TextView) findViewById( R.id.signUpText );
