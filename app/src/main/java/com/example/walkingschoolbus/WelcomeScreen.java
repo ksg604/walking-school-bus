@@ -125,10 +125,7 @@ public class WelcomeScreen extends AppCompatActivity {
         String name = returnedUser.getName();
 
         //set singleton user to point to user pulled from server
-       // user = returnedUser; //set singleton user to logged in user.
-        user.setEmail(returnedUser.getEmail());
-        user.setName(returnedUser.getName());
-        user.setId(returnedUser.getId());
+        user.makeCopyOf(returnedUser); //set singleton user to logged in user.
         Log.i(TAG, "set user to: "+ user.getName());
 
         //set and save session data
@@ -161,6 +158,10 @@ public class WelcomeScreen extends AppCompatActivity {
     }
 
 
+    public static Intent makeIntent(Context context){
+        Intent intent = new Intent( context, WelcomeScreen.class );
+        return intent;
+    }
     private void moveToMainMenu(){
         Intent intent = MainMenu.makeIntent(WelcomeScreen.this);
         startActivity(intent);
@@ -178,12 +179,5 @@ public class WelcomeScreen extends AppCompatActivity {
             }
         });
         setupSignUpButton();
-    }
-
-
-
-    public static Intent makeIntent(Context context){
-        Intent intent = new Intent( context, WelcomeScreen.class );
-        return intent;
     }
 }

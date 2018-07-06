@@ -83,8 +83,7 @@ public class Group {
         this.memberUsers = memberUsers;
         this.hasFullData = true;
         this.href=href;
-        //this.meetingPlace = meetingPlace;
-    }
+}
 
     // Check if full data
     // -------------------------------------------------------------------------------------------
@@ -157,7 +156,9 @@ public class Group {
         this.memberUsers = memberUsers;
     }
 
+    public void clearGrouyp(){
 
+    }
 
 /*
     public Location getLocation() {
