@@ -18,8 +18,11 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.view.View;
+import android.widget.Toast;
 
 import com.example.walkingschoolbus.model.Group;
 import com.example.walkingschoolbus.model.Session;
@@ -33,16 +36,18 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
 
-
-
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Map;
 
 import retrofit2.Call;
 
@@ -72,6 +77,10 @@ import static android.Manifest.permission.ACCESS_FINE_LOCATION;
     private FusedLocationProviderClient client;
     private Group group;
     private Session token = Session.getInstance();
+
+    private Marker groupFinalLocationMarker;
+    private List<Marker> markerArray = new ArrayList<>();
+    private Map<Marker, Long> markerLongHashMapMap = new HashMap<Marker, Long>();
 
 
 
@@ -105,55 +114,21 @@ import static android.Manifest.permission.ACCESS_FINE_LOCATION;
      * Server response is to return server groups and then display all of their current locations and
      * meeting locations on the map.
      */
+
     private void response(List<Group> returnedGroupList) {
 
-        //for(int i = 0; i < returnedGroupList.size(); i++){
         for (Group group : returnedGroupList) {
-            //Group group = returnedGroupList.get(i);
             if(group.getRouteLatArray().size() == 2 && group.getRouteLngArray().size() == 2){
-                LatLng groupMeetingLocation = new LatLng( group.getRouteLatArray().get( 1 ), group.getRouteLngArray().get( 1 ) );
-                MarkerOptions groupMeetingLocationMarker = new MarkerOptions()
-                        .position( groupMeetingLocation )
-                        .title( "Group: " + group.getGroupDescription() )
-                        //Differentiate group meeting location markers from current location markers with a different marker opacity (alpha).
-                        .alpha( 2 );
-                mMap.addMarker( groupMeetingLocationMarker );
+                LatLng groupFinalLocation = new LatLng( group.getRouteLatArray().get( 0 ), group.getRouteLngArray().get( 0 ) );
+                groupFinalLocationMarker = mMap.addMarker(new MarkerOptions()
+                        .position( groupFinalLocation )
+                        .title( "Group: " + group.getGroupDescription() ));
+                Log.i("Debug tag 0.8","group initial id is: "+group.getId());
+                markerLongHashMapMap.put(groupFinalLocationMarker,group.getId());
 
-                LatLng groupCurrentLocation = new LatLng( group.getRouteLatArray().get( 0 ), group.getRouteLngArray().get( 0 ) );
-                MarkerOptions groupLocationMarker = new MarkerOptions()
-                        .position( groupMeetingLocation )
-                        .title( "Group: " + group.getGroupDescription() )
-                        .alpha( 3 );
-                mMap.addMarker( groupLocationMarker );
             }
         }
     }
-
-    /**
-     * Retrieves the groups that the user is a member of and displays their meeting locations on the map as well as their current locations.
-     */
-    private void displayUserGroups(){
-        List<Group> userGroupList = user.getMemberOfGroups();
-        for(int i = 0; i < userGroupList.size(); i++){
-            //Unsure of whether to use singleton here.
-            Group group = userGroupList.get(i);
-            LatLng groupMeetingLocation = new LatLng(group.getRouteLatArray().get(1),group.getRouteLngArray().get(1));
-            MarkerOptions groupMeetingLocationMarker = new MarkerOptions()
-                    .position(groupMeetingLocation)
-                    .title("Group: "+group.getGroupDescription())
-                    //Differentiate group meeting location markers from current location markers with a different marker opacity (alpha).
-                    .alpha(2);
-            mMap.addMarker(groupMeetingLocationMarker);
-
-            LatLng groupCurrentLocation = new LatLng(group.getRouteLatArray().get(0),group.getRouteLngArray().get(0));
-            MarkerOptions groupLocationMarker = new MarkerOptions()
-                    .position(groupMeetingLocation)
-                    .title("Group: "+group.getGroupDescription())
-                    .alpha(3);
-            mMap.addMarker(groupLocationMarker);
-        }
-    }
-
 
     private void initMap(){
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
@@ -187,15 +162,19 @@ import static android.Manifest.permission.ACCESS_FINE_LOCATION;
             }
             mMap.setMyLocationEnabled(true);
         }
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
 
-        //Hardcoded destination for now.
-        //Need to change destinationLatLng to get the walking destination of the user's group.
-        //Also need to mark locations of other groups
-        LatLng destinationLatLng = new LatLng(49.278059,-122.919926);
-        MarkerOptions destinationMarker = new MarkerOptions()
-                .position(destinationLatLng)
-                .title("My Meeting Place");
-        mMap.addMarker(destinationMarker);
+                Long groupId = markerLongHashMapMap.get(marker);
+
+                Intent intent = OnMarkerClickActivity.makeIntent(getApplicationContext());
+                intent.putExtra("id",groupId);
+                startActivity(intent);
+                //setContentView(R.layout.activity_on_marker_click);
+                return false;
+            }
+        });
 
     }
 
@@ -212,9 +191,16 @@ import static android.Manifest.permission.ACCESS_FINE_LOCATION;
             location.addOnCompleteListener(new OnCompleteListener() {
                 @Override
                 public void onComplete(@NonNull Task task) {
-                    if(task.isSuccessful()){
+                    if(task.isSuccessful()) {
                         Location currentLocation = (Location) task.getResult();
-                        moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()),DEFAULT_ZOOM);
+                        if (currentLocation == null) {
+                            Location sfu = new Location("");
+                            sfu.setLatitude(49.27);
+                            sfu.setLongitude(-122.98);
+                            moveCamera(new LatLng(sfu.getLatitude(), sfu.getLongitude()), DEFAULT_ZOOM);
+                        } else{
+                            moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), DEFAULT_ZOOM);
+                        }
                     }
                 }
             });

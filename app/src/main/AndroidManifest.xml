@@ -52,7 +52,7 @@
         <activity android:name=".PlacePickerActivity" />
         <activity android:name=".MonitoredListActivity" />
         <activity android:name=".LeaderActivity" />
-        <activity android:name=".MonitorActivity"></activity>
+        <activity android:name=".OnMarkerClickActivity"></activity>
     </application>
 
 </manifest>

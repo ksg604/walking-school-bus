@@ -63,6 +63,17 @@
     <string name="monitored_title">I MONITOR</string>
     <string name="monitoring_title">MY MONITORER</string>
 
+    <!-- Dialog Fragment -->
+
+    <string name="yes">YES</string>
+    <string name="no">NO</string>
+    <string name="group_name">Group name is: </string>
+    <string name="group_leader">Group leader is: </string>
+
+    <!-- On Marker Click -->
+
+    <string name="prompt">Would you like to join this group? </string>
+
 
 
     <!--MonitoredListActivity-->
