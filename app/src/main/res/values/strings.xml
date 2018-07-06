@@ -48,5 +48,10 @@
     <!-- Leader -->
     <string name="members">MEMBERS</string>
 
+    <!-- Dialog Fragment -->
+
+    <string name="YES">YES</string>
+    <string name="NO">NO</string>
+
 
 </resources>
