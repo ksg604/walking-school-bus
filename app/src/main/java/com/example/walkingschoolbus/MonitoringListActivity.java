@@ -71,6 +71,7 @@ public class MonitoringListActivity extends AppCompatActivity {
             ArrayAdapter adapter = new ArrayAdapter(MonitoringListActivity.this, R.layout.da_items, monitoringUser);
             monitoringList.setAdapter(adapter);
         }
+
         SwipeMenuCreator creator = new SwipeMenuCreator() {
 
             @Override
@@ -107,6 +108,24 @@ public class MonitoringListActivity extends AppCompatActivity {
                 deleteItem.setTitleColor(Color.WHITE);
                 // add to menu
                 menu.addMenuItem(deleteItem);
+
+
+                // create "group" list item
+                SwipeMenuItem goGroup = new SwipeMenuItem( getApplicationContext());
+                // set item background
+                goGroup.setBackground(new ColorDrawable(Color.rgb(120, 120,
+                        20)));
+
+                // set item width
+                goGroup.setWidth(180);
+                // set item title
+                goGroup.setTitle("Groups");
+                // set item title fontsize
+                goGroup.setTitleSize(18);
+                // set item title font color
+                goGroup.setTitleColor(Color.WHITE);
+                // add to menu
+                menu.addMenuItem(goGroup);
             }
         };
 
@@ -128,10 +147,17 @@ public class MonitoringListActivity extends AppCompatActivity {
                     case 1:
 
 
-                        Intent intent = MonitorActivity.makeIntentt(MonitoringListActivity.this,
+                        Intent intentForAdd = MonitorActivity.makeIntentt(MonitoringListActivity.this,
                                 returnedUsers.get(position).getEmail());
                         //intent.putExtra()
-                        startActivity(intent);
+                        startActivity(intentForAdd);
+
+                        break;
+
+                    case 2:
+                        Intent intentForRemove = RemoveMonitoringUserFromGroup.makeIntentt(MonitoringListActivity.this,
+                                returnedUsers.get(position).getEmail());
+                        startActivity(intentForRemove);
 
                         break;
 
