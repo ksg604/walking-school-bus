@@ -75,40 +75,56 @@ public class MonitoringListActivity extends AppCompatActivity {
 
             @Override
             public void create(SwipeMenu menu) {
-
-
-
-                // create "add" item
-                SwipeMenuItem addItem = new SwipeMenuItem( getApplicationContext());
-                // set item background
-                addItem.setBackground(new ColorDrawable(Color.rgb(0xC9, 0xC9,
-                        0xCE)));
-
-                // set item width
-                addItem.setWidth(180);
-                // set item title
-                addItem.setTitle(getString(R.string.add_swipe));
-                // set item title font size
-                addItem.setTitleSize(18);
-                // set item title font color
-                addItem.setTitleColor(Color.WHITE);
-                // add to menu
-                menu.addMenuItem(addItem);
-
                 // create "open" item
+                SwipeMenuItem openItem = new SwipeMenuItem( getApplicationContext());
+                // set item background
+                openItem.setBackground(new ColorDrawable(Color.rgb(0xC9, 0xC9, 0xCE)));
+                // set item width
+                openItem.setWidth(180);
+                // set item title
+                openItem.setTitle("Delete");
+                // set item title fontsize
+                openItem.setTitleSize(18);
+                // set item title font color
+                openItem.setTitleColor(Color.WHITE);
+                // add to menu
+                menu.addMenuItem(openItem);
+
+
+                // create "delete" item
                 SwipeMenuItem deleteItem = new SwipeMenuItem( getApplicationContext());
                 // set item background
-                deleteItem.setBackground(new ColorDrawable(Color.rgb(220, 20, 60)));
+                deleteItem.setBackground(new ColorDrawable(Color.rgb(220, 20,
+                        60)));
+
                 // set item width
                 deleteItem.setWidth(180);
                 // set item title
-                deleteItem.setTitle(getString(R.string.delete_swipe));
+                deleteItem.setTitle("Add To Group");
                 // set item title fontsize
                 deleteItem.setTitleSize(18);
                 // set item title font color
                 deleteItem.setTitleColor(Color.WHITE);
                 // add to menu
                 menu.addMenuItem(deleteItem);
+
+
+                // create "group" list item
+                SwipeMenuItem goGroup = new SwipeMenuItem( getApplicationContext());
+                // set item background
+                goGroup.setBackground(new ColorDrawable(Color.rgb(120, 120,
+                        20)));
+
+                // set item width
+                goGroup.setWidth(180);
+                // set item title
+                goGroup.setTitle("Groups");
+                // set item title fontsize
+                goGroup.setTitleSize(18);
+                // set item title font color
+                goGroup.setTitleColor(Color.WHITE);
+                // add to menu
+                menu.addMenuItem(goGroup);
             }
         };
 
@@ -120,25 +136,32 @@ public class MonitoringListActivity extends AppCompatActivity {
             public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
                 switch (index) {
                     case 0:
-
-                        Intent intent = MonitorActivity.makeIntent(MonitoringListActivity.this,
-                                returnedUsers.get(position).getEmail());
-                        startActivity(intent);
-
-                        break;
-
-
-                    case 1:
-
                         // Make call
                         Call<Void> caller = proxy.removeFromMonitorsUsers(user.getId(), returnedUsers.get(position).getId());
                         ProxyBuilder.callProxy(MonitoringListActivity.this, caller, returnedNothing -> response(returnedNothing));
                         monitoringList.removeViewsInLayout(position,1);
+                    break;
+
+                    case 1:
+                        //Intent intent = MonitorActivity.makeIntentt(MonitoringListActivity.this,
+
+
+                        Intent intentForAdd = MonitorActivity.makeIntentt(MonitoringListActivity.this,
+                                returnedUsers.get(position).getEmail());
+                        //intent.putExtra()
+                        startActivity(intentForAdd);
 
                         break;
 
+                    case 2:
+                        Intent intentForRemove = RemoveMonitoringUserFromGroup.makeIntentt(MonitoringListActivity.this,
+                                returnedUsers.get(position).getEmail());
+                        startActivity(intentForRemove);
+
+                        break;
 
                 }
+
                 // false : close the menu; true : not close the menu
                 return false;
             }
