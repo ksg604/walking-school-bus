@@ -21,6 +21,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.example.walkingschoolbus.model.Group;
@@ -170,15 +171,12 @@ import static android.Manifest.permission.ACCESS_FINE_LOCATION;
                 Intent intent = OnMarkerClickActivity.makeIntent(getApplicationContext());
                 intent.putExtra("id",groupId);
                 startActivity(intent);
+                //setContentView(R.layout.activity_on_marker_click);
                 return false;
             }
         });
 
-
-
-
     }
-
 
     /**
      * Retrieves the phones location and marks it on the map.
