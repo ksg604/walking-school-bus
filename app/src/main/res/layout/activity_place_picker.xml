@@ -41,11 +41,11 @@
         android:layout_marginTop="20dp"/>
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/btnCreateGroup"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:text="@string/create_group"
+        android:layout_marginLeft="10dp"
         android:layout_marginTop="170dp"
-        android:layout_marginLeft="10dp"/>
+        android:text="@string/create_group" />
 
 </LinearLayout>
