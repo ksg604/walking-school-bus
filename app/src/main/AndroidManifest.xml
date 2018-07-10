@@ -54,8 +54,7 @@
         <activity android:name=".MonitorActivity" />
         <activity android:name=".LeaderActivity" />
         <activity android:name=".OnMarkerClickActivity" />
-        <activity android:name=".MonitorActivity" />
-        <activity android:name=".RemoveMonitoringUserFromGroup"></activity>
+        <activity android:name=".RemoveMonitoringUserFromGroup" />
     </application>
 
 </manifest>

@@ -7,7 +7,9 @@ import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -54,6 +56,9 @@ public class MonitoredListActivity extends AppCompatActivity {
         // Make call
         Call<List<User>> caller = proxy.getMonitoredByUsers(user.getId());
         ProxyBuilder.callProxy(MonitoredListActivity.this, caller, returnedUsers -> response(returnedUsers));
+
+        //Add parents Button
+        setupAddParentsButton();
 
 
     }
@@ -115,6 +120,22 @@ public class MonitoredListActivity extends AppCompatActivity {
             }
         });
 
+
+    }
+
+    private void setupAddParentsButton() {
+
+        Button button = (Button) findViewById(R.id.addMyParentsBtn);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                Intent intentAdd = UserSettingActivity.makeIntent( MonitoredListActivity.this );
+                startActivity(intentAdd);
+
+            }
+        });
 
     }
 
