@@ -70,11 +70,11 @@ public class User {
 
     // GPS Location
     // - - - - - - - - - - - - - - - - - - - - - - - - - -
-   // private GpsLocation lastGpsLocation;
+    private GpsLocation lastGpsLocation;
 
     // Messages
     // - - - - - - - - - - - - - - - - - - - - - - - - - -
-    //private List<Message> messages;
+    private List<Message> messages;
 
     // Gamification Support
     // - - - - - - - - - - - - - - - - - - - - - - - - - - -
