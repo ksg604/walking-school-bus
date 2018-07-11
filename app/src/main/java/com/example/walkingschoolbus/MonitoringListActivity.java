@@ -174,7 +174,7 @@ public class MonitoringListActivity extends AppCompatActivity {
             public void onClick(View v) {
 
 
-                Intent intentAdd = UserSettingActivity.makeIntent( MonitoringListActivity.this );
+                Intent intentAdd = AddNewParentsActivity.makeIntent( MonitoringListActivity.this );
                 startActivity(intentAdd);
 
             }

@@ -47,7 +47,7 @@
             android:label="@string/title_activity_maps" />
         <activity android:name=".SignUpActivity" />
         <activity android:name=".GroupManagementActivity" />
-        <activity android:name=".UserSettingActivity" />
+        <activity android:name=".AddNewParentsActivity" />
         <activity android:name=".MonitoringListActivity" />
         <activity android:name=".PlacePickerActivity" />
         <activity android:name=".MonitoredListActivity" />
@@ -55,6 +55,7 @@
         <activity android:name=".LeaderActivity" />
         <activity android:name=".OnMarkerClickActivity" />
         <activity android:name=".RemoveMonitoringUserFromGroup" />
+        <activity android:name=".MyParentsActivity"></activity>
         <activity android:name=".UpdateUserDetails"></activity>
     </application>
 
