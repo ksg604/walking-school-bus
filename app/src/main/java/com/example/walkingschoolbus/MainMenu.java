@@ -38,7 +38,8 @@ public class MainMenu extends AppCompatActivity {
 
         setupLayoutGroups();
         setupLayoutMaps();
-        setupLayoutSetting();
+        setupLayoutMessages();
+        setupLayoutMyParents();
         setupLogOutButton();
 
         new Handler().postDelayed(new Runnable(){
@@ -72,14 +73,12 @@ public class MainMenu extends AppCompatActivity {
     /**
      * setup linear layout to redirect to settings page on click
      */
-    private void setupLayoutSetting() {
-        LinearLayout setting = (LinearLayout) findViewById(R.id.linearLayoutSetting);
+    private void setupLayoutMessages() {
+        LinearLayout setting = (LinearLayout) findViewById(R.id.linearLayoutMessages);
         setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = UserSettingActivity.makeIntent(MainMenu.this);
-                Log.w("Maintest", "   --> NOW HAVE TOKEN(output3): " + token);
-                startActivity(intent);
+
             }
         });
     }
@@ -94,10 +93,61 @@ public class MainMenu extends AppCompatActivity {
             public void onClick(View v){
                 Intent intent = GroupManagementActivity.makeIntent(MainMenu.this);
                 startActivity(intent);
-                Log.w("Sprint1","Group Activity Launched");
+                Log.w("Main Menu","Group Activity Launched");
             }
         });
     }
+
+
+    /**
+     * setup linear layout to redirect to my parents page on click
+     */
+    private void setupLayoutMyParents() {
+        LinearLayout setting = (LinearLayout) findViewById(R.id.linearLayoutMyParents);
+        setting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = MonitoredListActivity.makeIntent(MainMenu.this);
+                Log.w("Maintest", "   --> NOW HAVE TOKEN(output3): " + token);
+                startActivity(intent);
+            }
+        });
+    }
+
+
+    /**
+     * setup linear layout to redirect to my kids page on click
+     */
+    private void setupLayoutMyKids() {
+        LinearLayout setting = (LinearLayout) findViewById(R.id.linearLayoutMyKids);
+        setting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = MonitoringListActivity.makeIntent(MainMenu.this);
+                Log.w("Maintest", "   --> NOW HAVE TOKEN(output3): " + token);
+                startActivity(intent);
+            }
+        });
+    }
+
+
+
+    /**
+     *Show welcome message to the user loggged in
+     */
+    private void setTextViewMessage( )
+    {
+        String welcomeMessage;
+        TextView welcome = (TextView) findViewById( R.id.mainMenuWelcomeMessage );
+        if(session.getName()!=null) {
+            welcomeMessage = getString(R.string.hello) + " " + session.getName();
+        }else{
+            welcomeMessage = getString(R.string.hello);
+        }
+        welcome.setText( welcomeMessage );
+
+    }
+
 
     /**
      * setup linear layout to redirect to map activity
@@ -112,22 +162,6 @@ public class MainMenu extends AppCompatActivity {
                 Log.i("Sprint1","Map activity Launched");
             }
         });
-    }
-
-    /**
-     *Show welcome message to the user loggged in
-     */
-    private void setTextViewMessage( )
-    {
-        String welcomeMessage;
-        TextView welcome = (TextView) findViewById( R.id.mainMenuMessage );
-        if(session.getName()!=null) {
-            welcomeMessage = getString(R.string.hello) + " " + session.getName();
-        }else{
-            welcomeMessage = getString(R.string.hello);
-        }
-        welcome.setText( welcomeMessage );
-
     }
 
     public static Intent makeIntent(Context context){

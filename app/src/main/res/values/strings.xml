@@ -18,10 +18,13 @@
 
 
     <!--Main Menu-->
+    <string name="menu_my_kids">My Kids</string>
     <string name="menu_monitor">Monitor</string>
-    <string name="menu_group">Group</string>
+    <string name="menu_my_parents">My Parents</string>
+    <string name="menu_group">Groups</string>
     <string name="menu_map">Map</string>
     <string name="menu_setting">Settings</string>
+    <string name="menu_message">Messages</string>
     <string name="log_out">LOG OUT</string>
     <string name="hello">Hello,</string>
 
@@ -59,7 +62,7 @@
     <string name="monitor_email_help">Add Email or User to Monitor/Be Monitored By</string>
     <string name="add_monitoring">Start Monitoring The Email Above</string>
     <string name="add_monitored_by">Starting Being Monitored By The Email Above</string>
-    <string name="monitored_title">I AM MONITORED BY:</string>
+    <string name="monitored_title">MY PARENTS:</string>
     <string name="monitoring_title">I MONITOR:</string>
     <string name="monitor_help_txt">Swipe left on user name for options.</string>
 
@@ -76,9 +79,7 @@
 
 
     <!--Leader Activity-->
-    <string name= "member_is">Member : </string>
-
-
+    <string name="member_is">Member : </string>
 
 
     <!---On Listview -->
@@ -99,9 +100,11 @@
 
     <!--MonitoredListActivity-->
     <string name="notify_delete"> You will not be monitored by this user anymore.</string>
+    <string name="add_new_kids">Add a new kid</string>
 
     <!--MonitoringListActivity-->
     <string name="notify_not_monitor">You cannot monitor this user anymore.</string>
     <string name="monitoring_user_email">User Email: </string>
     <string name="monitoring_user_name">User Name: </string>
+    <string name="add_new_parents">Add a new parent</string>
 </resources>

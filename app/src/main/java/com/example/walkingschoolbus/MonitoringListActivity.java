@@ -7,7 +7,9 @@ import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -60,8 +62,7 @@ public class MonitoringListActivity extends AppCompatActivity {
 
 
         SwipeMenuListView monitoringList = (SwipeMenuListView) findViewById(R.id.monitoringList);
-        //List<String> monitoringUser = new ArrayList<>();
-        //List<Integer> child_ID = new ArrayList<Integer>();
+
         for (User user : returnedUsers) {
             Log.w(TAG, "    User: " + user.toString());
             String userInfo = getString(R.string.monitoring_user_name) + " "  + user.getName() +"\n"+
@@ -143,12 +144,9 @@ public class MonitoringListActivity extends AppCompatActivity {
                     break;
 
                     case 1:
-                        //Intent intent = MonitorActivity.makeIntentt(MonitoringListActivity.this,
-
 
                         Intent intentForAdd = MonitorActivity.makeIntent(MonitoringListActivity.this,
                                 returnedUsers.get(position).getEmail());
-                        //intent.putExtra()
                         startActivity(intentForAdd);
 
                         break;
@@ -166,6 +164,22 @@ public class MonitoringListActivity extends AppCompatActivity {
                 return false;
             }
         });
+    }
+
+    private void setupAddKidsButton() {
+
+        Button button = (Button) findViewById(R.id.addMyKidsBtn);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                Intent intentAdd = UserSettingActivity.makeIntent( MonitoringListActivity.this );
+                startActivity(intentAdd);
+
+            }
+        });
+
     }
 
     private void response(Void returnedNothing) {
