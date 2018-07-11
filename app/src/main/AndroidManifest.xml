@@ -55,6 +55,9 @@
         <activity android:name=".LeaderActivity" />
         <activity android:name=".OnMarkerClickActivity" />
         <activity android:name=".RemoveMonitoringUserFromGroup" />
+        <activity android:name=".MyKidsActivity" />
+        <activity android:name=".OpenKidActivity" />
+        <activity android:name=".AddNewKidActivity"></activity>
     </application>
 
 </manifest>

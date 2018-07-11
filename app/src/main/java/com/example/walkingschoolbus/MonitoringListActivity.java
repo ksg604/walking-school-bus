@@ -61,7 +61,7 @@ public class MonitoringListActivity extends AppCompatActivity {
     private void response(List<User> returnedUsers) {
 
 
-        SwipeMenuListView monitoringList = (SwipeMenuListView) findViewById(R.id.monitoringList);
+        SwipeMenuListView monitoringList = (SwipeMenuListView) findViewById(R.id.myKidsList);
 
         for (User user : returnedUsers) {
             Log.w(TAG, "    User: " + user.toString());
@@ -179,7 +179,6 @@ public class MonitoringListActivity extends AppCompatActivity {
 
             }
         });
-
     }
 
     private void response(Void returnedNothing) {

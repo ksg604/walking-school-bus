@@ -83,8 +83,6 @@ import static android.Manifest.permission.ACCESS_FINE_LOCATION;
     private Map<Marker, Long> markerLongHashMapMap = new HashMap<Marker, Long>();
 
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -183,6 +181,7 @@ import static android.Manifest.permission.ACCESS_FINE_LOCATION;
      * The map will automatically centre on to the phone location upon initiation of the map.
      * There is a button on the top right corner of the map that will centre on to the phones's location if clicked.
      */
+    //Source: https://www.youtube.com/watch?v=fPFr0So1LmI&list=PLgCYzUzKIBE-vInwQhGSdnbyJ62nixHCt&index=5
     private void getUserLocation(){
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
@@ -221,6 +220,7 @@ import static android.Manifest.permission.ACCESS_FINE_LOCATION;
     /**
      * Requests permission from the user to allow location services for the map.
      */
+    //Source: https://www.youtube.com/watch?v=Vt6H9TOmsuo&index=4&list=PLgCYzUzKIBE-vInwQhGSdnbyJ62nixHCt
     private void getUserLocationPermission(){
         String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION};
 
@@ -245,7 +245,7 @@ import static android.Manifest.permission.ACCESS_FINE_LOCATION;
      * @param requestCode The code passed by getUserLocationMethod providing the results of whether user denied or allowed location services.
      * @param permissions The array of requested permissions.
      * @param grantResults Grant results for the requested permissions.  Either PERMISSION_GRANTED or PERMISSION_DENIED.
-     */
+     */ //Source: https://www.youtube.com/watch?v=Vt6H9TOmsuo&index=4&list=PLgCYzUzKIBE-vInwQhGSdnbyJ62nixHCt
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
        mLocationPermissionsGranted = false;

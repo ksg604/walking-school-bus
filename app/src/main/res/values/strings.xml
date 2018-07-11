@@ -107,4 +107,22 @@
     <string name="monitoring_user_email">User Email: </string>
     <string name="monitoring_user_name">User Name: </string>
     <string name="add_new_parents">Add a new parent</string>
+
+    <!--MyKidsActivity-->
+    <string name="map">Map</string>
+    <string name="add_new">Add New Kid</string>
+    <string name="my_kids_txt">My Kids:</string>
+    <string name="mykids_user_email">User Email: </string>
+    <string name="mykids_user_name">User Name: </string>
+    <string name="mykids_remove_swipe">Remove</string>
+    <string name="mykids_open_swipe">Open</string>
+    <string name="mykids_notify_not_kid">You are not monitoring this kid anymore.</string>
+
+    <!--OpenKidActivity-->
+    <string name="update_kid">Update</string>
+    <string name= "add_to_group">Add To Group</string>
+    <string name="open_kid_group_name">Group Name: </string>
+    <string name="open_kid_title_part1">My kid </string>
+    <string name="open_kid_title_part2">is a member of the groups: </string>
+
 </resources>
