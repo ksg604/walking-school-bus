@@ -83,7 +83,7 @@ public class LeaderActivity extends AppCompatActivity {
                     getString(R.string.user_email_list)+ " " + member.getEmail();
             stringUserList.add( userInfo );
 
-            ArrayAdapter adapter = new ArrayAdapter( LeaderActivity.this, R.layout.da_items, stringUserList );
+            ArrayAdapter adapter = new ArrayAdapter( LeaderActivity.this, R.layout.swipe_listview, stringUserList );
 
             userListView.setAdapter( adapter );
 
@@ -94,6 +94,21 @@ public class LeaderActivity extends AppCompatActivity {
             @Override
             public void create(SwipeMenu menu) {
 
+                // create "open" item
+                SwipeMenuItem openItem = new SwipeMenuItem( getApplicationContext());
+                // set item background
+                openItem.setBackground(new ColorDrawable( Color.rgb(0xC9, 0xC9, 0xCE)));
+                // set item width
+                openItem.setWidth(180);
+                // set item title
+                openItem.setTitle(getString( R.string.open_swipe ));
+                // set item title fontsize
+                openItem.setTitleSize(18);
+                // set item title font color
+                openItem.setTitleColor(Color.WHITE);
+                // add to menu
+                menu.addMenuItem(openItem);
+
                 // create "delete" item
                 SwipeMenuItem deleteItem = new SwipeMenuItem( getApplicationContext());
                 // set item background
@@ -101,7 +116,7 @@ public class LeaderActivity extends AppCompatActivity {
                 // set item width
                 deleteItem.setWidth(180);
                 // set item title
-                deleteItem.setTitle("Delete");
+                deleteItem.setTitle(getString( R.string.delete_swipe));
                 // set item title fontsize
                 deleteItem.setTitleSize(18);
                 // set item title font color
@@ -121,12 +136,17 @@ public class LeaderActivity extends AppCompatActivity {
                 switch (index) {
 
                     case 0:
+                        Long memberId = returnedUsers.get(position).getId();
+
+
+
+                    case 1:
 
                          Call<Void> caller = proxy.removeGroupMember(group.getId(), returnedUsers.get(position).getId());
                          ProxyBuilder.callProxy(LeaderActivity.this, caller, returnedNothing -> response(returnedNothing));
                          userListView.removeViewsInLayout(position,1);
                          finish();
-                         ArrayAdapter adapter = new ArrayAdapter(LeaderActivity.this, R.layout.da_items, stringUserList);
+                         ArrayAdapter adapter = new ArrayAdapter(LeaderActivity.this, R.layout.swipe_listview, stringUserList);
                          userListView.setAdapter(adapter);
                          startActivity( getIntent() );
 
