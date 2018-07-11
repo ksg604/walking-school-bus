@@ -41,16 +41,53 @@ public class User {
     private Long id;
 
     private Boolean hasFullData;
+
+
+    // ---------------------------------------
+    //    Fields
+    // ---------------------------------------
     private String name;
     private String email;
+    private Integer birthYear;
+    private Integer birthMonth;
+    private String address;
+    private String cellPhone;
+    private String homePhone;
+    private String grade;
+    private String teacherName;
+    private String emergencyContactInfo;
     private String password;
 
+    // Monitoring
+    // - - - - - - - - - - - - - - - - - - - - - - - - - -
+    private List<User> monitoredByUsers = new ArrayList<>();
+    private List<User> monitorsUsers = new ArrayList<>();
 
-    private List<User> monitoredByUsers = new ArrayList<>();// <-- TO BE IMPLEMENTED
-    private List<User> monitorsUsers = new ArrayList<>();   // <-- TO BE IMPLEMENTED
+    // Group Membership / Leading
+    // - - - - - - - - - - - - - - - - - - - - - - - - - -
+    private List<Group> memberOfGroups = new ArrayList<>();
+    private List<Group> leadsGroups = new ArrayList<>();
 
-    private List<Group> memberOfGroups = new ArrayList<>(); // <-- TO BE IMPLEMENTED
-    private List<Group> leadsGroups = new ArrayList<>();    // <-- TO BE IMPLEMENTED
+    // GPS Location
+    // - - - - - - - - - - - - - - - - - - - - - - - - - -
+   // private GpsLocation lastGpsLocation;
+
+    // Messages
+    // - - - - - - - - - - - - - - - - - - - - - - - - - -
+    //private List<Message> messages;
+
+    // Gamification Support
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    //private Integer currentPoints;
+    //private Integer totalPointsEarned;
+    // rewards will be serialized to be the customJson
+    //private EarnedRewards rewards;
+
+
+    // Permissions
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    //private List<PermissionRequest> pendingPermissionRequests;
+
 
     private String href;
 
@@ -155,6 +192,72 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
+
+
+    public Integer getBirthYear() {
+        return birthYear;
+    }
+
+    public void setBirthYear(Integer birthYear) {
+        this.birthYear = birthYear;
+    }
+
+    public Integer getBirthMonth() {
+        return birthMonth;
+    }
+
+    public void setBirthMonth(Integer birthMonth) {
+        this.birthMonth = birthMonth;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getCellPhone() {
+        return cellPhone;
+    }
+
+    public void setCellPhone(String cellPhone) {
+        this.cellPhone = cellPhone;
+    }
+
+    public String getHomePhone() {
+        return homePhone;
+    }
+
+    public void setHomePhone(String homePhone) {
+        this.homePhone = homePhone;
+    }
+
+    public String getGrade() {
+        return grade;
+    }
+
+    public void setGrade(String grade) {
+        this.grade = grade;
+    }
+
+    public String getTeacherName() {
+        return teacherName;
+    }
+
+    public void setTeacherName(String teacherName) {
+        this.teacherName = teacherName;
+    }
+
+    public String getEmergencyContactInfo() {
+        return emergencyContactInfo;
+    }
+
+    public void setEmergencyContactInfo(String emergencyContactInfo) {
+        this.emergencyContactInfo = emergencyContactInfo;
+    }
+
 
     // Note: Password never returned by the server; only used to send password to server.
     public String getPassword() {
@@ -293,6 +396,8 @@ public class User {
                 ", href='" + href + '\'' +
                 '}';
     }
+
+
 }
 
 
