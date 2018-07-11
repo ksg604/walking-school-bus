@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.example.walkingschoolbus.model.GpsLocation;
 import com.example.walkingschoolbus.model.Group;
+import com.example.walkingschoolbus.model.Message;
 import com.example.walkingschoolbus.model.User;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -112,6 +113,13 @@ public interface WGServerProxy {
     // Messages
     // -----------------------------
     // TODO: Implement
+
+    @POST("/messages/toparentsof/{userId}")
+    Call<Message> sendMessageToParents (@Path("userId") Long userId,@Body Message message);
+
+    @GET("/messages")
+    Call<Message> getAllMessages();
+
 
     // -----------------------------
     // Permissions

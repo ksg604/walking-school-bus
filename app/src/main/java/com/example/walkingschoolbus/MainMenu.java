@@ -78,6 +78,8 @@ public class MainMenu extends AppCompatActivity {
         setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = MessageActivity.makeIntent(MainMenu.this);
+                startActivity(intent);
 
             }
         });
@@ -165,6 +167,7 @@ public class MainMenu extends AppCompatActivity {
     }
 
     public static Intent makeIntent(Context context){
+
         return new Intent(context,MainMenu.class);
     }
 

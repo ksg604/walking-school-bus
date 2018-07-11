@@ -17,6 +17,10 @@ public class Message extends IdItemBase  {
     private User fromUser;
     private User toUser;
 
+    public Message () {
+
+    }
+
 
     public boolean isEmergency() {
         return isEmergency;
