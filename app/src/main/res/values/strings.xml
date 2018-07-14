@@ -119,4 +119,5 @@
     <string name="user_teacher_grade">Teacher and Grade: </string>
     <string name="user_view_settings_title">Account Information</string>
     <string name="user_view_settings_subtitle">Click Below to Update Information</string>
+    <string name="user_view_ICE">Emergency Contact Information: </string>
 </resources>
