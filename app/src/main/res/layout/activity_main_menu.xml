@@ -4,20 +4,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainMenu">
+    tools:context=".MainMenu"
+    tools:layout_editor_absoluteY="81dp">
 
 
     <LinearLayout
         android:id="@+id/linearLayoutMaps"
-        android:layout_width="161dp"
-        android:layout_height="48dp"
-        android:layout_marginEnd="196dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="181dp"
+        android:layout_marginEnd="117dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
         android:background="#728a74"
         android:orientation="vertical"
         android:weightSum="3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintBottom_toTopOf="@+id/trackingSwitch"
+        app:layout_constraintEnd_toStartOf="@+id/btnUserDetails"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.013">
 
         <ImageView
             android:layout_width="25dp"
@@ -41,36 +47,35 @@
     <Button
         android:id="@+id/btnLogOut"
         android:layout_width="wrap_content"
-        android:layout_height="36dp"
+        android:layout_height="0dp"
         android:layout_marginBottom="8dp"
         android:text="@string/log_out"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tableLayout2" />
 
     <TextView
         android:id="@+id/mainMenuWelcomeMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="104dp"
+        android:layout_marginBottom="116dp"
+        android:layout_marginStart="1dp"
         android:text="TextView"
         android:textAppearance="@android:style/TextAppearance.Material.Headline"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toTopOf="@+id/tableLayout2"
+        app:layout_constraintStart_toEndOf="@+id/trackingSwitch"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutMaps" />
 
     <TableLayout
         android:id="@+id/tableLayout2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginBottom="45dp"
+        android:layout_marginStart="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.847">
+        app:layout_constraintTop_toBottomOf="@+id/trackingSwitch">
 
         <TableRow
             android:layout_width="wrap_content"
@@ -213,16 +218,6 @@
 
     </TableLayout>
 
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@mipmap/ic_settings_grey600_48dp" />
-
     <Switch
         android:id="@+id/trackingSwitch"
         android:layout_width="wrap_content"
@@ -231,6 +226,20 @@
         android:layout_marginStart="27dp"
         android:text="On Tracking"
         app:layout_constraintBottom_toTopOf="@+id/tableLayout2"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnUserDetails" />
+
+    <ImageButton
+        android:id="@+id/btnUserDetails"
+        android:layout_width="66dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="129dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginTop="15dp"
+        app:layout_constraintBottom_toTopOf="@+id/trackingSwitch"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/linearLayoutMaps"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@mipmap/ic_settings_grey600_48dp" />
 
 </android.support.constraint.ConstraintLayout>

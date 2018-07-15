@@ -57,6 +57,8 @@
         <activity android:name=".RemoveMonitoringUserFromGroup" />
         <activity android:name=".MyParentsActivity"></activity>
         <activity android:name=".UpdateUserDetails"></activity>
+        <activity android:name=".ViewUserSettingsActivity" />
+        <activity android:name=".EditUserSettingsActivity"></activity>
     </application>
 
 </manifest>
