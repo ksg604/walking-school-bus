@@ -12,6 +12,7 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,6 +37,7 @@ public class MainMenu extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
 
+        setupButtonSettings();
         setupLayoutGroups();
         setupLayoutMaps();
         setupLayoutMessages();
@@ -49,6 +51,18 @@ public class MainMenu extends AppCompatActivity {
             }
         },2000);
         setTextViewMessage();
+    }
+
+    private void setupButtonSettings() {
+        ImageButton btn = findViewById(R.id.btnUserDetails);
+        btn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                long sessionID = session.getid();
+                Intent intent = ViewUserSettingsActivity.makeIntent(MainMenu.this,sessionID);
+                startActivity(intent);
+            }
+        });
     }
 
     /**
