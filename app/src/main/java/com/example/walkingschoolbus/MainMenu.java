@@ -121,7 +121,7 @@ public class MainMenu extends AppCompatActivity {
         setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = MonitoredListActivity.makeIntent(MainMenu.this);
+                Intent intent = MyParentsActivity.makeIntent(MainMenu.this);
                 Log.w("Maintest", "   --> NOW HAVE TOKEN(output3): " + token);
                 startActivity(intent);
             }
