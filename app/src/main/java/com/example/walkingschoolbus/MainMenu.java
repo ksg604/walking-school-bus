@@ -15,7 +15,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.SwitchCompat;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
@@ -39,6 +38,8 @@ import com.example.walkingschoolbus.proxy.WGServerProxy;
 import com.google.android.gms.location.FusedLocationProviderClient;
 
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -59,6 +60,7 @@ public class MainMenu extends AppCompatActivity {
     private Boolean mLocationPermissionsGranted = false;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 0;
     private FusedLocationProviderClient mFusedLocationProviderClient;
+    private Handler handler = new Handler();
 
 
 
@@ -88,31 +90,29 @@ public class MainMenu extends AppCompatActivity {
         OnTracking.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isOn) {
-                Handler handler = new Handler();
-                Runnable runnable = new Runnable() {
-                    public void run() {
-                        updateLastGpsLocation();
-                        handler.postDelayed( this, 30000 );
-                    }
+                if (isOn == true) {
 
-                };
-                if (!isOn) {
-                    // Start the initial runnable task by posting through the handler
-                    handler.post(runnable);
-                }else {
-                    //Stop updating location
-                    handler.removeCallbacksAndMessages(runnable);
+                    Runnable runnable = new Runnable() {
+                        public void run() {
+                            updateLastGpsLocation();
+                            handler.postDelayed( this, 30000 );
+                        }
+
+                    };
+
+                    handler.post( runnable );
+                    session.setTracking( true );
+
+                }else{
+                    handler.removeMessages(0);
                 }
+
             }
-
-
-
 
         } );
 
 
     }
-
 
     private void responseForGps(GpsLocation returnedGps) {
         user.setLastGpsLocation( returnedGps );
@@ -254,8 +254,7 @@ public class MainMenu extends AppCompatActivity {
         LocationListener locationListener = new LocationListener() {
             public void onLocationChanged(Location location) {
                 // Called when a new location is found by the network location provider.
-                lastGpsLocation.setLng( location.getLongitude() );
-                lastGpsLocation.setLat( location.getLatitude() );
+
             }
 
             public void onStatusChanged(String provider, int status, Bundle extras) {
@@ -278,7 +277,7 @@ public class MainMenu extends AppCompatActivity {
                 Location location = locationManager.getLastKnownLocation( LocationManager.GPS_PROVIDER );
                 lastGpsLocation.setLng( location.getLongitude() );
                 lastGpsLocation.setLat( location.getLatitude() );
-
+                lastGpsLocation.setTimestamp( getTimeStamp() );
 
                 Call<GpsLocation> caller = proxy.setLastGpsLocation(user.getId(),lastGpsLocation );
                 ProxyBuilder.callProxy(MainMenu.this, caller, returnedGpsLocation -> responseForGps(returnedGpsLocation));
@@ -336,4 +335,9 @@ public class MainMenu extends AppCompatActivity {
         }
     }
 
+    private String getTimeStamp() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        String timeStamp  = dateFormat.format(new Date());
+        return timeStamp;
+    }
 }
