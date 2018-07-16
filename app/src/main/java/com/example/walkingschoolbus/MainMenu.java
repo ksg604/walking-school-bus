@@ -253,7 +253,6 @@ public class MainMenu extends AppCompatActivity {
         // Define a listener that responds to location updates
         LocationListener locationListener = new LocationListener() {
             public void onLocationChanged(Location location) {
-                // Called when a new location is found by the network location provider.
 
             }
 
