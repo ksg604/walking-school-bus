@@ -127,6 +127,11 @@
     <string name="user_view_settings_subtitle">Click Below to Update Information</string>
     <string name="user_view_ICE">Emergency Contact Information: </string>
     <string name="user_btn_update">UPDATE</string>
+    <string name="user_save">SAVE</string>
+    <string name="user_edit_subtitle">Update Information Then Press Save</string>
+    <string name="user_edit_title">Update Account Information</string>
+    <string name="user_hinty_year">-yyyy-</string>
+    <string name="user_hint_student">fill only if student</string>
 
     <string-array name="months_array">
         <item></item>

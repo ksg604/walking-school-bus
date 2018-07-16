@@ -7,29 +7,51 @@
     tools:context=".EditUserSettingsActivity"
     tools:layout_editor_absoluteY="81dp">
 
+    <Button
+        android:id="@+id/btnEditUserSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="@string/user_save"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+
     <TextView
         android:id="@+id/txtViewUserEditTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="163dp"
-        tools:layout_editor_absoluteY="16dp" />
+        android:layout_marginBottom="26dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginTop="2dp"
+        android:text="@string/user_edit_title"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+        app:layout_constraintEnd_toEndOf="@+id/txtViewUserEditSubTitle"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/txtViewUserEditSubTitle"
         android:layout_width="wrap_content"
-        android:layout_height="19dp"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="163dp"
-        tools:layout_editor_absoluteY="35dp" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/user_edit_subtitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtViewUserEditTitle" />
 
     <LinearLayout
         android:id="@+id/linearLayout2"
-        android:layout_width="368dp"
-        android:layout_height="390dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:orientation="vertical"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="60dp">
+        app:layout_constraintBottom_toTopOf="@+id/btnEditUserSave"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtViewUserEditTitle">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -37,14 +59,14 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/txtViewedituserName"
+                android:id="@+id/txtViewEditUserName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/user_name" />
 
             <EditText
-                android:id="@+id/EditTxtInputName"
+                android:id="@+id/editTxtInputName"
                 android:layout_width="134dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -64,14 +86,34 @@
 
             <Spinner
                 android:id="@+id/SpinnerEditUserMOB"
-                android:layout_width="wrap_content"
+                android:layout_width="111dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="0"
                 android:background="@android:drawable/btn_dropdown"
-                android:spinnerMode="dropdown"/>
+                android:spinnerMode="dropdown" />
 
             <EditText
-                android:id="@+id/txtViewUserThisYOB"
+                android:id="@+id/editTxtUserThisYOB"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="@string/user_hinty_year"
+                android:inputType="number" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/TxtViewHPhone"
+                android:layout_width="134dp"
+                android:layout_height="match_parent"
+                android:text="@string/user_hphone" />
+
+            <EditText
+                android:id="@+id/editTxtUserThisHPhone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
@@ -83,36 +125,16 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/TxtViewHPhone"
-                android:layout_width="134dp"
-                android:layout_height="wrap_content"
-                android:text="@string/user_hphone" />
-
-            <TextView
-                android:id="@+id/txtViewUserThisHPhone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="TextView" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
                 android:id="@+id/txtViewCPhone"
                 android:layout_width="134dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:text="@string/user_cphone" />
 
-            <TextView
-                android:id="@+id/txtViewUserThisCPhone"
+            <EditText
+                android:id="@+id/editTxtUserThisCPhone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="TextView" />
+                android:layout_weight="1" />
         </LinearLayout>
 
         <LinearLayout
@@ -126,12 +148,11 @@
                 android:layout_height="wrap_content"
                 android:text="@string/user_email" />
 
-            <TextView
-                android:id="@+id/txtViewUserThisEmail"
+            <EditText
+                android:id="@+id/editTxtUserEmail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="TextView" />
+                android:layout_weight="1" />
         </LinearLayout>
 
         <TextView
@@ -140,11 +161,10 @@
             android:layout_height="wrap_content"
             android:text="@string/user_address" />
 
-        <TextView
-            android:id="@+id/txtViewUserThisAddress"
+        <EditText
+            android:id="@+id/editTxtUserThisAddress"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:layout_height="wrap_content" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -157,12 +177,12 @@
                 android:layout_height="wrap_content"
                 android:text="@string/user_teacher_grade" />
 
-            <TextView
-                android:id="@+id/txtViewUserThisGrade"
+            <EditText
+                android:id="@+id/editTextUserThisGrade"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView" />
+                android:hint="@string/user_hint_student" />
         </LinearLayout>
 
         <TextView
@@ -171,21 +191,13 @@
             android:layout_height="wrap_content"
             android:text="@string/user_view_ICE" />
 
-        <TextView
-            android:id="@+id/txtViewUserThisICE"
+        <EditText
+            android:id="@+id/editTxtUserThisICE"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="textView" />
-    </LinearLayout>
+            android:hint="@string/user_hint_student" />
 
-    <Button
-        android:id="@+id/btnViewUserUpdate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Button"
-        tools:layout_editor_absoluteX="148dp"
-        tools:layout_editor_absoluteY="458dp" />
+    </LinearLayout>
 
 
 </android.support.constraint.ConstraintLayout>

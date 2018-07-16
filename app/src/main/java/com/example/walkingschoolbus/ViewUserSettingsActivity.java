@@ -4,6 +4,7 @@ and launch an activity to update this information.
  */
 package com.example.walkingschoolbus;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -36,6 +37,7 @@ public class ViewUserSettingsActivity extends AppCompatActivity {
     private TextView thisAddress;
     private TextView thisICE;
     private long thisUserID;
+    private static final int REQUEST_CODE = 12345;
 
 
     @Override
@@ -129,16 +131,27 @@ public class ViewUserSettingsActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                Intent intent = ViewUserSettingsActivity.makeIntent(ViewUserSettingsActivity.this, thisUserID);
-                startActivity(intent);
+                Intent intent = EditUserSettingsActivity.makeIntent(ViewUserSettingsActivity.this, thisUserID);
+                startActivityForResult(intent, REQUEST_CODE);
             }
         });
     }
-    
+
     public static Intent makeIntent(Context context, long userID){
         Log.i(TAG,"makeIntent");
         Intent intent = new Intent(context, ViewUserSettingsActivity.class);
         intent.putExtra("ID",userID);
         return intent;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent){
+        switch(requestCode){
+            case REQUEST_CODE:
+            if(resultCode== Activity.RESULT_OK){
+                finish();
+                startActivity(getIntent());
+            }
+        }
     }
 }
