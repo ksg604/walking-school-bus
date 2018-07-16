@@ -95,7 +95,7 @@ public class User {
 
     /*
     Singleton Support
-*/
+    */
 
     private static User instance;
 
@@ -259,6 +259,14 @@ public class User {
 
     public void setEmergencyContactInfo(String emergencyContactInfo) {
         this.emergencyContactInfo = emergencyContactInfo;
+    }
+
+    public GpsLocation getLastGpsLocation() {
+        return lastGpsLocation;
+    }
+
+    public void setLastGpsLocation(GpsLocation lastGpsLocation) {
+        this.lastGpsLocation = lastGpsLocation;
     }
 
 

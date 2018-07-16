@@ -2,10 +2,13 @@ package com.example.walkingschoolbus.model;
 
 import android.location.Location;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * Class for holding GPSLocation
  * Needed for Google Maps
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class GpsLocation {
     private Double lat;
     private Double lng;
