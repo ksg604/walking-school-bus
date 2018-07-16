@@ -138,10 +138,10 @@ public class GroupManagementActivity extends AppCompatActivity {
             }
 
             ArrayAdapter adapterLeader = new ArrayAdapter( GroupManagementActivity.this,
-                    R.layout.da_items, stringLeaderGroupList );
+                    R.layout.swipe_listview, stringLeaderGroupList );
             groupAsLeaderListView.setAdapter( adapterLeader );
             ArrayAdapter adapterMember = new ArrayAdapter( GroupManagementActivity.this,
-                    R.layout.da_items, stringMemberGroupList );
+                    R.layout.swipe_listview, stringMemberGroupList );
             groupAsMemberListView.setAdapter( adapterMember );
         }
 
@@ -221,6 +221,21 @@ public class GroupManagementActivity extends AppCompatActivity {
             @Override
             public void create(SwipeMenu menu) {
 
+                // create "open" item
+                SwipeMenuItem openItem = new SwipeMenuItem( getApplicationContext());
+                // set item background
+                openItem.setBackground(new ColorDrawable(Color.rgb(0xC9, 0xC9, 0xCE)));
+                // set item width
+                openItem.setWidth(180);
+                // set item title
+                openItem.setTitle(getString( R.string.open_swipe ));
+                // set item title font size
+                openItem.setTitleSize(18);
+                // set item title font color
+                openItem.setTitleColor(Color.WHITE);
+                // add to menu
+                menu.addMenuItem(openItem);
+
                 // create "delete" item
                 SwipeMenuItem deleteItem = new SwipeMenuItem( getApplicationContext());
                 // set item background
@@ -251,6 +266,9 @@ public class GroupManagementActivity extends AppCompatActivity {
                     switch (index) {
 
                         case 0:
+                            Long groupId = modifiedGroupMemberList.get(position).getId();
+
+                        case 1:
                             // Make call
                              Call<Void> caller = proxy.removeGroupMember(modifiedGroupMemberList.get(position).getId(), user.getId());
                              ProxyBuilder.callProxy(GroupManagementActivity.this, caller, returnedNothing -> response(returnedNothing));

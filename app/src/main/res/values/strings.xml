@@ -56,10 +56,6 @@
     <!-- Leader -->
     <string name="members">MEMBERS</string>
 
-
-
-
-
     <!--Settings-->
     <string name="monitoring">List All Users I Monitor</string>
     <string name="monitored_by">List All Users Who Monitor Me</string>

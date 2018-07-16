@@ -2,6 +2,7 @@ package com.example.walkingschoolbus;
 
 
 import android.Manifest;
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -13,9 +14,11 @@ import android.location.LocationManager;
 
 import android.location.LocationProvider;
 
+import android.os.Build;
 import android.os.Bundle;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -24,6 +27,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.walkingschoolbus.model.GpsLocation;
 import com.example.walkingschoolbus.model.Group;
 import com.example.walkingschoolbus.model.Session;
 import com.example.walkingschoolbus.model.User;
@@ -43,7 +47,11 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
@@ -66,14 +74,13 @@ import static android.Manifest.permission.ACCESS_FINE_LOCATION;
  public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-
-    private LocationManager locationManager;
+    private static GpsLocation gpsLocation;
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private Boolean mLocationPermissionsGranted = false;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 0;
     private static final float DEFAULT_ZOOM = 14f;
     WGServerProxy proxy;
-    private User user = User.getInstance();
+    private static User user = User.getInstance();
     private FusedLocationProviderClient client;
     private Group group;
     private Session token = Session.getInstance();
@@ -200,6 +207,7 @@ import static android.Manifest.permission.ACCESS_FINE_LOCATION;
                             moveCamera(new LatLng(sfu.getLatitude(), sfu.getLongitude()), DEFAULT_ZOOM);
                         } else{
                             moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), DEFAULT_ZOOM);
+
                         }
                     }
                 }
@@ -262,6 +270,7 @@ import static android.Manifest.permission.ACCESS_FINE_LOCATION;
                }
        }
     }
+
 
 
     public static Intent makeIntent(Context context){
