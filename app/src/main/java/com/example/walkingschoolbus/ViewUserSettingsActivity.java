@@ -9,6 +9,8 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.walkingschoolbus.model.Session;
@@ -63,6 +65,8 @@ public class ViewUserSettingsActivity extends AppCompatActivity {
         Call<User> caller = proxy.getUserById(thisUserID);
         ProxyBuilder.callProxy(ViewUserSettingsActivity.this,caller,
                 returnedUser ->responseForUser(returnedUser));
+
+        setupUpdateButton();
 
     }
 
@@ -120,8 +124,17 @@ public class ViewUserSettingsActivity extends AppCompatActivity {
         thisMOB.setText(monthText);
     }
 
-
-
+    private void setupUpdateButton() {
+        Button btn = findViewById(R.id.btnViewUserUpdate);
+        btn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent intent = ViewUserSettingsActivity.makeIntent(ViewUserSettingsActivity.this, thisUserID);
+                startActivity(intent);
+            }
+        });
+    }
+    
     public static Intent makeIntent(Context context, long userID){
         Log.i(TAG,"makeIntent");
         Intent intent = new Intent(context, ViewUserSettingsActivity.class);
