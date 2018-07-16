@@ -40,6 +40,7 @@ public class MainMenu extends AppCompatActivity {
         setupLayoutMaps();
         setupLayoutMessages();
         setupLayoutMyParents();
+        setupLayoutMyKids();
         setupLogOutButton();
 
         new Handler().postDelayed(new Runnable(){
@@ -68,8 +69,6 @@ public class MainMenu extends AppCompatActivity {
     });
 
     }
-
-
     /**
      * setup linear layout to redirect to settings page on click
      */
@@ -123,7 +122,7 @@ public class MainMenu extends AppCompatActivity {
         setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = MonitoringListActivity.makeIntent(MainMenu.this);
+                Intent intent = MyKidsActivity.makeIntent(MainMenu.this);
                 Log.w("Maintest", "   --> NOW HAVE TOKEN(output3): " + token);
                 startActivity(intent);
             }

@@ -125,4 +125,9 @@
     <string name="open_kid_title_part1">My kid </string>
     <string name="open_kid_title_part2">is a member of the groups: </string>
 
+    <!--AddNewKidActivity-->
+    <string name="kids_email">Email: </string>
+    <string name="new_kid_title">Enter New Kid Information</string>
+    <string name="confirm_btn_text">Confirm</string>
+
 </resources>

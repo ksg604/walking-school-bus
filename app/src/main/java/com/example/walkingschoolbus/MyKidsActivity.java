@@ -1,5 +1,7 @@
 package com.example.walkingschoolbus;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -30,9 +32,10 @@ public class MyKidsActivity extends AppCompatActivity {
 
     private static final String TAG = "MyKidsActivity";
     private Session session;
-    private User user;
-    private static WGServerProxy proxy;
-    private ArrayList<String> myKidsList = new ArrayList<>();
+    private User parent;
+    WGServerProxy proxy;
+    private List<String> myKidsList = new ArrayList<>();
+    private static final int REQUEST_CODE = 22;
 
 
     @Override
@@ -41,24 +44,28 @@ public class MyKidsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_my_kids);
 
         session = Session.getInstance();
-        user = User.getInstance();
-        String savedToken = session.getToken();
+        parent = User.getInstance();
+
         setupMyKidsTextView();
-        setupAddNewKidBtn();
+
         proxy = ProxyBuilder.getProxy(getString(R.string.api_key), session.getToken());
 
-        Call<List<User>> caller = proxy.getMonitorsUsers(user.getId());
+        Call<List<User>> caller = proxy.getMonitorsUsers(parent.getId());
         ProxyBuilder.callProxy(MyKidsActivity.this, caller, returnedKids -> response(returnedKids));
+        setupAddNewKidBtn();
+
     }
 
     private void response(List<User> returnedKids) {
 
         SwipeMenuListView kidsList = (SwipeMenuListView) findViewById(R.id.myKidsList);
 
-        for (User user : returnedKids) {
-            Log.w(TAG, "    User: " + user.toString());
-            String userInfo = getString(R.string.mykids_user_name) + " " + user.getName() + "\n" +
-                    getString(R.string.mykids_user_email) + " " + user.getEmail();
+
+        for (User kid : returnedKids) {
+            Log.w(TAG, "    User: " + kid.toString());
+            String userInfo = getString(R.string.mykids_user_name) + " " + kid.getName() + "\n" +
+                    getString(R.string.mykids_user_email) + " " + kid.getEmail();
+
 
             myKidsList.add(userInfo);
             ArrayAdapter adapter = new ArrayAdapter(MyKidsActivity.this, R.layout.da_items, myKidsList);
@@ -113,18 +120,22 @@ public class MyKidsActivity extends AppCompatActivity {
                             Intent intentForOpen = OpenKidActivity.makeIntent(MyKidsActivity.this,
                                     returnedKids.get(position).getEmail());
                             startActivity(intentForOpen);
+                            break;
                         case 1:
-                            Call<Void> caller = proxy.removeFromMonitorsUsers(user.getId(), returnedKids.get(position).getId());
-                            ProxyBuilder.callProxy(MyKidsActivity.this, caller, returnedNothing -> response(returnedNothing));
+                            Call<Void> caller = proxy.removeFromMonitorsUsers(parent.getId(), returnedKids.get(position).getId());
+                            ProxyBuilder.callProxy(MyKidsActivity.this, caller, returnedNothing -> removeResponse(returnedNothing));
                             kidsList.removeViewsInLayout(position, 1);
+                            break;
                     }
                     return false;
                 }
             });
         }
+        Log.i("response debug",""+returnedKids);
     }
 
-    private void response(Void returnedNothing) {
+    private void removeResponse(Void returnedNothing) {
+
         notifyUserViaLogAndToast(MyKidsActivity.this.getString(R.string.mykids_notify_not_kid));
     }
 
@@ -134,8 +145,7 @@ public class MyKidsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intentForAddNewKids = AddNewKidActivity.makeIntent(MyKidsActivity.this);
-                startActivity(intentForAddNewKids);
-
+                startActivityForResult(intentForAddNewKids, REQUEST_CODE);
             }
         });
     }
@@ -152,5 +162,26 @@ public class MyKidsActivity extends AppCompatActivity {
 
     }
 
+    public static Intent makeIntent(Context context) {
+        Intent intent = new Intent(context, MyKidsActivity.class);
+        return intent;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        Log.i("tag50","request code: "+requestCode + "resultcode: "+resultCode);
+        switch(requestCode){
+            case REQUEST_CODE:
+                if (resultCode == Activity.RESULT_OK) {
+                    finish();
+                    Log.i("tag50","entered");
+                    startActivity(getIntent());
+                }
+                break;
+        }
+    }
 }
+
+
+
 
