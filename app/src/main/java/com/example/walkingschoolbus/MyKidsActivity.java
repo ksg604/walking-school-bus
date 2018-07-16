@@ -35,7 +35,9 @@ public class MyKidsActivity extends AppCompatActivity {
     private User parent;
     WGServerProxy proxy;
     private List<String> myKidsList = new ArrayList<>();
-    private static final int REQUEST_CODE = 22;
+    private static final int REQUEST_CODE = 2222;
+    private String userToken;
+    private long sessionID;
 
 
     @Override
@@ -44,13 +46,16 @@ public class MyKidsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_my_kids);
 
         session = Session.getInstance();
-        parent = User.getInstance();
+        userToken = session.getToken();
+        sessionID = session.getid();
+
+        //parent = User.getInstance();
 
         setupMyKidsTextView();
 
         proxy = ProxyBuilder.getProxy(getString(R.string.api_key), session.getToken());
 
-        Call<List<User>> caller = proxy.getMonitorsUsers(parent.getId());
+        Call<List<User>> caller = proxy.getMonitorsUsers(sessionID);
         ProxyBuilder.callProxy(MyKidsActivity.this, caller, returnedKids -> response(returnedKids));
         setupAddNewKidBtn();
 
@@ -122,7 +127,7 @@ public class MyKidsActivity extends AppCompatActivity {
                             startActivity(intentForOpen);
                             break;
                         case 1:
-                            Call<Void> caller = proxy.removeFromMonitorsUsers(parent.getId(), returnedKids.get(position).getId());
+                            Call<Void> caller = proxy.removeFromMonitorsUsers(sessionID, returnedKids.get(position).getId());
                             ProxyBuilder.callProxy(MyKidsActivity.this, caller, returnedNothing -> removeResponse(returnedNothing));
                             kidsList.removeViewsInLayout(position, 1);
                             break;
@@ -169,7 +174,7 @@ public class MyKidsActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        Log.i("tag50","request code: "+requestCode + "resultcode: "+resultCode);
+        Log.i(TAG,"request code: "+requestCode + "resultcode: "+resultCode);
         switch(requestCode){
             case REQUEST_CODE:
                 if (resultCode == Activity.RESULT_OK) {

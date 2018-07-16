@@ -99,6 +99,10 @@ public class AddNewKidActivity extends AppCompatActivity {
         Toast.makeText(AddNewKidActivity.this,""+parent.getName()+", you are now monitoring "+kid.getName()
         ,Toast.LENGTH_LONG)
                 .show();
+        Intent intent = MyKidsActivity.makeIntent(AddNewKidActivity.this);
+        intent.putExtra("result",RESULT_OK);
+        setResult(Activity.RESULT_OK,intent);
+        finish();
     }
 
     private void setupConfirmBtn(){
@@ -107,10 +111,6 @@ public class AddNewKidActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 registerKid();
-                Intent intent = MyKidsActivity.makeIntent(AddNewKidActivity.this);
-                intent.putExtra("result",RESULT_OK);
-                setResult(Activity.RESULT_OK,intent);
-                finish();
             }
         });
     }
