@@ -267,6 +267,9 @@ public class GroupManagementActivity extends AppCompatActivity {
 
                         case 0:
                             Long groupId = modifiedGroupMemberList.get(position).getId();
+                            group.setId(groupId);
+                            Intent intent = LeaderActivity.makeIntent( GroupManagementActivity.this );
+                            startActivity( intent );
 
                         case 1:
                             // Make call

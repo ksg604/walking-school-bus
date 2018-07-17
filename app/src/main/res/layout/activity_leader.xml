@@ -6,10 +6,21 @@
     android:layout_height="match_parent"
     tools:context=".LeaderActivity">
 
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginBottom="336dp"
+        android:layout_marginStart="32dp"
+        android:text="@string/leader_help_txt"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtViewGroupTitle" />
+
     <com.baoyz.swipemenulistview.SwipeMenuListView
         android:id="@+id/userList"
-        android:layout_width="326dp"
-        android:layout_height="359dp"
+        android:layout_width="320dp"
+        android:layout_height="294dp"
         android:layout_marginBottom="30dp"
         android:layout_marginEnd="20dp"
         android:layout_marginStart="20dp"
@@ -18,7 +29,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.13999999">
+        app:layout_constraintVertical_bias="1.0">
 
     </com.baoyz.swipemenulistview.SwipeMenuListView>
 
@@ -26,10 +37,20 @@
         android:id="@+id/leaderTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="116dp"
         android:text="@string/members"
         android:textAppearance="@android:style/TextAppearance.Material.Headline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Switch
+        android:id="@+id/gpsUpdateSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="224dp"
+        android:layout_marginTop="32dp"
+        android:text="@string/leader_gps_update"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

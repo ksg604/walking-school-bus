@@ -16,13 +16,9 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.Menu;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
@@ -60,7 +56,8 @@ public class MainMenu extends AppCompatActivity {
     private Boolean mLocationPermissionsGranted = false;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 0;
     private FusedLocationProviderClient mFusedLocationProviderClient;
-    private Handler handler = new Handler();
+    private static Handler handler = new Handler();
+    private static Runnable runnableCode;
 
 
 
@@ -83,6 +80,8 @@ public class MainMenu extends AppCompatActivity {
 
 
         setTextViewMessage();
+
+        makeHandlerRun();
     }
 
     private void setupOnTrackingBtn() {
@@ -92,32 +91,24 @@ public class MainMenu extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isOn) {
                 if (isOn == true) {
 
-                    Runnable runnable = new Runnable() {
-                        public void run() {
-                            updateLastGpsLocation();
-                            handler.postDelayed( this, 30000 );
-                        }
 
-                    };
 
-                    handler.post( runnable );
+                    turnOnGpsUpdate();
                     session.setTracking( true );
 
                 }else{
-                    handler.removeMessages(0);
+                   turnOffGpsUpdate();
                 }
 
             }
+
+
 
         } );
 
 
     }
 
-    private void responseForGps(GpsLocation returnedGps) {
-        user.setLastGpsLocation( returnedGps );
-
-    }
 
     private void setupButtonSettings() {
         ImageView btn = (ImageView) findViewById( R.id.btnUserDetails );
@@ -246,6 +237,15 @@ public class MainMenu extends AppCompatActivity {
         return new Intent( context, MainMenu.class );
     }
 
+    private void makeHandlerRun() {
+        runnableCode = new Runnable() {
+            public void run() {
+                updateLastGpsLocation();
+                handler.postDelayed( this, 30000 );
+            }
+
+        };
+    }
 
     private void updateLastGpsLocation() {
         LocationManager locationManager = (LocationManager) this.getSystemService( Context.LOCATION_SERVICE );
@@ -253,6 +253,10 @@ public class MainMenu extends AppCompatActivity {
         // Define a listener that responds to location updates
         LocationListener locationListener = new LocationListener() {
             public void onLocationChanged(Location location) {
+                lastGpsLocation.setLng( location.getLongitude() );
+                lastGpsLocation.setLat( location.getLatitude() );
+                lastGpsLocation.setTimestamp( getTimeStamp() );
+                user.setLastGpsLocation(lastGpsLocation);
 
             }
 
@@ -269,7 +273,7 @@ public class MainMenu extends AppCompatActivity {
         // Register the listener with the Location Manager to receive location update
         try {
             if (ActivityCompat.checkSelfPermission( this, Manifest.permission.ACCESS_FINE_LOCATION ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission( this, Manifest.permission.ACCESS_COARSE_LOCATION ) != PackageManager.PERMISSION_GRANTED) {
-             getUserLocationPermission();
+                getUserLocationPermission();
                 return;
             }else{
                 locationManager.requestLocationUpdates( LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
@@ -277,8 +281,9 @@ public class MainMenu extends AppCompatActivity {
                 lastGpsLocation.setLng( location.getLongitude() );
                 lastGpsLocation.setLat( location.getLatitude() );
                 lastGpsLocation.setTimestamp( getTimeStamp() );
+                user.setLastGpsLocation(lastGpsLocation);
 
-                Call<GpsLocation> caller = proxy.setLastGpsLocation(user.getId(),lastGpsLocation );
+                Call<GpsLocation> caller = proxy.setLastGpsLocation(user.getId(),user.getLastGpsLocation() );
                 ProxyBuilder.callProxy(MainMenu.this, caller, returnedGpsLocation -> responseForGps(returnedGpsLocation));
 
             }
@@ -288,7 +293,10 @@ public class MainMenu extends AppCompatActivity {
         }
     }
 
+    private void responseForGps(GpsLocation returnedGps) {
+        user.setLastGpsLocation( returnedGps );
 
+    }
 
     /**
      * Requests permission from the user to allow location services for the map.
@@ -339,4 +347,20 @@ public class MainMenu extends AppCompatActivity {
         String timeStamp  = dateFormat.format(new Date());
         return timeStamp;
     }
+
+    /**
+     * Turn on tracking by handler post
+     *
+     */
+    public static void turnOnGpsUpdate(){
+        handler.post( runnableCode );
+    }
+
+    /**
+     *Turn off tracking by removeMessage
+     */
+    public static void turnOffGpsUpdate (){
+        handler.removeMessages(0);
+    }
+
 }

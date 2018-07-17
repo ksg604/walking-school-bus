@@ -8,19 +8,24 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.baoyz.swipemenulistview.SwipeMenu;
 import com.baoyz.swipemenulistview.SwipeMenuCreator;
 import com.baoyz.swipemenulistview.SwipeMenuItem;
 import com.baoyz.swipemenulistview.SwipeMenuListView;
+import com.example.walkingschoolbus.model.GpsLocation;
 import com.example.walkingschoolbus.model.Group;
 import com.example.walkingschoolbus.model.Session;
 import com.example.walkingschoolbus.model.User;
 import com.example.walkingschoolbus.proxy.ProxyBuilder;
 import com.example.walkingschoolbus.proxy.WGServerProxy;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -36,7 +41,8 @@ public class LeaderActivity extends AppCompatActivity {
     private List<String> stringUserList = new ArrayList<>( );
     private Group group;
     private User user;
-
+    private GpsLocation userLastGpsLocation = new GpsLocation();
+    private GpsLocation schoolGpsLocation = new GpsLocation();
     private String userToken;
     private static WGServerProxy proxy;
 
@@ -51,9 +57,18 @@ public class LeaderActivity extends AppCompatActivity {
         userToken = tokenSession.getToken();
         // Build the server proxy
         proxy = ProxyBuilder.getProxy(getString( R.string.api_key),userToken);
-        //get the group instance
+
         user = User.getInstance();
         group = Group.getInstance();
+
+        //set Gps update Switch
+        setGpsUpdateSwitch();
+
+        //get School GPS Location;
+        getSchoolGpsLocation();
+
+
+
         //Make call
         Call<List<User>> caller = proxy.getGroupMembers(group.getId());
         ProxyBuilder.callProxy(LeaderActivity.this, caller, returnedUsers-> responseForList(returnedUsers));
@@ -62,6 +77,10 @@ public class LeaderActivity extends AppCompatActivity {
 
 
     }
+
+
+
+
     /**
      * get response from the server to get a group member list as a leader
      * @param returnedUsers the list of members of the group I want to get
@@ -102,7 +121,7 @@ public class LeaderActivity extends AppCompatActivity {
                 openItem.setWidth(180);
                 // set item title
                 openItem.setTitle(getString( R.string.open_swipe ));
-                // set item title fontsize
+                // set item title font size
                 openItem.setTitleSize(18);
                 // set item title font color
                 openItem.setTitleColor(Color.WHITE);
@@ -117,7 +136,7 @@ public class LeaderActivity extends AppCompatActivity {
                 deleteItem.setWidth(180);
                 // set item title
                 deleteItem.setTitle(getString( R.string.delete_swipe));
-                // set item title fontsize
+                // set item title font size
                 deleteItem.setTitleSize(18);
                 // set item title font color
                 deleteItem.setTitleColor(Color.WHITE);
@@ -171,6 +190,30 @@ public class LeaderActivity extends AppCompatActivity {
         notifyUserViaLogAndToast(" Successful delete");
     }
 
+    /**
+     *Set gps update switch for leader
+     */
+    private void setGpsUpdateSwitch() {
+        Switch gpsLocationUpdate = (Switch) findViewById( R.id.gpsUpdateSwitch );
+        gpsLocationUpdate.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isOn) {
+                if(isOn){
+                    MainMenu.turnOnGpsUpdate();
+                    user = User.getInstance();
+                    userLastGpsLocation = user.getLastGpsLocation();
+                    //decide whether leader reach the school.
+                    //checkGetToSchool();
+
+                }else{
+                    MainMenu.turnOffGpsUpdate();
+                }
+
+            }
+        } );
+    }
+
+
 
     private void notifyUserViaLogAndToast(String message) {
         Log.w(TAG, message);
@@ -185,6 +228,23 @@ public class LeaderActivity extends AppCompatActivity {
     public static Intent makeIntent(Context context){
         Intent intent = new Intent( context, LeaderActivity.class );
         return intent;
+    }
+
+
+    private void getSchoolGpsLocation() {
+
+        Call<Group> caller = proxy.getGroupById(group.getId());
+        ProxyBuilder.callProxy(LeaderActivity.this, caller, returnedGroup-> responseForGroup(returnedGroup));
+
+
+    }
+
+    private void responseForGroup(Group returnedGroup) {
+        group = returnedGroup;
+        schoolGpsLocation.setLat( group.getRouteLatArray().get(1));
+        schoolGpsLocation.setLng( group.getRouteLatArray().get(1));
+
+
     }
 
 
