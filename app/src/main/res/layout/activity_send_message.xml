@@ -6,6 +6,20 @@
     android:layout_height="match_parent"
     tools:context=".SendMessageActivity">
 
+    <com.baoyz.swipemenulistview.SwipeMenuListView
+        android:id="@+id/messagesGot"
+        android:layout_width="315dp"
+        android:layout_height="136dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="120dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.517"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </com.baoyz.swipemenulistview.SwipeMenuListView>
+
     <EditText
         android:id="@+id/textMessage"
         android:layout_width="wrap_content"
@@ -17,32 +31,35 @@
         android:hint="Type message here"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/button2"
+        app:layout_constraintEnd_toStartOf="@+id/btnsendMessage"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.893" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/btnsendMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="15dp"
-        android:text="Button"
+        android:text="SEND"
         app:layout_constraintBaseline_toBaselineOf="@+id/textMessage"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textMessage" />
 
-    <EditText
-        android:id="@+id/getMessage"
+    <Button
+        android:id="@+id/btnGetMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:ems="10"
-        android:hint="Show Message here"
-        android:inputType="textPersonName"
-        android:text="Name"
+        android:text="Get"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.939"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.089" />
 </android.support.constraint.ConstraintLayout>

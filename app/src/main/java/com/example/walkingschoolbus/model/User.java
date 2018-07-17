@@ -131,7 +131,8 @@ public class User {
 
 
 //Constructor
-    private User() {
+
+    public User() {
 
     }
 

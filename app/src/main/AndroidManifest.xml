@@ -56,7 +56,8 @@
         <activity android:name=".OnMarkerClickActivity" />
         <activity android:name=".RemoveMonitoringUserFromGroup" />
         <activity android:name=".MessageActivity" />
-        <activity android:name=".SendMessageActivity"></activity>
+        <activity android:name=".SendMessageActivity" />
+        <activity android:name=".emergencyMessageActivity"></activity>
     </application>
 
 </manifest>

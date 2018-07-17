@@ -41,6 +41,8 @@ public class MainMenu extends AppCompatActivity {
         setupLayoutMessages();
         setupLayoutMyParents();
         setupLogOutButton();
+        setupEmergencyButton();
+        setupWalkingMessageButton();
 
         new Handler().postDelayed(new Runnable(){
             @Override
@@ -49,6 +51,30 @@ public class MainMenu extends AppCompatActivity {
             }
         },2000);
         setTextViewMessage();
+    }
+
+    private void setupWalkingMessageButton() {
+        Button btn = findViewById(R.id.btnWalkingMessage);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = emergencyMessageActivity.makeIntent(MainMenu.this, false);
+                startActivity(intent);
+
+            }
+        });
+    }
+
+    private void setupEmergencyButton() {
+        Button btn = findViewById(R.id.btnEmergency);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = emergencyMessageActivity.makeIntent(MainMenu.this,true);
+                startActivity(intent);
+
+            }
+        });
     }
 
     /**

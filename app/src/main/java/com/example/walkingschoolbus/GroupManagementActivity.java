@@ -11,7 +11,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.baoyz.swipemenulistview.SwipeMenu;
@@ -117,7 +116,7 @@ public class GroupManagementActivity extends AppCompatActivity {
     *
     */
     private void responseForGroup(List<Group> returnedGroups) {
-        SwipeMenuListView groupAsLeaderListView = (SwipeMenuListView) findViewById( R.id.groupAsLeaderList);
+        SwipeMenuListView groupAsLeaderListView = (SwipeMenuListView) findViewById( R.id.messagesGot);
         SwipeMenuListView groupAsMemberListView = (SwipeMenuListView) findViewById(R.id.groupAsMemberList);
 
         for (Group group : returnedGroups) {

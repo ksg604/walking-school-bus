@@ -115,10 +115,14 @@ public interface WGServerProxy {
     // TODO: Implement
 
     @POST("/messages/toparentsof/{userId}")
-    Call<Message> sendMessageToParents (@Path("userId") Long userId,@Body Message message);
+    Call<List<Message>> sendMessageToParents (@Path("userId") Long userId,@Body Message message);
 
+    @POST("/messages/togroup/{groupId}")
+    Call<List<Message>> sendMessageToGroup(@Path("groupId") Long groupId, @Body Message message);
+
+    //get message from user id which is unread
     @GET("/messages")
-    Call<Message> getAllMessages();
+    Call<List<Message>> getMessageForUser(@Query("userId") Long userId);
 
 
     // -----------------------------

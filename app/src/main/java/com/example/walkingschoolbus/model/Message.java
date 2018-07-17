@@ -1,25 +1,22 @@
 package com.example.walkingschoolbus.model;
 
+import com.example.walkingschoolbus.model.IdItemBase;
+import com.example.walkingschoolbus.model.User;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Date;
 
-
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Message extends IdItemBase  {
-
+public class Message extends IdItemBase {
     private Boolean read;
-
     private boolean isEmergency;
     private Date timestamp;
     private String text;
 
+    //@JsonProperty("User")
     private User fromUser;
     private User toUser;
-
-    public Message () {
-
-    }
 
 
     public boolean isEmergency() {
@@ -69,6 +66,7 @@ public class Message extends IdItemBase  {
     public void setIsRead(Boolean read) {
         this.read = read;
     }
+
 
 
     @Override

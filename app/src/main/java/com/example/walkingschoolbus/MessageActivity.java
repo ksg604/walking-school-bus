@@ -11,6 +11,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 
+import com.baoyz.swipemenulistview.SwipeMenuListView;
+import com.example.walkingschoolbus.model.Group;
 import com.example.walkingschoolbus.model.Session;
 import com.example.walkingschoolbus.model.User;
 import com.example.walkingschoolbus.proxy.ProxyBuilder;
@@ -23,6 +25,18 @@ import java.util.List;
 import retrofit2.Call;
 
 public class MessageActivity extends AppCompatActivity {
+
+    private List<String> stringMemberGroupList = new ArrayList< >( );
+    private List<String> stringLeaderGroupList = new ArrayList< >( );
+    private List<Group> groupLeaderList = new ArrayList<>();
+    private List<Group> modifiedGroupLeaderList = new ArrayList<>(  );
+    private List<Long> groupIdLeaderList = new ArrayList<>();
+
+    private List<Group> groupMemberList = new ArrayList<>();
+    private List<Group> modifiedGroupMemberList = new ArrayList<>( );
+    private List<Long> groupIdMemberList = new ArrayList<>();
+
+
 
     private ExpandableListView listView;
     private ExpandableListAdapter listAdapter;
@@ -46,9 +60,12 @@ public class MessageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_message2);
 
 
-        user = User.getInstance();
+        //user = User.getInstance();
+
         Session.getStoredSession(this);
         session = Session.getInstance();
+        user = User.getInstance();
+
         String savedToken = session.getToken();
 
         //setMonitoringTextView();
@@ -76,14 +93,25 @@ public class MessageActivity extends AppCompatActivity {
                 returnedUsers -> responseForParentList(returnedUsers));
 
 
+        Call<User> callerForGropuList = proxy.getUserByEmail(user.getEmail());
+        ProxyBuilder.callProxy(MessageActivity.this, callerForGropuList,
+                returnedUser -> responseForGroupList(returnedUser));
+
+        //user.getLeadsGroups()
+
+        setupEmergency();
+
         listView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
                 //return false;
-                Long tempID = monitoringUser.get(childPosition);
+                if(groupPosition == 2) {
+                    Long tempID = groupIdLeaderList.get(childPosition);
 
-                Intent intent = SendMessageActivity.makeIntent(MessageActivity.this, tempID );
-                startActivity(intent);
+                    Intent intent = SendMessageActivity.makeIntent(MessageActivity.this, tempID);
+                    startActivity(intent);
+                }
+
                 return false;
 
             }
@@ -105,19 +133,80 @@ public class MessageActivity extends AppCompatActivity {
 
     }
 
+    private void setupEmergency() {
+        List<String> Emergency = new ArrayList<>();
+        Emergency.add("I Have Emergency!");
+
+        //listHash.put(listDataHeader.get(0),edmtDev);
+        listHash.put(listDataHeader.get(3),Emergency);
+    }
+
+    private void responseForGroupList(User returnedUser) {
+
+        groupLeaderList = returnedUser.getLeadsGroups();
+       // returnedUser.getLeadsGroups();
+        for(Group group : groupLeaderList ){
+            groupIdLeaderList.add(group.getId());
+        }
+
+        groupMemberList = returnedUser.getMemberOfGroups();
+        for( Group group : groupMemberList ){
+            groupIdMemberList.add(group.getId());
+        }
+
+        user.setId(returnedUser.getId());
+
+        // Make call
+        Call<List<Group>> caller = proxy.getGroups();
+        ProxyBuilder.callProxy(MessageActivity.this, caller,
+                returnedGroupList -> responseForGroupCheck(returnedGroupList));
+    }
+
+
+    private void responseForGroupCheck(List<Group> returnedGroups) {
+
+        List<String> groupList = new ArrayList<>();
+
+        for (Group group : returnedGroups) {
+
+            if (groupIdMemberList.contains(group.getId())) {
+                //Log.w( TAG, getString( R.string.group_list) + " " + group.getId() );
+
+                modifiedGroupMemberList.add(group);
+                String groupInfo = getString(R.string.group_list) + " " + group.getGroupDescription();
+                stringMemberGroupList.add(groupInfo);
+
+            } else if (groupIdLeaderList.contains(group.getId())) {
+                // Log.w( TAG, getString( R.string.group_list) + " " + group.getId() );
+
+                modifiedGroupLeaderList.add(group);
+                String groupInfo = getString(R.string.group_list) + " " + group.getGroupDescription();
+                stringLeaderGroupList.add(groupInfo);
+
+                groupList.add(groupInfo);
+                monitoringUser.add(user.getId());
+
+                //listHash.put(listDataHeader.get(0),edmtDev);
+                listHash.put(listDataHeader.get(2),groupList);
+            }
+
+        }
+
+    }
+
     private void responseForParentList(List<User> returnedUsers) {
-        List<String> androidStudio = new ArrayList<>();
+        List<String> ParentList = new ArrayList<>();
         for (User user : returnedUsers) {
             // Log.w(TAG, "    User: " + user.toString());
             String userInfo = getString(R.string.monitoring_user_name) + " "  + user.getName() +"\n"+
                     getString(R.string.monitoring_user_email)+ " " + user.getEmail();
 
             // List<String> edmtDev = new ArrayList<>();
-            androidStudio.add(userInfo);
+            ParentList.add(userInfo);
             monitoringUser.add(user.getId());
 
             //listHash.put(listDataHeader.get(0),edmtDev);
-            listHash.put(listDataHeader.get(1),androidStudio);
+            listHash.put(listDataHeader.get(1),ParentList);
             //monitoringUser.add(userInfo);
             //ArrayAdapter adapter = new ArrayAdapter(MonitoringListActivity.this, R.layout.da_items, monitoringUser);
             //monitoringList.setAdapter(adapter);
@@ -127,16 +216,16 @@ public class MessageActivity extends AppCompatActivity {
     }
 
     private void responseForChildList(List<User> returnedUsers) {
-        List<String> edmtDev = new ArrayList<>();
+        List<String> childList = new ArrayList<>();
         for (User user : returnedUsers) {
            // Log.w(TAG, "    User: " + user.toString());
             String userInfo = getString(R.string.monitoring_user_name) + " "  + user.getName() +"\n"+
                     getString(R.string.monitoring_user_email)+ " " + user.getEmail();
 
            // List<String> edmtDev = new ArrayList<>();
-            edmtDev.add(userInfo);
+            childList.add(userInfo);
 
-            listHash.put(listDataHeader.get(0),edmtDev);
+            listHash.put(listDataHeader.get(0),childList);
             //monitoringUser.add(userInfo);
             //ArrayAdapter adapter = new ArrayAdapter(MonitoringListActivity.this, R.layout.da_items, monitoringUser);
             //monitoringList.setAdapter(adapter);
@@ -148,8 +237,8 @@ public class MessageActivity extends AppCompatActivity {
 
         listDataHeader.add("Children List");
         listDataHeader.add("Parents List");
-        listDataHeader.add("Group List");
-        listDataHeader.add("I don't know");
+        listDataHeader.add("My Group List");
+        listDataHeader.add("Emergency");
 
 
         /*
