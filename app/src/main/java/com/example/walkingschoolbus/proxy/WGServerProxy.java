@@ -34,6 +34,11 @@ public interface WGServerProxy {
     @POST("/login")
     Call <Void> login(@Body User user);
 
+    //call to update user
+    //From Brian's Piazza post
+    @POST("/users/{id}")
+    Call<User> editUser(@Path("id") Long userId, @Body User user);
+
 
     @GET("/users")
     Call<List<User>> getUsers();

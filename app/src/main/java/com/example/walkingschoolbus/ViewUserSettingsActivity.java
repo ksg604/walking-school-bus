@@ -83,7 +83,7 @@ public class ViewUserSettingsActivity extends AppCompatActivity {
 
         //grab none-null DOB info and print
         try {
-            thisYOB.setText(user.getBirthYear());
+           thisYOB.setText(String.valueOf(user.getBirthYear()));
         } catch (NullPointerException e){
             Log.e(TAG, "exception: ", e);
             thisYOB.setText("");

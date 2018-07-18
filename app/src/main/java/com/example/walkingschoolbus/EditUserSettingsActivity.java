@@ -17,6 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.walkingschoolbus.model.Session;
 import com.example.walkingschoolbus.model.User;
@@ -68,6 +69,8 @@ public class EditUserSettingsActivity extends AppCompatActivity {
         editTeacher = findViewById(R.id.editTextUserThisGrade);
         editICE = findViewById(R.id.editTxtUserThisICE);
 
+
+
         proxy = ProxyBuilder.getProxy(getString(R.string.api_key),userToken);
 
         Intent intent = getIntent();
@@ -92,7 +95,7 @@ public class EditUserSettingsActivity extends AppCompatActivity {
             Log.e(TAG, "exception: ", e);
         }
         try{
-            editYearOfBirth.setText(user.getBirthYear());
+            editYearOfBirth.setText(String.valueOf(user.getBirthYear()));
         } catch(NullPointerException e){
             Log.e(TAG, "exception: ", e);
         }
@@ -153,14 +156,48 @@ public class EditUserSettingsActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Log.i(TAG, "Clicked Save");
                 updateUser();
-                Intent intent = ViewUserSettingsActivity.makeIntent(EditUserSettingsActivity.this,thisUserID);
-                intent.putExtra("result", RESULT_OK);
-                setResult(Activity.RESULT_OK, intent);
-                finish();
             }
         });
     }
     private void updateUser(){
+        updatedUser.setName(editName.getText().toString());
+        try {
+            updatedUser.setBirthYear(Integer.parseInt(editYearOfBirth.getText().toString()));
+        } catch(NumberFormatException e){
+            Log.e(TAG,"updateUser:", e);
+        }
+        
+        updatedUser.setBirthMonth(monthSpinner.getSelectedItemPosition());
+        updatedUser.setHomePhone(editHomePhone.getText().toString());
+        updatedUser.setCellPhone(editCellPhone.getText().toString());
+        updatedUser.setEmail(editEmail.getText().toString());
+        updatedUser.setAddress(editAddress.getText().toString());
+        updatedUser.setEmergencyContactInfo(editICE.getText().toString());
+        updatedUser.setTeacherName(editTeacher.getText().toString());
+
+        Call<User> caller =proxy.editUser(thisUserID,updatedUser);
+        ProxyBuilder.callProxy(EditUserSettingsActivity.this,caller,
+                returnedUser -> responseForUpdatedUser(returnedUser));
+
+    }
+
+    private void responseForUpdatedUser(User returnedUser) {
+        if(returnedUser.getId()==session.getid() && !returnedUser.getEmail().equals(session.getEmail()))
+        {
+            session.deleteTokenAndVariables();
+            session.storeSession(EditUserSettingsActivity.this);
+            Intent intent = WelcomeScreen.makeIntent(EditUserSettingsActivity.this);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |Intent.FLAG_ACTIVITY_CLEAR_TASK| intent.FLAG_ACTIVITY_NEW_TASK);
+            Log.i(TAG,"set flag intent");
+            startActivity(intent);
+            //Toast.makeText(this, getResources().getString(R.string.user_logout_message),Toast.LENGTH_LONG).show();
+            finish();
+        } else{
+            Intent intent = ViewUserSettingsActivity.makeIntent(EditUserSettingsActivity.this, thisUserID);
+            intent.putExtra("result", RESULT_OK);
+            setResult(Activity.RESULT_OK, intent);
+            finish();
+        }
 
     }
 
