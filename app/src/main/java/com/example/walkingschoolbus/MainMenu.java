@@ -83,6 +83,7 @@ public class MainMenu extends AppCompatActivity {
         setupWalkingMessageButton();
 
         setTextViewMessage();
+        setWalkingWithMessage();
 
         makeHandlerRun();
     }
@@ -245,6 +246,17 @@ public class MainMenu extends AppCompatActivity {
         welcome.setText( welcomeMessage );
     }
 
+    private void setWalkingWithMessage() {
+        String walkingMessage;
+        TextView walking = findViewById(R.id.txtViewWalkingMessage);
+        if(session.getGroup() != null){
+            walkingMessage = getString(R.string.mm_walkingwith) + session.getGroup().getGroupDescription();
+        }else{
+            walkingMessage = getString(R.string.mm_not_walking);
+        }
+        walking.setText(walkingMessage);
+    }
+
 
     /**
      * setup linear layout to redirect to map activity
@@ -282,18 +294,10 @@ public class MainMenu extends AppCompatActivity {
 
         // Define a listener that responds to location updates
         LocationListener locationListener = new LocationListener() {
-            public void onLocationChanged(Location location) {
-
-            }
-
-            public void onStatusChanged(String provider, int status, Bundle extras) {
-            }
-
-            public void onProviderEnabled(String provider) {
-            }
-
-            public void onProviderDisabled(String provider) {
-            }
+            public void onLocationChanged(Location location) {  }
+            public void onStatusChanged(String provider, int status, Bundle extras) {   }
+            public void onProviderEnabled(String provider) {    }
+            public void onProviderDisabled(String provider) {   }
         };
 
         // Register the listener with the Location Manager to receive location update
@@ -329,6 +333,7 @@ public class MainMenu extends AppCompatActivity {
 
         user.setLastGpsLocation( returnedGps );
         group = session.getGroup();
+        setWalkingWithMessage();
         zeroDistance = countZeroDistance(zeroDistance);
         if (zeroDistance == 20){
             turnOffGpsUpdate();

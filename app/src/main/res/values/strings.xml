@@ -27,7 +27,8 @@
     <string name="menu_message">Messages</string>
     <string name="log_out">LOG OUT</string>
     <string name="hello">Hello,</string>
-
+    <string name="mm_walkingwith">Walking With: </string>
+    <string name="mm_not_walking">No Group Selected</string>
 
     <!--Sign up-->
     <string name="name">Full Name: </string>
