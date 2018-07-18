@@ -62,11 +62,25 @@ public class Session {
         return token;
     }
 
-    public User getUser(){ return user;}
+    public User getUser(){
+        if(user ==null) {
+            this.user = new User();
+        }
+        return user;
+        }
 
-    public void setUser(User updatedUser){this.user = updatedUser;}
+    public void setUser(User updatedUser){this.user = new User(updatedUser);}
 
-    public String getName(){return user.getName();}
+    public String getName(){
+        String name;
+        try{
+            name = user.getName();
+        }catch(NullPointerException e){
+            name = " ";
+            e.printStackTrace();
+        }
+
+        return name;}
 
     public String getEmail(){return user.getEmail();}
 
