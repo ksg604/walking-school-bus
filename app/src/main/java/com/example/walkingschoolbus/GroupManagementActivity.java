@@ -44,7 +44,7 @@ public class GroupManagementActivity extends AppCompatActivity {
     private List<Group> groupMemberList = new ArrayList<>();
     private List<Group> modifiedGroupMemberList = new ArrayList<>( );
     private List<Long> groupIdMemberList = new ArrayList<>();
-    private Session tokenSession = Session.getInstance();
+    private Session session = Session.getInstance();
     private Group group = Group.getInstance();
     private User user;
     private String userToken;
@@ -58,7 +58,7 @@ public class GroupManagementActivity extends AppCompatActivity {
         setContentView(R.layout.activity_group_management);
 
         //get token from session
-        userToken = tokenSession.getToken();
+        userToken = session.getToken();
         // Build the server proxy
         proxy = ProxyBuilder.getProxy(getString( R.string.api_key),userToken);
 
@@ -72,6 +72,10 @@ public class GroupManagementActivity extends AppCompatActivity {
 
         // proxy = ProxyBuilder.getProxy( getString( R.string.api_key ));
         setupCreateGroupButton();
+
+
+
+
     }
 
     /*
@@ -304,6 +308,14 @@ public class GroupManagementActivity extends AppCompatActivity {
         return intent;
     }
 
+
+    private Intent makeIntentBack(Context context, int resultcode) {
+        Intent intent = new Intent(context, GroupManagementActivity.class );
+        setResult(resultcode, intent );
+        return intent;
+    }
+
+
     /**
      * put the result from PlacePickerActivity on the listview to update
      * @param requestCode arbitrary code number in this activity to get result from the other Activity
@@ -316,8 +328,8 @@ public class GroupManagementActivity extends AppCompatActivity {
         switch(requestCode){
             case REQUEST_CODE:
                 if (resultCode == Activity.RESULT_OK) {
-                    finish();
-                    startActivity(getIntent());
+                   finish();
+                   startActivity(getIntent());
                 }
                 break;
         }

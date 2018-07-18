@@ -1,6 +1,7 @@
 package com.example.walkingschoolbus;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -48,16 +49,18 @@ public class MainMenu extends AppCompatActivity {
     public static final String USER_TOKEN = "User token";
     private static final String TAG = "MainMenu";
     private GpsLocation lastGpsLocation = new GpsLocation();
-    Session session = Session.getInstance();
+    private Session session = Session.getInstance();
     User user = User.getInstance();
     String token = session.getToken();
     private String userToken;
     private static WGServerProxy proxy;
     private Boolean mLocationPermissionsGranted = false;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 0;
+    private static final int REQUEST_CODE = 2016;
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private static Handler handler = new Handler();
     private static Runnable runnableCode;
+
 
 
 
@@ -85,27 +88,23 @@ public class MainMenu extends AppCompatActivity {
     }
 
     private void setupOnTrackingBtn() {
-        Switch OnTracking = (Switch) findViewById( R.id.trackingSwitch );
-        OnTracking.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener() {
+        Switch onTracking = (Switch) findViewById( R.id.trackingSwitch );
+        onTracking.setChecked( session.isTracking());
+        onTracking.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isOn) {
-                if (isOn == true) {
-
-
-
+                if (isOn){
                     turnOnGpsUpdate();
-                    session.setTracking( true );
+                    session.setTracking (true);
+
 
                 }else{
                    turnOffGpsUpdate();
+                   session.setTracking (false);
                 }
-
             }
 
-
-
         } );
-
 
     }
 
@@ -163,8 +162,7 @@ public class MainMenu extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = GroupManagementActivity.makeIntent( MainMenu.this );
-                startActivity( intent );
-                Log.w( "Main Menu", "Group Activity Launched" );
+                startActivityForResult( intent, REQUEST_CODE );
             }
         } );
     }
@@ -354,13 +352,35 @@ public class MainMenu extends AppCompatActivity {
      */
     public static void turnOnGpsUpdate(){
         handler.post( runnableCode );
-    }
 
+    }
     /**
      *Turn off tracking by removeMessage
      */
-    public static void turnOffGpsUpdate (){
-        handler.removeMessages(0);
+    public static void turnOffGpsUpdate () {
+
+        handler.removeMessages( 0 );
     }
+
+
+    /**
+     * @param requestCode arbitrary code number in this activity to get result from the other Activity
+     * @param resultCode the result code from the other Activity
+     * @param intent intent for going to another activity
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+
+        switch(requestCode){
+            case REQUEST_CODE:
+                if (resultCode == Activity.RESULT_OK) {
+                   finish();
+                   startActivity( getIntent() );
+                }
+                break;
+        }
+    }
+
+
 
 }

@@ -7,9 +7,12 @@ import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.baoyz.swipemenulistview.SwipeMenu;
@@ -36,7 +39,7 @@ import retrofit2.Call;
  */
 public class LeaderActivity extends AppCompatActivity {
 
-    private Session tokenSession = Session.getInstance();
+    private Session session = Session.getInstance();
     private List<User> userList = new ArrayList<>();
     private List<String> stringUserList = new ArrayList<>( );
     private Group group;
@@ -54,22 +57,19 @@ public class LeaderActivity extends AppCompatActivity {
         setContentView( R.layout.activity_leader );
 
         //get token from session
-        userToken = tokenSession.getToken();
+        userToken = session.getToken();
         // Build the server proxy
         proxy = ProxyBuilder.getProxy(getString( R.string.api_key),userToken);
 
         user = User.getInstance();
         group = Group.getInstance();
+        getGroupInfo();
 
-        //set Gps update Switch
-        setGpsUpdateSwitch();
-
-        //get School GPS Location;
-        getSchoolGpsLocation();
+        //set Walking With This Group Button
+        setWalkingWithThisGroupBtn();
 
 
-
-        //Make call
+        //Make call for a list of member
         Call<List<User>> caller = proxy.getGroupMembers(group.getId());
         ProxyBuilder.callProxy(LeaderActivity.this, caller, returnedUsers-> responseForList(returnedUsers));
 
@@ -77,7 +77,6 @@ public class LeaderActivity extends AppCompatActivity {
 
 
     }
-
 
 
 
@@ -156,24 +155,21 @@ public class LeaderActivity extends AppCompatActivity {
 
                     case 0:
                         Long memberId = returnedUsers.get(position).getId();
-
-
+                        Intent intent = ViewUserSettingsActivity.makeIntent( LeaderActivity.this, memberId  );
+                        startActivity(intent);
+                        break;
 
                     case 1:
 
                          Call<Void> caller = proxy.removeGroupMember(group.getId(), returnedUsers.get(position).getId());
-                         ProxyBuilder.callProxy(LeaderActivity.this, caller, returnedNothing -> response(returnedNothing));
+                         ProxyBuilder.callProxy(LeaderActivity.this, caller, returnedNothing -> responseForRemove(returnedNothing));
                          userListView.removeViewsInLayout(position,1);
                          finish();
                          ArrayAdapter adapter = new ArrayAdapter(LeaderActivity.this, R.layout.swipe_listview, stringUserList);
                          userListView.setAdapter(adapter);
                          startActivity( getIntent() );
-
-
-
-
+                         break;
                 }
-
 
                 // false : close the menu; true : not close the menu
                 return false;
@@ -186,31 +182,17 @@ public class LeaderActivity extends AppCompatActivity {
     /**
      * After delete the group, show user that group is deleted
      */
-    private void response(Void returnedNothing) {
+    private void responseForRemove(Void returnedNothing) {
         notifyUserViaLogAndToast(" Successful delete");
     }
 
     /**
-     *Set gps update switch for leader
+     *Set group description
      */
-    private void setGpsUpdateSwitch() {
-        Switch gpsLocationUpdate = (Switch) findViewById( R.id.gpsUpdateSwitch );
-        gpsLocationUpdate.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean isOn) {
-                if(isOn){
-                    MainMenu.turnOnGpsUpdate();
-                    user = User.getInstance();
-                    userLastGpsLocation = user.getLastGpsLocation();
-                    //decide whether leader reach the school.
-                    //checkGetToSchool();
+    private void setGroupDescriptionTxt() {
+        TextView groupDescription = (TextView) findViewById( R.id.groupDescripTxt );
+        groupDescription.setText( group.getGroupDescription() );
 
-                }else{
-                    MainMenu.turnOffGpsUpdate();
-                }
-
-            }
-        } );
     }
 
 
@@ -231,7 +213,7 @@ public class LeaderActivity extends AppCompatActivity {
     }
 
 
-    private void getSchoolGpsLocation() {
+    private void getGroupInfo() {
 
         Call<Group> caller = proxy.getGroupById(group.getId());
         ProxyBuilder.callProxy(LeaderActivity.this, caller, returnedGroup-> responseForGroup(returnedGroup));
@@ -240,10 +222,31 @@ public class LeaderActivity extends AppCompatActivity {
     }
 
     private void responseForGroup(Group returnedGroup) {
-        group = returnedGroup;
+        group.setGroupDescription( returnedGroup.getGroupDescription() );
+        group.setRouteLatArray( returnedGroup.getRouteLatArray() );
+        group.setRouteLngArray( returnedGroup.getRouteLngArray() );
+        group.setLeader( returnedGroup.getLeader() );
+        group.setMemberUsers( returnedGroup.getMemberUsers() );
         schoolGpsLocation.setLat( group.getRouteLatArray().get(1));
         schoolGpsLocation.setLng( group.getRouteLatArray().get(1));
+        setGroupDescriptionTxt();
 
+
+    }
+
+    private void setWalkingWithThisGroupBtn() {
+        Button setWalkingWithThisGroup = (Button) findViewById( R.id.walkingWithThisGroupBtn );
+        setWalkingWithThisGroup.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                session.setGroup(group);
+                if(!session.isTracking()){
+                    MainMenu.turnOnGpsUpdate();
+                    notifyUserViaLogAndToast( "Now your GPS is updating " );
+                }
+
+            }
+        } );
 
     }
 

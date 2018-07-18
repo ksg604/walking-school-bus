@@ -34,6 +34,7 @@ public class Session {
     private String name;
     private String email;
 
+    private Group group;
     private Long id;
     private boolean tracking;
     private static final String TAG ="Session";
@@ -148,8 +149,12 @@ public class Session {
     }
 
 
+    public Group getGroup() {
+        return group;
+    }
 
-
-
+    public void setGroup(Group group) {
+        this.group = group;
+    }
 }
 
