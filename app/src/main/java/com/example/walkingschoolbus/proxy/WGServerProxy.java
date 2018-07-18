@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.example.walkingschoolbus.model.GpsLocation;
 import com.example.walkingschoolbus.model.Group;
+import com.example.walkingschoolbus.model.Message;
 import com.example.walkingschoolbus.model.User;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -117,6 +118,21 @@ public interface WGServerProxy {
     // Messages
     // -----------------------------
     // TODO: Implement
+
+    @POST("/messages/toparentsof/{userId}")
+    Call<List<Message>> sendMessageToParents (@Path("userId") Long userId,@Body Message message);
+
+    @POST("/messages/togroup/{groupId}")
+    Call<List<Message>> sendMessageToGroup(@Path("groupId") Long groupId, @Body Message message);
+
+    //get message from user id which is unread
+    @GET("/messages")
+    Call<List<Message>> getMessageForUser(@Query("userId") Long userId);
+
+    @GET("/messages")
+    Call<List<Message>> getMessageNotRead(@Query("touser") Long userId , @Query("status") String ifRead );
+
+
 
     // -----------------------------
     // Permissions

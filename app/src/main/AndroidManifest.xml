@@ -60,6 +60,9 @@
         <activity android:name=".UpdateUserDetails"></activity>
         <activity android:name=".ViewUserSettingsActivity" />
         <activity android:name=".EditUserSettingsActivity"></activity>
+        <activity android:name=".MessageActivity" />
+        <activity android:name=".SendMessageActivity" />
+        <activity android:name=".emergencyMessageActivity"></activity>
     </application>
 
 </manifest>

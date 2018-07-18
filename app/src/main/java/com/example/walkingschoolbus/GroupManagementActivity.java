@@ -11,7 +11,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.baoyz.swipemenulistview.SwipeMenu;
@@ -121,7 +120,7 @@ public class GroupManagementActivity extends AppCompatActivity {
     *
     */
     private void responseForGroup(List<Group> returnedGroups) {
-        SwipeMenuListView groupAsLeaderListView = (SwipeMenuListView) findViewById( R.id.groupAsLeaderList);
+        SwipeMenuListView groupAsLeaderListView = (SwipeMenuListView) findViewById( R.id.messagesGot);
         SwipeMenuListView groupAsMemberListView = (SwipeMenuListView) findViewById(R.id.groupAsMemberList);
 
         for (Group group : returnedGroups) {
@@ -159,7 +158,7 @@ public class GroupManagementActivity extends AppCompatActivity {
                 // set item background
                 openItem.setBackground(new ColorDrawable(Color.rgb(0xC9, 0xC9, 0xCE)));
                 // set item width
-                openItem.setWidth(180);
+                openItem.setWidth(240);
                 // set item title
                 openItem.setTitle(getString( R.string.open_swipe ));
                 // set item title font size
@@ -174,7 +173,7 @@ public class GroupManagementActivity extends AppCompatActivity {
                 // set item background
                 deleteItem.setBackground(new ColorDrawable( Color.rgb(220, 20, 60)));
                 // set item width
-                deleteItem.setWidth(180);
+                deleteItem.setWidth(240);
                 // set item title
                 deleteItem.setTitle(getString(R.string.delete_swipe));
                 // set item title font size
@@ -183,6 +182,22 @@ public class GroupManagementActivity extends AppCompatActivity {
                 deleteItem.setTitleColor(Color.WHITE);
                 // add to menu
                 menu.addMenuItem(deleteItem);
+
+
+                // create "open" item
+                SwipeMenuItem sendMessage = new SwipeMenuItem( getApplicationContext());
+                // set item background
+                openItem.setBackground(new ColorDrawable(Color.rgb(0xC9, 0xC9, 0xCE)));
+                // set item width
+                openItem.setWidth(240);
+                // set item title
+                openItem.setTitle("SendMessage");
+                // set item title font size
+                openItem.setTitleSize(18);
+                // set item title font color
+                openItem.setTitleColor(Color.WHITE);
+                // add to menu
+                menu.addMenuItem(sendMessage);
             }
         };
 
@@ -198,7 +213,7 @@ public class GroupManagementActivity extends AppCompatActivity {
             public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
                 switch (index) {
 
-                    case 0:
+                    case 1:
                         Long groupId = modifiedGroupLeaderList.get(position).getId();
 
                         group.setId(groupId);
@@ -207,13 +222,19 @@ public class GroupManagementActivity extends AppCompatActivity {
                         break;
 
 
-                    case 1:
+                    case 2:
                          //make Call
                          Call<Void> caller = proxy.deleteGroup( modifiedGroupLeaderList.get(position).getId());
                          ProxyBuilder.callProxy(GroupManagementActivity.this, caller, returnedNothing -> response(returnedNothing));
                          groupAsLeaderListView.removeViewsInLayout(position,1);
 
                          break;
+
+                    case 0:
+                        Long tempID = modifiedGroupLeaderList.get(position).getId();
+                        Intent intent2 = SendMessageActivity.makeIntent(GroupManagementActivity.this, tempID);
+                        startActivity(intent2);
+
                 }
                 // false : close the menu; true : not close the menu
                 return false;
