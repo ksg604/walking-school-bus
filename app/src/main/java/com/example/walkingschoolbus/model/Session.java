@@ -93,8 +93,13 @@ public class Session {
         prefsEditor.putString(SHAREDPREF_SESSION,json);
         //System.out.print(json);
         prefsEditor.apply();
-        Log.i(TAG,"session stored: " + this.user.getName());
-    }
+        try {
+            Log.i(TAG, "session stored: " + this.user.getName());
+        } catch(NullPointerException e){
+            Log.i(TAG, "session stored with null values: ");
+            e.printStackTrace();
+        }
+        }
 
     /**
      * recovered saved object instance
