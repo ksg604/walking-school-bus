@@ -38,7 +38,7 @@ public class AddNewParentsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_new_parents );
 
         session = Session.getInstance();
-        user = User.getInstance();
+        user= session.getUser();
 
         // Build the server proxy
         proxy = ProxyBuilder.getProxy(getString(R.string.api_key),session.getToken());

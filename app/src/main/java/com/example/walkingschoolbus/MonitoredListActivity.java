@@ -43,8 +43,8 @@ public class MonitoredListActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        user = User.getInstance();
         session = Session.getInstance();
+        user = session.getUser();
 
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_monitored_list );

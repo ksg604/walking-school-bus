@@ -46,7 +46,7 @@ public class MainMenu extends AppCompatActivity {
     private static final String TAG = "MainMenu";
     private GpsLocation lastGpsLocation = new GpsLocation();
     Session session = Session.getInstance();
-    User user = User.getInstance();
+    User user = session.getUser();
     String token = session.getToken();
     private String userToken;
     private static WGServerProxy proxy;
