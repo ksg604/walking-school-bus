@@ -26,6 +26,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.example.walkingschoolbus.model.GpsLocation;
+import com.example.walkingschoolbus.model.Group;
 import com.example.walkingschoolbus.model.Session;
 import com.example.walkingschoolbus.model.User;
 import com.example.walkingschoolbus.proxy.ProxyBuilder;
@@ -50,7 +51,7 @@ public class MainMenu extends AppCompatActivity {
     User user = session.getUser();
     private GpsLocation schoolLocation = new GpsLocation();
     String token = session.getToken();
-    Group group = session.getGroup();
+    private Group group = session.getGroup();
     private String userToken;
     private static WGServerProxy proxy;
     private Boolean mLocationPermissionsGranted = false;

@@ -36,7 +36,7 @@ import retrofit2.Call;
 public class Session {
     private String token;
     private User user;
-    private Group group
+    private Group group;
     private boolean tracking;
     private static final String TAG ="Session";
     private static Session instance;

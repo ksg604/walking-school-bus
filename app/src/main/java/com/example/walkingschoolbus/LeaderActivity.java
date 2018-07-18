@@ -234,8 +234,8 @@ public class LeaderActivity extends AppCompatActivity {
         setWalkingWithThisGroup.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                session.setGroup(group);
-                if(!session.isTracking()){
+                tokenSession.setGroup(group);
+                if(!tokenSession.isTracking()){
                     MainMenu.turnOnGpsUpdate();
                     notifyUserViaLogAndToast( "Now your GPS is updating " );
                 }
