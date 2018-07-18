@@ -135,6 +135,10 @@ public class User {
 
     }
 
+    public User(Long id){
+        this.id = id;
+    }
+
     public User( Long id, String name, String email, String password) {
         //to do
         this.id = id;
@@ -192,7 +196,6 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
-
 
     public Integer getBirthYear() {
         return birthYear;

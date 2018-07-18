@@ -98,7 +98,7 @@ public class Session {
     /**
      * delete all info from this logged in session
      */
-    public void deleteToken(){
+    public void deleteTokenAndVariables(){
         this.token = null;
         this.id = null;
         this.name = null;
