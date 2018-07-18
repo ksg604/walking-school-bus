@@ -6,31 +6,89 @@
     android:layout_height="match_parent"
     tools:context=".LeaderActivity">
 
-    <com.baoyz.swipemenulistview.SwipeMenuListView
-        android:id="@+id/userList"
-        android:layout_width="326dp"
-        android:layout_height="359dp"
-        android:layout_marginBottom="30dp"
-        android:layout_marginEnd="20dp"
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="251dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="113dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="55dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="@string/leader_help_txt"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.13999999">
-
-    </com.baoyz.swipemenulistview.SwipeMenuListView>
+        app:layout_constraintTop_toBottomOf="@+id/leaderTxt" />
 
     <TextView
         android:id="@+id/leaderTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="68dp"
         android:text="@string/members"
-        android:textAppearance="@android:style/TextAppearance.Material.Headline"
+        android:textAppearance="@android:style/TextAppearance.Material.Subhead"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/walkingWithThisGroupBtn"
+        android:layout_width="209dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="159dp"
+        android:text="@string/walking_with_btn"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.baoyz.swipemenulistview.SwipeMenuListView
+        android:id="@+id/userList"
+        android:layout_width="326dp"
+        android:layout_height="305dp"
+        android:layout_marginBottom="140dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="13dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.521"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView9"
+        app:layout_constraintVertical_bias="0.0">
+
+    </com.baoyz.swipemenulistview.SwipeMenuListView>
+
+    <LinearLayout
+        android:layout_width="169dp"
+        android:layout_height="32dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/leaderTxt"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textView10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/group_descript_leader"
+            android:textAppearance="@android:style/TextAppearance.Material.Headline"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/groupDescripTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="TextView"
+            android:textAppearance="@android:style/TextAppearance.Material.Headline"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="48dp" />
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

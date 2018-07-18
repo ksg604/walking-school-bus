@@ -64,7 +64,7 @@ public class Group {
         this.memberUsers = memberUsers;
         this.hasFullData = true;
         this.href=href;
-}
+    }
 
     public Group(String groupDescription, List<Double> routeLatArray,
                  List<Double> routeLngArray, User leader){
