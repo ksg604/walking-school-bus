@@ -1,13 +1,18 @@
 package com.example.walkingschoolbus;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.baoyz.swipemenulistview.SwipeMenu;
 import com.baoyz.swipemenulistview.SwipeMenuCreator;
@@ -19,6 +24,7 @@ import com.example.walkingschoolbus.model.User;
 import com.example.walkingschoolbus.proxy.ProxyBuilder;
 import com.example.walkingschoolbus.proxy.WGServerProxy;
 
+import java.lang.reflect.Proxy;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +37,10 @@ public class OpenKidActivity extends AppCompatActivity {
     private User user;
     private User kidUser;
     private static WGServerProxy proxy;
-    private ArrayList<String> kidsGroupList = new ArrayList<>();
+    private List<String> kidsGroupList = new ArrayList<>();
+    private List<Group> listOfKidGroups = new ArrayList<>();
+    private static final int REQUEST_CODE = 1111;
+
 
 
     @Override
@@ -42,8 +51,7 @@ public class OpenKidActivity extends AppCompatActivity {
         session = Session.getInstance();
         user = User.getInstance();
         String savedToken = session.getToken();
-        setupUpdateKidBtn();
-        setupAddToGroupBtn();
+
 
 
         proxy = ProxyBuilder.getProxy(getString(R.string.api_key), session.getToken());
@@ -52,6 +60,7 @@ public class OpenKidActivity extends AppCompatActivity {
         String kidsEmail = getFromMyKidsIntent.getExtras().getString("E");
         Call<User> caller = proxy.getUserByEmail(kidsEmail);
         ProxyBuilder.callProxy(OpenKidActivity.this, caller, returnedKid -> response(returnedKid));
+
     }
     private void response(User kid){
         kidUser = kid;
@@ -62,18 +71,42 @@ public class OpenKidActivity extends AppCompatActivity {
 
 
         SwipeMenuListView groupList = (SwipeMenuListView) findViewById(R.id.kidGroupList);
-        List<Group> kidMemberOfGroupList = kid.getMemberOfGroups();
 
-        for(Group group : kidMemberOfGroupList){
-            String groupInfo = getString(R.string.open_kid_group_name) + " " + group.getGroupDescription();
 
+        List<Group> groupListKid = kid.getMemberOfGroups();
+
+
+
+        for(Group group : groupListKid){
+            Log.i("Debug66","Name: "+group.getId());
+
+
+            String groupInfo = getString(R.string.open_kid_group_id) + " " + group.getId();
             kidsGroupList.add(groupInfo);
+
             ArrayAdapter adapter = new ArrayAdapter(OpenKidActivity.this, R.layout.da_items, kidsGroupList);
             groupList.setAdapter(adapter);
 
             SwipeMenuCreator creator = new SwipeMenuCreator() {
                 @Override
                 public void create(SwipeMenu menu) {
+
+                    // create "open" item
+                    SwipeMenuItem openItem = new SwipeMenuItem(getApplicationContext());
+                    // set item background
+                    openItem.setBackground(new ColorDrawable(Color.rgb(0xC9, 0xC9, 0xCE)));
+                    // set item width
+                    openItem.setWidth(180);
+                    // set item title
+                    openItem.setTitle(getString(R.string.mykids_open_swipe));
+                    // set item title fontsize
+                    openItem.setTitleSize(18);
+                    // set item title font color
+                    openItem.setTitleColor(Color.WHITE);
+                    // add to menu
+                    menu.addMenuItem(openItem);
+
+
                     SwipeMenuItem removeItem = new SwipeMenuItem(getApplicationContext());
                     // set item background
                     removeItem.setBackground(new ColorDrawable(Color.rgb(220, 20,
@@ -99,9 +132,18 @@ public class OpenKidActivity extends AppCompatActivity {
                 public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
                     switch(index){
                         case 0:
+                            Intent intentForOpen = OpenKidGroupActivity.makeIntent(OpenKidActivity.this,
+                                    group.getId());
+                            startActivity(intentForOpen);
+                            break;
+
+                        case 1:
                             Call<Void> caller = proxy.removeGroupMember(group.getId(),kid.getId());
                             ProxyBuilder.callProxy(OpenKidActivity.this, caller, returnedNothing -> response(returnedNothing));
                             groupList.removeViewsInLayout(position, 1);
+                            Toast.makeText(OpenKidActivity.this,"Your kid, "+kid.getName() +", has been removed from the group.",Toast.LENGTH_LONG)
+                                    .show();
+                            break;
                     }
                     return false;
                 }
@@ -109,11 +151,15 @@ public class OpenKidActivity extends AppCompatActivity {
         }
 
 
-        //kid.getMemberOfGroups()
+        setupUpdateKidBtn();
+        setupAddToGroupBtn();
     }
+
+
     private void response(Void returnedNothing) {
-        //notifyUserViaLogAndToast(MyKidsActivity.this.getString(R.string.mykids_notify_not_kid));
+
     }
+
 
     public static Intent makeIntent(Context context, String userEmailToPass) {
         Intent intent = new Intent(context, OpenKidActivity.class);
@@ -127,10 +173,34 @@ public class OpenKidActivity extends AppCompatActivity {
     }
 
     private void setupUpdateKidBtn(){
-
+        Button updateKidBtn = findViewById(R.id.updateKidBtn);
+        updateKidBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = ViewUserSettingsActivity.makeIntent(OpenKidActivity.this,kidUser.getId());
+                startActivity(intent);
+            }
+        });
     }
 
     private void setupAddToGroupBtn(){
-
+        Button addToGroupBtn = findViewById(R.id.addKidToGroupBtn);
+        addToGroupBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = AddKidToGroupActivity.makeIntent(OpenKidActivity.this);
+                intent.putExtra("kidEmail",kidUser.getEmail());
+                startActivity(intent);
+            }
+        });
     }
+
+    @Override
+    public void onRestart()
+    {
+        super.onRestart();
+        finish();
+        startActivity(getIntent());
+    }
+
 }
