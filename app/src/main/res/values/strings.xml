@@ -56,7 +56,7 @@
     <!-- Leader -->
     <string name="members">MEMBERS</string>
     <string name="leader_help_txt">Swipe left on member name for options.</string>
-    <string name="walking_with_btn">Walking with this group</string>
+    <string name="walking_with_btn">Walk with this group</string>
     <string name="group_descript_leader">Group: </string>
 
     <!--Settings-->

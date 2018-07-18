@@ -319,14 +319,20 @@ public class MainMenu extends AppCompatActivity {
             }else{
                 locationManager.requestLocationUpdates( LocationManager.GPS_PROVIDER, 0, 0, locationListener);
                 Location location = locationManager.getLastKnownLocation( LocationManager.GPS_PROVIDER );
-                lastGpsLocation.setLng( location.getLongitude() );
-                lastGpsLocation.setLat( location.getLatitude() );
-                lastGpsLocation.setTimestamp( getTimeStamp() );
-                user.setLastGpsLocation(lastGpsLocation);
-
-                Call<GpsLocation> caller = proxy.setLastGpsLocation(user.getId(),user.getLastGpsLocation() );
-                ProxyBuilder.callProxy(MainMenu.this, caller, returnedGpsLocation -> responseForGps(returnedGpsLocation));
-
+                if(location != null) {
+                    Log.i(TAG, "location set");
+                    lastGpsLocation.setLng(location.getLongitude());
+                    lastGpsLocation.setLat(location.getLatitude());
+                    lastGpsLocation.setTimestamp(getTimeStamp());
+                    user.setLastGpsLocation(lastGpsLocation);
+                    if(user == null){Log.i(TAG, "user null");}
+                    if(lastGpsLocation!=null) {
+                        Call<GpsLocation> caller = proxy.setLastGpsLocation(user.getId(), user.getLastGpsLocation());
+                        ProxyBuilder.callProxy(MainMenu.this, caller, returnedGpsLocation -> responseForGps(returnedGpsLocation));
+                    }
+                }else {
+                    Log.i(TAG,"location null");
+                }
             }
 
         }catch(SecurityException exception){
@@ -415,20 +421,26 @@ public class MainMenu extends AppCompatActivity {
 
 
     private int countZeroDistance(int count){
+        group = session.getGroup();
+        if(group != null) {
+            if (group.getRouteLngArray().size() == 2 && group.getRouteLatArray().size() == 2) {
 
-        if (group.getRouteLngArray().size() ==2 && group.getRouteLatArray().size() ==2 ) {
+                schoolLocation.setLat(group.getRouteLatArray().get(1));
+                schoolLocation.setLng(group.getRouteLngArray().get(1));
 
-            schoolLocation.setLat( group.getRouteLatArray().get( 1 ) );
-            schoolLocation.setLng( group.getRouteLngArray().get( 1 ) );
-
-            if((Math.abs(schoolLocation.getLat()-lastGpsLocation.getLat() )< 0.1 )
-                    && (Math.abs(schoolLocation.getLng()-lastGpsLocation.getLng()) <0.1)){
-                 count += 1;
-            }else{
-                count = 0;
+                if ((Math.abs(schoolLocation.getLat() - lastGpsLocation.getLat()) < 0.1)
+                        && (Math.abs(schoolLocation.getLng() - lastGpsLocation.getLng()) < 0.1)) {
+                    count += 1;
+                } else {
+                    count = 0;
+                }
             }
+            Log.i(TAG, "returning count");
+            return count;
+        } else{
+            Log.i(TAG,"group is null");
+            return 0;
         }
-        return count;
     }
 
 
