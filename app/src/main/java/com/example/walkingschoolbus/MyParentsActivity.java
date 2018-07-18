@@ -1,5 +1,6 @@
 package com.example.walkingschoolbus;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -26,36 +27,33 @@ import java.util.List;
 
 import retrofit2.Call;
 
-/**
- * MonitoredList activity provides user with list of persons who monitors me with options to remove.
- */
-public class MonitoredListActivity extends AppCompatActivity {
+public class MyParentsActivity extends AppCompatActivity {
 
 
-    private static final String TAG = "MonitoredListActivity";
+    private static final String TAG = "MyParentsActivity";
 
 
     private User user;
     private static WGServerProxy proxy;
     private Session session;
+    private static final int REQUEST_CODE = 5959;
 
-    private ArrayList<String> monitoredUser = new ArrayList<>();
+    private ArrayList<String> myParentsStringList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate( savedInstanceState );
+        setContentView( R.layout.activity_my_parents );
+
         session = Session.getInstance();
         user = session.getUser();
 
-        super.onCreate( savedInstanceState );
-        setContentView( R.layout.activity_monitored_list );
-
-
-       // Build the server proxy
+        // Build the server proxy
         proxy = ProxyBuilder.getProxy(getString(R.string.api_key),session.getToken());
 
         // Make call
         Call<List<User>> caller = proxy.getMonitoredByUsers(user.getId());
-        ProxyBuilder.callProxy(MonitoredListActivity.this, caller, returnedUsers -> response(returnedUsers));
+        ProxyBuilder.callProxy(MyParentsActivity.this, caller, returnedUsers -> response(returnedUsers));
 
         //Add parents Button
         setupAddParentsButton();
@@ -65,14 +63,14 @@ public class MonitoredListActivity extends AppCompatActivity {
 
     private void response(List<User> returnedUsers) {
 
-        SwipeMenuListView monitoredList = (SwipeMenuListView) findViewById(R.id.monitoredList);
+        SwipeMenuListView monitoredList = (SwipeMenuListView) findViewById(R.id.monitoredList );
 
         for (User user : returnedUsers) {
             Log.w(TAG, "    User: " + user.toString());
             String userInfo =  getString( R.string.user_name_list )+ " " + user.getName()+"\n" + getString(R.string.user_email_list) + user.getEmail();
 
-            monitoredUser.add(userInfo);
-            ArrayAdapter adapter = new ArrayAdapter(MonitoredListActivity.this, R.layout.da_items, monitoredUser);
+            myParentsStringList.add(userInfo);
+            ArrayAdapter adapter = new ArrayAdapter(MyParentsActivity.this, R.layout.da_items, myParentsStringList);
             monitoredList.setAdapter(adapter);
 
         }
@@ -85,11 +83,11 @@ public class MonitoredListActivity extends AppCompatActivity {
                 SwipeMenuItem deleteItem = new SwipeMenuItem(
                         getApplicationContext());
                 // set item background
-                deleteItem.setBackground(new ColorDrawable(Color.rgb(220, 20, 60)));
+                deleteItem.setBackground(new ColorDrawable( Color.rgb(220, 20, 60)));
                 // set item width
                 deleteItem.setWidth(180);
                 // set item title
-                deleteItem.setTitle(MonitoredListActivity.this.getString(R.string.delete_swipe));
+                deleteItem.setTitle(MyParentsActivity.this.getString(R.string.delete_swipe));
                 // set item title fontsize
                 deleteItem.setTitleSize(18);
                 // set item title font color
@@ -110,7 +108,7 @@ public class MonitoredListActivity extends AppCompatActivity {
                     case 0:
                         // Make call
                         Call<Void> caller = proxy.removeFromMonitoredByUsers(user.getId(), returnedUsers.get(position).getId());
-                        ProxyBuilder.callProxy(MonitoredListActivity.this, caller, returnedNothing -> response(returnedNothing));
+                        ProxyBuilder.callProxy(MyParentsActivity.this, caller, returnedNothing -> response(returnedNothing));
                         monitoredList.removeViewsInLayout(position,1);
 
                         break;
@@ -131,21 +129,39 @@ public class MonitoredListActivity extends AppCompatActivity {
             public void onClick(View v) {
 
 
-                Intent intentAdd = AddNewParentsActivity.makeIntent( MonitoredListActivity.this );
-                startActivity(intentAdd);
+                Intent intent = AddNewParentsActivity.makeIntent( MyParentsActivity.this );
+                startActivityForResult( intent, REQUEST_CODE);
 
             }
         });
 
     }
 
+    /**
+     * put the result from PlacePickerActivity on the listview to update
+     * @param requestCode arbitrary code number in this activity to get result from the other Activity
+     * @param resultCode the result code from the other Activity
+     * @param intent intent for going to another activity
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+
+        switch(requestCode){
+            case REQUEST_CODE:
+                if (resultCode == Activity.RESULT_OK) {
+                    finish();
+                    startActivity(getIntent());
+                }
+                break;
+        }
+    }
+
     private void response(Void returnedNothing) {
-        notifyUserViaLogAndToast(MonitoredListActivity.this.getString(R.string.notify_delete));
+        notifyUserViaLogAndToast(MyParentsActivity.this.getString(R.string.notify_delete));
     }
 
     public static Intent makeIntent(Context context) {
         Intent intent = new Intent(context, MonitoredListActivity.class);
-        //intent.putExtra(USER_TOKEN, tokenToPass);
         return intent;
     }
 
@@ -153,5 +169,4 @@ public class MonitoredListActivity extends AppCompatActivity {
         Log.w(TAG, message);
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
-
 }

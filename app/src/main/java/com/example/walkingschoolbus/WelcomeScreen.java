@@ -25,10 +25,11 @@ import retrofit2.Call;
  * Welcome screen allows user to log in using provided credentials or access the sign in page
  */
 public class WelcomeScreen extends AppCompatActivity {
-    private User user = User.getInstance();
+
     private WGServerProxy proxy;
     private boolean autoLogInFlag = false;
     private static Session session;
+    private User user;
     private static User loginUser;
 
     private static final String TAG = "ServerTest";
@@ -41,6 +42,7 @@ public class WelcomeScreen extends AppCompatActivity {
 
         Session.getStoredSession(this);
         session = Session.getInstance();
+        user = session.getUser();
         String savedToken = session.getToken();
         if(savedToken != null){
             autoLogInFlag =true;
@@ -133,15 +135,13 @@ public class WelcomeScreen extends AppCompatActivity {
 
         //set variables for session object
         String email =returnedUser.getEmail();
-        Long id = returnedUser.getId();
-        String name = returnedUser.getName();
 
         //set singleton user to point to user pulled from server
-        user.makeCopyOf(returnedUser); //set singleton user to logged in user.
-        Log.i(TAG, "set user to: "+ user.getName());
+        session.setUser(returnedUser); //set singleton user to logged in user.
+        Log.i(TAG, "set user to: "+ returnedUser.getName());
 
         //set and save session data
-        session.setSession(id,name,email,token);
+        session.setSession(returnedUser,token);
         session.storeSession(this);
         Log.i(TAG,"responseForUser ||"+ email);
 
