@@ -44,8 +44,9 @@ public class SendMessageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_send_message);
 
-        user = session.getUser();
         session = Session.getInstance();
+        user = session.getUser();
+
         // Build the server proxy
         proxy = ProxyBuilder.getProxy(getString(R.string.api_key),session.getToken());
 
