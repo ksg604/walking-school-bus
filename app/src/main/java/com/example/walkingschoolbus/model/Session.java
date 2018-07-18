@@ -33,7 +33,6 @@ public class Session {
     private String token;
     private String name;
     private String email;
-
     private Group group;
     private Long id;
     private boolean tracking;

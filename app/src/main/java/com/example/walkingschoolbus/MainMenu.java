@@ -49,9 +49,11 @@ public class MainMenu extends AppCompatActivity {
     public static final String USER_TOKEN = "User token";
     private static final String TAG = "MainMenu";
     private GpsLocation lastGpsLocation = new GpsLocation();
+    private GpsLocation schoolLocation = new GpsLocation();
     private Session session = Session.getInstance();
     User user = User.getInstance();
     String token = session.getToken();
+    Group group = session.getGroup();
     private String userToken;
     private static WGServerProxy proxy;
     private Boolean mLocationPermissionsGranted = false;
@@ -60,6 +62,9 @@ public class MainMenu extends AppCompatActivity {
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private static Handler handler = new Handler();
     private static Runnable runnableCode;
+    private static int zeroDistance = 0;
+
+
 
 
 
@@ -85,26 +90,32 @@ public class MainMenu extends AppCompatActivity {
         setTextViewMessage();
 
         makeHandlerRun();
+
     }
 
     private void setupOnTrackingBtn() {
         Switch onTracking = (Switch) findViewById( R.id.trackingSwitch );
+
         onTracking.setChecked( session.isTracking());
         onTracking.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isOn) {
-                if (isOn){
-                    turnOnGpsUpdate();
-                    session.setTracking (true);
+                if (isOn == true) {
 
+                    turnOnGpsUpdate();
+                    session.setTracking( true );
 
                 }else{
                    turnOffGpsUpdate();
                    session.setTracking (false);
                 }
+
             }
 
+
+
         } );
+
 
     }
 
@@ -162,7 +173,8 @@ public class MainMenu extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = GroupManagementActivity.makeIntent( MainMenu.this );
-                startActivityForResult( intent, REQUEST_CODE );
+                startActivity( intent );
+                Log.w( "Main Menu", "Group Activity Launched" );
             }
         } );
     }
@@ -239,10 +251,12 @@ public class MainMenu extends AppCompatActivity {
         runnableCode = new Runnable() {
             public void run() {
                 updateLastGpsLocation();
+
                 handler.postDelayed( this, 30000 );
             }
 
         };
+
     }
 
     private void updateLastGpsLocation() {
@@ -251,10 +265,6 @@ public class MainMenu extends AppCompatActivity {
         // Define a listener that responds to location updates
         LocationListener locationListener = new LocationListener() {
             public void onLocationChanged(Location location) {
-                lastGpsLocation.setLng( location.getLongitude() );
-                lastGpsLocation.setLat( location.getLatitude() );
-                lastGpsLocation.setTimestamp( getTimeStamp() );
-                user.setLastGpsLocation(lastGpsLocation);
 
             }
 
@@ -274,7 +284,7 @@ public class MainMenu extends AppCompatActivity {
                 getUserLocationPermission();
                 return;
             }else{
-                locationManager.requestLocationUpdates( LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+                locationManager.requestLocationUpdates( LocationManager.GPS_PROVIDER, 0, 0, locationListener);
                 Location location = locationManager.getLastKnownLocation( LocationManager.GPS_PROVIDER );
                 lastGpsLocation.setLng( location.getLongitude() );
                 lastGpsLocation.setLat( location.getLatitude() );
@@ -292,7 +302,12 @@ public class MainMenu extends AppCompatActivity {
     }
 
     private void responseForGps(GpsLocation returnedGps) {
+
         user.setLastGpsLocation( returnedGps );
+        zeroDistance = countZeroDistance(zeroDistance);
+        if (zeroDistance == 20){
+            turnOffGpsUpdate();
+        }
 
     }
 
@@ -352,35 +367,36 @@ public class MainMenu extends AppCompatActivity {
      */
     public static void turnOnGpsUpdate(){
         handler.post( runnableCode );
-
     }
+
     /**
      *Turn off tracking by removeMessage
      */
-    public static void turnOffGpsUpdate () {
-
-        handler.removeMessages( 0 );
+    public static void turnOffGpsUpdate (){
+        handler.removeMessages(0);
     }
 
 
-    /**
-     * @param requestCode arbitrary code number in this activity to get result from the other Activity
-     * @param resultCode the result code from the other Activity
-     * @param intent intent for going to another activity
-     */
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
 
-        switch(requestCode){
-            case REQUEST_CODE:
-                if (resultCode == Activity.RESULT_OK) {
-                   finish();
-                   startActivity( getIntent() );
-                }
-                break;
+
+
+
+    private int countZeroDistance(int count){
+
+        if (group.getRouteLngArray().size() ==2 && group.getRouteLatArray().size() ==2 ) {
+
+            schoolLocation.setLat( group.getRouteLatArray().get( 1 ) );
+            schoolLocation.setLng( group.getRouteLngArray().get( 1 ) );
+
+            if((Math.abs(schoolLocation.getLat()-lastGpsLocation.getLat() )< 0.1 )
+                    && (Math.abs(schoolLocation.getLng()-lastGpsLocation.getLng()) <0.1)){
+                 count += 1;
+            }else{
+                count = 0;
+            }
         }
+        return count;
     }
-
 
 
 }
