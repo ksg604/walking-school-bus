@@ -124,6 +124,10 @@ public interface WGServerProxy {
     @GET("/messages")
     Call<List<Message>> getMessageForUser(@Query("userId") Long userId);
 
+    @GET("/messages")
+    Call<List<Message>> getMessageNotRead(@Query("touser") Long userId , @Query("status") String ifRead );
+
+
 
     // -----------------------------
     // Permissions
