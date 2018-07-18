@@ -76,8 +76,11 @@ public class MessageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_message2);
 
        // Session.getStoredSession(this);
-        user = User.getInstance();
+        //user = User.getInstance();
+       // user = new User();
         session = Session.getInstance();
+        user = session.getUser();
+
 
         proxy = ProxyBuilder.getProxy(getString(R.string.api_key),session.getToken());
         listView = (ExpandableListView)findViewById(R.id.messageList);

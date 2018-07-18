@@ -50,7 +50,7 @@ public class emergencyMessageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
 
-        user = User.getInstance();
+        user = session.getUser();
         session = Session.getInstance();
         message = new Message();
         // Build the server proxy
