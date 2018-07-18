@@ -37,6 +37,7 @@ public class ViewUserSettingsActivity extends AppCompatActivity {
     private TextView thisAddress;
     private TextView thisICE;
     private long thisUserID;
+    private Boolean editable;
     private static final int REQUEST_CODE = 12345;
 
 
@@ -44,6 +45,9 @@ public class ViewUserSettingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_user_settings);
+
+        //TODO: setup editable logic
+        editable = true;
 
         //setup textviews
         thisName = findViewById(R.id.txtViewUserThisName);
@@ -62,7 +66,6 @@ public class ViewUserSettingsActivity extends AppCompatActivity {
         //get userID from intent
         Intent intent = getIntent();
         thisUserID = intent.getLongExtra("ID",0);
-
         //Create proxy call to generate full user object from ID above
         Call<User> caller = proxy.getUserById(thisUserID);
         ProxyBuilder.callProxy(ViewUserSettingsActivity.this,caller,
@@ -83,7 +86,11 @@ public class ViewUserSettingsActivity extends AppCompatActivity {
 
         //grab none-null DOB info and print
         try {
-           thisYOB.setText(String.valueOf(user.getBirthYear()));
+            if(!String.valueOf(user.getBirthYear()).equals("null")) {
+                thisYOB.setText(String.valueOf(user.getBirthYear()));
+            } else{
+                thisYOB.setText("");
+            }
         } catch (NullPointerException e){
             Log.e(TAG, "exception: ", e);
             thisYOB.setText("");
@@ -128,13 +135,18 @@ public class ViewUserSettingsActivity extends AppCompatActivity {
 
     private void setupUpdateButton() {
         Button btn = findViewById(R.id.btnViewUserUpdate);
-        btn.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                Intent intent = EditUserSettingsActivity.makeIntent(ViewUserSettingsActivity.this, thisUserID);
-                startActivityForResult(intent, REQUEST_CODE);
-            }
-        });
+
+        if(editable) {
+            btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = EditUserSettingsActivity.makeIntent(ViewUserSettingsActivity.this, thisUserID);
+                    startActivityForResult(intent, REQUEST_CODE);
+                }
+            });
+        }else{
+            btn.setVisibility(View.INVISIBLE);
+        }
     }
 
     public static Intent makeIntent(Context context, long userID){

@@ -119,7 +119,7 @@ public class MainMenu extends AppCompatActivity {
             public void onClick(View v) {
                 try{
                     long sessionID = session.getid();
-                    Intent intent = ViewUserSettingsActivity.makeIntent( MainMenu.this, sessionID );
+                    Intent intent = ViewUserSettingsActivity.makeIntent( MainMenu.this, sessionID);
                     startActivity( intent );
                 } catch(NullPointerException e){
                     Log.e(TAG, "exception", e);

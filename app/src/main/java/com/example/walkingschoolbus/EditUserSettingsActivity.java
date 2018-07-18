@@ -95,7 +95,10 @@ public class EditUserSettingsActivity extends AppCompatActivity {
             Log.e(TAG, "exception: ", e);
         }
         try{
-            editYearOfBirth.setText(String.valueOf(user.getBirthYear()));
+            if(!String.valueOf(user.getBirthYear()).equals("null")) {
+                editYearOfBirth.setText(String.valueOf(user.getBirthYear()));
+            }
+            //editYearOfBirth.setText(String.valueOf(user.getBirthYear()));
         } catch(NullPointerException e){
             Log.e(TAG, "exception: ", e);
         }
@@ -166,7 +169,7 @@ public class EditUserSettingsActivity extends AppCompatActivity {
         } catch(NumberFormatException e){
             Log.e(TAG,"updateUser:", e);
         }
-        
+
         updatedUser.setBirthMonth(monthSpinner.getSelectedItemPosition());
         updatedUser.setHomePhone(editHomePhone.getText().toString());
         updatedUser.setCellPhone(editCellPhone.getText().toString());
