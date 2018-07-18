@@ -41,13 +41,13 @@ public class MonitoringListActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        user = User.getInstance();
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_monitoring_list);
 
         Session.getStoredSession(this);
         session = Session.getInstance();
+        user = session.getUser();
         String savedToken = session.getToken();
         setMonitoringTextView();
 
@@ -152,7 +152,7 @@ public class MonitoringListActivity extends AppCompatActivity {
                         break;
 
                     case 2:
-                        Intent intentForRemove = RemoveMonitoringUserFromGroup.makeIntentt(MonitoringListActivity.this,
+                        Intent intentForRemove = RemoveMonitoringUserFromGroup.makeIntentWithEmailToPass(MonitoringListActivity.this,
                                 returnedUsers.get(position).getEmail());
                         startActivity(intentForRemove);
 

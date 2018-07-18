@@ -39,7 +39,7 @@ import retrofit2.Call;
  */
 public class LeaderActivity extends AppCompatActivity {
 
-    private Session session = Session.getInstance();
+    private Session tokenSession = Session.getInstance();
     private List<User> userList = new ArrayList<>();
     private List<String> stringUserList = new ArrayList<>( );
     private Group group;
@@ -57,11 +57,11 @@ public class LeaderActivity extends AppCompatActivity {
         setContentView( R.layout.activity_leader );
 
         //get token from session
-        userToken = session.getToken();
+        userToken = tokenSession.getToken();
         // Build the server proxy
         proxy = ProxyBuilder.getProxy(getString( R.string.api_key),userToken);
-
-        user = User.getInstance();
+        //get the group instance
+        user = tokenSession.getUser();
         group = Group.getInstance();
         getGroupInfo();
 
@@ -77,9 +77,6 @@ public class LeaderActivity extends AppCompatActivity {
 
 
     }
-
-
-
     /**
      * get response from the server to get a group member list as a leader
      * @param returnedUsers the list of members of the group I want to get
@@ -175,8 +172,6 @@ public class LeaderActivity extends AppCompatActivity {
                 return false;
             }
         });
-
-
     }
 
     /**

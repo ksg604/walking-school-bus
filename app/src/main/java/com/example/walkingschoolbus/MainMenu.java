@@ -24,10 +24,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.walkingschoolbus.model.GpsLocation;
-import com.example.walkingschoolbus.model.Group;
 import com.example.walkingschoolbus.model.Session;
 import com.example.walkingschoolbus.model.User;
 import com.example.walkingschoolbus.proxy.ProxyBuilder;
@@ -37,7 +35,6 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 import retrofit2.Call;
 
@@ -49,9 +46,9 @@ public class MainMenu extends AppCompatActivity {
     public static final String USER_TOKEN = "User token";
     private static final String TAG = "MainMenu";
     private GpsLocation lastGpsLocation = new GpsLocation();
+    Session session = Session.getInstance();
+    User user = session.getUser();
     private GpsLocation schoolLocation = new GpsLocation();
-    private Session session = Session.getInstance();
-    User user = User.getInstance();
     String token = session.getToken();
     Group group = session.getGroup();
     private String userToken;
@@ -119,15 +116,22 @@ public class MainMenu extends AppCompatActivity {
 
     }
 
-
     private void setupButtonSettings() {
         ImageView btn = (ImageView) findViewById( R.id.btnUserDetails );
         btn.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                long sessionID = session.getid();
-                Intent intent = ViewUserSettingsActivity.makeIntent( MainMenu.this, sessionID );
-                startActivity( intent );
+                try{
+                    long sessionID = session.getid();
+                    Intent intent = ViewUserSettingsActivity.makeIntent( MainMenu.this, sessionID);
+                    startActivity( intent );
+                } catch(NullPointerException e){
+                    Log.e(TAG, "exception", e);
+                    Intent intent = WelcomeScreen.makeIntent(MainMenu.this);
+                    startActivity(intent);
+                    finish();
+                }
+
             }
         } );
     }
@@ -140,7 +144,7 @@ public class MainMenu extends AppCompatActivity {
         btn.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                session.deleteToken();
+                session.deleteTokenAndVariables();
                 session.storeSession( MainMenu.this );
                 Intent intent = WelcomeScreen.makeIntent( MainMenu.this );
                 startActivity( intent );
