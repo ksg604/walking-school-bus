@@ -4,11 +4,25 @@
 
 package com.example.walkingschoolbus.model;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
+import com.example.walkingschoolbus.MainMenu;
+import com.example.walkingschoolbus.proxy.ProxyBuilder;
 import com.google.gson.Gson;
+
+import retrofit2.Call;
 
 /**
  * This class holds basic info from the loged in user such as name, id, token, and email
@@ -19,11 +33,16 @@ public class Session {
     private String token;
     private String name;
     private String email;
-    private Long id;
 
+    private Long id;
+    private boolean tracking;
     private static final String TAG ="Session";
     private static Session instance;
     private static final String SHAREDPREF_SESSION = "user session token";
+
+    private boolean mLocationPermissionsGranted;
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 0;
+    private GpsLocation lastGpsLocation;
 
     /** Signleton support of session class
      *
@@ -118,6 +137,17 @@ public class Session {
         instance = gson.fromJson(json, Session.class);
         Log.i(TAG,"Session grabbed");
     }
+
+
+    public boolean isTracking() {
+        return tracking;
+    }
+
+    public void setTracking(boolean tracking) {
+        this.tracking = tracking;
+    }
+
+
 
 
 

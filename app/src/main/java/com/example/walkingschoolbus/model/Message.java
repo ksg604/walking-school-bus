@@ -1,7 +1,6 @@
 package com.example.walkingschoolbus.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import java.util.Date;
 
 
