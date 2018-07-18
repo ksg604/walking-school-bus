@@ -122,14 +122,16 @@ public class SendMessageActivity extends AppCompatActivity {
     }
 
     private void responseGetGroupMember(List<User> returnedGroupMember) {
-        for(User user : returnedGroupMember){
-            Call<List<Message>> callGroupMemberParents = proxy.sendMessageToParents( user.getId() , message);
+        for(User userss : returnedGroupMember){
+            Log.i("SHow infomation", userss.getId().toString());
+            Call<List<Message>> callGroupMemberParents = proxy.sendMessageToParents( userss.getId() , message);
             ProxyBuilder.callProxy(SendMessageActivity.this, callGroupMemberParents,
                     returnedNothing -> responseFinish(returnedNothing));
         }
     }
 
     private void responseFinish(List<Message> returnedNothing) {
+        Log.i("This part is good","Good!");
         notifyUserViaLogAndToast("Message sent.");
     }
 
@@ -169,7 +171,7 @@ public class SendMessageActivity extends AppCompatActivity {
     }
 
     private void responseForSend(List<Message> returnedNothing) {
-        notifyUserViaLogAndToast(SendMessageActivity.this.getString(R.string.notify_delete));
+        notifyUserViaLogAndToast("Message sent!");
     }
     private void notifyUserViaLogAndToast(String message) {
        // Log.w(TAG, message);

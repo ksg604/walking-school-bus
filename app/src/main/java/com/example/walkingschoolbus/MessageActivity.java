@@ -92,7 +92,7 @@ public class MessageActivity extends AppCompatActivity {
 
         makeHandlerRun();
 
-        setupGetUnReadMessage();
+       // setupGetUnReadMessage();
 
         setupGetReadMessage();
 
