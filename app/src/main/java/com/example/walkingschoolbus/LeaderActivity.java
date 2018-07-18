@@ -35,7 +35,6 @@ public class LeaderActivity extends AppCompatActivity {
     private List<User> userList = new ArrayList<>();
     private List<String> stringUserList = new ArrayList<>( );
     private Group group;
-    private User user;
 
     private String userToken;
     private static WGServerProxy proxy;
@@ -52,7 +51,6 @@ public class LeaderActivity extends AppCompatActivity {
         // Build the server proxy
         proxy = ProxyBuilder.getProxy(getString( R.string.api_key),userToken);
         //get the group instance
-        user = User.getInstance();
         group = Group.getInstance();
         //Make call
         Call<List<User>> caller = proxy.getGroupMembers(group.getId());
@@ -149,19 +147,11 @@ public class LeaderActivity extends AppCompatActivity {
                          ArrayAdapter adapter = new ArrayAdapter(LeaderActivity.this, R.layout.swipe_listview, stringUserList);
                          userListView.setAdapter(adapter);
                          startActivity( getIntent() );
-
-
-
-
                 }
-
-
                 // false : close the menu; true : not close the menu
                 return false;
             }
         });
-
-
     }
 
     /**
@@ -186,8 +176,4 @@ public class LeaderActivity extends AppCompatActivity {
         Intent intent = new Intent( context, LeaderActivity.class );
         return intent;
     }
-
-
-
-
 }

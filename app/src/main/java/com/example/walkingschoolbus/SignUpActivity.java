@@ -24,7 +24,6 @@ public class SignUpActivity extends AppCompatActivity {
 
     private static WGServerProxy proxy;
     private User user;
-    private String tempToken0;
     private static final String TAG = "SignupActivity";
 
     @Override
@@ -37,14 +36,8 @@ public class SignUpActivity extends AppCompatActivity {
 
     }
 
-    /**
-     * Create intent for sign-up activity
-     * @param context
-     * @return
-     */
     public static Intent makeIntent(Context context){
         return new Intent(context,SignUpActivity.class);
-
     }
 
     // Create a new user on the server
@@ -55,7 +48,7 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // Build new user (with random email to avoid conflicts)
-                user = User.getInstance();
+                user = new User();
 
                 EditText name = (EditText) findViewById( R.id.edtTxtName );
                 EditText email = (EditText) findViewById( R.id.edtTxtEmail );
@@ -94,22 +87,10 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
 
-    /**
-     *Get response of User
-     *@param user
-     */
-    private void response(User user) {
-
-
-
-    }
+    private void response(User user) {  }
 
     private void notifyUserViaLogAndToast(String message) {
         Log.w(TAG, message);
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
-
-
-
-
 }

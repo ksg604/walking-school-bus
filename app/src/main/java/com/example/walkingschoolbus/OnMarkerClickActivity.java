@@ -14,7 +14,6 @@ import com.example.walkingschoolbus.model.Session;
 import com.example.walkingschoolbus.model.User;
 import com.example.walkingschoolbus.proxy.ProxyBuilder;
 import com.example.walkingschoolbus.proxy.WGServerProxy;
-import com.google.android.gms.maps.GoogleMap;
 
 import java.util.List;
 
@@ -23,15 +22,15 @@ import retrofit2.Call;
 public class OnMarkerClickActivity extends AppCompatActivity {
 
     WGServerProxy proxy;
-    private Session token = Session.getInstance();
-    User user = User.getInstance();
+    private Session session = Session.getInstance();
+    User user = session.getUser();
     Group group;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_on_marker_click);
-        String tokenValue = token.getToken();
+        String tokenValue = session.getToken();
         proxy = ProxyBuilder.getProxy(getString(R.string.api_key),tokenValue);
         getGroupDetails();
 

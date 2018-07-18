@@ -27,11 +27,8 @@ import retrofit2.Call;
 
 public class RemoveMonitoringUserFromGroup extends AppCompatActivity {
 
-
-    private User user;
     private Session session;
     private static WGServerProxy proxy;
-    private static String userEmail;
     private static Long userId;
     private static final String TAG = "Monitor";
 
@@ -49,7 +46,6 @@ public class RemoveMonitoringUserFromGroup extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_remove_monitoring_user_from_group);
 
-        user = User.getInstance();
         session = Session.getInstance();
 
         // Build the server proxy
@@ -168,7 +164,7 @@ public class RemoveMonitoringUserFromGroup extends AppCompatActivity {
     private void responseMessage(List<User> returnedUser) {
 
     }
-    public static Intent makeIntentt(Context context, String userEmailToPass){
+    public static Intent makeIntentWithEmailToPass(Context context, String userEmailToPass){
         Intent intent = new Intent(context, RemoveMonitoringUserFromGroup.class);
         intent.putExtra("Email",userEmailToPass);
         return intent;

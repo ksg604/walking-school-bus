@@ -39,9 +39,9 @@ public class PlacePickerActivity extends AppCompatActivity {
     private final static String TAG = "Place Picker Activity";
     private LatLng primaryLocation;
     private LatLng meetupLocation;
-    private User user = User.getInstance();
     private Session session = Session.getInstance();
     private String token = session.getToken();
+    private User user = session.getUser();
     private static WGServerProxy proxy;
 
 
