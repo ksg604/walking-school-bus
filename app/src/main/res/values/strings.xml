@@ -55,6 +55,9 @@
 
     <!-- Leader -->
     <string name="members">MEMBERS</string>
+    <string name="leader_help_txt">Swipe left on member name for options.</string>
+    <string name="walking_with_btn">Walking with this group</string>
+    <string name="group_descript_leader">Group: </string>
 
     <!--Settings-->
     <string name="monitoring">List All Users I Monitor</string>
@@ -77,9 +80,6 @@
 
     <string name="prompt">Would you like to join this group? </string>
 
-
-    <!--Leader Activity-->
-    <string name="member_is">Member : </string>
 
 
     <!---On Listview -->

@@ -1,6 +1,7 @@
 package com.example.walkingschoolbus;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -25,6 +26,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.example.walkingschoolbus.model.GpsLocation;
+import com.example.walkingschoolbus.model.Group;
 import com.example.walkingschoolbus.model.Session;
 import com.example.walkingschoolbus.model.User;
 import com.example.walkingschoolbus.proxy.ProxyBuilder;
@@ -47,13 +49,21 @@ public class MainMenu extends AppCompatActivity {
     private GpsLocation lastGpsLocation = new GpsLocation();
     Session session = Session.getInstance();
     User user = session.getUser();
+    private GpsLocation schoolLocation = new GpsLocation();
     String token = session.getToken();
+    private Group group = session.getGroup();
     private String userToken;
     private static WGServerProxy proxy;
     private Boolean mLocationPermissionsGranted = false;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 0;
+    private static final int REQUEST_CODE = 2016;
     private FusedLocationProviderClient mFusedLocationProviderClient;
-    private Handler handler = new Handler();
+    private static Handler handler = new Handler();
+    private static Runnable runnableCode;
+    private static int zeroDistance = 0;
+
+
+
 
 
 
@@ -78,39 +88,34 @@ public class MainMenu extends AppCompatActivity {
         setupWalkingMessageButton();
 
         setTextViewMessage();
+
+        makeHandlerRun();
+
     }
 
     private void setupOnTrackingBtn() {
-        Switch OnTracking = (Switch) findViewById( R.id.trackingSwitch );
-        OnTracking.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener() {
+        Switch onTracking = (Switch) findViewById( R.id.trackingSwitch );
+
+        onTracking.setChecked( session.isTracking());
+        onTracking.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isOn) {
                 if (isOn == true) {
 
-                    Runnable runnable = new Runnable() {
-                        public void run() {
-                            updateLastGpsLocation();
-                            handler.postDelayed( this, 30000 );
-                        }
-
-                    };
-
-                    handler.post( runnable );
+                    turnOnGpsUpdate();
                     session.setTracking( true );
 
                 }else{
-                    handler.removeMessages(0);
+                   turnOffGpsUpdate();
+                   session.setTracking (false);
                 }
 
             }
 
+
+
         } );
 
-
-    }
-
-    private void responseForGps(GpsLocation returnedGps) {
-        user.setLastGpsLocation( returnedGps );
 
     }
 
@@ -275,6 +280,17 @@ public class MainMenu extends AppCompatActivity {
         return new Intent( context, MainMenu.class );
     }
 
+    private void makeHandlerRun() {
+        runnableCode = new Runnable() {
+            public void run() {
+                updateLastGpsLocation();
+
+                handler.postDelayed( this, 30000 );
+            }
+
+        };
+
+    }
 
     private void updateLastGpsLocation() {
         LocationManager locationManager = (LocationManager) this.getSystemService( Context.LOCATION_SERVICE );
@@ -298,16 +314,17 @@ public class MainMenu extends AppCompatActivity {
         // Register the listener with the Location Manager to receive location update
         try {
             if (ActivityCompat.checkSelfPermission( this, Manifest.permission.ACCESS_FINE_LOCATION ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission( this, Manifest.permission.ACCESS_COARSE_LOCATION ) != PackageManager.PERMISSION_GRANTED) {
-             getUserLocationPermission();
+                getUserLocationPermission();
                 return;
             }else{
-                locationManager.requestLocationUpdates( LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+                locationManager.requestLocationUpdates( LocationManager.GPS_PROVIDER, 0, 0, locationListener);
                 Location location = locationManager.getLastKnownLocation( LocationManager.GPS_PROVIDER );
                 lastGpsLocation.setLng( location.getLongitude() );
                 lastGpsLocation.setLat( location.getLatitude() );
                 lastGpsLocation.setTimestamp( getTimeStamp() );
+                user.setLastGpsLocation(lastGpsLocation);
 
-                Call<GpsLocation> caller = proxy.setLastGpsLocation(user.getId(),lastGpsLocation );
+                Call<GpsLocation> caller = proxy.setLastGpsLocation(user.getId(),user.getLastGpsLocation() );
                 ProxyBuilder.callProxy(MainMenu.this, caller, returnedGpsLocation -> responseForGps(returnedGpsLocation));
 
             }
@@ -317,7 +334,15 @@ public class MainMenu extends AppCompatActivity {
         }
     }
 
+    private void responseForGps(GpsLocation returnedGps) {
 
+        user.setLastGpsLocation( returnedGps );
+        zeroDistance = countZeroDistance(zeroDistance);
+        if (zeroDistance == 20){
+            turnOffGpsUpdate();
+        }
+
+    }
 
     /**
      * Requests permission from the user to allow location services for the map.
@@ -368,4 +393,43 @@ public class MainMenu extends AppCompatActivity {
         String timeStamp  = dateFormat.format(new Date());
         return timeStamp;
     }
+
+    /**
+     * Turn on tracking by handler post
+     *
+     */
+    public static void turnOnGpsUpdate(){
+        handler.post( runnableCode );
+    }
+
+    /**
+     *Turn off tracking by removeMessage
+     */
+    public static void turnOffGpsUpdate (){
+        handler.removeMessages(0);
+    }
+
+
+
+
+
+
+    private int countZeroDistance(int count){
+
+        if (group.getRouteLngArray().size() ==2 && group.getRouteLatArray().size() ==2 ) {
+
+            schoolLocation.setLat( group.getRouteLatArray().get( 1 ) );
+            schoolLocation.setLng( group.getRouteLngArray().get( 1 ) );
+
+            if((Math.abs(schoolLocation.getLat()-lastGpsLocation.getLat() )< 0.1 )
+                    && (Math.abs(schoolLocation.getLng()-lastGpsLocation.getLng()) <0.1)){
+                 count += 1;
+            }else{
+                count = 0;
+            }
+        }
+        return count;
+    }
+
+
 }
