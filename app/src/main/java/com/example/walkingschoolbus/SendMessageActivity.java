@@ -95,11 +95,11 @@ public class SendMessageActivity extends AppCompatActivity {
                 Call<List<Message>> caller = proxy.sendMessageToGroup( tempGroupID , message);
                 ProxyBuilder.callProxy(SendMessageActivity.this, caller,
                         returnedNothing -> responseForSend(returnedNothing));
-
+/*
                 Call<List<User>> callGroupMember = proxy.getGroupMembers(tempGroupID);
                 ProxyBuilder.callProxy(SendMessageActivity.this, callGroupMember,
                         returnedGroupMember -> responseGetGroupMember(returnedGroupMember));
-
+*/
 
 
 
@@ -121,12 +121,22 @@ public class SendMessageActivity extends AppCompatActivity {
                 */
     }
 
+    private void responseForSend(List<Message> returnedNothing) {
+        notifyUserViaLogAndToast("Message sent!");
+
+        Call<List<User>> callGroupMember = proxy.getGroupMembers(tempGroupID);
+        ProxyBuilder.callProxy(SendMessageActivity.this, callGroupMember,
+                returnedGroupMember -> responseGetGroupMember(returnedGroupMember));
+    }
+
     private void responseGetGroupMember(List<User> returnedGroupMember) {
         for(User userss : returnedGroupMember){
-            Log.i("SHow infomation", userss.getId().toString());
-            Call<List<Message>> callGroupMemberParents = proxy.sendMessageToParents( userss.getId() , message);
-            ProxyBuilder.callProxy(SendMessageActivity.this, callGroupMemberParents,
-                    returnedNothing -> responseFinish(returnedNothing));
+            if(userss.getId() != user.getId()) {
+                Log.i("SHow infomation", userss.getId().toString());
+                Call<List<Message>> callGroupMemberParents = proxy.sendMessageToParents(userss.getId(), message);
+                ProxyBuilder.callProxy(SendMessageActivity.this, callGroupMemberParents,
+                        returnedNothing -> responseFinish(returnedNothing));
+            }
         }
     }
 
@@ -170,9 +180,8 @@ public class SendMessageActivity extends AppCompatActivity {
          senderEmail.add(returnedUser.getEmail());
     }
 
-    private void responseForSend(List<Message> returnedNothing) {
-        notifyUserViaLogAndToast("Message sent!");
-    }
+
+
     private void notifyUserViaLogAndToast(String message) {
        // Log.w(TAG, message);
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
