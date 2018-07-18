@@ -90,9 +90,7 @@ public class LeaderActivity extends AppCompatActivity {
 
         for (User member : returnedUsers) {
 
-
             Log.w( TAG, "    member: " + member.getId() );
-
 
             String userInfo = getString( R.string.user_name_list )+ " "+ member.getName() + "\n" +
                     getString(R.string.user_email_list)+ " " + member.getEmail();
@@ -209,11 +207,8 @@ public class LeaderActivity extends AppCompatActivity {
 
 
     private void getGroupInfo() {
-
         Call<Group> caller = proxy.getGroupById(group.getId());
         ProxyBuilder.callProxy(LeaderActivity.this, caller, returnedGroup-> responseForGroup(returnedGroup));
-
-
     }
 
     private void responseForGroup(Group returnedGroup) {
@@ -225,8 +220,6 @@ public class LeaderActivity extends AppCompatActivity {
         schoolGpsLocation.setLat( group.getRouteLatArray().get(1));
         schoolGpsLocation.setLng( group.getRouteLatArray().get(1));
         setGroupDescriptionTxt();
-
-
     }
 
     private void setWalkingWithThisGroupBtn() {
@@ -238,14 +231,9 @@ public class LeaderActivity extends AppCompatActivity {
                 if(!tokenSession.isTracking()){
                     MainMenu.turnOnGpsUpdate();
                     notifyUserViaLogAndToast( "Now your GPS is updating " );
+                    tokenSession.setTracking(true);
                 }
-
             }
         } );
-
     }
-
-
-
-
 }
