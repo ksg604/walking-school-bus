@@ -90,9 +90,7 @@ public class LeaderActivity extends AppCompatActivity {
 
         for (User member : returnedUsers) {
 
-
             Log.w( TAG, "    member: " + member.getId() );
-
 
             String userInfo = getString( R.string.user_name_list )+ " "+ member.getName() + "\n" +
                     getString(R.string.user_email_list)+ " " + member.getEmail();
@@ -238,14 +236,10 @@ public class LeaderActivity extends AppCompatActivity {
                 if(!tokenSession.isTracking()){
                     MainMenu.turnOnGpsUpdate();
                     notifyUserViaLogAndToast( "Now your GPS is updating " );
+                    tokenSession.setTracking(true);
                 }
-
             }
         } );
 
     }
-
-
-
-
 }

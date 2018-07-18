@@ -62,11 +62,6 @@ public class MainMenu extends AppCompatActivity {
     private static Runnable runnableCode;
     private static int zeroDistance = 0;
 
-
-
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
@@ -90,7 +85,6 @@ public class MainMenu extends AppCompatActivity {
         setTextViewMessage();
 
         makeHandlerRun();
-
     }
 
     private void setupOnTrackingBtn() {
@@ -109,14 +103,8 @@ public class MainMenu extends AppCompatActivity {
                    turnOffGpsUpdate();
                    session.setTracking (false);
                 }
-
             }
-
-
-
         } );
-
-
     }
 
     private void setupButtonSettings() {
@@ -134,7 +122,6 @@ public class MainMenu extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                 }
-
             }
         } );
     }
@@ -178,7 +165,6 @@ public class MainMenu extends AppCompatActivity {
                 finish();
             }
         } );
-
     }
 
 
@@ -257,7 +243,6 @@ public class MainMenu extends AppCompatActivity {
             welcomeMessage = getString( R.string.hello );
         }
         welcome.setText( welcomeMessage );
-
     }
 
 
@@ -343,11 +328,15 @@ public class MainMenu extends AppCompatActivity {
     private void responseForGps(GpsLocation returnedGps) {
 
         user.setLastGpsLocation( returnedGps );
+        group = session.getGroup();
         zeroDistance = countZeroDistance(zeroDistance);
         if (zeroDistance == 20){
             turnOffGpsUpdate();
-        }
+        } else{
+            Switch onTracking = (Switch) findViewById( R.id.trackingSwitch );
 
+            onTracking.setChecked(session.isTracking());
+        }
     }
 
     /**
@@ -368,8 +357,6 @@ public class MainMenu extends AppCompatActivity {
             //to verify the results of user's selection.
             ActivityCompat.requestPermissions(this,permissions,LOCATION_PERMISSION_REQUEST_CODE);
         }
-
-
     }
 
      /*
@@ -415,13 +402,7 @@ public class MainMenu extends AppCompatActivity {
         handler.removeMessages(0);
     }
 
-
-
-
-
-
     private int countZeroDistance(int count){
-        group = session.getGroup();
         if(group != null) {
             if (group.getRouteLngArray().size() == 2 && group.getRouteLatArray().size() == 2) {
 
@@ -442,6 +423,4 @@ public class MainMenu extends AppCompatActivity {
             return 0;
         }
     }
-
-
 }
