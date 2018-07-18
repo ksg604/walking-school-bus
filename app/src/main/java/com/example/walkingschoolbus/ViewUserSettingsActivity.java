@@ -19,6 +19,8 @@ import com.example.walkingschoolbus.model.User;
 import com.example.walkingschoolbus.proxy.ProxyBuilder;
 import com.example.walkingschoolbus.proxy.WGServerProxy;
 
+import java.util.List;
+
 import retrofit2.Call;
 
 public class ViewUserSettingsActivity extends AppCompatActivity {
@@ -37,17 +39,16 @@ public class ViewUserSettingsActivity extends AppCompatActivity {
     private TextView thisAddress;
     private TextView thisICE;
     private long thisUserID;
-    private Boolean editable;
+    private Boolean editable = false;
     private static final int REQUEST_CODE = 12345;
+    private User sessionUser = session.getUser();
+    private List<User> children;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_user_settings);
-
-        //TODO: setup editable logic
-        editable = true;
 
         //setup textviews
         thisName = findViewById(R.id.txtViewUserThisName);
@@ -71,9 +72,8 @@ public class ViewUserSettingsActivity extends AppCompatActivity {
         ProxyBuilder.callProxy(ViewUserSettingsActivity.this,caller,
                 returnedUser ->responseForUser(returnedUser));
 
-        setupUpdateButton();
-
     }
+
 
     private void responseForUser(User user){
         thisName.setText(user.getName());
@@ -131,6 +131,29 @@ public class ViewUserSettingsActivity extends AppCompatActivity {
                 monthText = "Dec";          break;
         }
         thisMOB.setText(monthText);
+
+        //update session user
+        sessionUser.makeCopyOf(user);
+        //save session user
+        session.storeSession(ViewUserSettingsActivity.this);
+
+        children = user.getMonitorsUsers();
+
+        setEditable();
+        setupUpdateButton();
+    }
+
+
+    private void setEditable() {
+        int length = children.size();
+        for(int i = 0; i < length; i++){
+            if(children.get(i).getId()==thisUserID){
+                editable= true;
+            }
+        }
+        if(session.getid() == thisUserID){
+            editable = true;
+        }
     }
 
     private void setupUpdateButton() {

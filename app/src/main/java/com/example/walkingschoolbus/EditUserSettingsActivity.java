@@ -36,6 +36,7 @@ public class EditUserSettingsActivity extends AppCompatActivity {
     private static final String TAG ="editUserSettings";
     private long thisUserID;
     private User updatedUser;
+    private User sessionUser=session.getUser();
 
     //spinner variables
     Spinner monthSpinner;
@@ -90,7 +91,7 @@ public class EditUserSettingsActivity extends AppCompatActivity {
         //try to set each field individually
 
         try{
-            editName.setText(user.getName());
+            editName.setText(sessionUser.getName());
         } catch(NullPointerException e){
             Log.e(TAG, "exception: ", e);
         }

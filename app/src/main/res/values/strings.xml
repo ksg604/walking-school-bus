@@ -112,7 +112,7 @@
 
     <!--edit/view User Settings -->
     <string name="user_name">Name: </string>
-    <string name="user_DOB">DOB: </string>
+    <string name="user_DOB">Date Of Birth: </string>
     <string name="user_address">Address: </string>
     <string name="user_hphone">Home Phone: </string>
     <string name="user_cphone">Cell Phone: </string>
