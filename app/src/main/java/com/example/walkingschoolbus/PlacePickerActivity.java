@@ -1,3 +1,8 @@
+/**
+ * Place picker activity allows user to select to locations on a map and use to that to generate
+ * a new walking group.
+ */
+
 package com.example.walkingschoolbus;
 
 import android.app.Activity;
@@ -28,10 +33,6 @@ import java.util.List;
 
 import retrofit2.Call;
 
-/**
- * Place picker activity allows user to select to locations on a map and use to that to generate
- * a new walking group.
- */
 public class PlacePickerActivity extends AppCompatActivity {
 
     private int PLACE_PICKER_LOC_REQUEST = 1;

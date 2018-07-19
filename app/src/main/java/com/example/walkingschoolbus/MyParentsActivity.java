@@ -1,3 +1,6 @@
+/**
+ * Activity to add a new parent by email
+ */
 package com.example.walkingschoolbus;
 
 import android.app.Activity;

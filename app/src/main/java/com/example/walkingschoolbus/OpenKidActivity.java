@@ -1,3 +1,7 @@
+/**
+ * Activity shows all groups a child is a member of and gives the user the option to update their
+ * child's information
+ */
 package com.example.walkingschoolbus;
 
 import android.app.Activity;

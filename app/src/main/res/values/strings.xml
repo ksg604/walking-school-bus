@@ -191,4 +191,15 @@
     <!--ViewUserMonitoredByActivity-->
     <string name="monitored_by_view">Monitored By: </string>
     <string name="view_parent_info">View</string>
+
+    <!--Emergency/Broadcast messages-->
+    <string name="emergency_prefix">|EMERGENCY|</string>
+    <string name="emergency_instruction">This will send an emergency message to your parents and
+    group leaders</string>
+    <string name ="non_emergency_instructions">This will send a message to your parents and group leaders</string>
+    <string name ="message_sent">Message sent.</string>
+    <string name ="send">SEND</string>
+    <string name ="type_message">Type message here</string>
+
+
 </resources>

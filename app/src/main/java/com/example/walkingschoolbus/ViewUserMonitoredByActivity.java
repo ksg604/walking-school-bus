@@ -1,3 +1,7 @@
+/**
+ * Activity allows user to view all other users who monitor them.
+ */
+
 package com.example.walkingschoolbus;
 
 import android.content.Context;

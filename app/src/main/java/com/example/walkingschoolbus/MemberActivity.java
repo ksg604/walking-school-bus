@@ -1,3 +1,7 @@
+/**
+ * Activity allows the user to view all members in a group and the group leader
+ */
+
 package com.example.walkingschoolbus;
 
 import android.content.Context;

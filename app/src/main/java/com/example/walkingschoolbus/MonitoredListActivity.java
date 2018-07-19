@@ -1,3 +1,6 @@
+/**
+ * MonitoredList activity provides user with list of persons who monitors me with options to remove.
+ */
 package com.example.walkingschoolbus;
 
 import android.content.Context;
@@ -26,9 +29,7 @@ import java.util.List;
 
 import retrofit2.Call;
 
-/**
- * MonitoredList activity provides user with list of persons who monitors me with options to remove.
- */
+
 public class MonitoredListActivity extends AppCompatActivity {
 
 

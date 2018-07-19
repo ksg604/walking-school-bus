@@ -1,3 +1,6 @@
+/**
+ * User settings activity allows user to change add/remove users they monitor from groups
+ */
 package com.example.walkingschoolbus;
 
 import android.app.Activity;
@@ -21,9 +24,7 @@ import java.util.List;
 
 import retrofit2.Call;
 
-/**
- * User settings activity allows user to change add/remove users they monitor from groups
- */
+
 public class AddNewParentsActivity extends AppCompatActivity {
 
     private WGServerProxy proxy;
