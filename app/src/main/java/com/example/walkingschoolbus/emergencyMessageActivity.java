@@ -1,3 +1,6 @@
+/**
+ * This activity allows a user the send an "emergency message" to their parents and group
+ */
 package com.example.walkingschoolbus;
 
 import android.content.Context;

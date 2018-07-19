@@ -1,3 +1,6 @@
+/**
+ * Activity to allow user to view read and unread messages
+ */
 package com.example.walkingschoolbus;
 
 import android.app.Activity;

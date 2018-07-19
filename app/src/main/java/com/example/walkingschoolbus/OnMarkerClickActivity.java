@@ -1,3 +1,6 @@
+/**
+ * Activity navigated to from the maps activity. Gives option to join a clicked on group
+ */
 package com.example.walkingschoolbus;
 
 import android.content.Context;

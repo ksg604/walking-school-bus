@@ -1,3 +1,7 @@
+/**
+ * Lists all users and leaders in a group
+ * Navigated to from a child's page
+ */
 package com.example.walkingschoolbus;
 
 import android.content.Context;

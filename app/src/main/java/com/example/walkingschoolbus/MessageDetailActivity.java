@@ -1,3 +1,6 @@
+/**
+ * Activity is the "open message" feature of the app
+ */
 package com.example.walkingschoolbus;
 
 import android.app.Activity;

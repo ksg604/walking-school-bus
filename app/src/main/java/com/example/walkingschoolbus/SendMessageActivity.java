@@ -1,3 +1,7 @@
+/**
+ * Activity allows user to send a non-emergency message
+ */
+
 package com.example.walkingschoolbus;
 
 import android.content.Context;
