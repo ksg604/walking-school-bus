@@ -61,6 +61,7 @@ public class MyParentsActivity extends AppCompatActivity {
 
     }
 
+
     private void response(List<User> returnedUsers) {
 
         SwipeMenuListView monitoredList = (SwipeMenuListView) findViewById(R.id.monitoredList );
@@ -70,10 +71,9 @@ public class MyParentsActivity extends AppCompatActivity {
             String userInfo =  getString( R.string.user_name_list )+ " " + user.getName()+"\n" + getString(R.string.user_email_list) + user.getEmail();
 
             myParentsStringList.add(userInfo);
-            ArrayAdapter adapter = new ArrayAdapter(MyParentsActivity.this, R.layout.da_items, myParentsStringList);
-            monitoredList.setAdapter(adapter);
-
         }
+        ArrayAdapter adapter = new ArrayAdapter(MyParentsActivity.this, R.layout.da_items, myParentsStringList);
+        monitoredList.setAdapter(adapter);
 
         SwipeMenuCreator creator = new SwipeMenuCreator() {
 
@@ -109,8 +109,8 @@ public class MyParentsActivity extends AppCompatActivity {
                         // Make call
                         Call<Void> caller = proxy.removeFromMonitoredByUsers(user.getId(), returnedUsers.get(position).getId());
                         ProxyBuilder.callProxy(MyParentsActivity.this, caller, returnedNothing -> response(returnedNothing));
-                        monitoredList.removeViewsInLayout(position,1);
-
+                        monitoredList.removeViewsInLayout(position, 1);
+                        adapter.notifyDataSetChanged();
                         break;
                 }
                 // false : close the menu; true : not close the menu
@@ -128,9 +128,9 @@ public class MyParentsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-
                 Intent intent = AddNewParentsActivity.makeIntent( MyParentsActivity.this );
                 startActivityForResult( intent, REQUEST_CODE);
+
 
             }
         });
@@ -151,8 +151,10 @@ public class MyParentsActivity extends AppCompatActivity {
                 if (resultCode == Activity.RESULT_OK) {
                     finish();
                     startActivity(getIntent());
+
                 }
                 break;
+
         }
     }
 
@@ -169,4 +171,6 @@ public class MyParentsActivity extends AppCompatActivity {
         Log.w(TAG, message);
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
+
+
 }
