@@ -69,8 +69,10 @@ public class GroupManagementActivity extends AppCompatActivity {
         ProxyBuilder.callProxy(GroupManagementActivity.this, caller,
                 returnedUser -> responseForUser(returnedUser));
 
-        // proxy = ProxyBuilder.getProxy( getString( R.string.api_key ));
+
         setupCreateGroupButton();
+        setupJoinGroupButton();
+
 
 
 
@@ -101,19 +103,6 @@ public class GroupManagementActivity extends AppCompatActivity {
                 returnedGroupList -> responseForGroup(returnedGroupList));
     }
 
-    /**
-     * set up the button to create group
-     */
-    private void setupCreateGroupButton() {
-        Button createGroupButton = findViewById( R.id.btnAddGroup );
-        createGroupButton.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = PlacePickerActivity.makeIntent(GroupManagementActivity.this);
-                startActivityForResult( intent, REQUEST_CODE);
-            }
-        } );
-    }
 
    /**get response List<Group> objects to save data into stringGroupList
     * to see group list on swipeMenuListView
@@ -136,7 +125,7 @@ public class GroupManagementActivity extends AppCompatActivity {
                 Log.w( TAG, getString( R.string.group_list) + " " + group.getId() );
 
                 modifiedGroupLeaderList.add(group);
-                String groupInfo = getString( R.string.group_list) + " " + group.getGroupDescription();
+                String groupInfo = getString( R.string.group_list) + " " + group.getGroupDescription()+"\n";
                 stringLeaderGroupList.add( groupInfo );
             }
 
@@ -154,6 +143,21 @@ public class GroupManagementActivity extends AppCompatActivity {
             public void create(SwipeMenu menu) {
 
                 // create "open" item
+                SwipeMenuItem sendMessage = new SwipeMenuItem( getApplicationContext());
+                // set item background
+                sendMessage.setBackground(new ColorDrawable(Color.rgb(80, 56, 184)));
+                // set item width
+                sendMessage.setWidth(240);
+                // set item title
+                sendMessage.setTitle("Broadcasts");
+                // set item title font size
+                sendMessage.setTitleSize(15);
+                // set item title font color
+                sendMessage.setTitleColor(Color.WHITE);
+                // add to menu
+                menu.addMenuItem(sendMessage);
+
+                // create "open" item
                 SwipeMenuItem openItem = new SwipeMenuItem( getApplicationContext());
                 // set item background
                 openItem.setBackground(new ColorDrawable(Color.rgb(0xC9, 0xC9, 0xCE)));
@@ -162,7 +166,7 @@ public class GroupManagementActivity extends AppCompatActivity {
                 // set item title
                 openItem.setTitle(getString( R.string.open_swipe ));
                 // set item title font size
-                openItem.setTitleSize(18);
+                openItem.setTitleSize(15);
                 // set item title font color
                 openItem.setTitleColor(Color.WHITE);
                 // add to menu
@@ -177,27 +181,14 @@ public class GroupManagementActivity extends AppCompatActivity {
                 // set item title
                 deleteItem.setTitle(getString(R.string.delete_swipe));
                 // set item title font size
-                deleteItem.setTitleSize(18);
+                deleteItem.setTitleSize(15);
                 // set item title font color
                 deleteItem.setTitleColor(Color.WHITE);
                 // add to menu
                 menu.addMenuItem(deleteItem);
 
 
-                // create "open" item
-                SwipeMenuItem sendMessage = new SwipeMenuItem( getApplicationContext());
-                // set item background
-                openItem.setBackground(new ColorDrawable(Color.rgb(0xC9, 0xC9, 0xCE)));
-                // set item width
-                openItem.setWidth(240);
-                // set item title
-                openItem.setTitle("SendMessage");
-                // set item title font size
-                openItem.setTitleSize(18);
-                // set item title font color
-                openItem.setTitleColor(Color.WHITE);
-                // add to menu
-                menu.addMenuItem(sendMessage);
+
             }
         };
 
@@ -212,6 +203,13 @@ public class GroupManagementActivity extends AppCompatActivity {
             @Override
             public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
                 switch (index) {
+
+
+                    case 0:
+                        Long tempID = modifiedGroupLeaderList.get(position).getId();
+                        Intent intent2 = SendMessageActivity.makeIntent(GroupManagementActivity.this, tempID);
+                        startActivity(intent2);
+                        break;
 
                     case 1:
                         Long groupId = modifiedGroupLeaderList.get(position).getId();
@@ -229,11 +227,6 @@ public class GroupManagementActivity extends AppCompatActivity {
                          groupAsLeaderListView.removeViewsInLayout(position,1);
 
                          break;
-
-                    case 0:
-                        Long tempID = modifiedGroupLeaderList.get(position).getId();
-                        Intent intent2 = SendMessageActivity.makeIntent(GroupManagementActivity.this, tempID);
-                        startActivity(intent2);
 
                 }
                 // false : close the menu; true : not close the menu
@@ -295,13 +288,14 @@ public class GroupManagementActivity extends AppCompatActivity {
                             group.setId(groupId);
                             Intent intent = LeaderActivity.makeIntent( GroupManagementActivity.this );
                             startActivity( intent );
+                            break;
 
                         case 1:
                             // Make call
-                             Call<Void> caller = proxy.removeGroupMember(modifiedGroupMemberList.get(position).getId(), user.getId());
-                             ProxyBuilder.callProxy(GroupManagementActivity.this, caller, returnedNothing -> response(returnedNothing));
-                             groupAsMemberListView.removeViewsInLayout(position,1);
-                             break;
+                            Call<Void> caller = proxy.removeGroupMember(modifiedGroupMemberList.get(position).getId(), user.getId());
+                            ProxyBuilder.callProxy(GroupManagementActivity.this, caller, returnedNothing -> response(returnedNothing));
+                            groupAsMemberListView.removeViewsInLayout(position,1);
+                            break;
                     }
                     // false : close the menu; true : not close the menu
                     return false;
@@ -313,6 +307,37 @@ public class GroupManagementActivity extends AppCompatActivity {
     private void response(Void returnedNothing) {
         notifyUserViaLogAndToast( getString( R.string.delete_message));
     }
+
+    /**
+     * set up the button to create group
+     */
+    private void setupCreateGroupButton() {
+        Button createGroupButton = findViewById( R.id.btnCreateGroupInGroupManage );
+        createGroupButton.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = PlacePickerActivity.makeIntent(GroupManagementActivity.this);
+                startActivityForResult( intent, REQUEST_CODE);
+            }
+        } );
+    }
+
+
+    /**
+     * setup the button to join a existing group
+     */
+    private void setupJoinGroupButton() {
+        Button joinGroupButton = (Button) findViewById( R.id.btnJoinGroup );
+        joinGroupButton.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = MapsActivity.makeIntent( GroupManagementActivity.this );
+                startActivity( intent );
+
+            }
+        } );
+    }
+
 
     private void notifyUserViaLogAndToast(String message) {
         Log.w(TAG, message);
@@ -355,4 +380,10 @@ public class GroupManagementActivity extends AppCompatActivity {
                 break;
         }
     }
+
+
+
+
+
+
 }

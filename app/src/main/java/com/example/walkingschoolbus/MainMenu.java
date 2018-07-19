@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -20,6 +22,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -84,17 +87,18 @@ public class MainMenu extends AppCompatActivity {
 
         setupButtonSettings();
         setupLayoutGroups();
-        setupLayoutMaps();
         setupLayoutMessages();
         setupLayoutMyParents();
+        setupLayoutMyKids();
         setupLogOutButton();
         setupOnTrackingBtn();
 
         setupEmergencyButton();
-        setupWalkingMessageButton();
-
+        setupBroadcastsButton();
         setTextViewMessage();
         setupMessageNumber();
+        setWalkingWithMessage();
+
         makeHandlerRun();
 
 
@@ -135,14 +139,8 @@ public class MainMenu extends AppCompatActivity {
                    turnOffGpsUpdate();
                    session.setTracking (false);
                 }
-
             }
-
-
-
         } );
-
-
     }
 
     private void setupButtonSettings() {
@@ -160,14 +158,13 @@ public class MainMenu extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                 }
-
             }
         } );
     }
 
-    private void setupWalkingMessageButton() {
-        Button btn = findViewById(R.id.btnWalkingMessage);
-        btn.setOnClickListener(new View.OnClickListener() {
+    private void setupBroadcastsButton() {
+        LinearLayout broadcasts = (LinearLayout) findViewById(R.id.linearLayoutBroadcasts);
+        broadcasts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = emergencyMessageActivity.makeIntent(MainMenu.this, false);
@@ -179,6 +176,9 @@ public class MainMenu extends AppCompatActivity {
 
     private void setupEmergencyButton() {
         Button btn = findViewById(R.id.btnEmergency);
+        btn.setText( R.string.emergency);
+
+
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -204,7 +204,6 @@ public class MainMenu extends AppCompatActivity {
                 finish();
             }
         } );
-
     }
 
 
@@ -263,9 +262,9 @@ public class MainMenu extends AppCompatActivity {
         setting.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = MonitoringListActivity.makeIntent( MainMenu.this );
-                Log.w( "Maintest", "   --> NOW HAVE TOKEN(output3): " + token );
-                startActivity( intent );
+                Intent intent = MyKidsActivity.makeIntent(MainMenu.this);
+                Log.w("Maintest", "   --> NOW HAVE TOKEN(output3): " + token);
+                startActivity(intent);
             }
         } );
     }
@@ -283,24 +282,20 @@ public class MainMenu extends AppCompatActivity {
             welcomeMessage = getString( R.string.hello );
         }
         welcome.setText( welcomeMessage );
+    }
 
+    private void setWalkingWithMessage() {
+        String walkingMessage;
+        TextView walking = findViewById(R.id.txtViewWalkingMessage);
+        if(session.getGroup() != null){
+            walkingMessage = getString(R.string.mm_walkingwith) + session.getGroup().getGroupDescription();
+        }else{
+            walkingMessage = getString(R.string.mm_not_walking);
+        }
+        walking.setText(walkingMessage);
     }
 
 
-    /**
-     * setup linear layout to redirect to map activity
-     */
-    private void setupLayoutMaps() {
-        LinearLayout maps = (LinearLayout) findViewById( R.id.linearLayoutMaps );
-        maps.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = MapsActivity.makeIntent( MainMenu.this );
-                startActivity( intent );
-                Log.i( "Sprint1", "Map activity Launched" );
-            }
-        } );
-    }
 
     public static Intent makeIntent(Context context) {
         return new Intent( context, MainMenu.class );
@@ -319,9 +314,7 @@ public class MainMenu extends AppCompatActivity {
                 setupMessageNumber();
                 handler.postDelayed( this, 30000 );
             }
-
         };
-
     }
 
     private void updateLastGpsLocation() {
@@ -329,18 +322,10 @@ public class MainMenu extends AppCompatActivity {
 
         // Define a listener that responds to location updates
         LocationListener locationListener = new LocationListener() {
-            public void onLocationChanged(Location location) {
-
-            }
-
-            public void onStatusChanged(String provider, int status, Bundle extras) {
-            }
-
-            public void onProviderEnabled(String provider) {
-            }
-
-            public void onProviderDisabled(String provider) {
-            }
+            public void onLocationChanged(Location location) {  }
+            public void onStatusChanged(String provider, int status, Bundle extras) {   }
+            public void onProviderEnabled(String provider) {    }
+            public void onProviderDisabled(String provider) {   }
         };
 
         // Register the listener with the Location Manager to receive location update
@@ -351,14 +336,20 @@ public class MainMenu extends AppCompatActivity {
             }else{
                 locationManager.requestLocationUpdates( LocationManager.GPS_PROVIDER, 0, 0, locationListener);
                 Location location = locationManager.getLastKnownLocation( LocationManager.GPS_PROVIDER );
-                lastGpsLocation.setLng( location.getLongitude() );
-                lastGpsLocation.setLat( location.getLatitude() );
-                lastGpsLocation.setTimestamp( getTimeStamp() );
-                user.setLastGpsLocation(lastGpsLocation);
-
-                Call<GpsLocation> caller = proxy.setLastGpsLocation(user.getId(),user.getLastGpsLocation() );
-                ProxyBuilder.callProxy(MainMenu.this, caller, returnedGpsLocation -> responseForGps(returnedGpsLocation));
-
+                if(location != null) {
+                    Log.i(TAG, "location set");
+                    lastGpsLocation.setLng(location.getLongitude());
+                    lastGpsLocation.setLat(location.getLatitude());
+                    lastGpsLocation.setTimestamp(getTimeStamp());
+                    user.setLastGpsLocation(lastGpsLocation);
+                    if(user == null){Log.i(TAG, "user null");}
+                    if(lastGpsLocation!=null) {
+                        Call<GpsLocation> caller = proxy.setLastGpsLocation(user.getId(), user.getLastGpsLocation());
+                        ProxyBuilder.callProxy(MainMenu.this, caller, returnedGpsLocation -> responseForGps(returnedGpsLocation));
+                    }
+                }else {
+                    Log.i(TAG,"location null");
+                }
             }
 
         }catch(SecurityException exception){
@@ -369,11 +360,16 @@ public class MainMenu extends AppCompatActivity {
     private void responseForGps(GpsLocation returnedGps) {
 
         user.setLastGpsLocation( returnedGps );
+        group = session.getGroup();
+        setWalkingWithMessage();
         zeroDistance = countZeroDistance(zeroDistance);
         if (zeroDistance == 20){
             turnOffGpsUpdate();
-        }
+        } else{
+            Switch onTracking = (Switch) findViewById( R.id.trackingSwitch );
 
+            onTracking.setChecked(session.isTracking());
+        }
     }
 
     /**
@@ -394,8 +390,6 @@ public class MainMenu extends AppCompatActivity {
             //to verify the results of user's selection.
             ActivityCompat.requestPermissions(this,permissions,LOCATION_PERMISSION_REQUEST_CODE);
         }
-
-
     }
 
      /*
@@ -441,27 +435,25 @@ public class MainMenu extends AppCompatActivity {
         handler.removeMessages(0);
     }
 
-
-
-
-
-
     private int countZeroDistance(int count){
+        if(group != null) {
+            if (group.getRouteLngArray().size() == 2 && group.getRouteLatArray().size() == 2) {
 
-        if (group.getRouteLngArray().size() ==2 && group.getRouteLatArray().size() ==2 ) {
+                schoolLocation.setLat(group.getRouteLatArray().get(1));
+                schoolLocation.setLng(group.getRouteLngArray().get(1));
 
-            schoolLocation.setLat( group.getRouteLatArray().get( 1 ) );
-            schoolLocation.setLng( group.getRouteLngArray().get( 1 ) );
-
-            if((Math.abs(schoolLocation.getLat()-lastGpsLocation.getLat() )< 0.1 )
-                    && (Math.abs(schoolLocation.getLng()-lastGpsLocation.getLng()) <0.1)){
-                 count += 1;
-            }else{
-                count = 0;
+                if ((Math.abs(schoolLocation.getLat() - lastGpsLocation.getLat()) < 0.1)
+                        && (Math.abs(schoolLocation.getLng() - lastGpsLocation.getLng()) < 0.1)) {
+                    count += 1;
+                } else {
+                    count = 0;
+                }
             }
+            Log.i(TAG, "returning count");
+            return count;
+        } else{
+            Log.i(TAG,"group is null");
+            return 0;
         }
-        return count;
     }
-
-
 }

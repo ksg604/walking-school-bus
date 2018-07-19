@@ -97,10 +97,29 @@ public class Session {
 
     public Long getid(){return user.getId();}
 
+    public boolean isTracking() {
+        return tracking;
+    }
+
+    public void setTracking(boolean tracking) {
+        this.tracking = tracking;
+    }
+
+    public Group getGroup() {
+        return group;
+    }
+
+    public void setGroup(Group group) {
+        this.group = group;
+    }
+
     public void deleteTokenAndVariables(){
         this.token = null;
         this.user = null;
-    }
+        this.group = null;
+        this.tracking=false;
+        }
+
     public void setSession(User user, String setToken){
         this.token = setToken;
         this.user = user;
@@ -124,7 +143,7 @@ public class Session {
             Log.i(TAG, "session stored with null values: ");
             e.printStackTrace();
         }
-        }
+    }
 
     /**
      * recovered saved object instance
@@ -139,21 +158,5 @@ public class Session {
     }
 
 
-    public boolean isTracking() {
-        return tracking;
-    }
-
-    public void setTracking(boolean tracking) {
-        this.tracking = tracking;
-    }
-
-
-    public Group getGroup() {
-        return group;
-    }
-
-    public void setGroup(Group group) {
-        this.group = group;
-    }
 }
 

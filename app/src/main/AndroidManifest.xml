@@ -59,12 +59,27 @@
         <activity android:name=".RemoveMonitoringUserFromGroup" />
         <activity android:name=".MyParentsActivity" />
         <activity android:name=".UpdateUserDetails" />
+        <activity android:name=".MyKidsActivity" />
+        <activity android:name=".OpenKidActivity" />
+        <activity android:name=".AddNewKidActivity" />
+        <activity android:name=".MyParentsActivity" />
+        <activity android:name=".UpdateUserDetails" />
         <activity android:name=".ViewUserSettingsActivity" />
         <activity android:name=".EditUserSettingsActivity" />
+        <activity android:name=".EditUserSettingsActivity" />
+        <activity android:name=".AddKidToGroupActivity" />
+        <activity android:name=".OnMarkerClickKidActivity" />
+        <activity android:name=".OpenKidGroupActivity" />
+        <activity android:name=".ViewUserMonitoredByActivity"/>
         <activity android:name=".MessageActivity" />
         <activity android:name=".SendMessageActivity" />
         <activity android:name=".emergencyMessageActivity" />
         <activity android:name=".MessageDetailActivity"></activity>
+        <activity android:name=".emergencyMessageActivity" />
+        <activity android:name=".MemberActivity">
+
+        </activity>
+
     </application>
 
 </manifest>

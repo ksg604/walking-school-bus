@@ -110,8 +110,6 @@ public class WelcomeScreen extends AppCompatActivity {
         pullUser(token, loginUser.getEmail());
         // Replace the current proxy with one that uses the token!
         Log.w(TAG, "   --> NOW HAVE TOKEN: " + token);
-
-        moveToMainMenu();
     }
 
     /**
@@ -125,6 +123,7 @@ public class WelcomeScreen extends AppCompatActivity {
         ProxyBuilder.callProxy(WelcomeScreen.this,caller,returnedUser ->
                 responseForUser(returnedUser, token));
         Log.i(TAG, "pull user");
+      //  moveToMainMenu();
     }
 
     /**
@@ -145,10 +144,10 @@ public class WelcomeScreen extends AppCompatActivity {
         session.storeSession(this);
         Log.i(TAG,"responseForUser ||"+ email);
 
-        if(autoLogInFlag){
+      //  if(autoLogInFlag){
             // if not first time logging in move directly to main menu
             moveToMainMenu();
-        }
+     //   }
     }
 
     /**
