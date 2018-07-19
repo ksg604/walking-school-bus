@@ -123,6 +123,7 @@ public class emergencyMessageActivity extends AppCompatActivity {
 
     private void responseEmergency(List<Message> returnedNothing) {
         notifyUserViaLogAndToast("message sent.");
+        finish();
     }
 
     private void notifyUserViaLogAndToast(String message) {

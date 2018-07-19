@@ -144,6 +144,7 @@ public class SendMessageActivity extends AppCompatActivity {
     private void responseFinish(List<Message> returnedNothing) {
         Log.i("This part is good","Good!");
         notifyUserViaLogAndToast("Message sent.");
+        finish();
     }
 
     private void responseMessage(List<Message> returnedMessageList) {
