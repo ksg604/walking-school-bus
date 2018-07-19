@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Path;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -77,7 +78,8 @@ public class OpenKidActivity extends AppCompatActivity {
 
         for(Group group: groupListKid){
             Call<Group> caller = proxy.getGroupById(group.getId());
-            ProxyBuilder.callProxy(OpenKidActivity.this, caller,returnedGroup->responseForGroup(returnedGroup, groupListKid, kidUser));
+            ProxyBuilder.callProxy(OpenKidActivity.this, caller,
+                    returnedGroup->responseForGroup(returnedGroup, groupListKid, kidUser));
         }
         setupUpdateKidBtn();
         setupAddToGroupBtn();
@@ -98,6 +100,21 @@ public class OpenKidActivity extends AppCompatActivity {
         SwipeMenuCreator creator = new SwipeMenuCreator() {
             @Override
             public void create(SwipeMenu menu) {
+
+                // create "map" item
+                SwipeMenuItem mapItem = new SwipeMenuItem(getApplicationContext());
+                // set item background
+                mapItem.setBackground(new ColorDrawable(Color.rgb(0xC9, 0xC9, 0xCE)));
+                // set item width
+                mapItem.setWidth(180);
+                // set item title
+                mapItem.setTitle(getString(R.string.map_open_kid));
+                // set item title fontsize
+                mapItem.setTitleSize(12);
+                // set item title font color
+                mapItem.setTitleColor(Color.WHITE);
+                // add to menu
+                menu.addMenuItem(mapItem);
 
                 // create "open" item
                 SwipeMenuItem openItem = new SwipeMenuItem(getApplicationContext());
@@ -140,12 +157,16 @@ public class OpenKidActivity extends AppCompatActivity {
             public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
                 switch(index){
                     case 0:
+                        Intent intentForMap = ParentsDashboardActivity.makeIntent(OpenKidActivity.this,groupListKids.get(position).getId());
+                        startActivity(intentForMap);
+                        break;
+                    case 1:
                         Intent intentForOpen = OpenKidGroupActivity.makeIntent(OpenKidActivity.this,
-                                group.getId());
+                                groupListKids.get(position).getId());
                         startActivity(intentForOpen);
                         break;
 
-                    case 1:
+                    case 2:
                         Call<Void> caller = proxy.removeGroupMember(group.getId(),kid.getId());
                         ProxyBuilder.callProxy(OpenKidActivity.this, caller, returnedNothing -> response(returnedNothing));
                         groupList.removeViewsInLayout(position, 1);

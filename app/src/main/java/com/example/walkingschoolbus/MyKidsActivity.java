@@ -1,3 +1,4 @@
+//Activity to list all children you monitor
 package com.example.walkingschoolbus;
 
 import android.app.Activity;
@@ -58,6 +59,7 @@ public class MyKidsActivity extends AppCompatActivity {
         Call<List<User>> caller = proxy.getMonitorsUsers(sessionID);
         ProxyBuilder.callProxy(MyKidsActivity.this, caller, returnedKids -> response(returnedKids));
         setupAddNewKidBtn();
+        //setupMapBtn();
 
     }
 
@@ -154,6 +156,18 @@ public class MyKidsActivity extends AppCompatActivity {
             }
         });
     }
+
+    /*
+    private void setupMapBtn(){
+        Button parentsDashboardBtn = findViewById(R.id.myKidsMapBtn);
+        parentsDashboardBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentToDashboard = ParentsDashboardActivity.makeIntent(MyKidsActivity.this);
+                startActivity(intentToDashboard);
+            }
+        });
+    }*/
 
     private void notifyUserViaLogAndToast(String message) {
         Log.w(TAG, message);

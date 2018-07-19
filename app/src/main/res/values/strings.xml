@@ -135,6 +135,7 @@
     <string name="open_kid_group_id">Group Id: </string>
     <string name="open_kid_title_part1">My kid </string>
     <string name="open_kid_title_part2">is a member of the groups: </string>
+    <string name="map_open_kid">Map</string>
 
     <!--AddNewKidActivity-->
     <string name="kids_email">Email: </string>
@@ -162,6 +163,7 @@
     <string name="user_hint_year">-yyyy-</string>
     <string name="user_hint_student">fill only if student</string>
     <string name="user_logout_message">Please Log In Using Your New Email</string>
+    <string name="user_view_monitors">VIEW PARENTS AND MONITORS</string>
 
     <string-array name="months_array">
         <item></item>

@@ -84,11 +84,6 @@ public class PlacePickerActivity extends AppCompatActivity {
         public void onClick(View v){
             Log.i(TAG, "create group");
             makeGroupFromUserData();
-            Intent intent = GroupManagementActivity.makeIntent( PlacePickerActivity.this );
-            int resultCode = Activity.RESULT_OK;
-            intent.putExtra("result",RESULT_OK);
-            setResult(Activity.RESULT_OK,intent);
-            finish();
         }
     });
     }
@@ -123,6 +118,12 @@ public class PlacePickerActivity extends AppCompatActivity {
 
    private void responseForUser(User returnedUser){
         Log.i(TAG, "updating user after creating new group");
+        user.makeCopyOf(returnedUser);
+        Intent intent = GroupManagementActivity.makeIntent( PlacePickerActivity.this );
+       int resultCode = Activity.RESULT_OK;
+       intent.putExtra("result",RESULT_OK);
+       setResult(Activity.RESULT_OK,intent);
+       finish();
 
     }
 
@@ -165,7 +166,6 @@ public class PlacePickerActivity extends AppCompatActivity {
     public static Intent makeIntent(Context context){
             Intent intent = new Intent( context, PlacePickerActivity.class );
             return intent;
-
     }
 
     private Intent makeIntentBack(Context context, int resultcode) {

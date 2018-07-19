@@ -112,8 +112,9 @@ public class OpenKidGroupActivity extends AppCompatActivity {
                     switch(index){
                         case 0:
                             Intent intentToViewMonitoredBy = ViewUserSettingsActivity.makeIntent(
-                                    OpenKidGroupActivity.this, userInGroup.getId());
-                            Log.i("Tag 89","user id: "+userInGroup.getId());
+                                    OpenKidGroupActivity.this,
+                                    theReturnedUsers.get(position).getId());
+                            Log.w("Tag 89","user id: "+userInGroup.getId());
                             startActivity(intentToViewMonitoredBy);
                             break;
                     }

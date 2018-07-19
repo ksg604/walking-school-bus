@@ -71,8 +71,9 @@ public class ViewUserSettingsActivity extends AppCompatActivity {
         ProxyBuilder.callProxy(ViewUserSettingsActivity.this,caller,
                 returnedUser ->responseForUser(returnedUser));
 
-    }
+        setupMonitorsButton();
 
+    }
 
     private void responseForUser(User user){
         thisName.setText(user.getName());
@@ -170,6 +171,20 @@ public class ViewUserSettingsActivity extends AppCompatActivity {
             btn.setVisibility(View.INVISIBLE);
         }
     }
+
+    private void setupMonitorsButton() {
+    Button btn = findViewById(R.id.btnUserMonitors);
+    btn.setOnClickListener(new View.OnClickListener(){
+        @Override
+        public void onClick(View v) {
+            Intent intent = ViewUserMonitoredByActivity.makeIntent(
+                    ViewUserSettingsActivity.this,thisUserID);
+            startActivity(intent);
+        }
+    });
+
+    }
+
 
     public static Intent makeIntent(Context context, long userID){
         Log.i(TAG,"makeIntent");
