@@ -7,6 +7,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.baoyz.swipemenulistview.SwipeMenu;
@@ -19,6 +20,7 @@ import com.example.walkingschoolbus.model.User;
 import com.example.walkingschoolbus.proxy.ProxyBuilder;
 import com.example.walkingschoolbus.proxy.WGServerProxy;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -29,6 +31,7 @@ public class OpenKidGroupActivity extends AppCompatActivity {
     private Session session;
     private static WGServerProxy proxy;
     private static final String TAG = "OpenKidGroupActivity";
+    private List<String> groupUserListInfo = new ArrayList<>();
 
 
     @Override
@@ -38,9 +41,9 @@ public class OpenKidGroupActivity extends AppCompatActivity {
 
         session = Session.getInstance();
         proxy = ProxyBuilder.getProxy(getString(R.string.api_key), session.getToken());
-        //getFromOpenKid();
+        getFromOpenKid();
     }
-    /*
+
 
     private void getFromOpenKid(){
         Intent getFromOpenKidsIntent = getIntent();
@@ -76,8 +79,15 @@ public class OpenKidGroupActivity extends AppCompatActivity {
 
         for(User userInGroup : theReturnedUsers){
             Log.w(TAG, "    User: " + userInGroup.toString());
+
             String userInfo = getString(R.string.mykids_user_name) + " " + userInGroup.getName() + "\n" +
                     getString(R.string.mykids_user_email) + " " + userInGroup.getEmail();
+            Log.i("Tag88","Initial user id: "+ userInGroup.getId());
+
+            groupUserListInfo.add(userInfo);
+            ArrayAdapter adapter = new ArrayAdapter(OpenKidGroupActivity.this, R.layout.da_items, groupUserListInfo);
+            groupUserList.setAdapter(adapter);
+
 
             SwipeMenuCreator creator = new SwipeMenuCreator() {
                 @Override
@@ -99,12 +109,17 @@ public class OpenKidGroupActivity extends AppCompatActivity {
 
                 }
             };
+
+            groupUserList.setMenuCreator(creator);
             groupUserList.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
                 @Override
                 public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
                     switch(index){
                         case 0:
-
+                            Intent intentToViewMonitoredBy = ViewUserMonitoredByActivity.makeIntent(OpenKidGroupActivity.this,
+                                    userInGroup.getId());
+                            Log.i("Tag 89","user id: "+userInGroup.getId());
+                            startActivity(intentToViewMonitoredBy);
                             break;
                     }
 
@@ -114,11 +129,11 @@ public class OpenKidGroupActivity extends AppCompatActivity {
             });
         }
 
-    }*/
+    }
 
 
     public static Intent makeIntent(Context context, Long groupIdToPass) {
-        Intent intent = new Intent(context, OpenKidActivity.class);
+        Intent intent = new Intent(context, OpenKidGroupActivity.class);
         intent.putExtra("I",groupIdToPass);
         return intent;
     }

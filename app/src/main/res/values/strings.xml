@@ -155,4 +155,8 @@
     <!--OpenKidGroupActivity-->
     <string name="monitored_by_open_kid_group">Monitored By</string>
     <string name="kid_group_members">Members: </string>
+
+    <!--ViewUserMonitoredByActivity-->
+    <string name="monitored_by_view">Monitored By: </string>
+    <string name="view_parent_info">View</string>
 </resources>
