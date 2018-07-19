@@ -75,7 +75,7 @@ public class MyParentsActivity extends AppCompatActivity {
 
             myParentsStringList.add(userInfo);
         }
-        ArrayAdapter adapter = new ArrayAdapter(MyParentsActivity.this, R.layout.da_items, myParentsStringList);
+        ArrayAdapter adapter = new ArrayAdapter(MyParentsActivity.this, R.layout.swipe_listview, myParentsStringList);
         monitoredList.setAdapter(adapter);
 
         SwipeMenuCreator creator = new SwipeMenuCreator() {

@@ -133,6 +133,7 @@
     <string name="add_to_group">Add To Group</string>
     <string name="open_kid_group_name">Group Name: </string>
     <string name="open_kid_group_id">Group Id: </string>
+    <string name="open_kid_group_description">Group Description: </string>
     <string name="open_kid_title_part1">My kid </string>
     <string name="open_kid_title_part2">is a member of the groups: </string>
     <string name="map_open_kid">Map</string>

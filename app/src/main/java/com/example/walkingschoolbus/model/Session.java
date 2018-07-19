@@ -37,11 +37,13 @@ public class Session {
     private String token;
     private User user;
     private Group group;
+    private String numberOfMessages;
     private boolean tracking;
     private static final String TAG ="Session";
     private static Session instance;
     private static final String SHAREDPREF_SESSION = "user session token";
     private static int numOfUnreadMessage;
+
 
 
     private boolean mLocationPermissionsGranted;
@@ -158,5 +160,12 @@ public class Session {
     }
 
 
+    public String getNumberOfMessages() {
+        return numberOfMessages;
+    }
+
+    public void setNumberOfMessages(String numberOfMessages) {
+        this.numberOfMessages = numberOfMessages;
+    }
 }
 

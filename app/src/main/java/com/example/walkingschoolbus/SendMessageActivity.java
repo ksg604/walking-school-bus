@@ -165,7 +165,7 @@ public class SendMessageActivity extends AppCompatActivity {
             }
 
             ArrayAdapter adapterMember = new ArrayAdapter( SendMessageActivity.this,
-                    R.layout.da_items, messagesList );
+                    R.layout.swipe_listview, messagesList );
             returnedMessageListView.setAdapter( adapterMember );
 
           //  returnedMessageListView.

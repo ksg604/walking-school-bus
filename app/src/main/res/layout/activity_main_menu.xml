@@ -166,7 +166,7 @@
                     android:weightSum="3">
 
                     <ImageView
-                        android:layout_width="25dp"
+                        android:layout_width="20dp"
                         android:layout_height="0dp"
                         android:layout_gravity="center"
                         android:layout_marginTop="8dp"
@@ -198,7 +198,7 @@
                     android:weightSum="3">
 
                     <ImageView
-                        android:layout_width="25dp"
+                        android:layout_width="20dp"
                         android:layout_height="0dp"
                         android:layout_gravity="center"
                         android:layout_marginTop="8dp"
@@ -206,6 +206,7 @@
                         android:src="@mipmap/ic_textsms_white_48dp" />
 
                     <TextView
+                        android:id="@+id/messagesMainMenu"
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
                         android:layout_gravity="center"
@@ -214,19 +215,13 @@
                         android:text="@string/menu_message"
                         android:textColor="#fff"
                         android:textSize="12sp" />
+
                 </LinearLayout>
             </LinearLayout>
 
 
         </TableRow>
 
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-
-        </TableRow>
 
     </TableLayout>
 
@@ -277,18 +272,5 @@
         android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/trackingSwitch"
         app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/MessageNumber"
-        android:layout_width="31dp"
-        android:layout_height="50dp"
-        android:layout_marginBottom="128dp"
-        android:layout_marginEnd="32dp"
-        android:fontFamily="serif-monospace"
-        android:textColor="?attr/colorBackgroundFloating"
-        android:textSize="24sp"
-        android:typeface="normal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

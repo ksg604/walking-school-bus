@@ -104,7 +104,7 @@ public class RemoveMonitoringUserFromGroup extends AppCompatActivity {
         }
 
         ArrayAdapter adapterLeader = new ArrayAdapter( RemoveMonitoringUserFromGroup.this,
-                R.layout.da_items, stringMemberGroupList );
+                R.layout.swipe_listview, stringMemberGroupList );
 
         userGroups.setAdapter( adapterLeader );
 
