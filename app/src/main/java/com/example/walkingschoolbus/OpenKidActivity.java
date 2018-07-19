@@ -108,7 +108,7 @@ public class OpenKidActivity extends AppCompatActivity {
                 // create "map" item
                 SwipeMenuItem mapItem = new SwipeMenuItem(getApplicationContext());
                 // set item background
-                mapItem.setBackground(new ColorDrawable(Color.rgb(0xC9, 0xC9, 0xCE)));
+                mapItem.setBackground(new ColorDrawable(Color.rgb(220, 0, 220)));
                 // set item width
                 mapItem.setWidth(180);
                 // set item title
