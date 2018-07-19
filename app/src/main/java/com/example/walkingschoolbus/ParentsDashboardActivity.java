@@ -302,8 +302,6 @@ public class ParentsDashboardActivity extends FragmentActivity implements OnMapR
             //to verify the results of user's selection.
             ActivityCompat.requestPermissions(this,permissions,LOCATION_PERMISSION_REQUEST_CODE);
         }
-
-
     }
 
     /**
