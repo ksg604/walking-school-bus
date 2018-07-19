@@ -30,7 +30,7 @@ public class DialogFragment extends AppCompatDialogFragment {
         setCancelable(false);
         return new AlertDialog.Builder(getContext(),android.R.style.Theme_Material_Dialog_Alert)
                 .setView(v)
-                .setMessage(getString(R.string.prompt))
+                .setMessage(getString(R.string.prompt_join))
                 .setPositiveButton(R.string.no,listener)
                 .setNegativeButton(R.string.yes,listener)
                 .create();

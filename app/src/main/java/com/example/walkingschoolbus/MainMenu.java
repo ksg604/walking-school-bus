@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -20,6 +22,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
@@ -73,15 +76,13 @@ public class MainMenu extends AppCompatActivity {
 
         setupButtonSettings();
         setupLayoutGroups();
-        setupLayoutMaps();
         setupLayoutMessages();
         setupLayoutMyParents();
         setupLogOutButton();
         setupOnTrackingBtn();
 
         setupEmergencyButton();
-        setupWalkingMessageButton();
-
+        setupBroadcastsButton();
         setTextViewMessage();
         setWalkingWithMessage();
 
@@ -127,9 +128,9 @@ public class MainMenu extends AppCompatActivity {
         } );
     }
 
-    private void setupWalkingMessageButton() {
-        Button btn = findViewById(R.id.btnWalkingMessage);
-        btn.setOnClickListener(new View.OnClickListener() {
+    private void setupBroadcastsButton() {
+        LinearLayout broadcasts = (LinearLayout) findViewById(R.id.linearLayoutBroadcasts);
+        broadcasts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = emergencyMessageActivity.makeIntent(MainMenu.this, false);
@@ -141,6 +142,9 @@ public class MainMenu extends AppCompatActivity {
 
     private void setupEmergencyButton() {
         Button btn = findViewById(R.id.btnEmergency);
+        btn.setText( R.string.emergency);
+
+
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -258,20 +262,6 @@ public class MainMenu extends AppCompatActivity {
     }
 
 
-    /**
-     * setup linear layout to redirect to map activity
-     */
-    private void setupLayoutMaps() {
-        LinearLayout maps = (LinearLayout) findViewById( R.id.linearLayoutMaps );
-        maps.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = MapsActivity.makeIntent( MainMenu.this );
-                startActivity( intent );
-                Log.i( "Sprint1", "Map activity Launched" );
-            }
-        } );
-    }
 
     public static Intent makeIntent(Context context) {
         return new Intent( context, MainMenu.class );
