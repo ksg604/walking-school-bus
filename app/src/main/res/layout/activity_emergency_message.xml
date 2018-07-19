@@ -9,28 +9,30 @@
 
     <EditText
         android:id="@+id/emergencyText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="42dp"
+        android:layout_width="350dp"
+        android:layout_height="343dp"
+
+        android:layout_marginBottom="52dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
+        android:background="@drawable/edit_text_border"
         android:ems="10"
+        android:gravity="top"
         android:hint="Type in message here"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnSendEmergencyMessage"
+        android:padding="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnSendEmergencyMessage"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.91" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/btnSendEmergencyMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
         android:text="send"
-        app:layout_constraintBaseline_toBaselineOf="@+id/emergencyText"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/emergencyText" />
+        app:layout_constraintStart_toStartOf="parent" />
 </android.support.constraint.ConstraintLayout>
