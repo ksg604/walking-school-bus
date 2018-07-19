@@ -6,6 +6,8 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -24,7 +26,10 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.walkingschoolbus.model.GpsLocation;
@@ -35,6 +40,7 @@ import com.example.walkingschoolbus.proxy.ProxyBuilder;
 import com.example.walkingschoolbus.proxy.WGServerProxy;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -106,25 +112,89 @@ public class ParentsDashboardActivity extends FragmentActivity implements OnMapR
         Call<List<User>> kidListCaller = proxy.getMonitorsUsers(currentUser.getId());
         ProxyBuilder.callProxy(ParentsDashboardActivity.this, kidListCaller, returnedKids -> response(returnedKids));
     }
-    private void response(List<User> currentUserKids){
+    private void response(List<User> currentUserKids) {
 
-        for(User myKid: currentUserKids){
+        Intent getGroupFromOpenKid = getIntent();
+        Long groupId = getGroupFromOpenKid.getExtras().getLong("G");
 
-            String snippet = "Last seen at: "+myKid.getLastGpsLocation().getTimestamp();
-
-            GpsLocation kidLocation = myKid.getLastGpsLocation();
-            if(kidLocation != null && kidLocation.getLat()!= null && kidLocation.getLng() != null && kidLocation.getTimestamp() != null){
-                LatLng kidLatLng = new LatLng( kidLocation.getLat(), kidLocation.getLng() );
-                kidLocationMarker = mMap.addMarker(new MarkerOptions()
-                        .position( kidLatLng )
-                        .title("My Kid: "+ myKid.getName()));
-
-                kidLocationMarker.setSnippet(snippet);
-
-                markerLongHashMapMap.put(kidLocationMarker, myKid.getId());
-            }
-        }
+        Call<Group> groupCaller = proxy.getGroupById(groupId);
+        ProxyBuilder.callProxy(ParentsDashboardActivity.this, groupCaller, returnedGroup -> responseForGroup(returnedGroup,currentUserKids));
     }
+
+        private void responseForGroup (Group returnedGroup, List<User> passedKidList){
+            User incompleteGroupLeader = returnedGroup.getLeader();
+
+            Call<User> leaderCaller = proxy.getUserById(incompleteGroupLeader.getId());
+            ProxyBuilder.callProxy(ParentsDashboardActivity.this, leaderCaller, completeLeader -> responseForLeader(completeLeader, passedKidList));
+
+        }
+
+        private void responseForLeader (User theLeader, List<User> passedKidList){
+            Log.i("Tag 151", "Leader name is: "+theLeader.getName());
+            String snippet;
+            passedKidList.add(theLeader);
+            for(User usersToPlot : passedKidList){
+
+                if(usersToPlot == passedKidList.get(passedKidList.size()-1)){
+                    snippet = "This user is the leader of this group." +"\n"
+                            + "Leader Name: "+usersToPlot.getName() + "\n"
+                            + "Last seen here: " + usersToPlot.getLastGpsLocation().getTimestamp() + "\n";
+
+
+                }else {
+                        snippet = "Kid Name: " + usersToPlot.getName() + "\n" +
+                                "Last seen here: " + usersToPlot.getLastGpsLocation().getTimestamp() + "\n";
+                    }
+
+                    GpsLocation kidLocation = usersToPlot.getLastGpsLocation();
+                    if (kidLocation != null && kidLocation.getLat() != null && kidLocation.getLng() != null && kidLocation.getTimestamp() != null) {
+                        LatLng kidLatLng = new LatLng(kidLocation.getLat(), kidLocation.getLng());
+                        kidLocationMarker = mMap.addMarker(new MarkerOptions()
+                                .position(kidLatLng)
+                                .title("Name: " + usersToPlot.getName()));
+
+                        kidLocationMarker.setSnippet(snippet);
+
+                        markerLongHashMapMap.put(kidLocationMarker, usersToPlot.getId());
+                    }
+
+
+
+
+                    //Source: https://stackoverflow.com/questions/13904651/android-google-maps-v2-how-to-add-marker-with-multiline-snippet
+                    mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
+                        @Override
+                        public View getInfoWindow(Marker marker) {
+                            return null;
+                        }
+
+                        @Override
+                        public View getInfoContents(Marker marker) {
+
+                            LinearLayout info = new LinearLayout(ParentsDashboardActivity.this);
+                            info.setOrientation(LinearLayout.VERTICAL);
+
+                            TextView title = new TextView(ParentsDashboardActivity.this);
+                            title.setTextColor(Color.BLACK);
+                            title.setGravity(Gravity.CENTER);
+                            title.setTypeface(null, Typeface.BOLD);
+                            title.setText(marker.getTitle());
+
+                            TextView snippet = new TextView(ParentsDashboardActivity.this);
+                            snippet.setTextColor(Color.GRAY);
+                            snippet.setText(marker.getSnippet());
+
+                            info.addView(title);
+                            info.addView(snippet);
+
+                            return info;
+
+                        }
+                    });
+
+                }
+            }
+
 
     private void initMap(){
 
@@ -261,8 +331,9 @@ public class ParentsDashboardActivity extends FragmentActivity implements OnMapR
 
 
 
-    public static Intent makeIntent(Context context){
+    public static Intent makeIntent(Context context, Long groupIdToPass){
         Intent intent = new Intent(context, ParentsDashboardActivity.class);
+        intent.putExtra("G",groupIdToPass);
         return intent;
     }
 }
