@@ -1,3 +1,7 @@
+/**
+ * Activity allows one to remove a child from a group.
+ */
+
 package com.example.walkingschoolbus;
 
 import android.content.Context;

@@ -20,16 +20,6 @@
     </com.baoyz.swipemenulistview.SwipeMenuListView>
 
     <Button
-        android:id="@+id/myKidsMapBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginStart="16dp"
-        android:text="@string/map"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
         android:id="@+id/addNewBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

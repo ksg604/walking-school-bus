@@ -1,3 +1,6 @@
+/**
+ * Main menu screen to give users highest level option after log in
+ */
 package com.example.walkingschoolbus;
 
 import android.Manifest;
@@ -47,9 +50,6 @@ import retrofit2.Call;
 
 import static com.example.walkingschoolbus.model.Session.getNumOfUnreadMessage;
 
-/**
- * Main menu screen to give users highest level option after log in
- */
 public class MainMenu extends AppCompatActivity {
 
     public static final String USER_TOKEN = "User token";
@@ -173,7 +173,6 @@ public class MainMenu extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = emergencyMessageActivity.makeIntent(MainMenu.this, false);
                 startActivity(intent);
-
             }
         });
     }

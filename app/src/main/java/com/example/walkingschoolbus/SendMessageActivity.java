@@ -1,3 +1,7 @@
+/**
+ * Activity allows user to send a non-emergency message
+ */
+
 package com.example.walkingschoolbus;
 
 import android.content.Context;
@@ -59,8 +63,6 @@ public class SendMessageActivity extends AppCompatActivity {
 
         setupSendButton();
         setupGetButtonForTest();
-
-
     }
 
     private void setupGetButtonForTest() {
@@ -113,7 +115,6 @@ public class SendMessageActivity extends AppCompatActivity {
             }
         });
 
-
     /*
         Call<Message> caller2 = proxy.getAllMessages();
         ProxyBuilder.callProxy(SendMessageActivity.this, caller2,
@@ -145,7 +146,6 @@ public class SendMessageActivity extends AppCompatActivity {
         notifyUserViaLogAndToast("Message sent.");
     }
 
-
     private void responseMessage(List<Message> returnedMessageList) {
         SwipeMenuListView returnedMessageListView = (SwipeMenuListView) findViewById( R.id.messagesGot);
         for (Message message : returnedMessageList) {
@@ -164,23 +164,17 @@ public class SendMessageActivity extends AppCompatActivity {
 
             }
 
-
             ArrayAdapter adapterMember = new ArrayAdapter( SendMessageActivity.this,
                     R.layout.da_items, messagesList );
             returnedMessageListView.setAdapter( adapterMember );
 
           //  returnedMessageListView.
-
-
         }
-
     }
 
     private void responseMessageSender(User returnedUser) {
          senderEmail.add(returnedUser.getEmail());
     }
-
-
 
     private void notifyUserViaLogAndToast(String message) {
        // Log.w(TAG, message);
@@ -189,8 +183,8 @@ public class SendMessageActivity extends AppCompatActivity {
 
     private void extractDataFromIntent() {
         Intent neededIntent = getIntent();
-         long tempid = neededIntent.getLongExtra("ID", 0);
-         tempGroupID = Long.valueOf(tempid);
+        long tempid = neededIntent.getLongExtra("ID", 0);
+        tempGroupID = Long.valueOf(tempid);
     }
 
     public static Intent makeIntent(Context context, Long userIdToPass){
