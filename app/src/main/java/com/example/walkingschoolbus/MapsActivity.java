@@ -79,7 +79,8 @@ import static android.Manifest.permission.ACCESS_FINE_LOCATION;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 0;
     private static final float DEFAULT_ZOOM = 14f;
     WGServerProxy proxy;
-    private Session token = Session.getInstance();
+    private Session session = Session.getInstance();
+    private User user = session.getUser();
 
     private Marker groupFinalLocationMarker;
     private Map<Marker, Long> markerLongHashMapMap = new HashMap<Marker, Long>();
@@ -90,7 +91,7 @@ import static android.Manifest.permission.ACCESS_FINE_LOCATION;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
-        String tokenValue= token.getToken();
+        String tokenValue= session.getToken();
 
         proxy = ProxyBuilder.getProxy(getString(R.string.api_key),tokenValue);
         getUserLocationPermission();
@@ -119,12 +120,15 @@ import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
         for (Group group : returnedGroupList) {
             if(group.getRouteLatArray().size() == 2 && group.getRouteLngArray().size() == 2){
+
                 LatLng groupFinalLocation = new LatLng( group.getRouteLatArray().get( 0 ), group.getRouteLngArray().get( 0 ) );
-                groupFinalLocationMarker = mMap.addMarker(new MarkerOptions()
+                groupFinalLocationMarker = mMap.addMarker( new MarkerOptions()
                         .position( groupFinalLocation )
-                        .title( "Group: " + group.getGroupDescription() ));
-                Log.i("Debug tag 0.8","group initial id is: "+group.getId());
-                markerLongHashMapMap.put(groupFinalLocationMarker,group.getId());
+                        .title( "Group: " + group.getGroupDescription() ) );
+                Log.i( "Debug tag 0.8", "group initial id is: " + group.getId() );
+                markerLongHashMapMap.put( groupFinalLocationMarker, group.getId() );
+
+
 
             }
         }
