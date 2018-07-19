@@ -156,12 +156,12 @@ public class OpenKidActivity extends AppCompatActivity {
             public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
                 switch(index){
                     case 0:
-                        Intent intentForMap = ParentsDashboardActivity.makeIntent(OpenKidActivity.this,group.getId());
+                        Intent intentForMap = ParentsDashboardActivity.makeIntent(OpenKidActivity.this,groupListKids.get(position).getId());
                         startActivity(intentForMap);
                         break;
                     case 1:
                         Intent intentForOpen = OpenKidGroupActivity.makeIntent(OpenKidActivity.this,
-                                group.getId());
+                                groupListKids.get(position).getId());
                         startActivity(intentForOpen);
                         break;
 
