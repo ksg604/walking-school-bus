@@ -70,7 +70,7 @@
     <string name="monitored_by">List All Users Who Monitor Me</string>
     <string name="monitor_email_help">Add Email or User to Monitor/Be Monitored By</string>
     <string name="add_monitoring">Start Monitoring The Email Above</string>
-
+    <string name="add_monitored_by">Starting Being Monitored By The Email Above</string>
     <string name="monitored_title">MY PARENTS:</string>
     <string name="monitoring_title">I MONITOR:</string>
     <string name="monitor_help_txt">Swipe left on user name for options.</string>
@@ -85,6 +85,10 @@
 
     <string name="prompt_join">Would you like to join this group? </string>
     <string name="prompt_leader">You are the leader of this group!</string>
+
+
+    <!--Leader Activity-->
+    <string name="member_is">Member : </string>
 
 
     <!---On Listview -->
@@ -113,6 +117,31 @@
     <string name="notify_not_monitor">You cannot monitor this user anymore.</string>
     <string name="monitoring_user_email">User Email: </string>
     <string name="monitoring_user_name">User Name: </string>
+
+
+    <!--MyKidsActivity-->
+    <string name="map">Map</string>
+    <string name="add_new">Add New Kid</string>
+    <string name="my_kids_txt">My Kids:</string>
+    <string name="mykids_user_email">User Email: </string>
+    <string name="mykids_user_name">User Name: </string>
+    <string name="mykids_remove_swipe">Remove</string>
+    <string name="mykids_open_swipe">Open</string>
+    <string name="mykids_notify_not_kid">You are not monitoring this kid anymore.</string>
+
+    <!--OpenKidActivity-->
+    <string name="update_kid">Update</string>
+    <string name="add_to_group">Add To Group</string>
+    <string name="open_kid_group_name">Group Name: </string>
+    <string name="open_kid_group_id">Group Id: </string>
+    <string name="open_kid_title_part1">My kid </string>
+    <string name="open_kid_title_part2">is a member of the groups: </string>
+
+    <!--AddNewKidActivity-->
+    <string name="kids_email">Email: </string>
+    <string name="new_kid_title">Enter New Kid Information</string>
+    <string name="confirm_btn_text">Confirm</string>
+
     <string name="add_new_kids">Add a new kid</string>
 
     <!--edit/view User Settings -->
@@ -150,4 +179,15 @@
         <item>Nov</item>
         <item>Dec</item>
     </string-array>
+
+    <!--OnMarkerClickKidActivity-->
+    <string name="group_id_kid">Group ID: </string>
+
+    <!--OpenKidGroupActivity-->
+    <string name="details">DETAILS</string>
+    <string name="kid_group_members">Members: </string>
+
+    <!--ViewUserMonitoredByActivity-->
+    <string name="monitored_by_view">Monitored By: </string>
+    <string name="view_parent_info">View</string>
 </resources>

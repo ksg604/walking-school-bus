@@ -3,6 +3,7 @@ package com.example.walkingschoolbus;
 
 import android.Manifest;
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -71,7 +72,7 @@ import static android.Manifest.permission.ACCESS_FINE_LOCATION;
  * - More notes at the end of this file.
  */
 
- public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class AddKidToGroupActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private FusedLocationProviderClient mFusedLocationProviderClient;
@@ -79,11 +80,13 @@ import static android.Manifest.permission.ACCESS_FINE_LOCATION;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 0;
     private static final float DEFAULT_ZOOM = 14f;
     WGServerProxy proxy;
-    private Session session = Session.getInstance();
-    private User user = session.getUser();
+    private Session token = Session.getInstance();
+    private User kidUser;
 
     private Marker groupFinalLocationMarker;
     private Map<Marker, Long> markerLongHashMapMap = new HashMap<Marker, Long>();
+    private static final int REQUEST_CODE = 3333;
+    private static final String TAG = "AddKidToGroupActivity";
 
 
     @Override
@@ -91,11 +94,28 @@ import static android.Manifest.permission.ACCESS_FINE_LOCATION;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
-        String tokenValue= session.getToken();
+        String tokenValue= token.getToken();
 
         proxy = ProxyBuilder.getProxy(getString(R.string.api_key),tokenValue);
         getUserLocationPermission();
 
+    }
+
+    /**
+     * Retrieve kid information from previous activity.
+     */
+    private void getKidDetails(){
+        Intent intent = getIntent();
+        String kidEmail = intent.getExtras().getString("kidEmail");
+
+        Call<User> kidCaller = proxy.getUserByEmail(kidEmail);
+        ProxyBuilder.callProxy(AddKidToGroupActivity.this, kidCaller, returnedKid -> responseKid(returnedKid));
+    }
+    private void responseKid(User theReturnedKid){
+        kidUser = theReturnedKid;
+        if(kidUser != null && kidUser.getEmail() != null){
+            Log.i("Debug42","Successfully retrieved kidUser");
+        }
     }
 
     /**
@@ -109,7 +129,7 @@ import static android.Manifest.permission.ACCESS_FINE_LOCATION;
      */
     private void displayAllGroups(){
         Call<List<Group>> groupListCaller = proxy.getGroups();
-        ProxyBuilder.callProxy(MapsActivity.this, groupListCaller, returnedGroups -> response(returnedGroups));
+        ProxyBuilder.callProxy(AddKidToGroupActivity.this, groupListCaller, returnedGroups -> response(returnedGroups));
     }
     /*
      * Server response is to return server groups and then display all of their current locations and
@@ -120,15 +140,12 @@ import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
         for (Group group : returnedGroupList) {
             if(group.getRouteLatArray().size() == 2 && group.getRouteLngArray().size() == 2){
-
                 LatLng groupFinalLocation = new LatLng( group.getRouteLatArray().get( 0 ), group.getRouteLngArray().get( 0 ) );
-                groupFinalLocationMarker = mMap.addMarker( new MarkerOptions()
+                groupFinalLocationMarker = mMap.addMarker(new MarkerOptions()
                         .position( groupFinalLocation )
-                        .title( "Group: " + group.getGroupDescription() ) );
-                Log.i( "Debug tag 0.8", "group initial id is: " + group.getId() );
-                markerLongHashMapMap.put( groupFinalLocationMarker, group.getId() );
-
-
+                        .title( "Group: " + group.getGroupDescription() ));
+                Log.i("Debug tag 0.8","group initial id is: "+group.getId());
+                markerLongHashMapMap.put(groupFinalLocationMarker,group.getId());
 
             }
         }
@@ -155,6 +172,9 @@ import static android.Manifest.permission.ACCESS_FINE_LOCATION;
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        Toast.makeText(AddKidToGroupActivity.this,"Choose a group to join by tapping a marker.",Toast.LENGTH_LONG)
+                .show();
+        getKidDetails();
         displayAllGroups();
 
         //If user enables the app to access their location, get user location.
@@ -172,9 +192,12 @@ import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
                 Long groupId = markerLongHashMapMap.get(marker);
 
-                Intent intent = OnMarkerClickActivity.makeIntent(getApplicationContext());
+                Intent intent = OnMarkerClickKidActivity.makeIntent(getApplicationContext());
                 intent.putExtra("id",groupId);
-                startActivity(intent);
+                Log.i("Debug30","kidUser email is "+kidUser.getEmail());
+                intent.putExtra("theKidEmail", kidUser.getEmail());
+
+                startActivityForResult(intent, REQUEST_CODE);
                 //setContentView(R.layout.activity_on_marker_click);
                 return false;
             }
@@ -238,9 +261,9 @@ import static android.Manifest.permission.ACCESS_FINE_LOCATION;
             mLocationPermissionsGranted = true;
             initMap();
         }else{
-        //Else, request the user to enable location services for the map.
-        //LOCATION_PERMISSION_REQUEST_CODE will be passed to onRequestPermissionsResult method
-        //to verify the results of user's selection.
+            //Else, request the user to enable location services for the map.
+            //LOCATION_PERMISSION_REQUEST_CODE will be passed to onRequestPermissionsResult method
+            //to verify the results of user's selection.
             ActivityCompat.requestPermissions(this,permissions,LOCATION_PERMISSION_REQUEST_CODE);
         }
 
@@ -255,27 +278,42 @@ import static android.Manifest.permission.ACCESS_FINE_LOCATION;
      */ //Source: https://www.youtube.com/watch?v=Vt6H9TOmsuo&index=4&list=PLgCYzUzKIBE-vInwQhGSdnbyJ62nixHCt
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-       mLocationPermissionsGranted = false;
-       switch(requestCode){
-           case LOCATION_PERMISSION_REQUEST_CODE:
-               if(grantResults.length > 0){
-                   for(int i = 0; i < grantResults.length; i++){
-                       if(grantResults[i] != PackageManager.PERMISSION_GRANTED){
-                           mLocationPermissionsGranted = false;
-                           return;
-                       }
-                   }
-                   mLocationPermissionsGranted = true;
-               }
-       }
+        mLocationPermissionsGranted = false;
+        switch(requestCode){
+            case LOCATION_PERMISSION_REQUEST_CODE:
+                if(grantResults.length > 0){
+                    for(int i = 0; i < grantResults.length; i++){
+                        if(grantResults[i] != PackageManager.PERMISSION_GRANTED){
+                            mLocationPermissionsGranted = false;
+                            return;
+                        }
+                    }
+                    mLocationPermissionsGranted = true;
+                }
+        }
     }
 
 
 
     public static Intent makeIntent(Context context){
-        Intent intent = new Intent(context, MapsActivity.class);
+        Intent intent = new Intent(context, AddKidToGroupActivity.class);
         return intent;
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        Log.i(TAG,"request code: "+requestCode + "resultcode: "+resultCode);
+        switch(requestCode){
+            case REQUEST_CODE:
+                if (resultCode == Activity.RESULT_OK) {
+                    finish();
+                    Log.i("tag50","entered");
+                    startActivity(getIntent());
+                }
+                break;
+        }
+    }
+
 }
 
 

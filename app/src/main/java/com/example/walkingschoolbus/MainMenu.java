@@ -78,6 +78,7 @@ public class MainMenu extends AppCompatActivity {
         setupLayoutGroups();
         setupLayoutMessages();
         setupLayoutMyParents();
+        setupLayoutMyKids();
         setupLogOutButton();
         setupOnTrackingBtn();
 
@@ -228,9 +229,9 @@ public class MainMenu extends AppCompatActivity {
         setting.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = MonitoringListActivity.makeIntent( MainMenu.this );
-                Log.w( "Maintest", "   --> NOW HAVE TOKEN(output3): " + token );
-                startActivity( intent );
+                Intent intent = MyKidsActivity.makeIntent(MainMenu.this);
+                Log.w("Maintest", "   --> NOW HAVE TOKEN(output3): " + token);
+                startActivity(intent);
             }
         } );
     }
