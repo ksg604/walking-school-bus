@@ -58,6 +58,7 @@ public class MyKidsActivity extends AppCompatActivity {
         Call<List<User>> caller = proxy.getMonitorsUsers(sessionID);
         ProxyBuilder.callProxy(MyKidsActivity.this, caller, returnedKids -> response(returnedKids));
         setupAddNewKidBtn();
+        setupMapBtn();
 
     }
 
@@ -151,6 +152,17 @@ public class MyKidsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intentForAddNewKids = AddNewKidActivity.makeIntent(MyKidsActivity.this);
                 startActivityForResult(intentForAddNewKids, REQUEST_CODE);
+            }
+        });
+    }
+
+    private void setupMapBtn(){
+        Button parentsDashboardBtn = findViewById(R.id.myKidsMapBtn);
+        parentsDashboardBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentToDashboard = ParentsDashboardActivity.makeIntent(MyKidsActivity.this);
+                startActivity(intentToDashboard);
             }
         });
     }

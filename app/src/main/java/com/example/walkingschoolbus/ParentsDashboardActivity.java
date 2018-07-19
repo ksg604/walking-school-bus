@@ -107,14 +107,27 @@ public class ParentsDashboardActivity extends FragmentActivity implements OnMapR
         ProxyBuilder.callProxy(ParentsDashboardActivity.this, kidListCaller, returnedKids -> response(returnedKids));
     }
     private void response(List<User> currentUserKids){
+
         for(User myKid: currentUserKids){
-            kidLocationMarker = mMap.addMarker(new MarkerOptions()
-                    .position( myKid.getLastGpsLocation() )
-                    .title( "Group: " + group.getGroupDescription() ));
+
+            String snippet = "Last seen at: "+myKid.getLastGpsLocation().getTimestamp();
+
+            GpsLocation kidLocation = myKid.getLastGpsLocation();
+            if(kidLocation != null && kidLocation.getLat()!= null && kidLocation.getLng() != null && kidLocation.getTimestamp() != null){
+                LatLng kidLatLng = new LatLng( kidLocation.getLat(), kidLocation.getLng() );
+                kidLocationMarker = mMap.addMarker(new MarkerOptions()
+                        .position( kidLatLng )
+                        .title("My Kid: "+ myKid.getName()));
+
+                kidLocationMarker.setSnippet(snippet);
+
+                markerLongHashMapMap.put(kidLocationMarker, myKid.getId());
+            }
         }
     }
 
     private void initMap(){
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -146,20 +159,16 @@ public class ParentsDashboardActivity extends FragmentActivity implements OnMapR
             }
             mMap.setMyLocationEnabled(true);
         }
+
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
 
-                Long groupId = markerLongHashMapMap.get(marker);
+                marker.showInfoWindow();
 
-                Intent intent = OnMarkerClickActivity.makeIntent(getApplicationContext());
-                intent.putExtra("id",groupId);
-                startActivity(intent);
-                //setContentView(R.layout.activity_on_marker_click);
                 return false;
             }
         });
-
     }
 
     /**
