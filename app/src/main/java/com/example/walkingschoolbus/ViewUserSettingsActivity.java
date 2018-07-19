@@ -42,7 +42,7 @@ public class ViewUserSettingsActivity extends AppCompatActivity {
     private Boolean editable = false;
     private static final int REQUEST_CODE = 12345;
     private User sessionUser = session.getUser();
-    private List<User> children;
+    private List<User> children = sessionUser.getMonitorsUsers();
 
 
     @Override
@@ -63,7 +63,6 @@ public class ViewUserSettingsActivity extends AppCompatActivity {
 
         //create proxy for server communication
         proxy = ProxyBuilder.getProxy(getString(R.string.api_key),userToken);
-
         //get userID from intent
         Intent intent = getIntent();
         thisUserID = intent.getLongExtra("ID",0);
@@ -132,28 +131,28 @@ public class ViewUserSettingsActivity extends AppCompatActivity {
         }
         thisMOB.setText(monthText);
 
-        //update session user
-        sessionUser.makeCopyOf(user);
-        //save session user
-        session.storeSession(ViewUserSettingsActivity.this);
-
-        children = user.getMonitorsUsers();
-
         setEditable();
-        setupUpdateButton();
     }
 
 
     private void setEditable() {
-        int length = children.size();
-        for(int i = 0; i < length; i++){
-            if(children.get(i).getId()==thisUserID){
-                editable= true;
+        try {
+            int length = children.size();
+            for (int i = 0; i < length; i++) {
+                if (children.get(i).getId() == thisUserID) {
+                    editable = true;
+                    Log.i(TAG, "editable true, child");
+                }
             }
-        }
+        }catch(NullPointerException e){
+            e.printStackTrace();
+            }
+
         if(session.getid() == thisUserID){
             editable = true;
+            Log.i(TAG, "editable true, me" );
         }
+        setupUpdateButton();
     }
 
     private void setupUpdateButton() {
