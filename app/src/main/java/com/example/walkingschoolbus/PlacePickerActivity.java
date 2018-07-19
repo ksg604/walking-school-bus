@@ -165,7 +165,6 @@ public class PlacePickerActivity extends AppCompatActivity {
     public static Intent makeIntent(Context context){
             Intent intent = new Intent( context, PlacePickerActivity.class );
             return intent;
-
     }
 
     private Intent makeIntentBack(Context context, int resultcode) {
