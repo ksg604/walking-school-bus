@@ -284,9 +284,7 @@ public class MainMenu extends AppCompatActivity {
 
                 handler.postDelayed( this, 30000 );
             }
-
         };
-
     }
 
     private void updateLastGpsLocation() {
