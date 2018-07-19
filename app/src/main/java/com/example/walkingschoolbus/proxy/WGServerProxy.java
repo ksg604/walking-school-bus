@@ -130,6 +130,12 @@ public interface WGServerProxy {
     @GET("/messages")
     Call<List<Message>> getMessageNotRead(@Query("touser") Long userId , @Query("status") String ifRead );
 
+    @GET("/messages/{messageId}")
+    Call<Message> getMessageById(@Path("messageId") Long messageId);
+
+    @POST("messages/{messageId}/mark-read-or-unread")
+    Call<Message> markMessageAsReadOrUnread(@Path("messageId") Long messageId, @Body boolean markRead);
+
 
 
     // -----------------------------

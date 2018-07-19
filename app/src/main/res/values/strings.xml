@@ -24,11 +24,13 @@
     <string name="menu_group">Groups</string>
     <string name="menu_map">Map</string>
     <string name="menu_setting">Settings</string>
+    <string name="emergency">EMERGENCY</string>
     <string name="menu_message">Messages</string>
     <string name="log_out">LOG OUT</string>
     <string name="hello">Hello,</string>
     <string name="mm_walkingwith">Walking With: </string>
     <string name="mm_not_walking">No Group Selected</string>
+    <string name="menu_broadcasts">Broadcasts</string>
 
     <!--Sign up-->
     <string name="name">Full Name: </string>
@@ -39,7 +41,8 @@
 
     <!--Group Management-->
     <string name="group_layout_title">MY GROUPS</string>
-    <string name="add_group">NEW GROUP</string>
+    <string name="create_group_btn">CREATE GROUP</string>
+    <string name="join_group_btn">JOIN GROUP</string>
     <string name="modify_group">MODIFY/REMOVE</string>
     <string name="leader_group">A leader of</string>
     <string name="member_group">A member of</string>
@@ -73,7 +76,6 @@
     <string name="monitor_help_txt">Swipe left on user name for options.</string>
 
     <!-- Dialog Fragment -->
-
     <string name="yes">YES</string>
     <string name="no">NO</string>
     <string name="group_name">Group name is: </string>
@@ -81,12 +83,12 @@
 
     <!-- On Marker Click -->
 
-    <string name="prompt">Would you like to join this group? </string>
+    <string name="prompt_join">Would you like to join this group? </string>
+    <string name="prompt_leader">You are the leader of this group!</string>
 
 
     <!--Leader Activity-->
     <string name="member_is">Member : </string>
-
 
     <!---On Listview -->
     <string name="delete_swipe">Delete</string>
@@ -161,6 +163,7 @@
     <string name="user_hint_year">-yyyy-</string>
     <string name="user_hint_student">fill only if student</string>
     <string name="user_logout_message">Please Log In Using Your New Email</string>
+    <string name="user_view_monitors">VIEW PARENTS AND MONITORS</string>
 
     <string-array name="months_array">
         <item></item>

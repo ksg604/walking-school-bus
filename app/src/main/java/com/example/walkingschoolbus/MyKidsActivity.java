@@ -1,3 +1,4 @@
+//Activity to list all children you monitor
 package com.example.walkingschoolbus;
 
 import android.app.Activity;

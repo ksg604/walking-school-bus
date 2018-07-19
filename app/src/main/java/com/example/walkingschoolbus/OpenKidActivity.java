@@ -78,7 +78,8 @@ public class OpenKidActivity extends AppCompatActivity {
 
         for(Group group: groupListKid){
             Call<Group> caller = proxy.getGroupById(group.getId());
-            ProxyBuilder.callProxy(OpenKidActivity.this, caller,returnedGroup->responseForGroup(returnedGroup, groupListKid, kidUser));
+            ProxyBuilder.callProxy(OpenKidActivity.this, caller,
+                    returnedGroup->responseForGroup(returnedGroup, groupListKid, kidUser));
         }
         setupUpdateKidBtn();
         setupAddToGroupBtn();

@@ -41,6 +41,8 @@ public class Session {
     private static final String TAG ="Session";
     private static Session instance;
     private static final String SHAREDPREF_SESSION = "user session token";
+    private static int numOfUnreadMessage;
+
 
     private boolean mLocationPermissionsGranted;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 0;
@@ -83,6 +85,15 @@ public class Session {
         return name;}
 
     public String getEmail(){return user.getEmail();}
+
+    public static int getNumOfUnreadMessage() {
+        return numOfUnreadMessage;
+    }
+
+    public static void setNumOfUnreadMessage(int numOfUnreadMessage) {
+        Session.numOfUnreadMessage = numOfUnreadMessage;
+    }
+
 
     public Long getid(){return user.getId();}
 

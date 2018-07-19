@@ -25,6 +25,7 @@ public class OnMarkerClickActivity extends AppCompatActivity {
     private Session session = Session.getInstance();
     User user = session.getUser();
     Group group;
+    User leader = new User();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,25 +36,37 @@ public class OnMarkerClickActivity extends AppCompatActivity {
         getGroupDetails();
 
         TextView prompt = findViewById(R.id.markerClickPrompt);
-        prompt.setText(R.string.prompt);
 
+
+        prompt.setText( R.string.prompt_join );
         setupNoBtn();
         setupYesBtn();
+
+
+
     }
 
     private void getGroupDetails(){
         Intent intent = getIntent();
         Long groupId = intent.getExtras().getLong("id");
+        Call<Group> groupCaller = proxy.getGroupById( groupId );
+        ProxyBuilder.callProxy( OnMarkerClickActivity.this, groupCaller, group -> response( group ) );
 
-        Call<Group> groupCaller = proxy.getGroupById(groupId);
-        ProxyBuilder.callProxy(OnMarkerClickActivity.this, groupCaller, group -> response(group));
     }
+
     private void response(Group returnedGroup){
+
         group = returnedGroup;
+        leader = returnedGroup.getLeader();
         Log.i("debugTag2",""+returnedGroup.getGroupDescription());
         TextView groupName = findViewById(R.id.groupNameMarkerClick);
-
         groupName.setText(getString(R.string.group_name)+ " "+returnedGroup.getGroupDescription());
+
+        if (returnedGroup.getLeader().getId() == user.getId()){
+            OnMarkerClickActivity.this.finish();
+
+        }
+
 
     }
 
