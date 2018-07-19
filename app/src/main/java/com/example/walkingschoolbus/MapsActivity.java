@@ -15,6 +15,7 @@ package com.example.walkingschoolbus;
 
 import android.Manifest;
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -179,6 +180,7 @@ import static android.Manifest.permission.ACCESS_FINE_LOCATION;
                 Intent intent = OnMarkerClickActivity.makeIntent(getApplicationContext());
                 intent.putExtra("id",groupId);
                 startActivity(intent);
+                finish();
                 //setContentView(R.layout.activity_on_marker_click);
                 return false;
             }

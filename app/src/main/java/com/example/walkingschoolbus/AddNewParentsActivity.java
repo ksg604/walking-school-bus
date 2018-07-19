@@ -3,6 +3,7 @@
  */
 package com.example.walkingschoolbus;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -79,6 +80,11 @@ public class AddNewParentsActivity extends AppCompatActivity {
 
     private void response(List<User> returnedUser) {
         //notifyUserViaLogAndToast(getString(R.string.notify_monitoring_user_added));
+        Intent intent = MyParentsActivity.makeIntent(AddNewParentsActivity.this);
+        setResult( Activity.RESULT_OK, intent );
+        startActivity(intent);
+        finish();
+
     }
 
     private void notifyUserViaLogAndToast(String message) {
@@ -90,4 +96,5 @@ public class AddNewParentsActivity extends AppCompatActivity {
         Intent intent = new Intent(context, AddNewParentsActivity.class);
         return intent;
     }
+
 }
