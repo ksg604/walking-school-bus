@@ -335,7 +335,7 @@ public class GroupManagementActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = MapsActivity.makeIntent( GroupManagementActivity.this );
-                startActivity( intent );
+                startActivity( intent);
 
             }
         } );
@@ -384,6 +384,14 @@ public class GroupManagementActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onRestart(){
+
+        super.onRestart();
+        finish();
+        startActivity( getIntent() );
+
+    }
 
 
 

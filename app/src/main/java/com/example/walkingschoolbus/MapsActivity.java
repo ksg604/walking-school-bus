@@ -176,8 +176,6 @@ import static android.Manifest.permission.ACCESS_FINE_LOCATION;
                 Intent intent = OnMarkerClickActivity.makeIntent(getApplicationContext());
                 intent.putExtra("id",groupId);
                 startActivity(intent);
-                Intent intentBack = GroupManagementActivity.makeIntent( MapsActivity.this );
-                setResult(Activity.RESULT_OK,intentBack);
                 finish();
                 //setContentView(R.layout.activity_on_marker_click);
                 return false;
