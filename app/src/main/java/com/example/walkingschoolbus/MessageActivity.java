@@ -1,5 +1,6 @@
 package com.example.walkingschoolbus;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
@@ -14,6 +15,7 @@ import android.widget.ExpandableListView;
 
 import com.baoyz.swipemenulistview.SwipeMenuListView;
 import com.example.walkingschoolbus.model.Group;
+import com.example.walkingschoolbus.model.LocalMessageContainer;
 import com.example.walkingschoolbus.model.Message;
 import com.example.walkingschoolbus.model.Session;
 import com.example.walkingschoolbus.model.User;
@@ -30,10 +32,11 @@ import static android.media.CamcorderProfile.get;
 
 public class MessageActivity extends AppCompatActivity {
 
+    public static final int REQUEST_CODE_GETMESSAGE = 1014;
     private User user;
     private static WGServerProxy proxy;
     private Session session;
-
+    private LocalMessageContainer messageContainer;
 
     private List<String> listDataHeader;
     private HashMap<String,List<String>> listHash;
@@ -75,7 +78,7 @@ public class MessageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_message2);
         session = Session.getInstance();
         user = session.getUser();
-
+        messageContainer = LocalMessageContainer.getInstance();
         proxy = ProxyBuilder.getProxy(getString(R.string.api_key),session.getToken());
         listView = (ExpandableListView)findViewById(R.id.messageList);
 
@@ -86,7 +89,7 @@ public class MessageActivity extends AppCompatActivity {
 
 
 
-        setupGetUnReadMessage();
+        //setupGetUnReadMessage();
 
         makeHandlerRun();
 
@@ -99,23 +102,19 @@ public class MessageActivity extends AppCompatActivity {
                 if(groupPosition == 0) {
                     Long tempMessageID = unreadMessageIdList.get(childPosition);
 
+                    unreadMessageIdList.remove(childPosition);
                     Call<Message> caller = proxy.markMessageAsReadOrUnread(tempMessageID, true);
                     ProxyBuilder.callProxy(MessageActivity.this, caller,
                             returnedMessage -> responseForReadMark(returnedMessage));
 
-
-
                     updateUnreadList(childPosition);
-                    //tempMessageContent = NewMessageStringList.get(childPosition);
-                    updateReadList(childPosition, tempMessageContent);
-                    // NewMessageStringList.remove(childPosition);
-                    // OldMessageString.add(childPosition, messageContent);
-
                     Intent intent = MessageDetailActivity.makeIntent(MessageActivity.this, tempMessageID, fromUserId);
                     startActivity(intent);
+                    updateReadList(childPosition, tempMessageID);
                 }
 
                 if(groupPosition == 1) {
+
 
                 }
                 
@@ -136,14 +135,17 @@ public class MessageActivity extends AppCompatActivity {
 
     }
 
-    private void updateReadList(int index, String content) {
-        OldMessageString.add(index, content);
+    private void updateReadList(int index, Long messageId) {
+        OldMessageString.add( messageContainer.getMessageContent());
         listHash.put(listDataHeader.get(1), OldMessageString);
         listAdapter = new com.example.walkingschoolbus.model.ExpandableListAdapter(this,listDataHeader,listHash);
         listView.setAdapter(listAdapter);
 
 
     }
+
+
+
 
 
     private void setupGetReadMessage() {
@@ -257,5 +259,6 @@ public class MessageActivity extends AppCompatActivity {
     private void responseForReadMark(Message returnedMessage) {
 
     }
+
 
 }

@@ -102,7 +102,6 @@ public class MainMenu extends AppCompatActivity {
         makeHandlerRun();
 
 
-
     }
 
 
@@ -115,12 +114,16 @@ public class MainMenu extends AppCompatActivity {
     }
     private void responseForUnreadMessage(List<Message> returnedMessageList) {
        // session.setNumOfUnreadMessage(returnedMessageList.size());
-        String temp = Integer.toString(returnedMessageList.size());
-        Log.i("Number????",temp);
-
+        int counter = 0;
+       for(Message message : returnedMessageList){
+           if(!(message.getFromUser().getId().equals(user.getId()))) {
+               counter++;
+           }
+       }
+        //String temp = Integer.toString(returnedMessageList.size());
+        //Log.i("Number????",temp);
+        String temp = Integer.toString(counter);
         TextView editText = (TextView) findViewById(R.id.MessageNumber);
-       // int numberToShow = session.getNumOfUnreadMessage();
-       // String numToShow = Integer.toString(numberToShow);
         editText.setText(temp);
     }
 
@@ -317,6 +320,7 @@ public class MainMenu extends AppCompatActivity {
             }
         };
     }
+
 
     private void updateLastGpsLocation() {
         LocationManager locationManager = (LocationManager) this.getSystemService( Context.LOCATION_SERVICE );
