@@ -166,7 +166,6 @@ public class MainMenu extends AppCompatActivity {
         } );
     }
 
-    //TODO: why do both bo
     private void setupBroadcastsButton() {
         LinearLayout broadcasts = (LinearLayout) findViewById(R.id.linearLayoutBroadcasts);
         broadcasts.setOnClickListener(new View.OnClickListener() {
