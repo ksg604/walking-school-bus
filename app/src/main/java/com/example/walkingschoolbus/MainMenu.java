@@ -62,11 +62,6 @@ public class MainMenu extends AppCompatActivity {
     private static Runnable runnableCode;
     private static int zeroDistance = 0;
 
-
-
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
@@ -88,9 +83,9 @@ public class MainMenu extends AppCompatActivity {
         setupWalkingMessageButton();
 
         setTextViewMessage();
+        setWalkingWithMessage();
 
         makeHandlerRun();
-
     }
 
     private void setupOnTrackingBtn() {
@@ -109,14 +104,8 @@ public class MainMenu extends AppCompatActivity {
                    turnOffGpsUpdate();
                    session.setTracking (false);
                 }
-
             }
-
-
-
         } );
-
-
     }
 
     private void setupButtonSettings() {
@@ -134,7 +123,6 @@ public class MainMenu extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                 }
-
             }
         } );
     }
@@ -178,7 +166,6 @@ public class MainMenu extends AppCompatActivity {
                 finish();
             }
         } );
-
     }
 
 
@@ -257,7 +244,17 @@ public class MainMenu extends AppCompatActivity {
             welcomeMessage = getString( R.string.hello );
         }
         welcome.setText( welcomeMessage );
+    }
 
+    private void setWalkingWithMessage() {
+        String walkingMessage;
+        TextView walking = findViewById(R.id.txtViewWalkingMessage);
+        if(session.getGroup() != null){
+            walkingMessage = getString(R.string.mm_walkingwith) + session.getGroup().getGroupDescription();
+        }else{
+            walkingMessage = getString(R.string.mm_not_walking);
+        }
+        walking.setText(walkingMessage);
     }
 
 
@@ -297,18 +294,10 @@ public class MainMenu extends AppCompatActivity {
 
         // Define a listener that responds to location updates
         LocationListener locationListener = new LocationListener() {
-            public void onLocationChanged(Location location) {
-
-            }
-
-            public void onStatusChanged(String provider, int status, Bundle extras) {
-            }
-
-            public void onProviderEnabled(String provider) {
-            }
-
-            public void onProviderDisabled(String provider) {
-            }
+            public void onLocationChanged(Location location) {  }
+            public void onStatusChanged(String provider, int status, Bundle extras) {   }
+            public void onProviderEnabled(String provider) {    }
+            public void onProviderDisabled(String provider) {   }
         };
 
         // Register the listener with the Location Manager to receive location update
@@ -319,14 +308,19 @@ public class MainMenu extends AppCompatActivity {
             }else{
                 locationManager.requestLocationUpdates( LocationManager.GPS_PROVIDER, 0, 0, locationListener);
                 Location location = locationManager.getLastKnownLocation( LocationManager.GPS_PROVIDER );
-                if (location != null) {
-                    lastGpsLocation.setLng( location.getLongitude() );
-                    lastGpsLocation.setLat( location.getLatitude() );
-                    lastGpsLocation.setTimestamp( getTimeStamp() );
-                    user.setLastGpsLocation( lastGpsLocation );
-
-                    Call<GpsLocation> caller = proxy.setLastGpsLocation( user.getId(), user.getLastGpsLocation() );
-                    ProxyBuilder.callProxy( MainMenu.this, caller, returnedGpsLocation -> responseForGps( returnedGpsLocation ) );
+                if(location != null) {
+                    Log.i(TAG, "location set");
+                    lastGpsLocation.setLng(location.getLongitude());
+                    lastGpsLocation.setLat(location.getLatitude());
+                    lastGpsLocation.setTimestamp(getTimeStamp());
+                    user.setLastGpsLocation(lastGpsLocation);
+                    if(user == null){Log.i(TAG, "user null");}
+                    if(lastGpsLocation!=null) {
+                        Call<GpsLocation> caller = proxy.setLastGpsLocation(user.getId(), user.getLastGpsLocation());
+                        ProxyBuilder.callProxy(MainMenu.this, caller, returnedGpsLocation -> responseForGps(returnedGpsLocation));
+                    }
+                }else {
+                    Log.i(TAG,"location null");
                 }
             }
 
@@ -338,11 +332,16 @@ public class MainMenu extends AppCompatActivity {
     private void responseForGps(GpsLocation returnedGps) {
 
         user.setLastGpsLocation( returnedGps );
+        group = session.getGroup();
+        setWalkingWithMessage();
         zeroDistance = countZeroDistance(zeroDistance);
         if (zeroDistance == 20){
             turnOffGpsUpdate();
-        }
+        } else{
+            Switch onTracking = (Switch) findViewById( R.id.trackingSwitch );
 
+            onTracking.setChecked(session.isTracking());
+        }
     }
 
     /**
@@ -363,8 +362,6 @@ public class MainMenu extends AppCompatActivity {
             //to verify the results of user's selection.
             ActivityCompat.requestPermissions(this,permissions,LOCATION_PERMISSION_REQUEST_CODE);
         }
-
-
     }
 
      /*
@@ -410,27 +407,25 @@ public class MainMenu extends AppCompatActivity {
         handler.removeMessages(0);
     }
 
-
-
-
-
-
     private int countZeroDistance(int count){
+        if(group != null) {
+            if (group.getRouteLngArray().size() == 2 && group.getRouteLatArray().size() == 2) {
 
-        if (group.getRouteLngArray().size() ==2 && group.getRouteLatArray().size() ==2 ) {
+                schoolLocation.setLat(group.getRouteLatArray().get(1));
+                schoolLocation.setLng(group.getRouteLngArray().get(1));
 
-            schoolLocation.setLat( group.getRouteLatArray().get( 1 ) );
-            schoolLocation.setLng( group.getRouteLngArray().get( 1 ) );
-
-            if((Math.abs(schoolLocation.getLat()-lastGpsLocation.getLat() )< 0.1 )
-                    && (Math.abs(schoolLocation.getLng()-lastGpsLocation.getLng()) <0.1)){
-                 count += 1;
-            }else{
-                count = 0;
+                if ((Math.abs(schoolLocation.getLat() - lastGpsLocation.getLat()) < 0.1)
+                        && (Math.abs(schoolLocation.getLng() - lastGpsLocation.getLng()) < 0.1)) {
+                    count += 1;
+                } else {
+                    count = 0;
+                }
             }
+            Log.i(TAG, "returning count");
+            return count;
+        } else{
+            Log.i(TAG,"group is null");
+            return 0;
         }
-        return count;
     }
-
-
 }
