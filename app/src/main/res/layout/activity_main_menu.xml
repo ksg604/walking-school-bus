@@ -266,4 +266,14 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.107" />
 
+    <TextView
+        android:id="@+id/MessageNumber"
+        android:layout_width="48dp"
+        android:layout_height="15dp"
+        android:layout_marginBottom="144dp"
+        android:layout_marginEnd="36dp"
+        android:textColor="?attr/colorAccent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
 </android.support.constraint.ConstraintLayout>

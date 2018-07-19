@@ -26,24 +26,13 @@ import java.util.List;
 
 import retrofit2.Call;
 
+import static android.media.CamcorderProfile.get;
+
 public class MessageActivity extends AppCompatActivity {
-
-    private List<String> stringMemberGroupList = new ArrayList< >( );
-    private List<String> stringLeaderGroupList = new ArrayList< >( );
-    private List<Group> groupLeaderList = new ArrayList<>();
-    private List<Group> modifiedGroupLeaderList = new ArrayList<>(  );
-    private List<Long> groupIdLeaderList = new ArrayList<>();
-    private List<Group> groupMemberList = new ArrayList<>();
-    private List<Group> modifiedGroupMemberList = new ArrayList<>( );
-    private List<Long> groupIdMemberList = new ArrayList<>();
-    private ArrayList<Long> monitoringUser = new ArrayList<>();
-
-
 
     private User user;
     private static WGServerProxy proxy;
     private Session session;
-
 
 
     private List<String> listDataHeader;
@@ -53,16 +42,22 @@ public class MessageActivity extends AppCompatActivity {
     private final static String read = "read";
 
 
-    static List<Long>unreadMessageIdList = new ArrayList<>();
-    static List<Long>oldMessageIdList = new ArrayList<>();
+    private ExpandableListView listView;
+    private ExpandableListAdapter listAdapter;
+
+
+
+    List<Long>unreadMessageIdList = new ArrayList<>();
+    List<Long>oldMessageIdList = new ArrayList<>();
 
     String senderName;
     Long fromUserId;
 
-    static List<String> OldMessageString = new ArrayList<>();
-    static List<String> NewMessageStringList = new ArrayList<>();
+    List<String> OldMessageString = new ArrayList<>();
+    List<String> NewMessageStringList = new ArrayList<>();
 
-    static String messageContent;
+     String messageContent;
+    String tempMessageContent;
 
     private static Handler handler = new Handler();
     private static Runnable runnableCode;
@@ -81,9 +76,6 @@ public class MessageActivity extends AppCompatActivity {
         session = Session.getInstance();
         user = session.getUser();
 
-         ExpandableListView listView;
-         ExpandableListAdapter listAdapter;
-
         proxy = ProxyBuilder.getProxy(getString(R.string.api_key),session.getToken());
         listView = (ExpandableListView)findViewById(R.id.messageList);
 
@@ -98,23 +90,10 @@ public class MessageActivity extends AppCompatActivity {
 
         setupGetReadMessage();
 
-        //TODO
-        //Remove this part to group activity to send messages to groups
-        Call<User> callerForGroup = proxy.getUserById(user.getId());
-        ProxyBuilder.callProxy(MessageActivity.this, callerForGroup,
-                currentUser -> responseForGroupList(currentUser));
-        //*************************************************************//
-
         listView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-                //return false;
-                if(groupPosition == 2) {
-                    Long tempID = groupIdLeaderList.get(childPosition);
 
-                    Intent intent = SendMessageActivity.makeIntent(MessageActivity.this, tempID);
-                    startActivity(intent);
-                }
                 if(groupPosition == 0) {
                     Long tempMessageID = unreadMessageIdList.get(childPosition);
 
@@ -122,9 +101,12 @@ public class MessageActivity extends AppCompatActivity {
                     ProxyBuilder.callProxy(MessageActivity.this, caller,
                             returnedMessage -> responseForReadMark(returnedMessage));
 
-                    updateReadList(tempMessageID);
-                    
-                    updateUnreadList(tempMessageID);
+
+
+                    updateUnreadList(childPosition);
+                    //tempMessageContent = NewMessageStringList.get(childPosition);
+                    updateReadList(childPosition, tempMessageContent);
+
                     // NewMessageStringList.remove(childPosition);
                     // OldMessageString.add(childPosition, messageContent);
 
@@ -142,10 +124,24 @@ public class MessageActivity extends AppCompatActivity {
         });
     }
 
-    private void updateUnreadList(Long tempMessageID) {
+    private void updateUnreadList(int index) {
+        tempMessageContent =NewMessageStringList.get(index);
+        NewMessageStringList.remove(index);
+        session.setNumOfUnreadMessage(NewMessageStringList.size());
+        listHash.put(listDataHeader.get(0), NewMessageStringList);
+        listAdapter = new com.example.walkingschoolbus.model.ExpandableListAdapter(this,listDataHeader,listHash);
+        listView.setAdapter(listAdapter);
+
+
     }
 
-    private void updateReadList(Long tempMessageID) {
+    private void updateReadList(int index, String content) {
+        OldMessageString.add(index, content);
+        listHash.put(listDataHeader.get(1), OldMessageString);
+        listAdapter = new com.example.walkingschoolbus.model.ExpandableListAdapter(this,listDataHeader,listHash);
+        listView.setAdapter(listAdapter);
+
+
     }
 
 
@@ -178,7 +174,11 @@ public class MessageActivity extends AppCompatActivity {
                         anotherUser-> responseForMessageSender(anotherUser, message));
             }
 
+
             listHash.put(listDataHeader.get(1), OldMessageString);
+            listAdapter = new com.example.walkingschoolbus.model.ExpandableListAdapter(this,listDataHeader,listHash);
+            listView.setAdapter(listAdapter);
+
 
         }
     }
@@ -188,17 +188,24 @@ public class MessageActivity extends AppCompatActivity {
 
         for (Message message : returnedMessageList) {
     
-            if (message.getFromUser().getId() != user.getId()) {
+            if (!(message.getFromUser().getId().equals(user.getId())) ) {
+                Log.i("Show me fromid",message.getFromUser().getId().toString());
+                Log.i("Show me userid", user.getId().toString());
+
                 if (!unreadMessageIdList.contains(message.getId())) {
                     unreadMessageIdList.add(message.getId());
                     fromUserId = message.getFromUser().getId();
                     messageContent = "New Message" + " from " + fromUserId + "......";
                     NewMessageStringList.add(messageContent);
+                    session.setNumOfUnreadMessage(NewMessageStringList.size());
 
                 }
             }
         }
         listHash.put(listDataHeader.get(0), NewMessageStringList);
+        listAdapter = new com.example.walkingschoolbus.model.ExpandableListAdapter(this,listDataHeader,listHash);
+        listView.setAdapter(listAdapter);
+
     }
 
 
@@ -216,61 +223,27 @@ public class MessageActivity extends AppCompatActivity {
     }
 
 
-
-    private void responseForGroupList(User returnedUser) {
-        groupLeaderList = returnedUser.getLeadsGroups();
-       // returnedUser.getLeadsGroups();
-        for(Group group : groupLeaderList ){
-            groupIdLeaderList.add(group.getId());
-        }
-        groupMemberList = returnedUser.getMemberOfGroups();
-        for( Group group : groupMemberList ){
-            groupIdMemberList.add(group.getId());
-        }
-        user.setId(returnedUser.getId());
-        // Make call
-        Call<List<Group>> caller = proxy.getGroups();
-        ProxyBuilder.callProxy(MessageActivity.this, caller,
-                returnedGroupList -> responseForGroupCheck(returnedGroupList));
-    }
-
-
-    private void responseForGroupCheck(List<Group> returnedGroups) {
-        List<String> groupList = new ArrayList<>();
-        for (Group group : returnedGroups) {
-            if (groupIdMemberList.contains(group.getId())) {
-                //Log.w( TAG, getString( R.string.group_list) + " " + group.getId() );
-                modifiedGroupMemberList.add(group);
-                String groupInfo = getString(R.string.group_list) + " " + group.getGroupDescription();
-                stringMemberGroupList.add(groupInfo);
-            } else if (groupIdLeaderList.contains(group.getId())) {
-                // Log.w( TAG, getString( R.string.group_list) + " " + group.getId() );
-                modifiedGroupLeaderList.add(group);
-                String groupInfo = getString(R.string.group_list) + " " + group.getGroupDescription();
-                stringLeaderGroupList.add(groupInfo);
-                groupList.add(groupInfo);
-                monitoringUser.add(user.getId());
-                //listHash.put(listDataHeader.get(0),edmtDev);
-                listHash.put(listDataHeader.get(2),groupList);
-            }
-        }
-    }
-
     private void makeHandlerRun() {
         runnableCode = new Runnable(){
             public void run() {
                 setupGetUnReadMessage();
+                sendUnreadMessageNumberToMainpage();
                 handler.postDelayed(this, 30000);
             }
         };
         handler.post(runnableCode);
     }
 
+    private void sendUnreadMessageNumberToMainpage() {
+        Intent intent = MainMenu.makeIntent(MessageActivity.this, 5);
+
+    }
+
 
     private void initData() {
         listDataHeader.add("New Message");
         listDataHeader.add("Old Message");
-        listDataHeader.add("Group Message. For test now.");
+       // listDataHeader.add("Group Message. For test now.");
     }
 
     public static Intent makeIntent(Context context){
