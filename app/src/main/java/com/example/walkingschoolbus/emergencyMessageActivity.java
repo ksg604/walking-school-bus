@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.walkingschoolbus.model.Group;
@@ -31,6 +32,7 @@ public class emergencyMessageActivity extends AppCompatActivity {
     private static WGServerProxy proxy;
     private Session session;
     private Message message;
+    private String successMessage;
 
 
 
@@ -52,6 +54,7 @@ public class emergencyMessageActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+
         session = Session.getInstance();
         user = session.getUser();
 
@@ -61,10 +64,14 @@ public class emergencyMessageActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_emergency_message);
-
+        TextView instructions = findViewById(R.id.txtViewEMessageInstruct);
         emergencyFlag = extractEmergencyFlag();
+        if(emergencyFlag){
+            instructions.setText(R.string.emergency_instruction);
+        }else{
+            instructions.setText(R.string.non_emergency_instructions);
+        }
         setupSendButton();
-
     }
 
     private boolean extractEmergencyFlag() {
@@ -81,7 +88,7 @@ public class emergencyMessageActivity extends AppCompatActivity {
                 if(emergencyFlag == true) {
                     EditText text = (EditText) findViewById(R.id.emergencyText);
                     String messageToSend = text.getText().toString();
-                    message.setText(messageToSend);
+                    message.setText("|EMERGENCY|"+ messageToSend);
                     message.setEmergency(true);
                     message.setIsRead(false);
                     message.setFromUser(user);
@@ -115,7 +122,7 @@ public class emergencyMessageActivity extends AppCompatActivity {
     }
 
     private void responseEmergency(List<Message> returnedNothing) {
-        notifyUserViaLogAndToast("Message sent.");
+        notifyUserViaLogAndToast("message sent.");
     }
 
     private void notifyUserViaLogAndToast(String message) {
