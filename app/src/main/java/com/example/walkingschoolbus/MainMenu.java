@@ -23,6 +23,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
@@ -30,6 +31,7 @@ import android.widget.TextView;
 
 import com.example.walkingschoolbus.model.GpsLocation;
 import com.example.walkingschoolbus.model.Group;
+import com.example.walkingschoolbus.model.Message;
 import com.example.walkingschoolbus.model.Session;
 import com.example.walkingschoolbus.model.User;
 import com.example.walkingschoolbus.proxy.ProxyBuilder;
@@ -39,8 +41,11 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import retrofit2.Call;
+
+import static com.example.walkingschoolbus.model.Session.getNumOfUnreadMessage;
 
 /**
  * Main menu screen to give users highest level option after log in
@@ -65,6 +70,12 @@ public class MainMenu extends AppCompatActivity {
     private static Runnable runnableCode;
     private static int zeroDistance = 0;
 
+
+
+    private final static String unread = "unread";
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
@@ -85,9 +96,32 @@ public class MainMenu extends AppCompatActivity {
         setupEmergencyButton();
         setupBroadcastsButton();
         setTextViewMessage();
+        setupMessageNumber();
         setWalkingWithMessage();
 
         makeHandlerRun();
+
+
+
+    }
+
+
+    private void setupMessageNumber() {
+
+        Call<List<Message>> callerForUnreadMessage = proxy.getMessageNotRead(user.getId(), unread);
+        ProxyBuilder.callProxy(MainMenu.this, callerForUnreadMessage,
+                returnedMessageList -> responseForUnreadMessage(returnedMessageList));
+
+    }
+    private void responseForUnreadMessage(List<Message> returnedMessageList) {
+       // session.setNumOfUnreadMessage(returnedMessageList.size());
+        String temp = Integer.toString(returnedMessageList.size());
+        Log.i("Number????",temp);
+
+        TextView editText = (TextView) findViewById(R.id.MessageNumber);
+       // int numberToShow = session.getNumOfUnreadMessage();
+       // String numToShow = Integer.toString(numberToShow);
+        editText.setText(temp);
     }
 
     private void setupOnTrackingBtn() {
@@ -268,11 +302,17 @@ public class MainMenu extends AppCompatActivity {
         return new Intent( context, MainMenu.class );
     }
 
+    public static Intent makeIntent(Context context, int number){
+        Intent intent = new Intent(context, MainMenu.class);
+        intent.putExtra("Unread Message Number", number);
+        return intent;
+    }
+
     private void makeHandlerRun() {
         runnableCode = new Runnable() {
             public void run() {
                 updateLastGpsLocation();
-
+                setupMessageNumber();
                 handler.postDelayed( this, 30000 );
             }
         };
