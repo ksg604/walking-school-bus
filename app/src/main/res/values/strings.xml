@@ -198,6 +198,8 @@
     group leaders</string>
     <string name ="non_emergency_instructions">This will send a message to your parents and group leaders</string>
     <string name ="message_sent">Message sent.</string>
+    <string name ="send">SEND</string>
+    <string name ="type_message">Type message here</string>
 
 
 </resources>

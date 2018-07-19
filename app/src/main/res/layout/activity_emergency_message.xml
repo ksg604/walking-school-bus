@@ -16,7 +16,7 @@
         android:layout_marginStart="1dp"
         android:layout_marginTop="8dp"
         android:ems="10"
-        android:hint="Type in message here"
+        android:hint="@string/type_message"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btnSendEmergencyMessage"
@@ -29,7 +29,7 @@
         android:id="@+id/btnSendEmergencyMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="send"
+        android:text="@string/send"
         app:layout_constraintBaseline_toBaselineOf="@+id/emergencyText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/emergencyText" />
