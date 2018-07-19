@@ -56,7 +56,7 @@ public class MessageActivity extends AppCompatActivity {
     List<String> OldMessageString = new ArrayList<>();
     List<String> NewMessageStringList = new ArrayList<>();
 
-     String messageContent;
+    String messageContent;
     String tempMessageContent;
 
     private static Handler handler = new Handler();
@@ -84,9 +84,11 @@ public class MessageActivity extends AppCompatActivity {
         listAdapter = new com.example.walkingschoolbus.model.ExpandableListAdapter(this,listDataHeader,listHash);
         listView.setAdapter(listAdapter);
 
-        makeHandlerRun();
 
-       // setupGetUnReadMessage();
+
+        setupGetUnReadMessage();
+
+        makeHandlerRun();
 
         setupGetReadMessage();
 
@@ -106,7 +108,6 @@ public class MessageActivity extends AppCompatActivity {
                     updateUnreadList(childPosition);
                     //tempMessageContent = NewMessageStringList.get(childPosition);
                     updateReadList(childPosition, tempMessageContent);
-
                     // NewMessageStringList.remove(childPosition);
                     // OldMessageString.add(childPosition, messageContent);
 
@@ -185,9 +186,11 @@ public class MessageActivity extends AppCompatActivity {
 
 
     private void responseForUnreadMessage(List<Message> returnedMessageList) {
+       // Log.i("Test 1:","Code reach here");
 
         for (Message message : returnedMessageList) {
-    
+         //   Log.i("Testtttt2", "Code reach here!");
+
             if (!(message.getFromUser().getId().equals(user.getId())) ) {
                 Log.i("Show me fromid",message.getFromUser().getId().toString());
                 Log.i("Show me userid", user.getId().toString());
@@ -197,7 +200,7 @@ public class MessageActivity extends AppCompatActivity {
                     fromUserId = message.getFromUser().getId();
                     messageContent = "New Message" + " from " + fromUserId + "......";
                     NewMessageStringList.add(messageContent);
-                    session.setNumOfUnreadMessage(NewMessageStringList.size());
+                  //  session.setNumOfUnreadMessage(NewMessageStringList.size());
 
                 }
             }

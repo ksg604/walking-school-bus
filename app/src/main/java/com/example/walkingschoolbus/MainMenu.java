@@ -105,6 +105,7 @@ public class MainMenu extends AppCompatActivity {
 
     }
 
+
     private void setupMessageNumber() {
 
         Call<List<Message>> callerForUnreadMessage = proxy.getMessageNotRead(user.getId(), unread);
@@ -113,7 +114,7 @@ public class MainMenu extends AppCompatActivity {
 
     }
     private void responseForUnreadMessage(List<Message> returnedMessageList) {
-        session.setNumOfUnreadMessage(returnedMessageList.size());
+       // session.setNumOfUnreadMessage(returnedMessageList.size());
         String temp = Integer.toString(returnedMessageList.size());
         Log.i("Number????",temp);
 
