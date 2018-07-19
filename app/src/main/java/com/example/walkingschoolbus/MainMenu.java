@@ -319,14 +319,15 @@ public class MainMenu extends AppCompatActivity {
             }else{
                 locationManager.requestLocationUpdates( LocationManager.GPS_PROVIDER, 0, 0, locationListener);
                 Location location = locationManager.getLastKnownLocation( LocationManager.GPS_PROVIDER );
-                lastGpsLocation.setLng( location.getLongitude() );
-                lastGpsLocation.setLat( location.getLatitude() );
-                lastGpsLocation.setTimestamp( getTimeStamp() );
-                user.setLastGpsLocation(lastGpsLocation);
+                if (location != null) {
+                    lastGpsLocation.setLng( location.getLongitude() );
+                    lastGpsLocation.setLat( location.getLatitude() );
+                    lastGpsLocation.setTimestamp( getTimeStamp() );
+                    user.setLastGpsLocation( lastGpsLocation );
 
-                Call<GpsLocation> caller = proxy.setLastGpsLocation(user.getId(),user.getLastGpsLocation() );
-                ProxyBuilder.callProxy(MainMenu.this, caller, returnedGpsLocation -> responseForGps(returnedGpsLocation));
-
+                    Call<GpsLocation> caller = proxy.setLastGpsLocation( user.getId(), user.getLastGpsLocation() );
+                    ProxyBuilder.callProxy( MainMenu.this, caller, returnedGpsLocation -> responseForGps( returnedGpsLocation ) );
+                }
             }
 
         }catch(SecurityException exception){

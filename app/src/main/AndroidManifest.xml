@@ -11,6 +11,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <uses-feature android:name="android.hardware.location.gps" />
 
     <application
@@ -56,13 +57,14 @@
         <activity android:name=".LeaderActivity" />
         <activity android:name=".OnMarkerClickActivity" />
         <activity android:name=".RemoveMonitoringUserFromGroup" />
-        <activity android:name=".MyParentsActivity"></activity>
-        <activity android:name=".UpdateUserDetails"></activity>
+        <activity android:name=".MyParentsActivity" />
+        <activity android:name=".UpdateUserDetails" />
         <activity android:name=".ViewUserSettingsActivity" />
-        <activity android:name=".EditUserSettingsActivity"></activity>
+        <activity android:name=".EditUserSettingsActivity" />
         <activity android:name=".MessageActivity" />
         <activity android:name=".SendMessageActivity" />
-        <activity android:name=".emergencyMessageActivity"></activity>
+        <activity android:name=".emergencyMessageActivity" />
+        <activity android:name=".MemberActivity"></activity>
     </application>
 
 </manifest>

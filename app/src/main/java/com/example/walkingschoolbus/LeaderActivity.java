@@ -66,7 +66,7 @@ public class LeaderActivity extends AppCompatActivity {
         getGroupInfo();
 
         //set Walking With This Group Button
-        setWalkingWithThisGroupBtn();
+        setWalkWithThisGroupBtn();
 
 
         //Make call for a list of member
@@ -158,16 +158,15 @@ public class LeaderActivity extends AppCompatActivity {
 
                     case 1:
 
-                         Call<Void> caller = proxy.removeGroupMember(group.getId(), returnedUsers.get(position).getId());
-                         ProxyBuilder.callProxy(LeaderActivity.this, caller, returnedNothing -> responseForRemove(returnedNothing));
-                         userListView.removeViewsInLayout(position,1);
-                         finish();
-                         ArrayAdapter adapter = new ArrayAdapter(LeaderActivity.this, R.layout.swipe_listview, stringUserList);
-                         userListView.setAdapter(adapter);
-                         startActivity( getIntent() );
-                         break;
+                        Call<Void> caller = proxy.removeGroupMember(group.getId(), returnedUsers.get(position).getId());
+                        ProxyBuilder.callProxy(LeaderActivity.this, caller, returnedNothing -> responseForRemove(returnedNothing));
+                        userListView.removeViewsInLayout(position,1);
+                        finish();
+                        ArrayAdapter adapter = new ArrayAdapter(LeaderActivity.this, R.layout.swipe_listview, stringUserList);
+                        userListView.setAdapter(adapter);
+                        startActivity( getIntent() );
+                        break;
                 }
-
                 // false : close the menu; true : not close the menu
                 return false;
             }
@@ -178,7 +177,7 @@ public class LeaderActivity extends AppCompatActivity {
      * After delete the group, show user that group is deleted
      */
     private void responseForRemove(Void returnedNothing) {
-        notifyUserViaLogAndToast(" Successful delete");
+        notifyUserViaLogAndToast("Delete successfully");
     }
 
     /**
@@ -229,7 +228,7 @@ public class LeaderActivity extends AppCompatActivity {
 
     }
 
-    private void setWalkingWithThisGroupBtn() {
+    private void setWalkWithThisGroupBtn() {
         Button setWalkingWithThisGroup = (Button) findViewById( R.id.walkingWithThisGroupBtn );
         setWalkingWithThisGroup.setOnClickListener( new View.OnClickListener() {
             @Override
@@ -237,6 +236,7 @@ public class LeaderActivity extends AppCompatActivity {
                 tokenSession.setGroup(group);
                 if(!tokenSession.isTracking()){
                     MainMenu.turnOnGpsUpdate();
+                    tokenSession.setTracking( true );
                     notifyUserViaLogAndToast( "Now your GPS is updating " );
                 }
 
