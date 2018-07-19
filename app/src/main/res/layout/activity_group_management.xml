@@ -60,7 +60,7 @@
         android:layout_marginStart="16dp"
         android:text="@string/group_layout_title"
         android:textAppearance="@android:style/TextAppearance.Material.Headline"
-        app:layout_constraintBottom_toTopOf="@+id/textView4"
+        app:layout_constraintBottom_toTopOf="@+id/myKidsTxt"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -88,7 +88,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/myKidsTxt"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginBottom="457dp"
