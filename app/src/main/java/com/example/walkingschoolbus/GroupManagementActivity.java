@@ -188,8 +188,6 @@ public class GroupManagementActivity extends AppCompatActivity {
                 // add to menu
                 menu.addMenuItem(deleteItem);
 
-
-
             }
         };
 
