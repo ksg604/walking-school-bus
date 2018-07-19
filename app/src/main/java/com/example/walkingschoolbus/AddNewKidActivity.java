@@ -36,7 +36,7 @@ public class AddNewKidActivity extends AppCompatActivity {
         setContentView(R.layout.activity_new_kid);
 
         session = Session.getInstance();
-        parent = User.getInstance();
+        parent = session.getUser();
         proxy = ProxyBuilder.getProxy(getString(R.string.api_key), session.getToken());
         setupTextViews();
         setupConfirmBtn();

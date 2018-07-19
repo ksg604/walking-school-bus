@@ -67,11 +67,13 @@
         <activity android:name=".AddKidToGroupActivity" />
         <activity android:name=".OnMarkerClickKidActivity" />
         <activity android:name=".OpenKidGroupActivity" />
-        <activity android:name=".ViewUserMonitoredByActivity">
+        <activity android:name=".ViewUserMonitoredByActivity"/>
         <activity android:name=".MessageActivity" />
         <activity android:name=".SendMessageActivity" />
         <activity android:name=".emergencyMessageActivity" />
-        <activity android:name=".MemberActivity"></activity>
+        <activity android:name=".MemberActivity">
+
+        </activity>
 
     </application>
 

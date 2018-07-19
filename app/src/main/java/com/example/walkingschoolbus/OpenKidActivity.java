@@ -49,7 +49,7 @@ public class OpenKidActivity extends AppCompatActivity {
         setContentView(R.layout.activity_open_kid);
 
         session = Session.getInstance();
-        user = User.getInstance();
+        user = session.getUser();
         String savedToken = session.getToken();
 
 

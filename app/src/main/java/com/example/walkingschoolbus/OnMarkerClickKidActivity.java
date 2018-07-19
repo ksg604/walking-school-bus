@@ -26,7 +26,7 @@ public class OnMarkerClickKidActivity extends AppCompatActivity {
 
     WGServerProxy proxy;
     private Session token = Session.getInstance();
-    User user = User.getInstance();
+    User user = token.getUser();
     private User kidUser;
     Group group;
 
