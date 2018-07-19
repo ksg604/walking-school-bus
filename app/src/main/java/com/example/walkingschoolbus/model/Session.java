@@ -9,6 +9,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -19,8 +20,11 @@ import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
 import com.example.walkingschoolbus.MainMenu;
+import com.example.walkingschoolbus.R;
 import com.example.walkingschoolbus.proxy.ProxyBuilder;
+import com.example.walkingschoolbus.proxy.WGServerProxy;
 import com.google.gson.Gson;
+
 
 import retrofit2.Call;
 
@@ -31,10 +35,8 @@ import retrofit2.Call;
  */
 public class Session {
     private String token;
-    private String name;
-    private String email;
-
-    private Long id;
+    private User user;
+    private Group group;
     private boolean tracking;
     private static final String TAG ="Session";
     private static Session instance;
@@ -56,59 +58,60 @@ public class Session {
     }
     private Session(){}
 
-    private void setToken(String string){
-        this.token = string;
-    }
-
     public String getToken(){
         return token;
     }
 
-    /**
-     * set session name
-     * @param string the logged in users name
-     */
-    private void setName(String string){this.name = string;}
+    public User getUser(){
+        if(user ==null) {
+            this.user = new User();
+        }
+        return user;
+        }
 
-    /**
-     * @return name of sessions user
-     */
-    public String getName(){return name;}
+    public void setUser(User updatedUser){this.user = new User(updatedUser);}
 
-    /**
-     * @param string the logged in users email
-     */
-    private void setEmail(String string){this.email = string;}
+    public String getName(){
+        String name;
+        try{
+            name = user.getName();
+        }catch(NullPointerException e){
+            name = " ";
+            e.printStackTrace();
+        }
 
-    /**
-     * @return the logged in user's email
-     */
-    public String getEmail(){return email;}
+        return name;}
 
-    /**
-     * @param number the logged in users id
-     */
-    private void setid(Long number){this.id = number;}
+    public String getEmail(){return user.getEmail();}
 
-    /**
-     * @return the logged in users id
-     */
-    public Long getid(){return id;}
+    public Long getid(){return user.getId();}
 
-    /**
-     * delete all info from this logged in session
-     */
-    public void deleteToken(){
-        this.token = null;
-        this.id = null;
-        this.name = null;
-        this.email = null;
+    public boolean isTracking() {
+        return tracking;
     }
-    public void setSession(Long setID, String setName, String setEmail, String setToken){
+
+    public void setTracking(boolean tracking) {
+        this.tracking = tracking;
+    }
+
+    public Group getGroup() {
+        return group;
+    }
+
+    public void setGroup(Group group) {
+        this.group = group;
+    }
+
+    public void deleteTokenAndVariables(){
+        this.token = null;
+        this.user = null;
+        this.group = null;
+        this.tracking=false;
+        }
+
+    public void setSession(User user, String setToken){
         this.token = setToken;
-        this.id = setID;
-        this.email = setEmail;
-        this.name = setName;
+        this.user = user;
     }
 
     /**
@@ -123,7 +126,12 @@ public class Session {
         prefsEditor.putString(SHAREDPREF_SESSION,json);
         //System.out.print(json);
         prefsEditor.apply();
-        Log.i(TAG,"session stored: " + name );
+        try {
+            Log.i(TAG, "session stored: " + this.user.getName());
+        } catch(NullPointerException e){
+            Log.i(TAG, "session stored with null values: ");
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -137,18 +145,6 @@ public class Session {
         instance = gson.fromJson(json, Session.class);
         Log.i(TAG,"Session grabbed");
     }
-
-
-    public boolean isTracking() {
-        return tracking;
-    }
-
-    public void setTracking(boolean tracking) {
-        this.tracking = tracking;
-    }
-
-
-
 
 
 }

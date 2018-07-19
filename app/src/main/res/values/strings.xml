@@ -27,7 +27,8 @@
     <string name="menu_message">Messages</string>
     <string name="log_out">LOG OUT</string>
     <string name="hello">Hello,</string>
-
+    <string name="mm_walkingwith">Walking With: </string>
+    <string name="mm_not_walking">No Group Selected</string>
 
     <!--Sign up-->
     <string name="name">Full Name: </string>
@@ -53,8 +54,13 @@
     <string name="group_name_edit">GROUP NAME</string>
     <string name="create_group">CREATE GROUP</string>
 
-    <!-- Leader -->
+    <!-- Leader && Member -->
     <string name="members">MEMBERS</string>
+    <string name="leader_help_txt">Swipe left on member name for options.</string>
+    <string name="walking_with_btn">Walk with this group</string>
+    <string name="group_descript_leader">Group: </string>
+    <string name="leader">A LEADER</string>
+    <string name="member_help_txt">Swipe left on leader name for options.</string>
 
     <!--Settings-->
     <string name="monitoring">List All Users I Monitor</string>
@@ -137,7 +143,7 @@
 
     <!--edit/view User Settings -->
     <string name="user_name">Name: </string>
-    <string name="user_DOB">DOB: </string>
+    <string name="user_DOB">Date Of Birth: </string>
     <string name="user_address">Address: </string>
     <string name="user_hphone">Home Phone: </string>
     <string name="user_cphone">Cell Phone: </string>
@@ -148,6 +154,28 @@
     <string name="user_view_settings_subtitle">Click Below to Update Information</string>
     <string name="user_view_ICE">Emergency Contact Information: </string>
     <string name="user_btn_update">UPDATE</string>
+    <string name="user_save">SAVE</string>
+    <string name="user_edit_subtitle">Update Information Then Press Save</string>
+    <string name="user_edit_title">Update Account Information</string>
+    <string name="user_hint_year">-yyyy-</string>
+    <string name="user_hint_student">fill only if student</string>
+    <string name="user_logout_message">Please Log In Using Your New Email</string>
+
+    <string-array name="months_array">
+        <item></item>
+        <item>Jan</item>
+        <item>Feb</item>
+        <item>Mar</item>
+        <item>Apr</item>
+        <item>May</item>
+        <item>Jun</item>
+        <item>Jul</item>
+        <item>Aug</item>
+        <item>Sep</item>
+        <item>Oct</item>
+        <item>Nov</item>
+        <item>Dec</item>
+    </string-array>
 
     <!--OnMarkerClickKidActivity-->
     <string name="group_id_kid">Group ID: </string>

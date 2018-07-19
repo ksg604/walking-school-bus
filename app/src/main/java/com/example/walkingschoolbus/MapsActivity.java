@@ -74,19 +74,14 @@ import static android.Manifest.permission.ACCESS_FINE_LOCATION;
  public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-    private static GpsLocation gpsLocation;
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private Boolean mLocationPermissionsGranted = false;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 0;
     private static final float DEFAULT_ZOOM = 14f;
     WGServerProxy proxy;
-    private static User user = User.getInstance();
-    private FusedLocationProviderClient client;
-    private Group group;
     private Session token = Session.getInstance();
 
     private Marker groupFinalLocationMarker;
-    private List<Marker> markerArray = new ArrayList<>();
     private Map<Marker, Long> markerLongHashMapMap = new HashMap<Marker, Long>();
 
 

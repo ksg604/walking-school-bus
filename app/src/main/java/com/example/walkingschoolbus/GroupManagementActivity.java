@@ -11,7 +11,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.baoyz.swipemenulistview.SwipeMenu;
@@ -44,7 +43,7 @@ public class GroupManagementActivity extends AppCompatActivity {
     private List<Group> groupMemberList = new ArrayList<>();
     private List<Group> modifiedGroupMemberList = new ArrayList<>( );
     private List<Long> groupIdMemberList = new ArrayList<>();
-    private Session tokenSession = Session.getInstance();
+    private Session session = Session.getInstance();
     private Group group = Group.getInstance();
     private User user;
     private String userToken;
@@ -58,11 +57,11 @@ public class GroupManagementActivity extends AppCompatActivity {
         setContentView(R.layout.activity_group_management);
 
         //get token from session
-        userToken = tokenSession.getToken();
+        userToken = session.getToken();
         // Build the server proxy
         proxy = ProxyBuilder.getProxy(getString( R.string.api_key),userToken);
 
-        user = User.getInstance();
+        user = session.getUser();
 
 
         //Make call
@@ -72,6 +71,10 @@ public class GroupManagementActivity extends AppCompatActivity {
 
         // proxy = ProxyBuilder.getProxy( getString( R.string.api_key ));
         setupCreateGroupButton();
+
+
+
+
     }
 
     /*
@@ -117,7 +120,7 @@ public class GroupManagementActivity extends AppCompatActivity {
     *
     */
     private void responseForGroup(List<Group> returnedGroups) {
-        SwipeMenuListView groupAsLeaderListView = (SwipeMenuListView) findViewById( R.id.groupAsLeaderList);
+        SwipeMenuListView groupAsLeaderListView = (SwipeMenuListView) findViewById( R.id.messagesGot);
         SwipeMenuListView groupAsMemberListView = (SwipeMenuListView) findViewById(R.id.groupAsMemberList);
 
         for (Group group : returnedGroups) {
@@ -151,15 +154,30 @@ public class GroupManagementActivity extends AppCompatActivity {
             public void create(SwipeMenu menu) {
 
                 // create "open" item
+                SwipeMenuItem sendMessage = new SwipeMenuItem( getApplicationContext());
+                // set item background
+                sendMessage.setBackground(new ColorDrawable(Color.rgb(0xC9, 0xC9, 0xCE)));
+                // set item width
+                sendMessage.setWidth(240);
+                // set item title
+                sendMessage.setTitle("Message");
+                // set item title font size
+                sendMessage.setTitleSize(12);
+                // set item title font color
+                sendMessage.setTitleColor(Color.WHITE);
+                // add to menu
+                menu.addMenuItem(sendMessage);
+
+                // create "open" item
                 SwipeMenuItem openItem = new SwipeMenuItem( getApplicationContext());
                 // set item background
                 openItem.setBackground(new ColorDrawable(Color.rgb(0xC9, 0xC9, 0xCE)));
                 // set item width
-                openItem.setWidth(180);
+                openItem.setWidth(240);
                 // set item title
                 openItem.setTitle(getString( R.string.open_swipe ));
                 // set item title font size
-                openItem.setTitleSize(18);
+                openItem.setTitleSize(12);
                 // set item title font color
                 openItem.setTitleColor(Color.WHITE);
                 // add to menu
@@ -170,15 +188,18 @@ public class GroupManagementActivity extends AppCompatActivity {
                 // set item background
                 deleteItem.setBackground(new ColorDrawable( Color.rgb(220, 20, 60)));
                 // set item width
-                deleteItem.setWidth(180);
+                deleteItem.setWidth(240);
                 // set item title
                 deleteItem.setTitle(getString(R.string.delete_swipe));
                 // set item title font size
-                deleteItem.setTitleSize(18);
+                deleteItem.setTitleSize(12);
                 // set item title font color
                 deleteItem.setTitleColor(Color.WHITE);
                 // add to menu
                 menu.addMenuItem(deleteItem);
+
+
+
             }
         };
 
@@ -194,7 +215,14 @@ public class GroupManagementActivity extends AppCompatActivity {
             public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
                 switch (index) {
 
+
                     case 0:
+                        Long tempID = modifiedGroupLeaderList.get(position).getId();
+                        Intent intent2 = SendMessageActivity.makeIntent(GroupManagementActivity.this, tempID);
+                        startActivity(intent2);
+                        break;
+
+                    case 1:
                         Long groupId = modifiedGroupLeaderList.get(position).getId();
 
                         group.setId(groupId);
@@ -203,13 +231,14 @@ public class GroupManagementActivity extends AppCompatActivity {
                         break;
 
 
-                    case 1:
+                    case 2:
                          //make Call
                          Call<Void> caller = proxy.deleteGroup( modifiedGroupLeaderList.get(position).getId());
                          ProxyBuilder.callProxy(GroupManagementActivity.this, caller, returnedNothing -> response(returnedNothing));
                          groupAsLeaderListView.removeViewsInLayout(position,1);
 
                          break;
+
                 }
                 // false : close the menu; true : not close the menu
                 return false;
@@ -267,13 +296,17 @@ public class GroupManagementActivity extends AppCompatActivity {
 
                         case 0:
                             Long groupId = modifiedGroupMemberList.get(position).getId();
+                            group.setId(groupId);
+                            Intent intent = LeaderActivity.makeIntent( GroupManagementActivity.this );
+                            startActivity( intent );
+                            break;
 
                         case 1:
                             // Make call
-                             Call<Void> caller = proxy.removeGroupMember(modifiedGroupMemberList.get(position).getId(), user.getId());
-                             ProxyBuilder.callProxy(GroupManagementActivity.this, caller, returnedNothing -> response(returnedNothing));
-                             groupAsMemberListView.removeViewsInLayout(position,1);
-                             break;
+                            Call<Void> caller = proxy.removeGroupMember(modifiedGroupMemberList.get(position).getId(), user.getId());
+                            ProxyBuilder.callProxy(GroupManagementActivity.this, caller, returnedNothing -> response(returnedNothing));
+                            groupAsMemberListView.removeViewsInLayout(position,1);
+                            break;
                     }
                     // false : close the menu; true : not close the menu
                     return false;
@@ -301,6 +334,14 @@ public class GroupManagementActivity extends AppCompatActivity {
         return intent;
     }
 
+
+    private Intent makeIntentBack(Context context, int resultcode) {
+        Intent intent = new Intent(context, GroupManagementActivity.class );
+        setResult(resultcode, intent );
+        return intent;
+    }
+
+
     /**
      * put the result from PlacePickerActivity on the listview to update
      * @param requestCode arbitrary code number in this activity to get result from the other Activity
@@ -313,8 +354,8 @@ public class GroupManagementActivity extends AppCompatActivity {
         switch(requestCode){
             case REQUEST_CODE:
                 if (resultCode == Activity.RESULT_OK) {
-                    finish();
-                    startActivity(getIntent());
+                   finish();
+                   startActivity(getIntent());
                 }
                 break;
         }

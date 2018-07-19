@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.example.walkingschoolbus.model.GpsLocation;
 import com.example.walkingschoolbus.model.Group;
+import com.example.walkingschoolbus.model.Message;
 import com.example.walkingschoolbus.model.User;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -34,6 +35,11 @@ public interface WGServerProxy {
     @POST("/login")
     Call <Void> login(@Body User user);
 
+    //call to update user
+    //From Brian's Piazza post
+    @POST("/users/{id}")
+    Call<User> editUser(@Path("id") Long userId, @Body User user);
+
 
     @GET("/users")
     Call<List<User>> getUsers();
@@ -52,8 +58,6 @@ public interface WGServerProxy {
 
     @POST("/users/{id}/lastGpsLocation")
     Call<GpsLocation> setLastGpsLocation(@Path("id") Long userId, @Body GpsLocation location);
-
-   // @POST("/groups/{id}/")
 
 
     // -----------------------------
@@ -112,6 +116,21 @@ public interface WGServerProxy {
     // Messages
     // -----------------------------
     // TODO: Implement
+
+    @POST("/messages/toparentsof/{userId}")
+    Call<List<Message>> sendMessageToParents (@Path("userId") Long userId,@Body Message message);
+
+    @POST("/messages/togroup/{groupId}")
+    Call<List<Message>> sendMessageToGroup(@Path("groupId") Long groupId, @Body Message message);
+
+    //get message from user id which is unread
+    @GET("/messages")
+    Call<List<Message>> getMessageForUser(@Query("userId") Long userId);
+
+    @GET("/messages")
+    Call<List<Message>> getMessageNotRead(@Query("touser") Long userId , @Query("status") String ifRead );
+
+
 
     // -----------------------------
     // Permissions

@@ -30,7 +30,6 @@ import java.util.List;
 import retrofit2.Call;
 public class MonitorActivity extends AppCompatActivity {
 
-    private User user;
     private Session session;
     private static WGServerProxy proxy;
     private static String userEmail;
@@ -47,7 +46,6 @@ public class MonitorActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_monitor);
 
-        user = User.getInstance();
         session = Session.getInstance();
 
         // Build the server proxy
