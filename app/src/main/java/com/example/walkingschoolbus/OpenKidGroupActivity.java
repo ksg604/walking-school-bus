@@ -27,12 +27,10 @@ import retrofit2.Call;
 
 public class OpenKidGroupActivity extends AppCompatActivity {
 
-
     private Session session;
     private static WGServerProxy proxy;
     private static final String TAG = "OpenKidGroupActivity";
     private List<String> groupUserListInfo = new ArrayList<>();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +41,6 @@ public class OpenKidGroupActivity extends AppCompatActivity {
         proxy = ProxyBuilder.getProxy(getString(R.string.api_key), session.getToken());
         getFromOpenKid();
     }
-
 
     private void getFromOpenKid(){
         Intent getFromOpenKidsIntent = getIntent();
@@ -88,7 +85,6 @@ public class OpenKidGroupActivity extends AppCompatActivity {
             ArrayAdapter adapter = new ArrayAdapter(OpenKidGroupActivity.this, R.layout.da_items, groupUserListInfo);
             groupUserList.setAdapter(adapter);
 
-
             SwipeMenuCreator creator = new SwipeMenuCreator() {
                 @Override
                 public void create(SwipeMenu menu) {
@@ -99,14 +95,13 @@ public class OpenKidGroupActivity extends AppCompatActivity {
                     // set item width
                     monitoredByItem.setWidth(180);
                     // set item title
-                    monitoredByItem.setTitle(getString(R.string.monitored_by_open_kid_group));
+                    monitoredByItem.setTitle(getString(R.string.details));
                     // set item title fontsize
-                    monitoredByItem.setTitleSize(18);
+                    monitoredByItem.setTitleSize(12);
                     // set item title font color
                     monitoredByItem.setTitleColor(Color.WHITE);
                     // add to menu
                     menu.addMenuItem(monitoredByItem);
-
                 }
             };
 
@@ -116,21 +111,17 @@ public class OpenKidGroupActivity extends AppCompatActivity {
                 public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
                     switch(index){
                         case 0:
-                            Intent intentToViewMonitoredBy = ViewUserMonitoredByActivity.makeIntent(OpenKidGroupActivity.this,
-                                    userInGroup.getId());
+                            Intent intentToViewMonitoredBy = ViewUserSettingsActivity.makeIntent(
+                                    OpenKidGroupActivity.this, userInGroup.getId());
                             Log.i("Tag 89","user id: "+userInGroup.getId());
                             startActivity(intentToViewMonitoredBy);
                             break;
                     }
-
-
                     return false;
                 }
             });
         }
-
     }
-
 
     public static Intent makeIntent(Context context, Long groupIdToPass) {
         Intent intent = new Intent(context, OpenKidGroupActivity.class);

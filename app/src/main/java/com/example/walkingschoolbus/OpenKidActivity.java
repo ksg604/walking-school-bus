@@ -70,95 +70,96 @@ public class OpenKidActivity extends AppCompatActivity {
         openKidsTitle.setText( kidTitle );
 
 
-        SwipeMenuListView groupList = (SwipeMenuListView) findViewById(R.id.kidGroupList);
+
 
 
         List<Group> groupListKid = kid.getMemberOfGroups();
 
-
-
-        for(Group group : groupListKid){
-            Log.i("Debug66","Name: "+group.getId());
-
-
-            String groupInfo = getString(R.string.open_kid_group_id) + " " + group.getId();
-            kidsGroupList.add(groupInfo);
-
-            ArrayAdapter adapter = new ArrayAdapter(OpenKidActivity.this, R.layout.da_items, kidsGroupList);
-            groupList.setAdapter(adapter);
-
-            SwipeMenuCreator creator = new SwipeMenuCreator() {
-                @Override
-                public void create(SwipeMenu menu) {
-
-                    // create "open" item
-                    SwipeMenuItem openItem = new SwipeMenuItem(getApplicationContext());
-                    // set item background
-                    openItem.setBackground(new ColorDrawable(Color.rgb(0xC9, 0xC9, 0xCE)));
-                    // set item width
-                    openItem.setWidth(180);
-                    // set item title
-                    openItem.setTitle(getString(R.string.mykids_open_swipe));
-                    // set item title fontsize
-                    openItem.setTitleSize(18);
-                    // set item title font color
-                    openItem.setTitleColor(Color.WHITE);
-                    // add to menu
-                    menu.addMenuItem(openItem);
-
-
-                    SwipeMenuItem removeItem = new SwipeMenuItem(getApplicationContext());
-                    // set item background
-                    removeItem.setBackground(new ColorDrawable(Color.rgb(220, 20,
-                            60)));
-
-                    // set item width
-                    removeItem.setWidth(180);
-                    // set item title
-                    removeItem.setTitle(getString(R.string.mykids_remove_swipe));
-                    // set item title fontsize
-                    removeItem.setTitleSize(18);
-                    // set item title font color
-                    removeItem.setTitleColor(Color.WHITE);
-                    // add to menu
-                    menu.addMenuItem(removeItem);
-                }
-            };
-
-            groupList.setMenuCreator(creator);
-
-            groupList.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
-                @Override
-                public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
-                    switch(index){
-                        case 0:
-                            Intent intentForOpen = OpenKidGroupActivity.makeIntent(OpenKidActivity.this,
-                                    group.getId());
-                            startActivity(intentForOpen);
-                            break;
-
-                        case 1:
-                            Call<Void> caller = proxy.removeGroupMember(group.getId(),kid.getId());
-                            ProxyBuilder.callProxy(OpenKidActivity.this, caller, returnedNothing -> response(returnedNothing));
-                            groupList.removeViewsInLayout(position, 1);
-                            Toast.makeText(OpenKidActivity.this,"Your kid, "+kid.getName() +", has been removed from the group.",Toast.LENGTH_LONG)
-                                    .show();
-                            break;
-                    }
-                    return false;
-                }
-            });
+        for(Group group: groupListKid){
+            Call<Group> caller = proxy.getGroupById(group.getId());
+            ProxyBuilder.callProxy(OpenKidActivity.this, caller,returnedGroup->responseForGroup(returnedGroup, groupListKid, kidUser));
         }
-
-
         setupUpdateKidBtn();
         setupAddToGroupBtn();
     }
 
+    private void responseForGroup(Group group,List<Group> groupListKids, User kid) {
+        SwipeMenuListView groupList = (SwipeMenuListView) findViewById(R.id.kidGroupList);
+        Log.i("Debug66","Name: "+group.getId());
 
-    private void response(Void returnedNothing) {
 
+        String groupInfo = getString(R.string.open_kid_group_id) + " " + group.getId()+", " +
+                group.getGroupDescription();
+        kidsGroupList.add(groupInfo);
+
+        ArrayAdapter adapter = new ArrayAdapter(OpenKidActivity.this, R.layout.da_items, kidsGroupList);
+        groupList.setAdapter(adapter);
+
+        SwipeMenuCreator creator = new SwipeMenuCreator() {
+            @Override
+            public void create(SwipeMenu menu) {
+
+                // create "open" item
+                SwipeMenuItem openItem = new SwipeMenuItem(getApplicationContext());
+                // set item background
+                openItem.setBackground(new ColorDrawable(Color.rgb(0xC9, 0xC9, 0xCE)));
+                // set item width
+                openItem.setWidth(180);
+                // set item title
+                openItem.setTitle(getString(R.string.mykids_open_swipe));
+                // set item title fontsize
+                openItem.setTitleSize(12);
+                // set item title font color
+                openItem.setTitleColor(Color.WHITE);
+                // add to menu
+                menu.addMenuItem(openItem);
+
+
+                SwipeMenuItem removeItem = new SwipeMenuItem(getApplicationContext());
+                // set item background
+                removeItem.setBackground(new ColorDrawable(Color.rgb(220, 20,
+                        60)));
+
+                // set item width
+                removeItem.setWidth(180);
+                // set item title
+                removeItem.setTitle(getString(R.string.mykids_remove_swipe));
+                // set item title fontsize
+                removeItem.setTitleSize(12);
+                // set item title font color
+                removeItem.setTitleColor(Color.WHITE);
+                // add to menu
+                menu.addMenuItem(removeItem);
+            }
+        };
+
+        groupList.setMenuCreator(creator);
+
+        groupList.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
+                switch(index){
+                    case 0:
+                        Intent intentForOpen = OpenKidGroupActivity.makeIntent(OpenKidActivity.this,
+                                group.getId());
+                        startActivity(intentForOpen);
+                        break;
+
+                    case 1:
+                        Call<Void> caller = proxy.removeGroupMember(group.getId(),kid.getId());
+                        ProxyBuilder.callProxy(OpenKidActivity.this, caller, returnedNothing -> response(returnedNothing));
+                        groupList.removeViewsInLayout(position, 1);
+                        Toast.makeText(OpenKidActivity.this,"Your kid, "+kid.getName() +", has been removed from the group.",Toast.LENGTH_LONG)
+                                .show();
+                        break;
+                }
+                return false;
+            }
+        });
     }
+
+
+    private void response(Void returnedNothing) { }
 
 
     public static Intent makeIntent(Context context, String userEmailToPass) {
