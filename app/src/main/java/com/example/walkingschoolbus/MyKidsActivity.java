@@ -89,7 +89,7 @@ public class MyKidsActivity extends AppCompatActivity {
                     // set item title
                     openItem.setTitle(getString(R.string.mykids_open_swipe));
                     // set item title fontsize
-                    openItem.setTitleSize(18);
+                    openItem.setTitleSize(12);
                     // set item title font color
                     openItem.setTitleColor(Color.WHITE);
                     // add to menu
@@ -107,7 +107,7 @@ public class MyKidsActivity extends AppCompatActivity {
                     // set item title
                     removeItem.setTitle(getString(R.string.mykids_remove_swipe));
                     // set item title fontsize
-                    removeItem.setTitleSize(18);
+                    removeItem.setTitleSize(12);
                     // set item title font color
                     removeItem.setTitleColor(Color.WHITE);
                     // add to menu

@@ -181,7 +181,7 @@
     <string name="group_id_kid">Group ID: </string>
 
     <!--OpenKidGroupActivity-->
-    <string name="monitored_by_open_kid_group">Monitored By</string>
+    <string name="details">DETAILS</string>
     <string name="kid_group_members">Members: </string>
 
     <!--ViewUserMonitoredByActivity-->
