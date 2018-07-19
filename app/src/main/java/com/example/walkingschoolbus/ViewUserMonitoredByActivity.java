@@ -102,7 +102,7 @@ public class ViewUserMonitoredByActivity extends AppCompatActivity {
 
                    switch(index){
                        case 0:
-                           Intent intentToViewInfo = ViewUserSettingsActivity.makeIntent(ViewUserMonitoredByActivity.this,parentOfKid.getId());
+                           Intent intentToViewInfo = ViewUserSettingsActivity.makeIntent(ViewUserMonitoredByActivity.this,theReturnedList.get(position).getId());
                            startActivity(intentToViewInfo);
                    }
                    return false;
@@ -111,8 +111,6 @@ public class ViewUserMonitoredByActivity extends AppCompatActivity {
         }
 
     }
-
-
 
 
     public static Intent makeIntent(Context context, Long userIdToPass) {
