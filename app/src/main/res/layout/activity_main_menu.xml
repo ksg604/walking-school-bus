@@ -179,7 +179,7 @@
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Communicate"
+                        android:text="@string/communicate"
                         android:textColor="#fff"
                         android:textSize="12sp" />
 
@@ -257,7 +257,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginStart="56dp"
         android:elevation="0dp"
-        android:text="EMERGENCY"
+        android:text="@string/emergency"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
