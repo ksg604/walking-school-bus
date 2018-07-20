@@ -1,3 +1,7 @@
+/**
+ * LeaderActivity class to provide user with options related to groups he or her manages
+ * Such as adding or removing members.
+ */
 package com.example.walkingschoolbus;
 
 import android.content.Context;
@@ -33,10 +37,7 @@ import java.util.List;
 
 import retrofit2.Call;
 
-/**
- * LeaderActivity class to provide user with options related to groups he or her manages
- * Such as adding or removing members.
- */
+
 public class LeaderActivity extends AppCompatActivity {
 
     private Session tokenSession = Session.getInstance();

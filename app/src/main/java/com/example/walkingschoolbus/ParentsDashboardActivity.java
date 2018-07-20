@@ -1,5 +1,15 @@
-package com.example.walkingschoolbus;
+/**
+ * Shows a map with your kids on it and a selected group leader.
+ *
+ * Simple test app to show a Google Map.
+ * - If using the emulator, Create an Emulator from the API 26 image.
+ *   (API27's doesn't/didn't support maps; nor will 24 or before I believe).
+ * - Accessing Google Maps requires an API key: You can request one for free (and should!)
+ *   see /res/values/google_maps_api.xml
+ * - More notes at the end of this file.
+ */
 
+package com.example.walkingschoolbus;
 
 import android.Manifest;
 import android.annotation.TargetApi;
@@ -66,16 +76,6 @@ import java.util.Map;
 import retrofit2.Call;
 
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
-
-
-/**
- * Simple test app to show a Google Map.
- * - If using the emulator, Create an Emulator from the API 26 image.
- *   (API27's doesn't/didn't support maps; nor will 24 or before I believe).
- * - Accessing Google Maps requires an API key: You can request one for free (and should!)
- *   see /res/values/google_maps_api.xml
- * - More notes at the end of this file.
- */
 
 public class ParentsDashboardActivity extends FragmentActivity implements OnMapReadyCallback {
 

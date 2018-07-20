@@ -1,3 +1,6 @@
+/**
+ * This activity allows the user to monitor a new child by entering their email address
+ */
 package com.example.walkingschoolbus;
 
 import android.app.Activity;

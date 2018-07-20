@@ -1,3 +1,6 @@
+/**
+ * Activity is the "open message" feature of the app
+ */
 package com.example.walkingschoolbus;
 
 import android.app.Activity;
@@ -82,25 +85,7 @@ public class MessageDetailActivity extends AppCompatActivity {
     }
 
 
-/*
-    private void setupReadMessageButton() {
-        Button btn = (Button) findViewById(R.id.btnReadMessage);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Call<Message> caller = proxy.markMessageAsReadOrUnread(messageId, true);
-                ProxyBuilder.callProxy(MessageDetailActivity.this, caller,
-                        returnedMessage -> responseForReadMark(returnedMessage));
 
-            }
-        });
-    }
-
-    private void responseForReadMark(Message returnedMessage) {
-        notifyUserViaLogAndToast("Message has been read.");
-
-    }
-    */
 
     private void extractDataFromIntent() {
         Intent neededIntent = getIntent();

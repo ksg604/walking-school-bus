@@ -1,8 +1,21 @@
+/**
+ * Maps activity to add yourself to an existing group
+ *
+ *
+ * Simple test app to show a Google Map.
+ * - If using the emulator, Create an Emulator from the API 26 image.
+ *   (API27's doesn't/didn't support maps; nor will 24 or before I believe).
+ * - Accessing Google Maps requires an API key: You can request one for free (and should!)
+ *   see /res/values/google_maps_api.xml
+ * - More notes at the end of this file.
+ */
+
 package com.example.walkingschoolbus;
 
 
 import android.Manifest;
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -62,14 +75,6 @@ import retrofit2.Call;
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
 
-/**
- * Simple test app to show a Google Map.
- * - If using the emulator, Create an Emulator from the API 26 image.
- *   (API27's doesn't/didn't support maps; nor will 24 or before I believe).
- * - Accessing Google Maps requires an API key: You can request one for free (and should!)
- *   see /res/values/google_maps_api.xml
- * - More notes at the end of this file.
- */
 
  public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -175,6 +180,7 @@ import static android.Manifest.permission.ACCESS_FINE_LOCATION;
                 Intent intent = OnMarkerClickActivity.makeIntent(getApplicationContext());
                 intent.putExtra("id",groupId);
                 startActivity(intent);
+                finish();
                 //setContentView(R.layout.activity_on_marker_click);
                 return false;
             }

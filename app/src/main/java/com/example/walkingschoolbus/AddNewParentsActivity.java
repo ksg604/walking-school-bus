@@ -1,5 +1,9 @@
+/**
+ * User settings activity allows user to change add/remove users they monitor from groups
+ */
 package com.example.walkingschoolbus;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -20,9 +24,7 @@ import java.util.List;
 
 import retrofit2.Call;
 
-/**
- * User settings activity allows user to change add/remove users they monitor from groups
- */
+
 public class AddNewParentsActivity extends AppCompatActivity {
 
     private WGServerProxy proxy;
@@ -78,6 +80,11 @@ public class AddNewParentsActivity extends AppCompatActivity {
 
     private void response(List<User> returnedUser) {
         //notifyUserViaLogAndToast(getString(R.string.notify_monitoring_user_added));
+        Intent intent = MyParentsActivity.makeIntent(AddNewParentsActivity.this);
+        setResult( Activity.RESULT_OK, intent );
+        startActivity(intent);
+        finish();
+
     }
 
     private void notifyUserViaLogAndToast(String message) {
@@ -89,4 +96,5 @@ public class AddNewParentsActivity extends AppCompatActivity {
         Intent intent = new Intent(context, AddNewParentsActivity.class);
         return intent;
     }
+
 }

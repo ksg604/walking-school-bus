@@ -1,3 +1,6 @@
+/**
+ * TODO Describe this Activity
+ */
 package com.example.walkingschoolbus;
 
 import android.content.Context;

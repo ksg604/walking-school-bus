@@ -1,3 +1,7 @@
+/**
+ * Activity shows all groups a child is a member of and gives the user the option to update their
+ * child's information
+ */
 package com.example.walkingschoolbus;
 
 import android.app.Activity;
@@ -90,11 +94,11 @@ public class OpenKidActivity extends AppCompatActivity {
         Log.i("Debug66","Name: "+group.getId());
 
 
-        String groupInfo = getString(R.string.open_kid_group_id) + " " + group.getId()+", " +
-                group.getGroupDescription();
+        String groupInfo = getString(R.string.open_kid_group_id) + " " + group.getId()+"\n "+
+                 getString(R.string.open_kid_group_description) + group.getGroupDescription();
         kidsGroupList.add(groupInfo);
 
-        ArrayAdapter adapter = new ArrayAdapter(OpenKidActivity.this, R.layout.da_items, kidsGroupList);
+        ArrayAdapter adapter = new ArrayAdapter(OpenKidActivity.this, R.layout.swipe_listview, kidsGroupList);
         groupList.setAdapter(adapter);
 
         SwipeMenuCreator creator = new SwipeMenuCreator() {
@@ -104,13 +108,13 @@ public class OpenKidActivity extends AppCompatActivity {
                 // create "map" item
                 SwipeMenuItem mapItem = new SwipeMenuItem(getApplicationContext());
                 // set item background
-                mapItem.setBackground(new ColorDrawable(Color.rgb(0xC9, 0xC9, 0xCE)));
+                mapItem.setBackground(new ColorDrawable(Color.rgb(220, 0, 220)));
                 // set item width
                 mapItem.setWidth(180);
                 // set item title
                 mapItem.setTitle(getString(R.string.map_open_kid));
                 // set item title fontsize
-                mapItem.setTitleSize(12);
+                mapItem.setTitleSize(18);
                 // set item title font color
                 mapItem.setTitleColor(Color.WHITE);
                 // add to menu
@@ -125,7 +129,7 @@ public class OpenKidActivity extends AppCompatActivity {
                 // set item title
                 openItem.setTitle(getString(R.string.mykids_open_swipe));
                 // set item title fontsize
-                openItem.setTitleSize(12);
+                openItem.setTitleSize(18);
                 // set item title font color
                 openItem.setTitleColor(Color.WHITE);
                 // add to menu
@@ -142,7 +146,7 @@ public class OpenKidActivity extends AppCompatActivity {
                 // set item title
                 removeItem.setTitle(getString(R.string.mykids_remove_swipe));
                 // set item title fontsize
-                removeItem.setTitleSize(12);
+                removeItem.setTitleSize(18);
                 // set item title font color
                 removeItem.setTitleColor(Color.WHITE);
                 // add to menu

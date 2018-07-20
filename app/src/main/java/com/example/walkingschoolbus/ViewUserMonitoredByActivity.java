@@ -1,3 +1,7 @@
+/**
+ * Activity allows user to view all other users who monitor them.
+ */
+
 package com.example.walkingschoolbus;
 
 import android.content.Context;
@@ -72,7 +76,7 @@ public class ViewUserMonitoredByActivity extends AppCompatActivity {
                     getString(R.string.mykids_user_email) + " " + parentOfKid.getEmail();
 
             kidsParentsListInfo.add(userInfo);
-            ArrayAdapter adapter = new ArrayAdapter(ViewUserMonitoredByActivity.this, R.layout.da_items, kidsParentsListInfo);
+            ArrayAdapter adapter = new ArrayAdapter(ViewUserMonitoredByActivity.this, R.layout.swipe_listview, kidsParentsListInfo);
             userMonitoredBySwipeList.setAdapter(adapter);
 
             SwipeMenuCreator creator = new SwipeMenuCreator() {
