@@ -140,13 +140,19 @@
     <string name="open_kid_title_part1">My kid </string>
     <string name="open_kid_title_part2">is a member of the groups: </string>
     <string name="map_open_kid">Map</string>
+    <string name="open_kid_removed_part_1">Your kid, </string>
+    <string name="open_kid_removed_part_2">, has been removed from the group.</string>
 
     <!--AddNewKidActivity-->
     <string name="kids_email">Email: </string>
     <string name="new_kid_title">Enter New Kid Information</string>
     <string name="confirm_btn_text">Confirm</string>
+    <string name="parent_now_monitors_kid">, you are now monitoring </string>
 
     <string name="add_new_kids">Add a new kid</string>
+
+    <!--AddKidToGroupActivity-->
+    <string name = "opening_message">Choose a group to join by tapping a marker.</string>
 
     <!--edit/view User Settings -->
     <string name="user_name">Name: </string>
