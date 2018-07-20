@@ -141,7 +141,6 @@ public class MainMenu extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isOn) {
                 if (isOn == true) {
-
                     turnOnGpsUpdate();
                     session.setTracking( true );
 

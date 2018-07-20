@@ -196,6 +196,7 @@
     <string name="view_parent_info">View</string>
 
     <!--Emergency/Broadcast messages-->
+    <string name="loading">Loading....</string>
     <string name="emergency_prefix">|EMERGENCY|</string>
     <string name="emergency_instruction">This will send an emergency message to your parents and
     group leaders</string>
