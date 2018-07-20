@@ -61,9 +61,35 @@ public class SendMessageActivity extends AppCompatActivity {
         //message.setIsRead()
         // Make call
         extractDataFromIntent();
-
+        setupSendNormalButton();
         setupSendButton();
         setHelpText();
+
+    }
+
+    private void setupSendNormalButton() {
+
+        Button sendButton = (Button) findViewById(R.id.btnsendRegularMessage);
+        sendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditText text = (EditText) findViewById(R.id.textMessage);
+                String messageToSend = text.getText().toString();
+                message.setText(messageToSend);
+                message.setEmergency(false);
+                message.setIsRead(false);
+                message.setFromUser(user);
+
+                Log.i("Check Message Here",message.getText());
+                Log.i("Check groupID here", tempGroupID.toString());
+                Call<List<Message>> caller = proxy.sendMessageToGroup( tempGroupID , message);
+                ProxyBuilder.callProxy(SendMessageActivity.this, caller,
+                        returnedNothing -> responseForSend(returnedNothing));
+
+
+
+            }
+        });
 
     }
 
@@ -76,7 +102,7 @@ public class SendMessageActivity extends AppCompatActivity {
                 EditText text = (EditText) findViewById(R.id.textMessage);
                 String messageToSend = text.getText().toString();
                 message.setText(messageToSend);
-                message.setEmergency(false);
+                message.setEmergency(true);
                 message.setIsRead(false);
                 message.setFromUser(user);
 

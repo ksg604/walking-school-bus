@@ -80,7 +80,7 @@ public class ViewUserSettingsActivity extends AppCompatActivity {
         thisHPhone.setText(user.getHomePhone());
         thisCPhone.setText(user.getCellPhone());
         thisEmail.setText(user.getEmail());
-        thisGrade.setText(user.getGrade());
+        thisGrade.setText(user.getTeacherName());
         thisAddress.setText(user.getAddress());
         thisICE.setText(user.getEmergencyContactInfo());
 

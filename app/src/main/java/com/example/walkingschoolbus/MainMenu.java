@@ -292,7 +292,7 @@ public class MainMenu extends AppCompatActivity {
         welcome.setText( welcomeMessage );
     }
 
-    private void setWalkingWithMessage() {
+    public void setWalkingWithMessage() {
         String walkingMessage;
         TextView walking = findViewById(R.id.txtViewWalkingMessage);
         if(session.getGroup() != null){
@@ -302,8 +302,6 @@ public class MainMenu extends AppCompatActivity {
         }
         walking.setText(walkingMessage);
     }
-
-
 
     public static Intent makeIntent(Context context) {
         return new Intent( context, MainMenu.class );
@@ -385,6 +383,7 @@ public class MainMenu extends AppCompatActivity {
         setWalkingWithMessage();
         zeroDistance = countZeroDistance(zeroDistance);
         if (zeroDistance == 20){
+            Log.i(TAG, "zero distance");
             turnOffGpsUpdate();
         } else{
             Switch onTracking = (Switch) findViewById( R.id.trackingSwitch );
@@ -452,7 +451,9 @@ public class MainMenu extends AppCompatActivity {
     /**
      *Turn off tracking by removeMessage
      */
-    public static void turnOffGpsUpdate (){
+    public void turnOffGpsUpdate(){
+        Switch trackingSwitch = findViewById(R.id.trackingSwitch);
+       trackingSwitch.setChecked(false);
         handlerForGps.removeMessages(0);
     }
 
@@ -463,8 +464,8 @@ public class MainMenu extends AppCompatActivity {
                 schoolLocation.setLat(group.getRouteLatArray().get(1));
                 schoolLocation.setLng(group.getRouteLngArray().get(1));
 
-                if ((Math.abs(schoolLocation.getLat() - lastGpsLocation.getLat()) < 0.1)
-                        && (Math.abs(schoolLocation.getLng() - lastGpsLocation.getLng()) < 0.1)) {
+                if ((Math.abs(schoolLocation.getLat() - lastGpsLocation.getLat()) < 0.001)
+                        && (Math.abs(schoolLocation.getLng() - lastGpsLocation.getLng()) < 0.001)) {
                     count += 1;
                 } else {
                     count = 0;

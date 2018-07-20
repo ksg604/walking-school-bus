@@ -70,11 +70,12 @@ public class AddNewParentsActivity extends AppCompatActivity {
     }
 
 
-    private void responseForParents(User returnedUsers) {
+    private User responseForParents(User returnedUsers) {
         notifyUserViaLogAndToast("Server replied with user: " + returnedUsers.getEmail());
         Call<List<User>> caller = proxy.addToMonitoredByUsers(user.getId(), returnedUsers);
         ProxyBuilder.callProxy(AddNewParentsActivity.this, caller, returnedUser -> response(returnedUser));
 
+        return returnedUsers;
     }
 
     private void response(List<User> returnedUser) {
