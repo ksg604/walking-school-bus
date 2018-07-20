@@ -10,8 +10,6 @@ import android.widget.TextView;
 
 import com.example.walkingschoolbus.R;
 
-import org.w3c.dom.Text;
-
 import java.util.HashMap;
 import java.util.List;
 
