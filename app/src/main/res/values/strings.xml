@@ -89,8 +89,10 @@
 
     <!--Leader Activity-->
     <string name="member_is">Member : </string>
+    <string name="gps_message">Now your GPS is updating!</string>
 
     <!---On Listview -->
+    <string name="message_swipe">Message</string>
     <string name="delete_swipe">Delete</string>
     <string name="leave_swipe">Leave</string>
     <string name="open_swipe">Open</string>
@@ -198,6 +200,7 @@
     <string name="emergency_instruction">This will send an emergency message to your parents and
     group leaders</string>
     <string name ="non_emergency_instructions">This will send a message to your parents and group leaders</string>
+    <string name ="broadcast_instructions">This will send a message to your group members</string>
     <string name ="message_sent">Message sent.</string>
     <string name ="send">SEND</string>
     <string name ="type_message">Type message here</string>

@@ -94,7 +94,7 @@ public class OpenKidActivity extends AppCompatActivity {
         Log.i("Debug66","Name: "+group.getId());
 
 
-        String groupInfo = getString(R.string.open_kid_group_id) + " " + group.getId()+"\n "+
+        String groupInfo = getString(R.string.open_kid_group_id) + " " + group.getId()+"\n"+
                  getString(R.string.open_kid_group_description) + group.getGroupDescription();
         kidsGroupList.add(groupInfo);
 
@@ -114,7 +114,7 @@ public class OpenKidActivity extends AppCompatActivity {
                 // set item title
                 mapItem.setTitle(getString(R.string.map_open_kid));
                 // set item title fontsize
-                mapItem.setTitleSize(18);
+                mapItem.setTitleSize(12);
                 // set item title font color
                 mapItem.setTitleColor(Color.WHITE);
                 // add to menu
@@ -129,7 +129,7 @@ public class OpenKidActivity extends AppCompatActivity {
                 // set item title
                 openItem.setTitle(getString(R.string.mykids_open_swipe));
                 // set item title fontsize
-                openItem.setTitleSize(18);
+                openItem.setTitleSize(12);
                 // set item title font color
                 openItem.setTitleColor(Color.WHITE);
                 // add to menu
@@ -146,7 +146,7 @@ public class OpenKidActivity extends AppCompatActivity {
                 // set item title
                 removeItem.setTitle(getString(R.string.mykids_remove_swipe));
                 // set item title fontsize
-                removeItem.setTitleSize(18);
+                removeItem.setTitleSize(12);
                 // set item title font color
                 removeItem.setTitleColor(Color.WHITE);
                 // add to menu
