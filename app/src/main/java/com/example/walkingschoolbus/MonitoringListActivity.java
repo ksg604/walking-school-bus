@@ -70,8 +70,9 @@ public class MonitoringListActivity extends AppCompatActivity {
                     getString(R.string.monitoring_user_email)+ " " + user.getEmail();
 
             monitoringUser.add(userInfo);
-            ArrayAdapter adapter = new ArrayAdapter(MonitoringListActivity.this, R.layout.da_items, monitoringUser);
+            ArrayAdapter adapter = new ArrayAdapter(MonitoringListActivity.this, R.layout.swipe_listview, monitoringUser);
             monitoringList.setAdapter(adapter);
+
         }
         SwipeMenuCreator creator = new SwipeMenuCreator() {
 

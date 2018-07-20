@@ -86,7 +86,7 @@ public class OpenKidGroupActivity extends AppCompatActivity {
             Log.i("Tag88","Initial user id: "+ userInGroup.getId());
 
             groupUserListInfo.add(userInfo);
-            ArrayAdapter adapter = new ArrayAdapter(OpenKidGroupActivity.this, R.layout.da_items, groupUserListInfo);
+            ArrayAdapter adapter = new ArrayAdapter(OpenKidGroupActivity.this, R.layout.swipe_listview, groupUserListInfo);
             groupUserList.setAdapter(adapter);
 
             SwipeMenuCreator creator = new SwipeMenuCreator() {
