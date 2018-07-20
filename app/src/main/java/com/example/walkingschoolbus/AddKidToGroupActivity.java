@@ -174,7 +174,7 @@ public class AddKidToGroupActivity extends FragmentActivity implements OnMapRead
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        Toast.makeText(AddKidToGroupActivity.this,"Choose a group to join by tapping a marker.",Toast.LENGTH_LONG)
+        Toast.makeText(AddKidToGroupActivity.this,getString(R.string.opening_message),Toast.LENGTH_LONG)
                 .show();
         getKidDetails();
         displayAllGroups();

@@ -174,7 +174,7 @@ public class OpenKidActivity extends AppCompatActivity {
                         Call<Void> caller = proxy.removeGroupMember(group.getId(),kid.getId());
                         ProxyBuilder.callProxy(OpenKidActivity.this, caller, returnedNothing -> response(returnedNothing));
                         groupList.removeViewsInLayout(position, 1);
-                        Toast.makeText(OpenKidActivity.this,"Your kid, "+kid.getName() +", has been removed from the group.",Toast.LENGTH_LONG)
+                        Toast.makeText(OpenKidActivity.this,getString(R.string.open_kid_title_part1)+kid.getName() +getString(R.string.open_kid_title_part2),Toast.LENGTH_LONG)
                                 .show();
                         break;
                 }
