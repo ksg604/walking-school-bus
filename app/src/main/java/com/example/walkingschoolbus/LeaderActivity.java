@@ -231,7 +231,7 @@ public class LeaderActivity extends AppCompatActivity {
                     MainMenu.turnOnGpsUpdate();
                     tokenSession.setTracking( true );
                     notifyUserViaLogAndToast( getString(R.string.gps_message) );
-                    tokenSession.setTracking(true);
+
                 }
             }
         } );

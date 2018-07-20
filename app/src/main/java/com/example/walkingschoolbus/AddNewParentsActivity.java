@@ -81,8 +81,8 @@ public class AddNewParentsActivity extends AppCompatActivity {
     private void response(List<User> returnedUser) {
         //notifyUserViaLogAndToast(getString(R.string.notify_monitoring_user_added));
         Intent intent = MyParentsActivity.makeIntent(AddNewParentsActivity.this);
+        intent.putExtra( "result",RESULT_OK );
         setResult( Activity.RESULT_OK, intent );
-        //startActivity(intent);
         finish();
 
     }
