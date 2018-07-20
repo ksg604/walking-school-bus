@@ -1,3 +1,7 @@
+/**
+ * Lists all users and leaders in a group
+ * Navigated to from a child's page
+ */
 package com.example.walkingschoolbus;
 
 import android.content.Context;
@@ -61,8 +65,7 @@ public class OpenKidGroupActivity extends AppCompatActivity {
         //Set layout textviews
         TextView groupName = findViewById(R.id.groupNameOpenGroupKid);
         groupName.setText(getString(R.string.group_name)+ " "+theReturnedGroup.getGroupDescription());
-        TextView groupId = findViewById(R.id.groupIdOpenGroupKid);
-        groupId.setText(getString(R.string.group_id_kid)+ " "+theReturnedGroup.getId());
+
         TextView members = findViewById(R.id.groupMembersOpenKid);
         members.setText(getString(R.string.kid_group_members));
 
@@ -82,7 +85,7 @@ public class OpenKidGroupActivity extends AppCompatActivity {
             Log.i("Tag88","Initial user id: "+ userInGroup.getId());
 
             groupUserListInfo.add(userInfo);
-            ArrayAdapter adapter = new ArrayAdapter(OpenKidGroupActivity.this, R.layout.da_items, groupUserListInfo);
+            ArrayAdapter adapter = new ArrayAdapter(OpenKidGroupActivity.this, R.layout.swipe_listview, groupUserListInfo);
             groupUserList.setAdapter(adapter);
 
             SwipeMenuCreator creator = new SwipeMenuCreator() {

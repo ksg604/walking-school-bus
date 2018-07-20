@@ -1,3 +1,7 @@
+/**
+ * Activity allows one to remove a child from a group.
+ */
+
 package com.example.walkingschoolbus;
 
 import android.content.Context;
@@ -100,7 +104,7 @@ public class RemoveMonitoringUserFromGroup extends AppCompatActivity {
         }
 
         ArrayAdapter adapterLeader = new ArrayAdapter( RemoveMonitoringUserFromGroup.this,
-                R.layout.da_items, stringMemberGroupList );
+                R.layout.swipe_listview, stringMemberGroupList );
 
         userGroups.setAdapter( adapterLeader );
 

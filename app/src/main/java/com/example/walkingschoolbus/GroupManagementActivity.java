@@ -1,3 +1,8 @@
+/**
+ * Class to list all groups related to logged in user with option to delete or move to place picker
+ * activity to create a new group.
+ */
+
 package com.example.walkingschoolbus;
 
 import android.app.Activity;
@@ -28,10 +33,6 @@ import java.util.List;
 
 import retrofit2.Call;
 
-/**
- * Class to list all groups related to logged in user with option to delete or move to place picker
- * activity to create a new group.
- */
 public class GroupManagementActivity extends AppCompatActivity {
 
     private List<String> stringMemberGroupList = new ArrayList< >( );
@@ -118,7 +119,7 @@ public class GroupManagementActivity extends AppCompatActivity {
                 Log.w( TAG, getString( R.string.group_list) + " " + group.getId() );
 
                 modifiedGroupMemberList.add(group);
-                String groupInfo = getString( R.string.group_list) + " " + group.getGroupDescription();
+                String groupInfo = getString( R.string.group_list) + " " + group.getGroupDescription()+"\n";
                 stringMemberGroupList.add( groupInfo );
 
             }else if( groupIdLeaderList.contains(group.getId())){
@@ -129,13 +130,14 @@ public class GroupManagementActivity extends AppCompatActivity {
                 stringLeaderGroupList.add( groupInfo );
             }
 
-            ArrayAdapter adapterLeader = new ArrayAdapter( GroupManagementActivity.this,
-                    R.layout.swipe_listview, stringLeaderGroupList );
-            groupAsLeaderListView.setAdapter( adapterLeader );
-            ArrayAdapter adapterMember = new ArrayAdapter( GroupManagementActivity.this,
-                    R.layout.swipe_listview, stringMemberGroupList );
-            groupAsMemberListView.setAdapter( adapterMember );
+
         }
+        ArrayAdapter adapterLeader = new ArrayAdapter( GroupManagementActivity.this,
+                R.layout.swipe_listview, stringLeaderGroupList );
+        groupAsLeaderListView.setAdapter( adapterLeader );
+        ArrayAdapter adapterMember = new ArrayAdapter( GroupManagementActivity.this,
+                R.layout.swipe_listview, stringMemberGroupList );
+        groupAsMemberListView.setAdapter( adapterMember );
 
         SwipeMenuCreator creatorForLeader = new SwipeMenuCreator() {
 
@@ -149,7 +151,7 @@ public class GroupManagementActivity extends AppCompatActivity {
                 // set item width
                 sendMessage.setWidth(240);
                 // set item title
-                sendMessage.setTitle("Broadcasts");
+                sendMessage.setTitle(getString( R.string.message_swipe ));
                 // set item title font size
                 sendMessage.setTitleSize(15);
                 // set item title font color
@@ -223,7 +225,7 @@ public class GroupManagementActivity extends AppCompatActivity {
                          Call<Void> caller = proxy.deleteGroup( modifiedGroupLeaderList.get(position).getId());
                          ProxyBuilder.callProxy(GroupManagementActivity.this, caller, returnedNothing -> response(returnedNothing));
                          groupAsLeaderListView.removeViewsInLayout(position,1);
-
+                         adapterLeader.notifyDataSetChanged();
                          break;
 
                 }
@@ -293,6 +295,8 @@ public class GroupManagementActivity extends AppCompatActivity {
                             Call<Void> caller = proxy.removeGroupMember(modifiedGroupMemberList.get(position).getId(), user.getId());
                             ProxyBuilder.callProxy(GroupManagementActivity.this, caller, returnedNothing -> response(returnedNothing));
                             groupAsMemberListView.removeViewsInLayout(position,1);
+                            adapterMember.notifyDataSetChanged();
+
                             break;
                     }
                     // false : close the menu; true : not close the menu
@@ -330,7 +334,7 @@ public class GroupManagementActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = MapsActivity.makeIntent( GroupManagementActivity.this );
-                startActivity( intent );
+                startActivity( intent);
 
             }
         } );
@@ -379,6 +383,14 @@ public class GroupManagementActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onRestart(){
+
+        super.onRestart();
+        finish();
+        startActivity( getIntent() );
+
+    }
 
 
 

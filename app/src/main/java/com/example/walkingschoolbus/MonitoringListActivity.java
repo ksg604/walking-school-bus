@@ -1,3 +1,6 @@
+/**
+ * Activity lists users whom logged in users monitor with options to delete
+ */
 package com.example.walkingschoolbus;
 
 import android.content.Context;
@@ -27,9 +30,7 @@ import java.util.List;
 
 import retrofit2.Call;
 
-/**
- * Activity lists users whom logged in users monitor with options to delete
- */
+
 public class MonitoringListActivity extends AppCompatActivity {
 
     private static final String TAG = "MonitoringListActivity";
@@ -69,8 +70,9 @@ public class MonitoringListActivity extends AppCompatActivity {
                     getString(R.string.monitoring_user_email)+ " " + user.getEmail();
 
             monitoringUser.add(userInfo);
-            ArrayAdapter adapter = new ArrayAdapter(MonitoringListActivity.this, R.layout.da_items, monitoringUser);
+            ArrayAdapter adapter = new ArrayAdapter(MonitoringListActivity.this, R.layout.swipe_listview, monitoringUser);
             monitoringList.setAdapter(adapter);
+
         }
         SwipeMenuCreator creator = new SwipeMenuCreator() {
 

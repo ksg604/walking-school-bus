@@ -1,5 +1,9 @@
+/**
+ * Activity is the "open message" feature of the app
+ */
 package com.example.walkingschoolbus;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +15,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.walkingschoolbus.model.LocalMessageContainer;
 import com.example.walkingschoolbus.model.Message;
 import com.example.walkingschoolbus.model.Session;
 import com.example.walkingschoolbus.model.User;
@@ -31,12 +36,12 @@ public class MessageDetailActivity extends AppCompatActivity {
     private User user;
     private static WGServerProxy proxy;
     private Session session;
-
+    private LocalMessageContainer messageContainer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message_detail);
-
+        messageContainer = LocalMessageContainer.getInstance();
         session = Session.getInstance();
         user = session.getUser();
         proxy = ProxyBuilder.getProxy(getString(R.string.api_key),session.getToken());
@@ -71,6 +76,8 @@ public class MessageDetailActivity extends AppCompatActivity {
                                                 "Emergency: " + returnedMessage.isEmergency() + "\n";
 
                                         editText.setText(messageContent);
+                                        messageContainer.setMessageContent(messageContent);
+
                                     }
                                 });
                     }
@@ -78,25 +85,7 @@ public class MessageDetailActivity extends AppCompatActivity {
     }
 
 
-/*
-    private void setupReadMessageButton() {
-        Button btn = (Button) findViewById(R.id.btnReadMessage);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Call<Message> caller = proxy.markMessageAsReadOrUnread(messageId, true);
-                ProxyBuilder.callProxy(MessageDetailActivity.this, caller,
-                        returnedMessage -> responseForReadMark(returnedMessage));
 
-            }
-        });
-    }
-
-    private void responseForReadMark(Message returnedMessage) {
-        notifyUserViaLogAndToast("Message has been read.");
-
-    }
-    */
 
     private void extractDataFromIntent() {
         Intent neededIntent = getIntent();

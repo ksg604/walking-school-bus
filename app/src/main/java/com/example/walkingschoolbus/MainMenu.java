@@ -1,3 +1,6 @@
+/**
+ * Main menu screen to give users highest level option after log in
+ */
 package com.example.walkingschoolbus;
 
 import android.Manifest;
@@ -39,6 +42,8 @@ import com.example.walkingschoolbus.proxy.WGServerProxy;
 import com.google.android.gms.location.FusedLocationProviderClient;
 
 
+import org.w3c.dom.Text;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -47,9 +52,6 @@ import retrofit2.Call;
 
 import static com.example.walkingschoolbus.model.Session.getNumOfUnreadMessage;
 
-/**
- * Main menu screen to give users highest level option after log in
- */
 public class MainMenu extends AppCompatActivity {
 
     public static final String USER_TOKEN = "User token";
@@ -66,11 +68,11 @@ public class MainMenu extends AppCompatActivity {
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 0;
     private static final int REQUEST_CODE = 2016;
     private FusedLocationProviderClient mFusedLocationProviderClient;
-    private static Handler handler = new Handler();
-    private static Runnable runnableCode;
+    private static Handler handlerForGps = new Handler();
+    private static Handler handlerForMessages = new Handler();
+    private static Runnable runnableForGps;
+    private static Runnable runnableForMessages;
     private static int zeroDistance = 0;
-
-
 
     private final static String unread = "unread";
 
@@ -99,7 +101,8 @@ public class MainMenu extends AppCompatActivity {
         setupMessageNumber();
         setWalkingWithMessage();
 
-        makeHandlerRun();
+        makeHandlerRunForGps();
+        makeHandlerRunForMessages();
 
 
 
@@ -115,13 +118,19 @@ public class MainMenu extends AppCompatActivity {
     }
     private void responseForUnreadMessage(List<Message> returnedMessageList) {
        // session.setNumOfUnreadMessage(returnedMessageList.size());
-        String temp = Integer.toString(returnedMessageList.size());
-        Log.i("Number????",temp);
+        int counter = 0;
+       for(Message message : returnedMessageList){
+           if(!(message.getFromUser().getId().equals(user.getId()))) {
+               counter++;
+           }
+       }
+        //String temp = Integer.toString(returnedMessageList.size());
+        String temp = Integer.toString(counter);
+        TextView messages = (TextView) findViewById( R.id.messagesMainMenu );
+        String numMessages = temp + " " +getString(R.string.menu_message);
+        session.setNumberOfMessages( numMessages );
+        messages.setText( numMessages );
 
-        TextView editText = (TextView) findViewById(R.id.MessageNumber);
-       // int numberToShow = session.getNumOfUnreadMessage();
-       // String numToShow = Integer.toString(numberToShow);
-        editText.setText(temp);
     }
 
     private void setupOnTrackingBtn() {
@@ -170,7 +179,6 @@ public class MainMenu extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = emergencyMessageActivity.makeIntent(MainMenu.this, false);
                 startActivity(intent);
-
             }
         });
     }
@@ -308,15 +316,28 @@ public class MainMenu extends AppCompatActivity {
         return intent;
     }
 
-    private void makeHandlerRun() {
-        runnableCode = new Runnable() {
+    private void makeHandlerRunForGps() {
+        runnableForGps = new Runnable() {
             public void run() {
                 updateLastGpsLocation();
-                setupMessageNumber();
-                handler.postDelayed( this, 30000 );
+                handlerForGps.postDelayed( this, 30000 );
             }
         };
     }
+
+    private void makeHandlerRunForMessages(){
+        runnableForMessages = new Runnable(){
+            public void run() {
+                setupMessageNumber();
+                handlerForMessages.postDelayed( this,60000 );
+            }
+        };
+        handlerForMessages.post( runnableForMessages);
+    }
+
+
+
+
 
     private void updateLastGpsLocation() {
         LocationManager locationManager = (LocationManager) this.getSystemService( Context.LOCATION_SERVICE );
@@ -426,14 +447,14 @@ public class MainMenu extends AppCompatActivity {
      *
      */
     public static void turnOnGpsUpdate(){
-        handler.post( runnableCode );
+        handlerForGps.post( runnableForGps );
     }
 
     /**
      *Turn off tracking by removeMessage
      */
     public static void turnOffGpsUpdate (){
-        handler.removeMessages(0);
+        handlerForGps.removeMessages(0);
     }
 
     private int countZeroDistance(int count){

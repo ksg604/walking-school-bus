@@ -1,3 +1,7 @@
+/**
+ * Activity shows all groups a child is a member of and gives the user the option to update their
+ * child's information
+ */
 package com.example.walkingschoolbus;
 
 import android.app.Activity;
@@ -90,11 +94,11 @@ public class OpenKidActivity extends AppCompatActivity {
         Log.i("Debug66","Name: "+group.getId());
 
 
-        String groupInfo = getString(R.string.open_kid_group_id) + " " + group.getId()+", " +
-                group.getGroupDescription();
+        String groupInfo = getString(R.string.open_kid_group_id) + " " + group.getId()+"\n"+
+                 getString(R.string.open_kid_group_description) + group.getGroupDescription();
         kidsGroupList.add(groupInfo);
 
-        ArrayAdapter adapter = new ArrayAdapter(OpenKidActivity.this, R.layout.da_items, kidsGroupList);
+        ArrayAdapter adapter = new ArrayAdapter(OpenKidActivity.this, R.layout.swipe_listview, kidsGroupList);
         groupList.setAdapter(adapter);
 
         SwipeMenuCreator creator = new SwipeMenuCreator() {
@@ -104,7 +108,7 @@ public class OpenKidActivity extends AppCompatActivity {
                 // create "map" item
                 SwipeMenuItem mapItem = new SwipeMenuItem(getApplicationContext());
                 // set item background
-                mapItem.setBackground(new ColorDrawable(Color.rgb(0xC9, 0xC9, 0xCE)));
+                mapItem.setBackground(new ColorDrawable(Color.rgb(220, 0, 220)));
                 // set item width
                 mapItem.setWidth(180);
                 // set item title

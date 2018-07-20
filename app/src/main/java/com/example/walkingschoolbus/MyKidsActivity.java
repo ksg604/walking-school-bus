@@ -6,12 +6,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +21,7 @@ import com.baoyz.swipemenulistview.SwipeMenu;
 import com.baoyz.swipemenulistview.SwipeMenuCreator;
 import com.baoyz.swipemenulistview.SwipeMenuItem;
 import com.baoyz.swipemenulistview.SwipeMenuListView;
+import com.example.walkingschoolbus.model.Message;
 import com.example.walkingschoolbus.model.Session;
 import com.example.walkingschoolbus.model.User;
 import com.example.walkingschoolbus.proxy.ProxyBuilder;
@@ -33,12 +36,16 @@ public class MyKidsActivity extends AppCompatActivity {
 
     private static final String TAG = "MyKidsActivity";
     private Session session;
-    private User parent;
-    WGServerProxy proxy;
+    private User user;
+    static WGServerProxy  proxy;
+    private String numberOfMessages;
     private List<String> myKidsList = new ArrayList<>();
     private static final int REQUEST_CODE = 2222;
     private String userToken;
     private long sessionID;
+    private final static String unread = "unread";
+    private Handler handler = new Handler();
+    private Runnable runnableCode;
 
 
     @Override
@@ -49,6 +56,7 @@ public class MyKidsActivity extends AppCompatActivity {
         session = Session.getInstance();
         userToken = session.getToken();
         sessionID = session.getid();
+        user = session.getUser();
 
         //parent = User.getInstance();
 
@@ -59,8 +67,39 @@ public class MyKidsActivity extends AppCompatActivity {
         Call<List<User>> caller = proxy.getMonitorsUsers(sessionID);
         ProxyBuilder.callProxy(MyKidsActivity.this, caller, returnedKids -> response(returnedKids));
         setupAddNewKidBtn();
-        //setupMapBtn();
+        makeHandlerRun();
+        setupLinearLayoutMessages();
 
+    }
+
+
+    private void setupLinearLayoutMessages() {
+        LinearLayout messages = findViewById( R.id.linearLayoutMessagesInMyKids );
+        messages.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = MessageActivity.makeIntent(MyKidsActivity.this);
+                startActivity(intent);
+
+            }
+        } );
+    }
+    //
+    private void getNumberOfMessagesFromSession(){
+        numberOfMessages = session.getNumberOfMessages();
+        TextView messages = (TextView) findViewById( R.id.messagesInMyKids );
+        messages.setText( numberOfMessages);
+    }
+
+
+    private void makeHandlerRun() {
+        runnableCode = new Runnable() {
+            public void run() {
+                getNumberOfMessagesFromSession();
+                handler.postDelayed( this, 60000 );
+            }
+        };
+        handler.post( runnableCode );
     }
 
     private void response(List<User> returnedKids) {
@@ -75,7 +114,7 @@ public class MyKidsActivity extends AppCompatActivity {
 
 
             myKidsList.add(userInfo);
-            ArrayAdapter adapter = new ArrayAdapter(MyKidsActivity.this, R.layout.da_items, myKidsList);
+            ArrayAdapter adapter = new ArrayAdapter(MyKidsActivity.this, R.layout.swipe_listview, myKidsList);
             kidsList.setAdapter(adapter);
 
             SwipeMenuCreator creator = new SwipeMenuCreator() {
@@ -156,18 +195,6 @@ public class MyKidsActivity extends AppCompatActivity {
             }
         });
     }
-
-    /*
-    private void setupMapBtn(){
-        Button parentsDashboardBtn = findViewById(R.id.myKidsMapBtn);
-        parentsDashboardBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intentToDashboard = ParentsDashboardActivity.makeIntent(MyKidsActivity.this);
-                startActivity(intentToDashboard);
-            }
-        });
-    }*/
 
     private void notifyUserViaLogAndToast(String message) {
         Log.w(TAG, message);

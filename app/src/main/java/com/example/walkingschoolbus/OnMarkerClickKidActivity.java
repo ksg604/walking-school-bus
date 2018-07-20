@@ -1,3 +1,7 @@
+/**
+ * Activity launches from map activity. Allows user to have their kid join a walking group that was
+ * clicked on in the map
+ */
 package com.example.walkingschoolbus;
 
 import android.app.Activity;

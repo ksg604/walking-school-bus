@@ -1,3 +1,5 @@
+//This is a google maps activity to allow users to add their kid to existing Walking Groups
+
 package com.example.walkingschoolbus;
 
 

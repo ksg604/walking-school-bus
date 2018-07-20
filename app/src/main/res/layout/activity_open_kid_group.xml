@@ -16,10 +16,9 @@
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/groupMembersOpenKid"
-        app:layout_constraintVertical_bias="0.088">
+        app:layout_constraintVertical_bias="1.0">
 
     </com.baoyz.swipemenulistview.SwipeMenuListView>
 
@@ -27,31 +26,23 @@
     <TextView
         android:id="@+id/groupNameOpenGroupKid"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="4dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/groupIdOpenGroupKid"
+        android:id="@+id/groupMembersOpenKid"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="14dp"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/groupNameOpenGroupKid" />
-
-    <TextView
-        android:id="@+id/groupMembersOpenKid"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="@+id/groupIdOpenGroupKid"
-        tools:layout_editor_absoluteX="4dp" />
 
 </android.support.constraint.ConstraintLayout>

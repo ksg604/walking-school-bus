@@ -1,3 +1,6 @@
+/**
+ * MonitoredList activity provides user with list of persons who monitors me with options to remove.
+ */
 package com.example.walkingschoolbus;
 
 import android.content.Context;
@@ -26,9 +29,7 @@ import java.util.List;
 
 import retrofit2.Call;
 
-/**
- * MonitoredList activity provides user with list of persons who monitors me with options to remove.
- */
+
 public class MonitoredListActivity extends AppCompatActivity {
 
 
@@ -72,7 +73,7 @@ public class MonitoredListActivity extends AppCompatActivity {
             String userInfo =  getString( R.string.user_name_list )+ " " + user.getName()+"\n" + getString(R.string.user_email_list) + user.getEmail();
 
             monitoredUser.add(userInfo);
-            ArrayAdapter adapter = new ArrayAdapter(MonitoredListActivity.this, R.layout.da_items, monitoredUser);
+            ArrayAdapter adapter = new ArrayAdapter(MonitoredListActivity.this, R.layout.swipe_listview, monitoredUser);
             monitoredList.setAdapter(adapter);
 
         }

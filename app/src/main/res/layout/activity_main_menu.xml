@@ -166,7 +166,7 @@
                     android:weightSum="3">
 
                     <ImageView
-                        android:layout_width="25dp"
+                        android:layout_width="20dp"
                         android:layout_height="0dp"
                         android:layout_gravity="center"
                         android:layout_marginTop="8dp"
@@ -179,7 +179,7 @@
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="@string/menu_broadcasts"
+                        android:text="@string/communicate"
                         android:textColor="#fff"
                         android:textSize="12sp" />
 
@@ -198,7 +198,7 @@
                     android:weightSum="3">
 
                     <ImageView
-                        android:layout_width="25dp"
+                        android:layout_width="20dp"
                         android:layout_height="0dp"
                         android:layout_gravity="center"
                         android:layout_marginTop="8dp"
@@ -206,6 +206,7 @@
                         android:src="@mipmap/ic_textsms_white_48dp" />
 
                     <TextView
+                        android:id="@+id/messagesMainMenu"
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
                         android:layout_gravity="center"
@@ -214,19 +215,13 @@
                         android:text="@string/menu_message"
                         android:textColor="#fff"
                         android:textSize="12sp" />
+
                 </LinearLayout>
             </LinearLayout>
 
 
         </TableRow>
 
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-
-        </TableRow>
 
     </TableLayout>
 
@@ -262,7 +257,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginStart="56dp"
         android:elevation="0dp"
-        android:text="EMERGENCY"
+        android:text="@string/emergency"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -277,15 +272,5 @@
         android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/trackingSwitch"
         app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/MessageNumber"
-        android:layout_width="48dp"
-        android:layout_height="15dp"
-        android:layout_marginBottom="144dp"
-        android:layout_marginEnd="36dp"
-        android:textColor="?attr/colorAccent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
