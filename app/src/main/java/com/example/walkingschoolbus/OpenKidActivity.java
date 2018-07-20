@@ -94,7 +94,7 @@ public class OpenKidActivity extends AppCompatActivity {
         Log.i("Debug66","Name: "+group.getId());
 
 
-        String groupInfo = getString(R.string.open_kid_group_id) + " " + group.getId()+"\n "+
+        String groupInfo = getString(R.string.open_kid_group_id) + " " + group.getId()+"\n"+
                  getString(R.string.open_kid_group_description) + group.getGroupDescription();
         kidsGroupList.add(groupInfo);
 

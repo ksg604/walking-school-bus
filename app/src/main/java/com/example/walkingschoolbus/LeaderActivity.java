@@ -84,7 +84,6 @@ public class LeaderActivity extends AppCompatActivity {
      *
      */
     private void responseForList(List<User> returnedUsers) {
-        notifyUserViaLogAndToast("Got list of " + returnedUsers.size() + " users! See logcat.");
         Log.w(TAG, "Got all users of this group!!");
 
         SwipeMenuListView userListView = (SwipeMenuListView) findViewById(R.id.userList);
@@ -176,7 +175,7 @@ public class LeaderActivity extends AppCompatActivity {
      * After delete the group, show user that group is deleted
      */
     private void responseForRemove(Void returnedNothing) {
-        notifyUserViaLogAndToast("Delete successfully");
+        notifyUserViaLogAndToast(getString(R.string.delete_message));
     }
 
     /**
@@ -231,7 +230,7 @@ public class LeaderActivity extends AppCompatActivity {
                 if(!tokenSession.isTracking()){
                     MainMenu.turnOnGpsUpdate();
                     tokenSession.setTracking( true );
-                    notifyUserViaLogAndToast( "Now your GPS is updating " );
+                    notifyUserViaLogAndToast( getString(R.string.gps_message) );
                     tokenSession.setTracking(true);
                 }
             }
