@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.baoyz.swipemenulistview.SwipeMenuListView;
@@ -62,23 +63,10 @@ public class SendMessageActivity extends AppCompatActivity {
         extractDataFromIntent();
 
         setupSendButton();
-        setupGetButtonForTest();
-    }
-
-    private void setupGetButtonForTest() {
-        Button btn = (Button) findViewById(R.id.btnGetMessage);
-       // String temp;
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Call<List<Message>> caller = proxy.getMessageForUser( user.getId());
-                ProxyBuilder.callProxy(SendMessageActivity.this, caller,
-                        returnedMessageList -> responseMessage(returnedMessageList));
-
-            }
-        });
+        setHelpText();
 
     }
+
 
     private void setupSendButton() {
         Button sendButton = (Button) findViewById(R.id.btnsendMessage);
@@ -98,18 +86,12 @@ public class SendMessageActivity extends AppCompatActivity {
                 ProxyBuilder.callProxy(SendMessageActivity.this, caller,
                         returnedNothing -> responseForSend(returnedNothing));
 /*
+ possblie future features
+
                 Call<List<User>> callGroupMember = proxy.getGroupMembers(tempGroupID);
                 ProxyBuilder.callProxy(SendMessageActivity.this, callGroupMember,
                         returnedGroupMember -> responseGetGroupMember(returnedGroupMember));
 */
-
-
-
-
-                //TODO:
-                // Need to get group members' user ID
-                // Then sendMessageToParents
-
 
 
             }
@@ -176,6 +158,12 @@ public class SendMessageActivity extends AppCompatActivity {
     private void responseMessageSender(User returnedUser) {
          senderEmail.add(returnedUser.getEmail());
     }
+
+    private void setHelpText() {
+        TextView helpText = (TextView) findViewById( R.id.helpTextInSendMessages );
+        helpText.setText(getString( R.string.broadcast_instructions ));
+    }
+
 
     private void notifyUserViaLogAndToast(String message) {
        // Log.w(TAG, message);

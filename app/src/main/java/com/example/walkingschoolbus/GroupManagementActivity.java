@@ -151,7 +151,7 @@ public class GroupManagementActivity extends AppCompatActivity {
                 // set item width
                 sendMessage.setWidth(240);
                 // set item title
-                sendMessage.setTitle("Broadcasts");
+                sendMessage.setTitle(getString( R.string.message_swipe ));
                 // set item title font size
                 sendMessage.setTitleSize(15);
                 // set item title font color

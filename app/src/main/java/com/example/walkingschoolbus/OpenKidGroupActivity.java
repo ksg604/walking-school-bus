@@ -65,8 +65,7 @@ public class OpenKidGroupActivity extends AppCompatActivity {
         //Set layout textviews
         TextView groupName = findViewById(R.id.groupNameOpenGroupKid);
         groupName.setText(getString(R.string.group_name)+ " "+theReturnedGroup.getGroupDescription());
-        TextView groupId = findViewById(R.id.groupIdOpenGroupKid);
-        groupId.setText(getString(R.string.group_id_kid)+ " "+theReturnedGroup.getId());
+
         TextView members = findViewById(R.id.groupMembersOpenKid);
         members.setText(getString(R.string.kid_group_members));
 
