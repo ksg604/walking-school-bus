@@ -250,7 +250,6 @@ public class MemberActivity extends AppCompatActivity {
         });
     }
 
-
     /**
      * After delete the group, show user that group is deleted
      */
@@ -270,7 +269,6 @@ public class MemberActivity extends AppCompatActivity {
                     session.setTracking( true );
                     notifyUserViaLogAndToast( "Now your GPS is updating " );
                 }
-
             }
         } );
     }
