@@ -13,7 +13,7 @@
         android:layout_marginBottom="250dp"
         android:layout_marginStart="27dp"
         android:layout_marginTop="8dp"
-        android:text="Loading..."
+        android:text="@string/loading"
         android:textAlignment="viewStart"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:typeface="normal"
