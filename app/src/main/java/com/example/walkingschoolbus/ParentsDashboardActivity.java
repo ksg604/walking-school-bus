@@ -19,6 +19,7 @@ import android.location.LocationProvider;
 import android.os.Build;
 import android.os.Bundle;
 
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
@@ -87,6 +88,8 @@ public class ParentsDashboardActivity extends FragmentActivity implements OnMapR
     private static final float DEFAULT_ZOOM = 14f;
     WGServerProxy proxy;
     private Session token = Session.getInstance();
+    private static Handler handler = new Handler();
+    private static Runnable runnableCode;
 
     private Marker kidLocationMarker;
     private User currentUser;
@@ -109,6 +112,7 @@ public class ParentsDashboardActivity extends FragmentActivity implements OnMapR
 
 
     private void getAllKids(){
+        mMap.clear();
         Call<List<User>> kidListCaller = proxy.getMonitorsUsers(currentUser.getId());
         ProxyBuilder.callProxy(ParentsDashboardActivity.this, kidListCaller, returnedKids -> response(returnedKids));
     }
@@ -218,7 +222,8 @@ public class ParentsDashboardActivity extends FragmentActivity implements OnMapR
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        getAllKids();
+        makeHandlerRun();
+
 
         //If user enables the app to access their location, get user location.
         if(mLocationPermissionsGranted){
@@ -239,7 +244,21 @@ public class ParentsDashboardActivity extends FragmentActivity implements OnMapR
                 return false;
             }
         });
+
     }
+    private void makeHandlerRun() {
+        runnableCode = new Runnable(){
+            public void run() {
+
+                getAllKids();
+                handler.postDelayed(this, 30000);
+            }
+        };
+        handler.post(runnableCode);
+    }
+
+
+
 
     /**
      * Retrieves the phones location and marks it on the map.
