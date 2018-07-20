@@ -206,5 +206,10 @@
     <string name ="send">SEND</string>
     <string name ="type_message">Type message here</string>
 
+    <!-- send message-->
+    <string name = "send_emergency_message">sendEmergency</string>
+    <string name = "send_regular_message">SendNormal</string>
+
+
 
 </resources>
