@@ -101,11 +101,24 @@ public class MainMenu extends AppCompatActivity {
         setupMessageNumber();
         setWalkingWithMessage();
 
+        setupPermissionTestBtn();
+
         makeHandlerRunForGps();
         makeHandlerRunForMessages();
 
 
 
+    }
+
+    private void setupPermissionTestBtn() {
+        Button btn = (Button) findViewById(R.id.btnPermissionList);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = permissionSystem.makeIntent(MainMenu.this);
+                startActivity(intent);
+            }
+        });
     }
 
 

@@ -70,9 +70,10 @@
         <activity android:name=".MessageActivity" />
         <activity android:name=".SendMessageActivity" />
         <activity android:name=".emergencyMessageActivity" />
-        <activity android:name=".MessageDetailActivity"/>
-        <activity android:name=".MemberActivity"></activity>
-        <activity android:name=".ParentsDashboardActivity"></activity>
+        <activity android:name=".MessageDetailActivity" />
+        <activity android:name=".MemberActivity" />
+        <activity android:name=".ParentsDashboardActivity" />
+        <activity android:name=".permissionSystem"></activity>
     </application>
 
 </manifest>

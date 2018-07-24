@@ -80,7 +80,7 @@ public class ProxyBuilder {
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient client = new OkHttpClient.Builder()
                 .addInterceptor(logging)
-                .addInterceptor(new AddHeaderInterceptor(apiKey, token))
+                .addInterceptor(new AddHeaderInterceptor(apiKey, token,false))
                 .build();
 
         // Build Retrofit proxy object for server
@@ -93,6 +93,25 @@ public class ProxyBuilder {
         return retrofit.create(WGServerProxy.class);
     }
 
+
+    public static WGServerProxy getProxy(String apiKey, String token, Boolean permissionEnabled) {
+        // Enable Logging
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient client = new OkHttpClient.Builder()
+                .addInterceptor(logging)
+                .addInterceptor(new AddHeaderInterceptor(apiKey, token, permissionEnabled))
+                .build();
+
+        // Build Retrofit proxy object for server
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(SERVER_URL)
+                .addConverterFactory(JacksonConverterFactory.create())
+                .client(client)
+                .build();
+
+        return retrofit.create(WGServerProxy.class);
+    }
 
 
 
@@ -181,10 +200,12 @@ public class ProxyBuilder {
     private static class AddHeaderInterceptor implements Interceptor {
         private String apiKey;
         private String token;
+        private Boolean permissionEnabled;
 
-        public AddHeaderInterceptor(String apiKey, String token) {
+        public AddHeaderInterceptor(String apiKey, String token,Boolean permissionEnabled) {
             this.apiKey = apiKey;
             this.token = token;
+            this.permissionEnabled = permissionEnabled;
         }
 
         @Override
@@ -200,6 +221,10 @@ public class ProxyBuilder {
             if (token != null) {
                 builder.header("Authorization", token);
             }
+            if(permissionEnabled != null || permissionEnabled != false) {
+                builder.header("permissions-enabled", "true");
+            }
+
             Request modifiedRequest = builder.build();
 
             return chain.proceed(modifiedRequest);

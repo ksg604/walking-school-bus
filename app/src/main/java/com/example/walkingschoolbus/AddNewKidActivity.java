@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.walkingschoolbus.model.PermissionRequest;
 import com.example.walkingschoolbus.model.Session;
 import com.example.walkingschoolbus.model.User;
 import com.example.walkingschoolbus.proxy.ProxyBuilder;
@@ -40,7 +41,7 @@ public class AddNewKidActivity extends AppCompatActivity {
 
         session = Session.getInstance();
         parent = session.getUser();
-        proxy = ProxyBuilder.getProxy(getString(R.string.api_key), session.getToken());
+        proxy = ProxyBuilder.getProxy(getString(R.string.api_key), session.getToken(),true);
         setupTextViews();
         setupConfirmBtn();
 
@@ -93,6 +94,11 @@ public class AddNewKidActivity extends AppCompatActivity {
     private void response1(User returnedKid){
         kid = returnedKid;
         Call<List<User>> caller = proxy.addToMonitorsUsers(parent.getId(),returnedKid);
+        List<PermissionRequest> permissionList = new ArrayList<>();
+        permissionList = returnedKid.getPendingPermissionRequests();
+        for(PermissionRequest permissions : permissionList) {
+            Log.i("Show permission details", permissions.getAction());
+        }
         ProxyBuilder.callProxy(AddNewKidActivity.this, caller, updatedMonitorsList -> response2(updatedMonitorsList));
     }
 
