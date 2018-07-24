@@ -71,7 +71,7 @@ public class AddNewParentsActivity extends AppCompatActivity {
 
 
     private void responseForParents(User returnedUsers) {
-        notifyUserViaLogAndToast("Server replied with user: " + returnedUsers.getEmail());
+        notifyUserViaLogAndToast(returnedUsers.getEmail());
         Call<List<User>> caller = proxy.addToMonitoredByUsers(user.getId(), returnedUsers);
         ProxyBuilder.callProxy(AddNewParentsActivity.this, caller, returnedUser -> response(returnedUser));
 
@@ -87,9 +87,9 @@ public class AddNewParentsActivity extends AppCompatActivity {
 
     }
 
-    private void notifyUserViaLogAndToast(String message) {
-        Log.w(TAG, message);
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+    private void notifyUserViaLogAndToast(String email) {
+        Log.w(TAG, email);
+        Toast.makeText(this,getString(R.string.request_sent) + email, Toast.LENGTH_SHORT).show();
     }
 
     public static Intent makeIntent(Context context){

@@ -60,10 +60,7 @@ public class MyParentsActivity extends AppCompatActivity {
 
         //Add parents Button
         setupAddParentsButton();
-
-
     }
-
 
     private void response(List<User> returnedUsers) {
 
@@ -120,8 +117,6 @@ public class MyParentsActivity extends AppCompatActivity {
                 return false;
             }
         });
-
-
     }
 
     private void setupAddParentsButton() {
@@ -184,7 +179,4 @@ public class MyParentsActivity extends AppCompatActivity {
         finish();
         startActivity(getIntent());
     }
-
-
-
 }

@@ -218,4 +218,7 @@
     <string name="send_regular_message">SendNormal</string>
 
 
+    <!-- Generic Permission-->
+    <string name="request_sent">Request Sent To:\u0020</string>
+
 </resources>
