@@ -115,7 +115,7 @@ public class MainMenu extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = permissionSystem.makeIntent(MainMenu.this);
+                Intent intent = PermissionSystem.makeIntent(MainMenu.this);
                 startActivity(intent);
             }
         });

@@ -30,7 +30,7 @@ import retrofit2.Call;
 
 import static com.example.walkingschoolbus.proxy.WGServerProxy.PermissionStatus.APPROVED;
 
-public class permissionSystem extends AppCompatActivity {
+public class PermissionSystem extends AppCompatActivity {
 
 
     private User user;
@@ -56,7 +56,7 @@ public class permissionSystem extends AppCompatActivity {
 
         // Make call
         Call<List<PermissionRequest>> caller = proxy.getPermissionForUser(user.getId());
-        ProxyBuilder.callProxy(permissionSystem.this, caller, returnedUsers -> response(returnedUsers));
+        ProxyBuilder.callProxy(PermissionSystem.this, caller, returnedUsers -> response(returnedUsers));
     }
 
     private void setPermissionTextView() {
@@ -67,7 +67,7 @@ public class permissionSystem extends AppCompatActivity {
 
 
     public static Intent makeIntent(Context context) {
-        Intent intent = new Intent(context, permissionSystem.class);
+        Intent intent = new Intent(context, PermissionSystem.class);
         return intent;
     }
 
@@ -85,7 +85,7 @@ public class permissionSystem extends AppCompatActivity {
             PermissionRequest permissionRequest = new PermissionRequest();
             permissionRequest = permission;
             permissionsListTemp.add(permissionRequest);
-            ArrayAdapter adapter = new ArrayAdapter(permissionSystem.this, R.layout.swipe_listview, permissionsListTemp);
+            ArrayAdapter adapter = new ArrayAdapter(PermissionSystem.this, R.layout.swipe_listview, permissionsListTemp);
             permissionsList.setAdapter(adapter);
 
         }
@@ -155,7 +155,7 @@ public class permissionSystem extends AppCompatActivity {
                 switch (index) {
                     case 0:
                         Call<List<PermissionRequest>> caller = proxy.approveOrDenyPermissionRequest(permissionsListTemp.get(position).getId(), WGServerProxy.PermissionStatus.APPROVED);
-                        ProxyBuilder.callProxy(permissionSystem.this, caller, returnedNothing -> response(returnedNothing));
+                        ProxyBuilder.callProxy(PermissionSystem.this, caller, returnedNothing -> response(returnedNothing));
                       //  monitoringList.removeViewsInLayout(position,1);
                         break;
 

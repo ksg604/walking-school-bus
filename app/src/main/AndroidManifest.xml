@@ -73,7 +73,7 @@
         <activity android:name=".MessageDetailActivity" />
         <activity android:name=".MemberActivity" />
         <activity android:name=".ParentsDashboardActivity" />
-        <activity android:name=".permissionSystem"></activity>
+        <activity android:name=".PermissionSystem"></activity>
     </application>
 
 </manifest>
