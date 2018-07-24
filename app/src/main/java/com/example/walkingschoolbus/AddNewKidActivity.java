@@ -105,8 +105,8 @@ public class AddNewKidActivity extends AppCompatActivity {
     private void response2(List<User> parentNewMonitorsList){
         Log.i("debug3","New parent monitors list in addnewkidactivity "+parentNewMonitorsList);
         Log.i(TAG,""+parent.getName()+",you are now monitoring "+kid.getName());
-        Toast.makeText(AddNewKidActivity.this,parent.getName()+getString(R.string.parent_now_monitors_kid)+kid.getName()
-        ,Toast.LENGTH_LONG)
+        Toast.makeText(AddNewKidActivity.this,getString(R.string.request_sent)+kid.getName()
+        ,Toast.LENGTH_SHORT)
                 .show();
         Intent intent = MyKidsActivity.makeIntent(AddNewKidActivity.this);
         intent.putExtra("result",RESULT_OK);
