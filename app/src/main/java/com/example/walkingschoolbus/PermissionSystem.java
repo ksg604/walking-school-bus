@@ -28,7 +28,7 @@ import java.util.List;
 
 import retrofit2.Call;
 
-import static com.example.walkingschoolbus.proxy.WGServerProxy.PermissionStatus.APPROVED;
+
 
 public class PermissionSystem extends AppCompatActivity {
 
@@ -50,7 +50,7 @@ public class PermissionSystem extends AppCompatActivity {
         user = session.getUser();
         String savedToken = session.getToken();
 
-        setPermissionTextView();
+        //setPermissionTextView();
 
         proxy = ProxyBuilder.getProxy(getString(R.string.api_key),session.getToken());
 
@@ -78,15 +78,17 @@ public class PermissionSystem extends AppCompatActivity {
         SwipeMenuListView permissionsList = (SwipeMenuListView) findViewById(R.id.myPermissionList);
 
         for (PermissionRequest permission : returnedPermission) {
-           // Log.w(TAG, "    User: " + user.toString());
-            //String userInfo = getString(R.string.monitoring_user_name) + " "  + user.getName() +"\n"+
-              //      getString(R.string.monitoring_user_email)+ " " + user.getEmail();
-            String permissionInfo = permission.getStatus().toString();
-            PermissionRequest permissionRequest = new PermissionRequest();
-            permissionRequest = permission;
-            permissionsListTemp.add(permissionRequest);
-            ArrayAdapter adapter = new ArrayAdapter(PermissionSystem.this, R.layout.swipe_listview, permissionsListTemp);
-            permissionsList.setAdapter(adapter);
+           if(permission.getStatus().equals(WGServerProxy.PermissionStatus.PENDING)) {
+              // String permissionInfo = permission.getStatus().toString();
+               PermissionRequest permissionRequest = new PermissionRequest();
+               permissionRequest = permission;
+               permissionsListTemp.add(permissionRequest);
+               List<String> permissionsMessage = new ArrayList<>();
+               permissionsMessage.add(permission.getMessage());
+               ArrayAdapter adapter = new ArrayAdapter(PermissionSystem.this, R.layout.swipe_listview, permissionsMessage);
+               permissionsList.setAdapter(adapter);
+           }
+
 
         }
         SwipeMenuCreator creator = new SwipeMenuCreator() {
@@ -118,7 +120,7 @@ public class PermissionSystem extends AppCompatActivity {
                 // set item width
                 deleteItem.setWidth(180);
                 // set item title
-                deleteItem.setTitle(getString(R.string.add_to_group_swipe));
+                deleteItem.setTitle("Deny");
                 // set item title fontsize
                 deleteItem.setTitleSize(18);
                 // set item title font color
@@ -127,22 +129,6 @@ public class PermissionSystem extends AppCompatActivity {
                 menu.addMenuItem(deleteItem);
 
 
-                // create "group" list item
-                SwipeMenuItem goGroup = new SwipeMenuItem( getApplicationContext());
-                // set item background
-                goGroup.setBackground(new ColorDrawable(Color.rgb(120, 120,
-                        20)));
-
-                // set item width
-                goGroup.setWidth(180);
-                // set item title
-                goGroup.setTitle(getString(R.string.gorup_swipe));
-                // set item title fontsize
-                goGroup.setTitleSize(18);
-                // set item title font color
-                goGroup.setTitleColor(Color.WHITE);
-                // add to menu
-                menu.addMenuItem(goGroup);
             }
         };
 
@@ -154,19 +140,20 @@ public class PermissionSystem extends AppCompatActivity {
             public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
                 switch (index) {
                     case 0:
-                        Call<List<PermissionRequest>> caller = proxy.approveOrDenyPermissionRequest(permissionsListTemp.get(position).getId(), WGServerProxy.PermissionStatus.APPROVED);
-                        ProxyBuilder.callProxy(PermissionSystem.this, caller, returnedNothing -> response(returnedNothing));
+                        Call<List<PermissionRequest>> caller = proxy.approveOrDenyPermissionRequest(permissionsListTemp.get(position).getId(),
+                                WGServerProxy.PermissionStatus.APPROVED  );
+                        ProxyBuilder.callProxy(PermissionSystem.this, caller, returnedUsers -> response(returnedUsers));
                       //  monitoringList.removeViewsInLayout(position,1);
+                        permissionsList.removeViewsInLayout(position,1);
                         break;
 
                     case 1:
-
-
+                        Call<List<PermissionRequest>> caller2 = proxy.approveOrDenyPermissionRequest(permissionsListTemp.get(position).getId(),
+                                WGServerProxy.PermissionStatus.DENIED  );
+                        ProxyBuilder.callProxy(PermissionSystem.this, caller2, returnedUsers -> response(returnedUsers));
+                        permissionsList.removeViewsInLayout(position,1);
                         break;
 
-                    case 2:
-
-                        break;
 
                 }
 
