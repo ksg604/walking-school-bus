@@ -220,5 +220,6 @@
 
     <!-- Generic Permission-->
     <string name="request_sent">Request Sent To:\u0020</string>
+    <string name="group_pending"></string>
 
 </resources>
