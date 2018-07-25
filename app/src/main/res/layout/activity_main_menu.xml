@@ -273,4 +273,29 @@
         app:layout_constraintBottom_toTopOf="@+id/trackingSwitch"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:layout_marginEnd="24dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/tableLayout2"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageView
+            android:id="@+id/imageLaurel"
+            android:layout_width="match_parent"
+            android:layout_height="39dp"
+            android:visibility="visible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@mipmap/gold_laurel" />
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/menu_leader_board" />
+    </LinearLayout>
+
 </android.support.constraint.ConstraintLayout>
