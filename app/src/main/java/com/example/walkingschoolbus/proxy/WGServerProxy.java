@@ -145,11 +145,20 @@ public interface WGServerProxy {
     @GET("/permissions")
     Call<List<PermissionRequest>> getPermissions();
 
+    @GET("/permissions")
+    Call<List<com.example.walkingschoolbus.model.PermissionRequest>> getPermissionForUser(@Query("userId") Long userId);
+
+
+    @GET("/permissions")
+    Call<List<com.example.walkingschoolbus.model.PermissionRequest>> getPermissionForUserPending(@Query("userId") Long userId,
+                                                                                                 @Query("statusForUser") WGServerProxy.PermissionStatus ifPending);
+
+
     @GET("/permissions/{id}")
     Call<PermissionRequest> getPermissionById(@Path("id") long permissionId);
 
     @POST("/permissions/{id}")
-    Call<PermissionRequest> approveOrDenyPermissionRequest(
+    Call<List<com.example.walkingschoolbus.model.PermissionRequest>> approveOrDenyPermissionRequest(
             @Path("id") long permissionId,
             @Body PermissionStatus status
     );

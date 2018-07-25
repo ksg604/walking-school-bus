@@ -89,7 +89,7 @@ public class User {
 
     // Permissions
     // - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    //private List<PermissionRequest> pendingPermissionRequests;
+    private List<PermissionRequest> pendingPermissionRequests;
 
 
     private String href;
@@ -107,6 +107,13 @@ public class User {
     }
 
 
+    public List<PermissionRequest> getPendingPermissionRequests() {
+        return pendingPermissionRequests;
+    }
+
+    public void setPendingPermissionRequests(List<PermissionRequest> pendingPermissionRequests) {
+        this.pendingPermissionRequests = pendingPermissionRequests;
+    }
 
     public User(Long id){
         this.id = id;

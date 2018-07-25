@@ -102,14 +102,14 @@ public class MainMenu extends AppCompatActivity {
         setupMessageNumber();
         setWalkingWithMessage();
 
+        setupPermissionTestBtn();
+
         makeHandlerRunForGps();
         makeHandlerRunForMessages();
 
 
 
     }
-
-
 
     private void setupMessageNumber() {
 
@@ -184,6 +184,17 @@ public class MainMenu extends AppCompatActivity {
         });
     }
 
+    private void setupPermissionTestBtn() {
+        LinearLayout btn = (LinearLayout) findViewById(R.id.linearLayoutPermissions);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = PermissionSystem.makeIntent(MainMenu.this);
+                startActivity(intent);
+            }
+        });
+    }
+
     private void setupEmergencyButton() {
         Button btn = findViewById(R.id.btnEmergency);
         btn.setText( R.string.emergency);
@@ -199,6 +210,8 @@ public class MainMenu extends AppCompatActivity {
         });
     }
 
+
+
     /**
      * setup logout button to finish this app.
      */
@@ -208,14 +221,18 @@ public class MainMenu extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 session.deleteTokenAndVariables();
-                session.storeSession( MainMenu.this );
-                Intent intent = WelcomeScreen.makeIntent( MainMenu.this );
-                startActivity( intent );
-                finish();
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable(){
+                    public void run(){
+                        session.storeSession( MainMenu.this );
+                        Intent intent = WelcomeScreen.makeIntent( MainMenu.this );
+                        startActivity( intent );
+                        finish();
+                    }
+                },1000);
             }
         } );
     }
-
 
     /**
      * setup linear layout to redirect to settings page on click
@@ -337,15 +354,15 @@ public class MainMenu extends AppCompatActivity {
             }
         };
     }
-
+//TODO: Reactiviate
     private void makeHandlerRunForMessages(){
-        runnableForMessages = new Runnable(){
-            public void run() {
-                setupMessageNumber();
-                handlerForMessages.postDelayed( this,60000 );
-            }
-        };
-        handlerForMessages.post( runnableForMessages);
+ //       runnableForMessages = new Runnable(){
+//            public void run() {
+//                setupMessageNumber();
+//                handlerForMessages.postDelayed( this,60000 );
+//            }
+//        };
+//        handlerForMessages.post( runnableForMessages);
     }
 
 
