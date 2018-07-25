@@ -365,7 +365,7 @@ public class User {
 
 
 
-    /*
+
     // Setter will be called when deserializing User's JSON object; we'll automatically
     // expand it into the custom object.
 
@@ -404,7 +404,7 @@ public class User {
     public void setRewards(EarnedRewards rewards) {
         this.rewards = rewards;
     }
-    */
+
     // Utility Functions
     // -------------------------------------------------------------------------------------------
     @Override
