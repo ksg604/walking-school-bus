@@ -111,19 +111,6 @@ public class MainMenu extends AppCompatActivity {
 
     }
 
-    private void setupPermissionTestBtn() {
-        Button btn = (Button) findViewById(R.id.btnPermissionList);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = PermissionSystem.makeIntent(MainMenu.this);
-                startActivity(intent);
-            }
-        });
-    }
-
-
-
     private void setupMessageNumber() {
 
         Call<List<Message>> callerForUnreadMessage = proxy.getMessageNotRead(user.getId(), unread);
@@ -197,6 +184,17 @@ public class MainMenu extends AppCompatActivity {
         });
     }
 
+    private void setupPermissionTestBtn() {
+        LinearLayout btn = (LinearLayout) findViewById(R.id.linearLayoutPermissions);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = PermissionSystem.makeIntent(MainMenu.this);
+                startActivity(intent);
+            }
+        });
+    }
+
     private void setupEmergencyButton() {
         Button btn = findViewById(R.id.btnEmergency);
         btn.setText( R.string.emergency);
@@ -211,6 +209,8 @@ public class MainMenu extends AppCompatActivity {
             }
         });
     }
+
+
 
     /**
      * setup logout button to finish this app.
