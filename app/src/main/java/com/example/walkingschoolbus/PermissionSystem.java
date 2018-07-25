@@ -39,6 +39,7 @@ public class PermissionSystem extends AppCompatActivity {
 
 
     private ArrayList<PermissionRequest> permissionsListTemp = new ArrayList<>();
+    private List<String> permissionsMessage = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,10 +53,11 @@ public class PermissionSystem extends AppCompatActivity {
 
         //setPermissionTextView();
 
-        proxy = ProxyBuilder.getProxy(getString(R.string.api_key),session.getToken());
+        proxy = ProxyBuilder.getProxy(getString(R.string.api_key),session.getToken(),true);
 
         // Make call
         Call<List<PermissionRequest>> caller = proxy.getPermissionForUser(user.getId());
+        Log.i("My id:::::",user.getId().toString());
         ProxyBuilder.callProxy(PermissionSystem.this, caller, returnedUsers -> response(returnedUsers));
     }
 
@@ -78,16 +80,18 @@ public class PermissionSystem extends AppCompatActivity {
         SwipeMenuListView permissionsList = (SwipeMenuListView) findViewById(R.id.myPermissionList);
 
         for (PermissionRequest permission : returnedPermission) {
-           if(permission.getStatus().equals(WGServerProxy.PermissionStatus.PENDING)) {
-              // String permissionInfo = permission.getStatus().toString();
-               PermissionRequest permissionRequest = new PermissionRequest();
-               permissionRequest = permission;
-               permissionsListTemp.add(permissionRequest);
-               List<String> permissionsMessage = new ArrayList<>();
-               permissionsMessage.add(permission.getMessage());
-               ArrayAdapter adapter = new ArrayAdapter(PermissionSystem.this, R.layout.swipe_listview, permissionsMessage);
-               permissionsList.setAdapter(adapter);
-           }
+
+              // PermissionRequest permissionRequest = new PermissionRequest();
+               //permissionRequest = permission;
+               if(permission.getStatus().equals(WGServerProxy.PermissionStatus.PENDING)) {
+                   permissionsListTemp.add(permission);
+
+                   permissionsMessage.add(permission.getMessage());
+                   ArrayAdapter adapter = new ArrayAdapter(PermissionSystem.this, R.layout.swipe_listview, permissionsMessage);
+                   permissionsList.setAdapter(adapter);
+               }
+
+         //  }
 
 
         }
@@ -142,7 +146,8 @@ public class PermissionSystem extends AppCompatActivity {
                     case 0:
                         Call<List<PermissionRequest>> caller = proxy.approveOrDenyPermissionRequest(permissionsListTemp.get(position).getId(),
                                 WGServerProxy.PermissionStatus.APPROVED  );
-                        ProxyBuilder.callProxy(PermissionSystem.this, caller, returnedUsers -> response(returnedUsers));
+                        Log.i("Show me here",permissionsListTemp.get(position).getId().toString());
+                        ProxyBuilder.callProxy(PermissionSystem.this, caller, returnedUsers -> response2(returnedUsers));
                       //  monitoringList.removeViewsInLayout(position,1);
                         permissionsList.removeViewsInLayout(position,1);
                         break;
@@ -150,7 +155,7 @@ public class PermissionSystem extends AppCompatActivity {
                     case 1:
                         Call<List<PermissionRequest>> caller2 = proxy.approveOrDenyPermissionRequest(permissionsListTemp.get(position).getId(),
                                 WGServerProxy.PermissionStatus.DENIED  );
-                        ProxyBuilder.callProxy(PermissionSystem.this, caller2, returnedUsers -> response(returnedUsers));
+                        ProxyBuilder.callProxy(PermissionSystem.this, caller2, returnedUsers -> response2(returnedUsers));
                         permissionsList.removeViewsInLayout(position,1);
                         break;
 
@@ -167,7 +172,7 @@ public class PermissionSystem extends AppCompatActivity {
 
 
     }
-    private void response(Void returnedNothing) {
+    private void response2(List<PermissionRequest> returnedNothing) {
        // notifyUserViaLogAndToast(MonitoringListActivity.this.getString(R.string.notify_not_monitor));
     }
 

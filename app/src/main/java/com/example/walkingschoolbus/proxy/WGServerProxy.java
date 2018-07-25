@@ -148,6 +148,12 @@ public interface WGServerProxy {
     @GET("/permissions")
     Call<List<com.example.walkingschoolbus.model.PermissionRequest>> getPermissionForUser(@Query("userId") Long userId);
 
+
+    @GET("/permissions")
+    Call<List<com.example.walkingschoolbus.model.PermissionRequest>> getPermissionForUserPending(@Query("userId") Long userId,
+                                                                                                 @Query("statusForUser") WGServerProxy.PermissionStatus ifPending);
+
+
     @GET("/permissions/{id}")
     Call<PermissionRequest> getPermissionById(@Path("id") long permissionId);
 
