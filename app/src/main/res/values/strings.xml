@@ -33,6 +33,7 @@
     <string name="mm_not_walking">No Group Selected</string>
     <string name="menu_broadcasts">Broadcasts</string>
     <string name="menu_leader_board">Leader Board</string>
+    <string name="permissions">My Permissions</string>
 
     <!--Sign up-->
     <string name="name">Full Name: </string>
