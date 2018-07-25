@@ -135,29 +135,6 @@ public class MyParentsActivity extends AppCompatActivity {
 
     }
 
-    /*
-    /**
-     * put the result from PlacePickerActivity on the listview to update
-     * @param requestCode arbitrary code number in this activity to get result from the other Activity
-     * @param resultCode the result code from the other Activity
-     * @param intent intent for going to another activity
-     */
-    /*
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
-
-        switch(requestCode){
-            case REQUEST_CODE:
-                if (resultCode == Activity.RESULT_OK) {
-                    finish();
-                    startActivity(getIntent());
-
-                }
-                break;
-
-        }
-    }*/
-
     private void response(Void returnedNothing) {
         notifyUserViaLogAndToast(MyParentsActivity.this.getString(R.string.notify_delete));
     }

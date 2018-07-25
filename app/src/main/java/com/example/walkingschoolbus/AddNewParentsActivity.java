@@ -74,12 +74,6 @@ public class AddNewParentsActivity extends AppCompatActivity {
         notifyUserViaLogAndToast(returnedUsers.getEmail());
         Call<List<User>> caller = proxy.addToMonitoredByUsers(user.getId(), returnedUsers);
         ProxyBuilder.callProxy(AddNewParentsActivity.this, caller, returnedUser -> response(returnedUser));
-
-        //notifyUserViaLogAndToast(getString(R.string.notify_monitoring_user_added));
-        Intent intent = MyParentsActivity.makeIntent(AddNewParentsActivity.this);
-        intent.putExtra("result",RESULT_OK);
-        setResult( Activity.RESULT_OK, intent );
-        startActivity(intent);
         finish();
     }
 

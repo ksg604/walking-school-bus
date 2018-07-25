@@ -231,7 +231,7 @@ public class MainMenu extends AppCompatActivity {
             }
         } );
     }
-    
+
     /**
      * setup linear layout to redirect to settings page on click
      */
