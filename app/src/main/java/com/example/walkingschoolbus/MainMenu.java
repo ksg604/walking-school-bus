@@ -94,6 +94,7 @@ public class MainMenu extends AppCompatActivity {
         setupLayoutMyKids();
         setupLogOutButton();
         setupOnTrackingBtn();
+        setupLeaderBoardBtn();
 
         setupEmergencyButton();
         setupBroadcastsButton();
@@ -107,6 +108,7 @@ public class MainMenu extends AppCompatActivity {
 
 
     }
+
 
 
     private void setupMessageNumber() {
@@ -301,6 +303,22 @@ public class MainMenu extends AppCompatActivity {
             walkingMessage = getString(R.string.mm_not_walking);
         }
         walking.setText(walkingMessage);
+    }
+
+
+
+    private void setupLeaderBoardBtn() {
+        Button leaderBoard = findViewById( R.id.LeaderBoardBtn );
+        leaderBoard.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = LeaderBoardActivity.makeIntent(MainMenu.this );
+                startActivity( intent );
+            }
+        } );
+
+
+
     }
 
     public static Intent makeIntent(Context context) {

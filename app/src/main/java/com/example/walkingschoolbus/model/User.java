@@ -3,6 +3,7 @@ package com.example.walkingschoolbus.model;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
@@ -32,7 +33,7 @@ import retrofit2.Call;
 // It ensures deserialization does not fail if server sends you some fields you are not expecting.
 // This is needed for the server to be able to change without breaking your app!
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class User{
+public class User {
     private String token;
 
     // Data fields for the user.
@@ -80,10 +81,10 @@ public class User{
 
     // Gamification Support
     // - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    //private Integer currentPoints;
-    //private Integer totalPointsEarned;
+    private Integer currentPoints;
+    private Integer totalPointsEarned;
     // rewards will be serialized to be the customJson
-    //private EarnedRewards rewards;
+    private EarnedRewards rewards;
 
 
     // Permissions
@@ -337,7 +338,7 @@ public class User{
 
 
 
-    /*
+
 
     // Rewards (custom JSON data)
     // -------------------------------------------------------------------------------------------
@@ -357,7 +358,7 @@ public class User{
 
 
 
-
+    /*
     // Setter will be called when deserializing User's JSON object; we'll automatically
     // expand it into the custom object.
 
