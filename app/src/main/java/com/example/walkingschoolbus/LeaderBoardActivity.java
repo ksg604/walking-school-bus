@@ -90,13 +90,14 @@ public class LeaderBoardActivity extends AppCompatActivity {
                     }
                     flag++;
                 }
+                int order = i+1;
                 String stringForList;
                 if(flag > 1) {
-                    stringForList = userFirstName + " " + userLastName.charAt( 0 ) + getString(R.string.colon)+ "  "
+                    stringForList = order + " " + userFirstName + " " + userLastName.charAt( 0 ) + getString(R.string.colon)+ "  "
                             + user.getTotalPointsEarned()+ " " + getString(R.string.user_point_total);
                 }
                 else{
-                    stringForList = userFirstName + getString(R.string.colon)+ "  " + user.getTotalPointsEarned()
+                    stringForList = order + " " + userFirstName + getString(R.string.colon)+ "  " + user.getTotalPointsEarned()
                             +" " + getString(R.string.user_point_total) ;
                 }
                 listSortedStringUserInfo.add( stringForList );
