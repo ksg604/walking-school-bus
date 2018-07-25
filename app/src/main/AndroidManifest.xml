@@ -73,7 +73,8 @@
         <activity android:name=".MessageDetailActivity" />
         <activity android:name=".MemberActivity" />
         <activity android:name=".ParentsDashboardActivity" />
-        <activity android:name=".LeaderBoardActivity"></activity>
+        <activity android:name=".LeaderBoardActivity" />
+        <activity android:name=".PurchaseRewardsActivity"></activity>
     </application>
 
 </manifest>

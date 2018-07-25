@@ -32,6 +32,7 @@ import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.example.walkingschoolbus.model.EarnedRewards;
 import com.example.walkingschoolbus.model.GpsLocation;
 import com.example.walkingschoolbus.model.Group;
 import com.example.walkingschoolbus.model.Message;
