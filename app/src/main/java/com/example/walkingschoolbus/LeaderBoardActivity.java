@@ -92,11 +92,12 @@ public class LeaderBoardActivity extends AppCompatActivity {
                 }
                 String stringForList;
                 if(flag > 1) {
-                    stringForList = userFirstName + " " + userLastName.charAt( 0 ) + " " +
-                            "userpoints" + user.getTotalPointsEarned();
+                    stringForList = userFirstName + " " + userLastName.charAt( 0 ) + getString(R.string.colon)+ "  "
+                            + user.getTotalPointsEarned()+ " " + getString(R.string.user_point_total);
                 }
                 else{
-                    stringForList = userFirstName + " "  + "userpoints" + user.getTotalPointsEarned();
+                    stringForList = userFirstName + getString(R.string.colon)+ "  " + user.getTotalPointsEarned()
+                            +" " + getString(R.string.user_point_total) ;
                 }
                 listSortedStringUserInfo.add( stringForList );
             }else{

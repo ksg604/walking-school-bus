@@ -94,7 +94,7 @@ public class MainMenu extends AppCompatActivity {
         setupLayoutMyKids();
         setupLogOutButton();
         setupOnTrackingBtn();
-        setupLeaderBoardBtn();
+        setupLeaderBoardLaurel();
 
         setupEmergencyButton();
         setupBroadcastsButton();
@@ -307,17 +307,15 @@ public class MainMenu extends AppCompatActivity {
 
 
 
-    private void setupLeaderBoardBtn() {
-        Button leaderBoard = findViewById( R.id.LeaderBoardBtn );
-        leaderBoard.setOnClickListener( new View.OnClickListener() {
+    private void setupLeaderBoardLaurel() {
+        ImageView laurel = findViewById( R.id.imageLaurel );
+        laurel.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = LeaderBoardActivity.makeIntent(MainMenu.this );
                 startActivity( intent );
             }
         } );
-
-
 
     }
 
