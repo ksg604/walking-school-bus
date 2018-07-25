@@ -56,7 +56,8 @@ public class PermissionSystem extends AppCompatActivity {
         proxy = ProxyBuilder.getProxy(getString(R.string.api_key),session.getToken(),true);
 
         // Make call
-        Call<List<PermissionRequest>> caller = proxy.getPermissionForUser(user.getId());
+        Call<List<PermissionRequest>> caller = proxy.getPermissionForUserPending(user.getId(),
+                WGServerProxy.PermissionStatus.PENDING);
         Log.i("My id:::::",user.getId().toString());
         ProxyBuilder.callProxy(PermissionSystem.this, caller, returnedUsers -> response(returnedUsers));
     }
