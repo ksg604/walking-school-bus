@@ -76,7 +76,7 @@ public class PermissionRequest extends IdItemBase {
         return authorizors;
     }
 
-    @JsonIgnore
+    //@JsonIgnore
     public void setAuthorizors(Set<Authorizor> authorizors) {
         this.authorizors = authorizors;
     }
@@ -103,7 +103,7 @@ public class PermissionRequest extends IdItemBase {
             this.id = id;
         }
 
-        @JsonIgnore
+        //@JsonIgnore
         public Set<User> getUsers() {
             return users;
         }
@@ -120,7 +120,7 @@ public class PermissionRequest extends IdItemBase {
             this.status = status;
         }
 
-        @JsonIgnore
+       // @JsonIgnore
         public User getWhoApprovedOrDenied() {
             return whoApprovedOrDenied;
         }
