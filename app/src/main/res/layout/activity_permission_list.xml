@@ -8,55 +8,43 @@
     tools:layout_editor_absoluteY="81dp">
 
 
-    <com.baoyz.swipemenulistview.SwipeMenuListView
-        android:id="@+id/permissionList"
-        android:layout_width="367dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="31dp"
-        app:layout_constraintBottom_toTopOf="@+id/PermissionDetails"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView15">
-
-    </com.baoyz.swipemenulistview.SwipeMenuListView>
-
     <EditText
         android:id="@+id/PermissionDetails"
         android:layout_width="376dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="41dp"
+        android:layout_height="172dp"
+        android:background="@null"
+        android:backgroundTint="@android:color/transparent"
         android:ems="10"
         android:focusable="false"
-        android:inputType="textMultiLine"
+        android:inputType="textMultiLine|textNoSuggestions"
         android:longClickable="false"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/permissionList" />
+        tools:layout_editor_absoluteX="4dp"
+        tools:layout_editor_absoluteY="299dp" />
 
     <TextView
         android:id="@+id/textView14"
         android:layout_width="wrap_content"
-        android:layout_height="31dp"
-        android:layout_marginBottom="14dp"
-        android:layout_marginTop="29dp"
+        android:layout_height="23dp"
         android:text="@string/permission_title_view_all"
         android:textSize="18dp"
-        app:layout_constraintBottom_toTopOf="@+id/textView15"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        tools:layout_editor_absoluteX="93dp"
+        tools:layout_editor_absoluteY="7dp" />
 
     <TextView
         android:id="@+id/textView15"
         android:layout_width="wrap_content"
-        android:layout_height="29dp"
-        android:layout_marginBottom="10dp"
+        android:layout_height="20dp"
         android:text="@string/permission_viewall_subtitle"
-        app:layout_constraintBottom_toTopOf="@+id/permissionList"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView14" />
+        tools:layout_editor_absoluteX="122dp"
+        tools:layout_editor_absoluteY="30dp" />
+
+    <com.baoyz.swipemenulistview.SwipeMenuListView
+        android:id="@+id/permissionList"
+        android:layout_width="367dp"
+        android:layout_height="227dp"
+        tools:layout_editor_absoluteX="9dp"
+        tools:layout_editor_absoluteY="59dp">
+
+    </com.baoyz.swipemenulistview.SwipeMenuListView>
 
 </android.support.constraint.ConstraintLayout>
