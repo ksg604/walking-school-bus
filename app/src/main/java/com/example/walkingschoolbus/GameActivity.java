@@ -136,7 +136,9 @@ public class GameActivity extends AppCompatActivity {
             postIt.setVisibility( View.INVISIBLE );
             user.setCurrentPoints( user.getCurrentPoints()-priceReward );
             stickers[row][col] = true;
-            rewards = user.getRewards();
+            if (user.getRewards() != null){
+                rewards = user.getRewards();
+            }
             rewards.setStickers( stickers );
             user.setRewards( rewards );
 
