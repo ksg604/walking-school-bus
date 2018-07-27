@@ -75,6 +75,7 @@
         <activity android:name=".ParentsDashboardActivity" />
         <activity android:name=".GameActivity"/>
         <activity android:name=".LeaderBoardActivity"></activity>
+        <activity android:name=".PermissionSystem"></activity>
     </application>
 
 </manifest>

@@ -89,13 +89,10 @@ public class User {
 
     // Permissions
     // - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    //private List<PermissionRequest> pendingPermissionRequests;
+    private List<PermissionRequest> pendingPermissionRequests;
 
 
     private String href;
-    /*
-    Singleton Support
-    */
 
     //Constructors
     public User() { }
@@ -107,6 +104,13 @@ public class User {
     }
 
 
+    public List<PermissionRequest> getPendingPermissionRequests() {
+        return pendingPermissionRequests;
+    }
+
+    public void setPendingPermissionRequests(List<PermissionRequest> pendingPermissionRequests) {
+        this.pendingPermissionRequests = pendingPermissionRequests;
+    }
 
     public User(Long id){
         this.id = id;
@@ -149,6 +153,9 @@ public class User {
         this.leadsGroups = oldUser.getLeadsGroups();    // <-- TO BE IMPLEMENTED
 
         this.href=oldUser.getHref();
+        this.currentPoints =oldUser.getCurrentPoints();
+        this.totalPointsEarned = oldUser.getTotalPointsEarned();
+        this.rewards = oldUser.getRewards();
     }
 
     public void makeCopyOf(User oldUser){
@@ -167,6 +174,9 @@ public class User {
         this.leadsGroups = oldUser.getLeadsGroups();    // <-- TO BE IMPLEMENTED
 
         this.href=oldUser.getHref();
+        this.currentPoints =oldUser.getCurrentPoints();
+        this.totalPointsEarned = oldUser.getTotalPointsEarned();
+        this.rewards = oldUser.getRewards();
     }
 
     public Boolean getHasFullData() {
@@ -355,6 +365,8 @@ public class User {
     public void setTotalPointsEarned(Integer totalPointsEarned) {
         this.totalPointsEarned = totalPointsEarned;
     }
+
+
 
 
     // Setter will be called when deserializing User's JSON object; we'll automatically
