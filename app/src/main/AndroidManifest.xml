@@ -73,11 +73,10 @@
         <activity android:name=".MessageDetailActivity" />
         <activity android:name=".MemberActivity" />
         <activity android:name=".ParentsDashboardActivity" />
-        <activity android:name=".LeaderBoardActivity" />
-        <activity android:name=".PurchaseRewardsActivity"/>
-            <activity android:name=".GameActivity"/>
-                <activity android:name=".PermissionSystem">
-        </activity>
+        <activity android:name=".GameActivity"/>
+        <activity android:name=".LeaderBoardActivity"></activity>
+        <activity android:name=".PermissionSystem"></activity>
+        <activity android:name=".PermissionListActivity"></activity>
     </application>
 
 </manifest>
