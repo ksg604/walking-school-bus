@@ -93,9 +93,6 @@ public class User {
 
 
     private String href;
-    /*
-    Singleton Support
-    */
 
     //Constructors
     public User() { }
@@ -156,6 +153,9 @@ public class User {
         this.leadsGroups = oldUser.getLeadsGroups();    // <-- TO BE IMPLEMENTED
 
         this.href=oldUser.getHref();
+        this.currentPoints =oldUser.getCurrentPoints();
+        this.totalPointsEarned = oldUser.getTotalPointsEarned();
+        this.rewards = oldUser.getRewards();
     }
 
     public void makeCopyOf(User oldUser){
@@ -174,6 +174,9 @@ public class User {
         this.leadsGroups = oldUser.getLeadsGroups();    // <-- TO BE IMPLEMENTED
 
         this.href=oldUser.getHref();
+        this.currentPoints =oldUser.getCurrentPoints();
+        this.totalPointsEarned = oldUser.getTotalPointsEarned();
+        this.rewards = oldUser.getRewards();
     }
 
     public Boolean getHasFullData() {
@@ -414,8 +417,8 @@ public class User {
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
-               // ", currentPoints=" + currentPoints +
-                //", totalPointsEarned=" + totalPointsEarned +
+                ", currentPoints=" + currentPoints +
+                ", totalPointsEarned=" + totalPointsEarned +
                 ", monitoredByUsers=" + monitoredByUsers +
                 ", monitorsUsers=" + monitorsUsers +
                 ", memberOfGroups=" + memberOfGroups +
