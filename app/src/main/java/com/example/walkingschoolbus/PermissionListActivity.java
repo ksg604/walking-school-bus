@@ -61,6 +61,7 @@ public class PermissionListActivity extends AppCompatActivity {
         user = session.getUser();
         String savedToken = session.getToken();
 
+
         proxy = ProxyBuilder.getProxy(getString(R.string.api_key),session.getToken(),true);
 
         // Make call
@@ -118,6 +119,11 @@ public class PermissionListActivity extends AppCompatActivity {
                         //TextView textView = (TextView) findViewById(R.id.PermissionDetails);
                         permissionStatus = permissionsListTemp.get(position).getStatus().toString();
                         permissionAction = permissionsListTemp.get(position).getMessage();
+
+                        authorizorEmail.clear();
+                        authorizorStatus.clear();
+                        authorizorName.clear();
+
 
                         for(PermissionRequest.Authorizor temp : permissionsListTemp.get(position).getAuthorizors()) {
 
