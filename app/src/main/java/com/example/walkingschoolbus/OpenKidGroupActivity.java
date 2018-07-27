@@ -55,6 +55,7 @@ public class OpenKidGroupActivity extends AppCompatActivity {
         ProxyBuilder.callProxy(OpenKidGroupActivity.this, caller, returnedGroup -> response(returnedGroup));
 
     }
+
     private void response(Group theReturnedGroup){
         if(theReturnedGroup != null) {
             Log.i("Tag 93", "Server callback success");
@@ -65,10 +66,8 @@ public class OpenKidGroupActivity extends AppCompatActivity {
         //Set layout textviews
         TextView groupName = findViewById(R.id.groupNameOpenGroupKid);
         groupName.setText(getString(R.string.group_name)+ " "+theReturnedGroup.getGroupDescription());
-
         TextView members = findViewById(R.id.groupMembersOpenKid);
         members.setText(getString(R.string.kid_group_members));
-
         //Get the group members
         Call<List<User>> groupUserCaller = proxy.getGroupMembers(theReturnedGroup.getId());
         ProxyBuilder.callProxy(OpenKidGroupActivity.this, groupUserCaller, returnedUsers -> response2(returnedUsers));
@@ -83,7 +82,6 @@ public class OpenKidGroupActivity extends AppCompatActivity {
             String userInfo = getString(R.string.mykids_user_name) + " " + userInGroup.getName() + "\n" +
                     getString(R.string.mykids_user_email) + " " + userInGroup.getEmail();
             Log.i("Tag88","Initial user id: "+ userInGroup.getId());
-
             groupUserListInfo.add(userInfo);
             ArrayAdapter adapter = new ArrayAdapter(OpenKidGroupActivity.this, R.layout.swipe_listview, groupUserListInfo);
             groupUserList.setAdapter(adapter);

@@ -52,18 +52,12 @@ public class MyKidsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_kids);
-
         session = Session.getInstance();
         userToken = session.getToken();
         sessionID = session.getid();
         user = session.getUser();
-
-        //parent = User.getInstance();
-
         setupMyKidsTextView();
-
         proxy = ProxyBuilder.getProxy(getString(R.string.api_key), session.getToken());
-
         Call<List<User>> caller = proxy.getMonitorsUsers(sessionID);
         ProxyBuilder.callProxy(MyKidsActivity.this, caller, returnedKids -> response(returnedKids));
         setupAddNewKidBtn();
@@ -72,7 +66,6 @@ public class MyKidsActivity extends AppCompatActivity {
 
     }
 
-
     private void setupLinearLayoutMessages() {
         LinearLayout messages = findViewById( R.id.linearLayoutMessagesInMyKids );
         messages.setOnClickListener( new View.OnClickListener() {
@@ -80,17 +73,15 @@ public class MyKidsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = MessageActivity.makeIntent(MyKidsActivity.this);
                 startActivity(intent);
-
             }
         } );
     }
-    //
+
     private void getNumberOfMessagesFromSession(){
         numberOfMessages = session.getNumberOfMessages();
         TextView messages = (TextView) findViewById( R.id.messagesInMyKids );
         messages.setText( numberOfMessages);
     }
-
 
     private void makeHandlerRun() {
         runnableCode = new Runnable() {
@@ -106,12 +97,10 @@ public class MyKidsActivity extends AppCompatActivity {
 
         SwipeMenuListView kidsList = (SwipeMenuListView) findViewById(R.id.myKidsList);
 
-
         for (User kid : returnedKids) {
             Log.w(TAG, "    User: " + kid.toString());
             String userInfo = getString(R.string.mykids_user_name) + " " + kid.getName() + "\n" +
                     getString(R.string.mykids_user_email) + " " + kid.getEmail();
-
 
             myKidsList.add(userInfo);
             ArrayAdapter adapter = new ArrayAdapter(MyKidsActivity.this, R.layout.swipe_listview, myKidsList);
@@ -134,14 +123,11 @@ public class MyKidsActivity extends AppCompatActivity {
                     openItem.setTitleColor(Color.WHITE);
                     // add to menu
                     menu.addMenuItem(openItem);
-
-
                     // create "delete" item
                     SwipeMenuItem removeItem = new SwipeMenuItem(getApplicationContext());
                     // set item background
                     removeItem.setBackground(new ColorDrawable(Color.rgb(220, 20,
                             60)));
-
                     // set item width
                     removeItem.setWidth(180);
                     // set item title
@@ -152,9 +138,7 @@ public class MyKidsActivity extends AppCompatActivity {
                     removeItem.setTitleColor(Color.WHITE);
                     // add to menu
                     menu.addMenuItem(removeItem);
-
                 }
-
             };
             kidsList.setMenuCreator(creator);
 
@@ -181,7 +165,6 @@ public class MyKidsActivity extends AppCompatActivity {
     }
 
     private void removeResponse(Void returnedNothing) {
-
         notifyUserViaLogAndToast(MyKidsActivity.this.getString(R.string.mykids_notify_not_kid));
     }
 

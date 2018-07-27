@@ -46,11 +46,8 @@ public class PermissionListActivity extends AppCompatActivity {
     List<String> authorizorEmail = new ArrayList<>();
 
     String problem;
-
     String permissionStatus ;
     String permissionAction ;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +57,6 @@ public class PermissionListActivity extends AppCompatActivity {
         session = Session.getInstance();
         user = session.getUser();
         String savedToken = session.getToken();
-
 
         proxy = ProxyBuilder.getProxy(getString(R.string.api_key),session.getToken(),true);
 
@@ -134,22 +130,17 @@ public class PermissionListActivity extends AppCompatActivity {
                                 Log.i("Test User ID again Here",tempUser.getId().toString());
                                 Call<User> caller = proxy.getUserById(tempUser.getId());
                                 ProxyBuilder.callProxy(PermissionListActivity.this, caller, returnedPermissions -> response2(returnedPermissions));
-
                             }
-
                         }
                         Log.i("Sssize of status",Integer.toString(authorizorStatus.size()));
                         Log.i("Sssize of name",Integer.toString(authorizorName.size()));
                         Log.i("Sssize of email",Integer.toString(authorizorEmail.size()));
-
                         break;
                 }
                 // false : close the menu; true : not close the menu
                 return false;
             }
         });
-
-
     }
 
     private void response2(User returnedNothing) {
@@ -171,10 +162,8 @@ public class PermissionListActivity extends AppCompatActivity {
         }
     }
 
-
     public static Intent makeIntent(Context context) {
         Intent intent = new Intent(context, PermissionListActivity.class);
         return intent;
     }
-
 }

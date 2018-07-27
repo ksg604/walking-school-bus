@@ -34,7 +34,6 @@ public class SendMessageActivity extends AppCompatActivity {
     private User user;
     private static WGServerProxy proxy;
     private Session session;
-
     private Message message;
     private List<Message> MessageListFromServer = new ArrayList< >( );
     private List<String> messagesList = new ArrayList< >( );
@@ -42,33 +41,23 @@ public class SendMessageActivity extends AppCompatActivity {
     private Long tempGroupID;
     private List<String> senderEmail = new ArrayList<>();
 
-  //  private User tempUser;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_send_message);
-
         session = Session.getInstance();
         user = session.getUser();
-
         // Build the server proxy
         proxy = ProxyBuilder.getProxy(getString(R.string.api_key),session.getToken());
-
         message = new Message();
 
-
-        //message.setIsRead()
-        // Make call
         extractDataFromIntent();
         setupSendNormalButton();
         setupSendButton();
         setHelpText();
-
     }
 
     private void setupSendNormalButton() {
-
         Button sendButton = (Button) findViewById(R.id.btnsendRegularMessage);
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,14 +74,9 @@ public class SendMessageActivity extends AppCompatActivity {
                 Call<List<Message>> caller = proxy.sendMessageToGroup( tempGroupID , message);
                 ProxyBuilder.callProxy(SendMessageActivity.this, caller,
                         returnedNothing -> responseForSend(returnedNothing));
-
-
-
             }
         });
-
     }
-
 
     private void setupSendButton() {
         Button sendButton = (Button) findViewById(R.id.btnsendMessage);
@@ -111,28 +95,12 @@ public class SendMessageActivity extends AppCompatActivity {
                 Call<List<Message>> caller = proxy.sendMessageToGroup( tempGroupID , message);
                 ProxyBuilder.callProxy(SendMessageActivity.this, caller,
                         returnedNothing -> responseForSend(returnedNothing));
-/*
- possblie future features
-
-                Call<List<User>> callGroupMember = proxy.getGroupMembers(tempGroupID);
-                ProxyBuilder.callProxy(SendMessageActivity.this, callGroupMember,
-                        returnedGroupMember -> responseGetGroupMember(returnedGroupMember));
-*/
-
-
             }
         });
-
-    /*
-        Call<Message> caller2 = proxy.getAllMessages();
-        ProxyBuilder.callProxy(SendMessageActivity.this, caller2,
-                returnedNothing -> responseForRecieive(returnedNothing));
-                */
     }
 
     private void responseForSend(List<Message> returnedNothing) {
         notifyUserViaLogAndToast("Message sent!");
-
         Call<List<User>> callGroupMember = proxy.getGroupMembers(tempGroupID);
         ProxyBuilder.callProxy(SendMessageActivity.this, callGroupMember,
                 returnedGroupMember -> responseGetGroupMember(returnedGroupMember));
@@ -158,26 +126,20 @@ public class SendMessageActivity extends AppCompatActivity {
     private void responseMessage(List<Message> returnedMessageList) {
         SwipeMenuListView returnedMessageListView = (SwipeMenuListView) findViewById( R.id.messagesGot);
         for (Message message : returnedMessageList) {
-
             if(!(messagesList.contains(message.getText()))){
                 String messages = message.getText();
-
                 //get user by tempUserID
-
                 Call<User> caller = proxy.getUserById( message.getFromUser().getId());
 
                 ProxyBuilder.callProxy(SendMessageActivity.this, caller,
                         returnedUser -> responseMessageSender(returnedUser));
 
                 messagesList.add(messages);
-
             }
 
             ArrayAdapter adapterMember = new ArrayAdapter( SendMessageActivity.this,
                     R.layout.swipe_listview, messagesList );
             returnedMessageListView.setAdapter( adapterMember );
-
-          //  returnedMessageListView.
         }
     }
 

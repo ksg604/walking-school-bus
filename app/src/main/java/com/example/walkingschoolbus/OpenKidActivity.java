@@ -52,31 +52,22 @@ public class OpenKidActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_open_kid);
-
         session = Session.getInstance();
         user = session.getUser();
         String savedToken = session.getToken();
-
-
-
         proxy = ProxyBuilder.getProxy(getString(R.string.api_key), session.getToken());
-
         Intent getFromMyKidsIntent = getIntent();
         String kidsEmail = getFromMyKidsIntent.getExtras().getString("E");
         Call<User> caller = proxy.getUserByEmail(kidsEmail);
         ProxyBuilder.callProxy(OpenKidActivity.this, caller, returnedKid -> response(returnedKid));
-
     }
+
     private void response(User kid){
         kidUser = kid;
 
         TextView openKidsTitle = (TextView) findViewById( R.id.openKidTitle );
         String kidTitle = getString(R.string.open_kid_title_part1) + " " + kid.getName() + " " + getString(R.string.open_kid_title_part2);
         openKidsTitle.setText( kidTitle );
-
-
-
-
 
         List<Group> groupListKid = kid.getMemberOfGroups();
 
@@ -93,7 +84,6 @@ public class OpenKidActivity extends AppCompatActivity {
         SwipeMenuListView groupList = (SwipeMenuListView) findViewById(R.id.kidGroupList);
         Log.i("Debug66","Name: "+group.getId());
 
-
         String groupInfo = getString(R.string.open_kid_group_id) + " " + group.getId()+"\n"+
                  getString(R.string.open_kid_group_description) + group.getGroupDescription();
         kidsGroupList.add(groupInfo);
@@ -104,7 +94,6 @@ public class OpenKidActivity extends AppCompatActivity {
         SwipeMenuCreator creator = new SwipeMenuCreator() {
             @Override
             public void create(SwipeMenu menu) {
-
                 // create "map" item
                 SwipeMenuItem mapItem = new SwipeMenuItem(getApplicationContext());
                 // set item background
@@ -119,7 +108,6 @@ public class OpenKidActivity extends AppCompatActivity {
                 mapItem.setTitleColor(Color.WHITE);
                 // add to menu
                 menu.addMenuItem(mapItem);
-
                 // create "open" item
                 SwipeMenuItem openItem = new SwipeMenuItem(getApplicationContext());
                 // set item background
@@ -134,13 +122,10 @@ public class OpenKidActivity extends AppCompatActivity {
                 openItem.setTitleColor(Color.WHITE);
                 // add to menu
                 menu.addMenuItem(openItem);
-
-
                 SwipeMenuItem removeItem = new SwipeMenuItem(getApplicationContext());
                 // set item background
                 removeItem.setBackground(new ColorDrawable(Color.rgb(220, 20,
                         60)));
-
                 // set item width
                 removeItem.setWidth(180);
                 // set item title
@@ -183,9 +168,7 @@ public class OpenKidActivity extends AppCompatActivity {
         });
     }
 
-
     private void response(Void returnedNothing) { }
-
 
     public static Intent makeIntent(Context context, String userEmailToPass) {
         Intent intent = new Intent(context, OpenKidActivity.class);
@@ -228,5 +211,4 @@ public class OpenKidActivity extends AppCompatActivity {
         finish();
         startActivity(getIntent());
     }
-
 }

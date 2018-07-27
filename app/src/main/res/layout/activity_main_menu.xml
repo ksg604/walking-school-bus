@@ -21,12 +21,12 @@
 
     <TextView
         android:id="@+id/mainMenuWelcomeMessage"
-        android:layout_width="99dp"
+        android:layout_width="245dp"
         android:layout_height="32dp"
-        android:layout_marginTop="92dp"
+        android:layout_marginTop="120dp"
+        android:gravity="center_horizontal|center"
         android:textAppearance="@android:style/TextAppearance.Material.Headline"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -159,7 +159,6 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="95dp"
-
                 android:orientation="horizontal"
                 android:weightSum="4">
 

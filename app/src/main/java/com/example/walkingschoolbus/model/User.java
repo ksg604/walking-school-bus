@@ -139,19 +139,14 @@ public class User {
     // (and hence those will have hasFullData set to false for them).
     public User(User oldUser){
         this.id = oldUser.getId();
-
         this.hasFullData = oldUser.getHasFullData();
         this.name = oldUser.getName();
         this.email = oldUser.getEmail();
         this.password = oldUser.getPassword();
-
-
-        this.monitoredByUsers =oldUser.getMonitoredByUsers();// <-- TO BE IMPLEMENTED
-        this.monitorsUsers = oldUser.getMonitorsUsers();   // <-- TO BE IMPLEMENTED
-
-        this.memberOfGroups = oldUser.getMemberOfGroups(); // <-- TO BE IMPLEMENTED
-        this.leadsGroups = oldUser.getLeadsGroups();    // <-- TO BE IMPLEMENTED
-
+        this.monitoredByUsers =oldUser.getMonitoredByUsers();
+        this.monitorsUsers = oldUser.getMonitorsUsers();
+        this.memberOfGroups = oldUser.getMemberOfGroups();
+        this.leadsGroups = oldUser.getLeadsGroups();
         this.href=oldUser.getHref();
         this.currentPoints =oldUser.getCurrentPoints();
         this.totalPointsEarned = oldUser.getTotalPointsEarned();
@@ -160,19 +155,14 @@ public class User {
 
     public void makeCopyOf(User oldUser){
         this.id = oldUser.getId();
-
         this.hasFullData = oldUser.getHasFullData();
         this.name = oldUser.getName();
         this.email = oldUser.getEmail();
         this.password = oldUser.getPassword();
-
-
-        this.monitoredByUsers =oldUser.getMonitoredByUsers();// <-- TO BE IMPLEMENTED
-        this.monitorsUsers = oldUser.getMonitorsUsers();   // <-- TO BE IMPLEMENTED
-
-        this.memberOfGroups = oldUser.getMemberOfGroups(); // <-- TO BE IMPLEMENTED
-        this.leadsGroups = oldUser.getLeadsGroups();    // <-- TO BE IMPLEMENTED
-
+        this.monitoredByUsers =oldUser.getMonitoredByUsers();
+        this.monitorsUsers = oldUser.getMonitorsUsers();
+        this.memberOfGroups = oldUser.getMemberOfGroups();
+        this.leadsGroups = oldUser.getLeadsGroups();
         this.href=oldUser.getHref();
         this.currentPoints =oldUser.getCurrentPoints();
         this.totalPointsEarned = oldUser.getTotalPointsEarned();
@@ -189,7 +179,6 @@ public class User {
 
     // Basic User Data
     // -------------------------------------------------------------------------------------------
-
 
     public Long getId() {
         return id;
@@ -215,7 +204,6 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
-
 
     public Integer getBirthYear() {
         return birthYear;
@@ -289,7 +277,6 @@ public class User {
         this.lastGpsLocation = lastGpsLocation;
     }
 
-
     // Note: Password never returned by the server; only used to send password to server.
     public String getPassword() {
         return password;
@@ -345,11 +332,6 @@ public class User {
         this.href = href;
     }
 
-
-
-
-
-
     // Rewards (custom JSON data)
     // -------------------------------------------------------------------------------------------
     public Integer getCurrentPoints() {
@@ -358,7 +340,6 @@ public class User {
     public void setCurrentPoints(Integer currentPoints) {
         this.currentPoints = currentPoints;
     }
-
     public Integer getTotalPointsEarned() {
         return totalPointsEarned;
     }
@@ -366,12 +347,8 @@ public class User {
         this.totalPointsEarned = totalPointsEarned;
     }
 
-
-
-
     // Setter will be called when deserializing User's JSON object; we'll automatically
     // expand it into the custom object.
-
     public void setCustomJson(String jsonString) {
         if (jsonString == null || jsonString.length() == 0) {
             rewards = null;
@@ -427,8 +404,6 @@ public class User {
                 ", href='" + href + '\'' +
                 '}';
     }
-
-
 }
 
 

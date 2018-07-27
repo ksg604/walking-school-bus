@@ -32,8 +32,6 @@ public class Group {
 
     private List<User> memberUsers = new ArrayList<>();
 
-    //private JSONObject customJson = new JSONObject(  );
-
     private Boolean hasFullData;
 
     private String href;
@@ -51,7 +49,6 @@ public class Group {
         }
         return instance;
     }
-
     //Constructor
 
     public Group(long id, String groupDescription, List<Double> routeLatArray,
@@ -115,7 +112,6 @@ public class Group {
         return routeLatArray;
     }
 
-
     public void setRouteLatArray(List<Double> routeLatArray) {
         this.routeLatArray = routeLatArray;
     }
@@ -136,7 +132,6 @@ public class Group {
         this.leader = leader;
     }
 
-
     public List<User> getMemberUsers() {
         return memberUsers;
     }
@@ -144,11 +139,6 @@ public class Group {
     public void setMemberUsers(List<User> memberUsers) {
         this.memberUsers = memberUsers;
     }
-
-    public void clearGroup(){
-
-    }
-
 
     @Override
     public String toString() {

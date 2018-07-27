@@ -33,21 +33,10 @@ public class emergencyMessageActivity extends AppCompatActivity {
     private Session session;
     private Message message;
     private String successMessage;
-
-
-
     private List<Group> groupUserAsMemberList = new ArrayList<>();
     private List<Group> groupObjectList = new ArrayList<>();
-
     private List<Long> groupIdUserAsMemberList = new ArrayList<>();
-  //  private List<Message> MessageListFromServer = new ArrayList< >( );
-
-  //  private List<String> messagesList = new ArrayList< >( );
-
-  //  private List<User> groupMemberList = new ArrayList<>();
-
     boolean emergencyFlag;
-
 
     private List<String> senderEmail = new ArrayList<>();
 
@@ -57,11 +46,8 @@ public class emergencyMessageActivity extends AppCompatActivity {
 
         session = Session.getInstance();
         user = session.getUser();
-
         message = new Message();
-        // Build the server proxy
         proxy = ProxyBuilder.getProxy(getString(R.string.api_key),session.getToken());
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_emergency_message);
         TextView instructions = findViewById(R.id.txtViewEMessageInstruct);
@@ -110,15 +96,9 @@ public class emergencyMessageActivity extends AppCompatActivity {
                     Call<List<Message>> callGroupMemberParents = proxy.sendMessageToParents(user.getId(), message);
                     ProxyBuilder.callProxy(emergencyMessageActivity.this, callGroupMemberParents,
                             returnedNothing -> responseEmergency(returnedNothing));
-
                 }
-
-
-
             }
         });
-
-
     }
 
     private void responseEmergency(List<Message> returnedNothing) {
@@ -130,9 +110,6 @@ public class emergencyMessageActivity extends AppCompatActivity {
         // Log.w(TAG, message);
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
-
-
-
 
     public static Intent makeIntent(Context context,boolean ifEmergency){
         Intent intent = new Intent( context, emergencyMessageActivity.class );

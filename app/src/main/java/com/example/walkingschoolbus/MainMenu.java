@@ -27,6 +27,7 @@ import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.example.walkingschoolbus.model.EarnedRewards;
 import com.example.walkingschoolbus.model.GpsLocation;
 import com.example.walkingschoolbus.model.Group;
 import com.example.walkingschoolbus.model.Message;
@@ -46,7 +47,6 @@ import retrofit2.Call;
 
 public class MainMenu extends AppCompatActivity {
 
-    public static final String USER_TOKEN = "User token";
     private static final String TAG = "MainMenu";
     private GpsLocation lastGpsLocation = new GpsLocation();
     Session session = Session.getInstance();
@@ -54,22 +54,15 @@ public class MainMenu extends AppCompatActivity {
     private GpsLocation schoolLocation = new GpsLocation();
     String token = session.getToken();
     private Group group = session.getGroup();
-    private String userToken;
     private static WGServerProxy proxy;
     private Boolean mLocationPermissionsGranted = false;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 0;
-    private static final int REQUEST_CODE = 2016;
-    private FusedLocationProviderClient mFusedLocationProviderClient;
     private static Handler handlerForGps = new Handler();
     private static Handler handlerForMessages = new Handler();
     private static Runnable runnableForGps;
     private static Runnable runnableForMessages;
     private static int zeroDistance = 0;
-    private static  String welcomeMessage;
-
     private final static String unread = "unread";
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,12 +93,6 @@ public class MainMenu extends AppCompatActivity {
 
         makeHandlerRunForGps();
         makeHandlerRunForMessages();
-
-
-
-
-
-
     }
 
     private void setupMessageNumber() {
@@ -123,7 +110,6 @@ public class MainMenu extends AppCompatActivity {
                counter++;
            }
        }
-        //String temp = Integer.toString(returnedMessageList.size());
         String temp = Integer.toString(counter);
         TextView messages = (TextView) findViewById( R.id.messagesMainMenu );
         String numMessages = temp + " " +getString(R.string.menu_message);
@@ -196,7 +182,6 @@ public class MainMenu extends AppCompatActivity {
         Button btn = findViewById(R.id.btnEmergency);
         btn.setText( R.string.emergency);
 
-
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -206,8 +191,6 @@ public class MainMenu extends AppCompatActivity {
             }
         });
     }
-
-
 
     /**
      * setup logout button to finish this app.
@@ -240,11 +223,11 @@ public class MainMenu extends AppCompatActivity {
         handler.postDelayed(new Runnable(){
             public void run(){
                 if (session.getName() != null) {
-                    welcomeMessage = getString( R.string.hello ) + " " + session.getName();
+                    welcome.setText(getString( R.string.hello )  +" " + session.getName());
+                    Log.i(TAG,"set name with : "+session.getName());
                 } else {
-                    welcomeMessage = getString( R.string.hello );
+                    setTextViewMessage();
                 }
-                welcome.setText( welcomeMessage );
             }
         },2000);
     }
@@ -279,7 +262,6 @@ public class MainMenu extends AppCompatActivity {
         } );
     }
 
-
     /**
      * setup linear layout to redirect to my parents page on click
      */
@@ -294,7 +276,6 @@ public class MainMenu extends AppCompatActivity {
             }
         } );
     }
-
 
     /**
      * setup linear layout to redirect to my kids page on click
@@ -366,22 +347,26 @@ public class MainMenu extends AppCompatActivity {
     private void responseForPermissions(List<PermissionRequest> returnedPermission) {
         int pendingPermissionNum = returnedPermission.size();
 
+        //String temp = Integer.toString(returnedMessageList.size());
+        String temp = Integer.toString(pendingPermissionNum);
+        TextView messages = (TextView) findViewById( R.id.textView11 );
+        String numMessages = temp + " " +"Permissions";
+        session.setNumberOfMessages( temp );
+        messages.setText( numMessages );
+
     }
 
-    //TODO: Reactiviate
+
     private void makeHandlerRunForMessages(){
- //       runnableForMessages = new Runnable(){
-//            public void run() {
-//                setupMessageNumber();
-//                handlerForMessages.postDelayed( this,60000 );
-//            }
-//        };
-//        handlerForMessages.post( runnableForMessages);
+          runnableForMessages = new Runnable(){
+            public void run() {
+                setupMessageNumber();
+                setupGetUnreadPermissions();
+                handlerForMessages.postDelayed( this,60000 );
+            }
+        };
+        handlerForMessages.post( runnableForMessages);
     }
-
-
-
-
 
     private void updateLastGpsLocation() {
         LocationManager locationManager = (LocationManager) this.getSystemService( Context.LOCATION_SERVICE );
