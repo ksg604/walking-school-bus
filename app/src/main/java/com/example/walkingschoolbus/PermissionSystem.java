@@ -7,7 +7,9 @@ import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.baoyz.swipemenulistview.SwipeMenu;
@@ -52,6 +54,7 @@ public class PermissionSystem extends AppCompatActivity {
         String savedToken = session.getToken();
 
         //setPermissionTextView();
+        setupPermissionListButton();
 
         proxy = ProxyBuilder.getProxy(getString(R.string.api_key),session.getToken(),true);
 
@@ -60,6 +63,17 @@ public class PermissionSystem extends AppCompatActivity {
                 WGServerProxy.PermissionStatus.PENDING);
         Log.i("My id:::::",user.getId().toString());
         ProxyBuilder.callProxy(PermissionSystem.this, caller, returnedUsers -> response(returnedUsers));
+    }
+
+    private void setupPermissionListButton() {
+        ImageButton btn = (ImageButton) findViewById(R.id.imageBtnPermissonLIst);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = PermissionListActivity.makeIntent(PermissionSystem.this);
+                startActivity(intent);
+            }
+        });
     }
 
     private void setPermissionTextView() {
