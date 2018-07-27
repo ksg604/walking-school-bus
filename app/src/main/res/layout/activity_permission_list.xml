@@ -40,7 +40,7 @@
     <TextView
         android:id="@+id/textView14"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_height="29dp"
         android:layout_marginBottom="17dp"
         android:text="@string/permission_title_view_all"
         android:textSize="18dp"
