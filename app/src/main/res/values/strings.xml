@@ -226,6 +226,7 @@
 
     <!--Game-->
     <string name="get_rewards_btn">Get Rewards</string>
+    <string name="session_user_points">My Points: </string>
 
     <!-- Generic Permission-->
     <string name="request_sent">Request Sent To:\u0020</string>
