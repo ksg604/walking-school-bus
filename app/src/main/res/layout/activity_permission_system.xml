@@ -10,25 +10,25 @@
 
     <com.baoyz.swipemenulistview.SwipeMenuListView
         android:id="@+id/myPermissionList"
-        android:layout_width="340dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="101dp"
-        android:layout_marginStart="20dp"
+        android:layout_width="357dp"
+        android:layout_height="484dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="68dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView12">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
     </com.baoyz.swipemenulistview.SwipeMenuListView>
 
     <ImageButton
         android:id="@+id/imageBtnPermissonLIst"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="69dp"
+        android:layout_height="27dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/textView13"
+        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView12"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/sym_action_email" />
 
@@ -36,26 +36,21 @@
         android:id="@+id/textView12"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="44dp"
-        android:layout_marginEnd="40dp"
-        android:layout_marginStart="88dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:text="@string/base_title"
         android:textSize="18dp"
-        app:layout_constraintBottom_toTopOf="@+id/myPermissionList"
-        app:layout_constraintEnd_toStartOf="@+id/imageBtnPermissonLIst"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView13"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="532dp"
+        android:layout_width="60dp"
+        android:layout_height="27dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginTop="32dp"
         android:text="@string/permission_view_all"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/myPermissionList"
-        app:layout_constraintStart_toEndOf="@+id/myPermissionList"
-        app:layout_constraintTop_toBottomOf="@+id/imageBtnPermissonLIst" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
