@@ -75,12 +75,10 @@ public class GameActivity extends AppCompatActivity {
                     if (stickers[rowIdx][colIdx] == true) {
                         numRewards++;
                     }
-
                 }
             }
             priceReward = priceReward + (numRewards * 25);
         }
-
     }
 
     private void populatePostIt() {
@@ -102,7 +100,6 @@ public class GameActivity extends AppCompatActivity {
                  int COL_POST_IT = col;
                  int ROW_POST_IT = row;
 
-
                 ImageView postIt = new ImageView(this);
                 TableRow.LayoutParams imagelLayoutParams =  new TableRow.LayoutParams(
                         TableRow.LayoutParams.MATCH_PARENT,
@@ -119,7 +116,7 @@ public class GameActivity extends AppCompatActivity {
                     postIt.setOnClickListener( new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            Log.i(TAG,"user points before buying: "+user.getCurrentPoints());
+
                             gridImageClicked( COL_POST_IT, ROW_POST_IT );
 
                         }
@@ -130,6 +127,9 @@ public class GameActivity extends AppCompatActivity {
                 images[row][col] = postIt;
             }
         }
+
+
+
     }
 
     private void gridImageClicked(int col, int row) {
@@ -172,5 +172,4 @@ public class GameActivity extends AppCompatActivity {
         Intent intent = new Intent(context, GameActivity.class);
         return intent;
     }
-
 }

@@ -62,8 +62,6 @@ public class OnMarkerClickKidActivity extends AppCompatActivity {
 
         TextView prompt = findViewById(R.id.markerClickPromptKid);
         prompt.setText("Would you like your kid, "+kidUser.getName()+", to join this group?");
-
-
         setupNoBtn();
         setupYesBtn();
     }
@@ -71,7 +69,6 @@ public class OnMarkerClickKidActivity extends AppCompatActivity {
     private void getGroupDetails(){
         Intent intent = getIntent();
         Long groupId = intent.getExtras().getLong("id");
-
         Call<Group> groupCaller = proxy.getGroupById(groupId);
         ProxyBuilder.callProxy(OnMarkerClickKidActivity.this, groupCaller, group -> response(group));
     }
@@ -79,13 +76,9 @@ public class OnMarkerClickKidActivity extends AppCompatActivity {
         group = returnedGroup;
         Log.i("debugTag2",""+returnedGroup.getGroupDescription());
         TextView groupName = findViewById(R.id.groupNameMarkerClickKid);
-
         groupName.setText(getString(R.string.group_name)+ " "+returnedGroup.getGroupDescription());
-
         TextView groupId = findViewById(R.id.groupIdMarkerClickKid);
-
         groupId.setText(getString(R.string.group_id_kid)+ " "+returnedGroup.getId());
-
     }
 
     private void setupYesBtn(){
@@ -95,8 +88,6 @@ public class OnMarkerClickKidActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 addKidToGroup();
-
-
             }
         });
     }

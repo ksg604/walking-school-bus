@@ -74,8 +74,6 @@ import retrofit2.Call;
 
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
-
-
  public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
@@ -90,7 +88,6 @@ import static android.Manifest.permission.ACCESS_FINE_LOCATION;
     private Marker groupFinalLocationMarker;
     private Map<Marker, Long> markerLongHashMapMap = new HashMap<Marker, Long>();
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,7 +97,6 @@ import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
         proxy = ProxyBuilder.getProxy(getString(R.string.api_key),tokenValue);
         getUserLocationPermission();
-
     }
 
     /**
@@ -132,9 +128,6 @@ import static android.Manifest.permission.ACCESS_FINE_LOCATION;
                         .title( "Group: " + group.getGroupDescription() ) );
                 Log.i( "Debug tag 0.8", "group initial id is: " + group.getId() );
                 markerLongHashMapMap.put( groupFinalLocationMarker, group.getId() );
-
-
-
             }
         }
     }
@@ -144,9 +137,7 @@ import static android.Manifest.permission.ACCESS_FINE_LOCATION;
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
     }
-
 
     /**
      * Manipulates the map once available.
@@ -185,7 +176,6 @@ import static android.Manifest.permission.ACCESS_FINE_LOCATION;
                 return false;
             }
         });
-
     }
 
     /**
@@ -211,7 +201,6 @@ import static android.Manifest.permission.ACCESS_FINE_LOCATION;
                             moveCamera(new LatLng(sfu.getLatitude(), sfu.getLongitude()), DEFAULT_ZOOM);
                         } else{
                             moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), DEFAULT_ZOOM);
-
                         }
                     }
                 }
@@ -249,8 +238,6 @@ import static android.Manifest.permission.ACCESS_FINE_LOCATION;
         //to verify the results of user's selection.
             ActivityCompat.requestPermissions(this,permissions,LOCATION_PERMISSION_REQUEST_CODE);
         }
-
-
     }
 
     /**
@@ -275,8 +262,6 @@ import static android.Manifest.permission.ACCESS_FINE_LOCATION;
                }
        }
     }
-
-
 
     public static Intent makeIntent(Context context){
         Intent intent = new Intent(context, MapsActivity.class);

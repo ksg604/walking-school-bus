@@ -26,13 +26,11 @@ import retrofit2.Call;
 
 
 public class AddNewParentsActivity extends AppCompatActivity {
-
     private WGServerProxy proxy;
     private static final String TAG = "UserSetting";
     private String userEmail;
     private User user;
     private Session session;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,10 +46,7 @@ public class AddNewParentsActivity extends AppCompatActivity {
         setupAddToMonitoredButton();
     }
 
-
-
     private void setupAddToMonitoredButton() {
-
         Button button = (Button) findViewById(R.id.btnAddNewParent);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,7 +63,6 @@ public class AddNewParentsActivity extends AppCompatActivity {
         });
 
     }
-
 
     private void responseForParents(User returnedUsers) {
         notifyUserViaLogAndToast(returnedUsers.getEmail());
@@ -90,5 +84,4 @@ public class AddNewParentsActivity extends AppCompatActivity {
         Intent intent = new Intent(context, AddNewParentsActivity.class);
         return intent;
     }
-
 }

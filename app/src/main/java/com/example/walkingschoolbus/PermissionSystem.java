@@ -51,26 +51,15 @@ public class PermissionSystem extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_permission_system);
-
         makeHandlerRun();
-
         Session.getStoredSession(this);
         session = Session.getInstance();
         user = session.getUser();
-        String savedToken = session.getToken();
 
         //setPermissionTextView();
         setupPermissionListButton();
 
         proxy = ProxyBuilder.getProxy(getString(R.string.api_key),session.getToken(),true);
-
-        // Make call
-        /*
-        Call<List<PermissionRequest>> caller = proxy.getPermissionForUserPending(user.getId(),
-                WGServerProxy.PermissionStatus.PENDING);
-        Log.i("My id:::::",user.getId().toString());
-        ProxyBuilder.callProxy(PermissionSystem.this, caller, returnedUsers -> response(returnedUsers));
-        */
     }
 
     private void setupPermissionListButton() {
@@ -95,20 +84,13 @@ public class PermissionSystem extends AppCompatActivity {
         return intent;
     }
 
-
     private void response(List<PermissionRequest> returnedPermission) {
-
-
         SwipeMenuListView permissionsList = (SwipeMenuListView) findViewById(R.id.myPermissionList);
 
         for (PermissionRequest permission : returnedPermission) {
-
-              // PermissionRequest permissionRequest = new PermissionRequest();
-               //permissionRequest = permission;
                if(permission.getStatus().equals(WGServerProxy.PermissionStatus.PENDING)&&
                        (!permissionsListTemp.contains(permission))) {
                    permissionsListTemp.add(permission);
-
                    permissionsMessage.add(permission.getMessage());
                    ArrayAdapter adapter = new ArrayAdapter(PermissionSystem.this, R.layout.swipe_listview, permissionsMessage);
                    permissionsList.setAdapter(adapter);
@@ -177,11 +159,9 @@ public class PermissionSystem extends AppCompatActivity {
                 // false : close the menu; true : not close the menu
                 return false;
             }
-
         });
-
-
     }
+
     private void makeHandlerRun() {
         runnableCode = new Runnable(){
             public void run() {
@@ -193,8 +173,6 @@ public class PermissionSystem extends AppCompatActivity {
         handler.post(runnableCode);
     }
 
-
-
     private void setupGetUnreadPermissions() {
         Call<List<PermissionRequest>> caller = proxy.getPermissionForUserPending(user.getId(),
                 WGServerProxy.PermissionStatus.PENDING);
@@ -203,9 +181,5 @@ public class PermissionSystem extends AppCompatActivity {
     }
 
     private void response2(List<PermissionRequest> returnedNothing) {
-       // notifyUserViaLogAndToast(MonitoringListActivity.this.getString(R.string.notify_not_monitor));
     }
-
-
-
 }

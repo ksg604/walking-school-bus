@@ -47,7 +47,6 @@ import retrofit2.Call;
 
 public class MainMenu extends AppCompatActivity {
 
-    public static final String USER_TOKEN = "User token";
     private static final String TAG = "MainMenu";
     private GpsLocation lastGpsLocation = new GpsLocation();
     Session session = Session.getInstance();
@@ -55,21 +54,15 @@ public class MainMenu extends AppCompatActivity {
     private GpsLocation schoolLocation = new GpsLocation();
     String token = session.getToken();
     private Group group = session.getGroup();
-    private String userToken;
     private static WGServerProxy proxy;
     private Boolean mLocationPermissionsGranted = false;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 0;
-    private static final int REQUEST_CODE = 2016;
-    private FusedLocationProviderClient mFusedLocationProviderClient;
     private static Handler handlerForGps = new Handler();
     private static Handler handlerForMessages = new Handler();
     private static Runnable runnableForGps;
     private static Runnable runnableForMessages;
     private static int zeroDistance = 0;
-
     private final static String unread = "unread";
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -189,7 +182,6 @@ public class MainMenu extends AppCompatActivity {
         Button btn = findViewById(R.id.btnEmergency);
         btn.setText( R.string.emergency);
 
-
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -199,8 +191,6 @@ public class MainMenu extends AppCompatActivity {
             }
         });
     }
-
-
 
     /**
      * setup logout button to finish this app.
@@ -272,7 +262,6 @@ public class MainMenu extends AppCompatActivity {
         } );
     }
 
-
     /**
      * setup linear layout to redirect to my parents page on click
      */
@@ -287,7 +276,6 @@ public class MainMenu extends AppCompatActivity {
             }
         } );
     }
-
 
     /**
      * setup linear layout to redirect to my kids page on click
@@ -379,10 +367,6 @@ public class MainMenu extends AppCompatActivity {
         };
         handlerForMessages.post( runnableForMessages);
     }
-
-
-
-
 
     private void updateLastGpsLocation() {
         LocationManager locationManager = (LocationManager) this.getSystemService( Context.LOCATION_SERVICE );

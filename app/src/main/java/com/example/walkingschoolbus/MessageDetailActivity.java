@@ -32,7 +32,6 @@ public class MessageDetailActivity extends AppCompatActivity {
     private Long messageSenderID;
     private String senderName;
 
-
     private User user;
     private static WGServerProxy proxy;
     private Session session;
@@ -48,7 +47,6 @@ public class MessageDetailActivity extends AppCompatActivity {
 
         extractDataFromIntent();
         getMessageDetails();
-       // setupReadMessageButton();
         notifyUserViaLogAndToast("Message has been read.");
     }
 
@@ -61,7 +59,6 @@ public class MessageDetailActivity extends AppCompatActivity {
                     @Override
                     public void callback(Message returnedMessage) {
 
-
                         Call<User> callerForGroup = proxy.getUserById(messageSenderID);
                         ProxyBuilder.callProxy(MessageDetailActivity.this, callerForGroup,
                                 new ProxyBuilder.SimpleCallback<User>() {
@@ -72,20 +69,14 @@ public class MessageDetailActivity extends AppCompatActivity {
                                         senderName = messageSender.getName();
                                         String messageContent = senderName + ":" + "\n" +
                                                 returnedMessage.getText() + "\n" +
-
                                                 "Emergency: " + returnedMessage.isEmergency() + "\n";
-
                                         editText.setText(messageContent);
                                         messageContainer.setMessageContent(messageContent);
-
                                     }
                                 });
                     }
                 });
     }
-
-
-
 
     private void extractDataFromIntent() {
         Intent neededIntent = getIntent();
@@ -95,14 +86,12 @@ public class MessageDetailActivity extends AppCompatActivity {
         messageSenderID = Long.valueOf(tempSenderId);
     }
 
-
     public static Intent makeIntent(Context context, Long messageIdToPass, Long senderIdToPass){
         Intent intent = new Intent(context, MessageDetailActivity.class);
         intent.putExtra("messageID", messageIdToPass);
         intent.putExtra("senderName", senderIdToPass);
         return intent;
     }
-
 
     private void notifyUserViaLogAndToast(String message) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();

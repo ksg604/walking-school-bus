@@ -64,7 +64,6 @@ public class MemberActivity extends AppCompatActivity {
         setUpLeader();
         setupMemberList();
         //Make call for a list of member
-
     }
 
 
@@ -100,7 +99,6 @@ public class MemberActivity extends AppCompatActivity {
 
             @Override
             public void create(SwipeMenu menu) {
-
                 // create "open" item
                 SwipeMenuItem openItem = new SwipeMenuItem( getApplicationContext());
                 // set item background
@@ -115,7 +113,6 @@ public class MemberActivity extends AppCompatActivity {
                 openItem.setTitleColor(Color.WHITE);
                 // add to menu
                 menu.addMenuItem(openItem);
-
             }
         };
 
@@ -152,14 +149,10 @@ public class MemberActivity extends AppCompatActivity {
         return intent;
     }
 
-
     private void setupMemberList() {
         Call<List<User>> caller = proxy.getGroupMembers(group.getId());
         ProxyBuilder.callProxy(MemberActivity.this, caller, returnedUsers-> responseForMemList(returnedUsers));
-
-
     }
-
 
     private void responseForMemList(List<User> returnedUsers) {
         notifyUserViaLogAndToast("Got list of " + returnedUsers.size() + " users! See logcat.");
@@ -169,18 +162,12 @@ public class MemberActivity extends AppCompatActivity {
 
         for (User member : returnedUsers) {
 
-
             Log.w( TAG, "    member: " + member.getId() );
-
-
             String userInfo = getString( R.string.user_name_list )+ " "+ member.getName() + "\n" +
                     getString(R.string.user_email_list)+ " " + member.getEmail();
             memberList.add( userInfo );
-
             ArrayAdapter adapter = new ArrayAdapter( MemberActivity.this, R.layout.swipe_listview, memberList );
-
             memberListView.setAdapter( adapter );
-
         }
 
         SwipeMenuCreator creator = new SwipeMenuCreator() {
@@ -281,10 +268,4 @@ public class MemberActivity extends AppCompatActivity {
         groupDescription.setText( group.getGroupDescription() );
 
     }
-
-
-
-
-
-
 }

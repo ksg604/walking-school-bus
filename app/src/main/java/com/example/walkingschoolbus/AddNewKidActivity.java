@@ -27,7 +27,6 @@ import java.util.List;
 import retrofit2.Call;
 
 public class AddNewKidActivity extends AppCompatActivity {
-
     private static final String TAG = "AddNewKidActivity";
     private Session session;
     private User parent;
@@ -46,7 +45,6 @@ public class AddNewKidActivity extends AppCompatActivity {
         setupConfirmBtn();
 
     }
-
 
     public static Intent makeIntent(Context context){
         Intent intent = new Intent(context, AddNewKidActivity.class);

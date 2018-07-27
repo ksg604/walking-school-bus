@@ -32,14 +32,10 @@ import retrofit2.Call;
 
 public class MonitoredListActivity extends AppCompatActivity {
 
-
     private static final String TAG = "MonitoredListActivity";
-
-
     private User user;
     private static WGServerProxy proxy;
     private Session session;
-
     private ArrayList<String> monitoredUser = new ArrayList<>();
 
     @Override
@@ -60,8 +56,6 @@ public class MonitoredListActivity extends AppCompatActivity {
 
         //Add parents Button
         setupAddParentsButton();
-
-
     }
 
     private void response(List<User> returnedUsers) {
@@ -75,7 +69,6 @@ public class MonitoredListActivity extends AppCompatActivity {
             monitoredUser.add(userInfo);
             ArrayAdapter adapter = new ArrayAdapter(MonitoredListActivity.this, R.layout.swipe_listview, monitoredUser);
             monitoredList.setAdapter(adapter);
-
         }
 
         SwipeMenuCreator creator = new SwipeMenuCreator() {
@@ -97,7 +90,6 @@ public class MonitoredListActivity extends AppCompatActivity {
                 deleteItem.setTitleColor(Color.WHITE);
                 // add to menu
                 menu.addMenuItem(deleteItem);
-
             }
         };
 
@@ -120,8 +112,6 @@ public class MonitoredListActivity extends AppCompatActivity {
                 return false;
             }
         });
-
-
     }
 
     private void setupAddParentsButton() {
@@ -130,14 +120,10 @@ public class MonitoredListActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 Intent intentAdd = AddNewParentsActivity.makeIntent( MonitoredListActivity.this );
                 startActivity(intentAdd);
-
             }
         });
-
     }
 
     private void response(Void returnedNothing) {

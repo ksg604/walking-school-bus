@@ -107,9 +107,7 @@ public class ParentsDashboardActivity extends FragmentActivity implements OnMapR
 
         proxy = ProxyBuilder.getProxy(getString(R.string.api_key),tokenValue);
         getUserLocationPermission();
-
     }
-
 
     private void getAllKids(){
         mMap.clear();
@@ -117,10 +115,8 @@ public class ParentsDashboardActivity extends FragmentActivity implements OnMapR
         ProxyBuilder.callProxy(ParentsDashboardActivity.this, kidListCaller, returnedKids -> response(returnedKids));
     }
     private void response(List<User> currentUserKids) {
-
         Intent getGroupFromOpenKid = getIntent();
         Long groupId = getGroupFromOpenKid.getExtras().getLong("G");
-
         Call<Group> groupCaller = proxy.getGroupById(groupId);
         ProxyBuilder.callProxy(ParentsDashboardActivity.this, groupCaller, returnedGroup -> responseForGroup(returnedGroup,currentUserKids));
     }
@@ -162,9 +158,6 @@ public class ParentsDashboardActivity extends FragmentActivity implements OnMapR
                         markerLongHashMapMap.put(kidLocationMarker, usersToPlot.getId());
                     }
 
-
-
-
                     //Source: https://stackoverflow.com/questions/13904651/android-google-maps-v2-how-to-add-marker-with-multiline-snippet
                     mMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
                         @Override
@@ -190,23 +183,17 @@ public class ParentsDashboardActivity extends FragmentActivity implements OnMapR
 
                             info.addView(title);
                             info.addView(snippet);
-
                             return info;
-
                         }
                     });
-
                 }
             }
 
-
     private void initMap(){
-
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
     }
 
 
@@ -223,8 +210,6 @@ public class ParentsDashboardActivity extends FragmentActivity implements OnMapR
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         makeHandlerRun();
-
-
         //If user enables the app to access their location, get user location.
         if(mLocationPermissionsGranted){
             getUserLocation();
@@ -238,27 +223,20 @@ public class ParentsDashboardActivity extends FragmentActivity implements OnMapR
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
-
                 marker.showInfoWindow();
-
                 return false;
             }
         });
-
     }
     private void makeHandlerRun() {
         runnableCode = new Runnable(){
             public void run() {
-
                 getAllKids();
                 handler.postDelayed(this, 30000);
             }
         };
         handler.post(runnableCode);
     }
-
-
-
 
     /**
      * Retrieves the phones location and marks it on the map.

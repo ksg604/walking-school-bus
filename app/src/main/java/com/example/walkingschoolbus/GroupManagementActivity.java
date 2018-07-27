@@ -40,7 +40,6 @@ public class GroupManagementActivity extends AppCompatActivity {
     private List<Group> groupLeaderList = new ArrayList<>();
     private List<Group> modifiedGroupLeaderList = new ArrayList<>(  );
     private List<Long> groupIdLeaderList = new ArrayList<>();
-
     private List<Group> groupMemberList = new ArrayList<>();
     private List<Group> modifiedGroupMemberList = new ArrayList<>( );
     private List<Long> groupIdMemberList = new ArrayList<>();
@@ -64,20 +63,13 @@ public class GroupManagementActivity extends AppCompatActivity {
 
         user = session.getUser();
 
-
         //Make call
         Call<User> caller = proxy.getUserByEmail(user.getEmail());
         ProxyBuilder.callProxy(GroupManagementActivity.this, caller,
                 returnedUser -> responseForUser(returnedUser));
 
-
         setupCreateGroupButton();
         setupJoinGroupButton();
-
-
-
-
-
     }
 
     /*
@@ -104,7 +96,6 @@ public class GroupManagementActivity extends AppCompatActivity {
                 returnedGroupList -> responseForGroup(returnedGroupList));
     }
 
-
    /**get response List<Group> objects to save data into stringGroupList
     * to see group list on swipeMenuListView
     *
@@ -129,16 +120,14 @@ public class GroupManagementActivity extends AppCompatActivity {
                 String groupInfo = getString( R.string.group_list) + " " + group.getGroupDescription()+"\n";
                 stringLeaderGroupList.add( groupInfo );
             }
-
-
         }
+
         ArrayAdapter adapterLeader = new ArrayAdapter( GroupManagementActivity.this,
                 R.layout.swipe_listview, stringLeaderGroupList );
         groupAsLeaderListView.setAdapter( adapterLeader );
         ArrayAdapter adapterMember = new ArrayAdapter( GroupManagementActivity.this,
                 R.layout.swipe_listview, stringMemberGroupList );
         groupAsMemberListView.setAdapter( adapterMember );
-
         SwipeMenuCreator creatorForLeader = new SwipeMenuCreator() {
 
             @Override
@@ -204,7 +193,6 @@ public class GroupManagementActivity extends AppCompatActivity {
             public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
                 switch (index) {
 
-
                     case 0:
                         Long tempID = modifiedGroupLeaderList.get(position).getId();
                         Intent intent2 = SendMessageActivity.makeIntent(GroupManagementActivity.this, tempID);
@@ -213,12 +201,10 @@ public class GroupManagementActivity extends AppCompatActivity {
 
                     case 1:
                         Long groupId = modifiedGroupLeaderList.get(position).getId();
-
                         group.setId(groupId);
                         Intent intent = LeaderActivity.makeIntent( GroupManagementActivity.this );
                         startActivity( intent );
                         break;
-
 
                     case 2:
                          //make Call
@@ -227,7 +213,6 @@ public class GroupManagementActivity extends AppCompatActivity {
                          groupAsLeaderListView.removeViewsInLayout(position,1);
                          adapterLeader.notifyDataSetChanged();
                          break;
-
                 }
                 // false : close the menu; true : not close the menu
                 return false;
@@ -324,7 +309,6 @@ public class GroupManagementActivity extends AppCompatActivity {
         } );
     }
 
-
     /**
      * setup the button to join a existing group
      */
@@ -339,7 +323,6 @@ public class GroupManagementActivity extends AppCompatActivity {
             }
         } );
     }
-
 
     private void notifyUserViaLogAndToast(String message) {
         Log.w(TAG, message);
@@ -356,13 +339,11 @@ public class GroupManagementActivity extends AppCompatActivity {
         return intent;
     }
 
-
     private Intent makeIntentBack(Context context, int resultcode) {
         Intent intent = new Intent(context, GroupManagementActivity.class );
         setResult(resultcode, intent );
         return intent;
     }
-
 
     /**
      * put the result from PlacePickerActivity on the listview to update
@@ -385,15 +366,8 @@ public class GroupManagementActivity extends AppCompatActivity {
 
     @Override
     public void onRestart(){
-
         super.onRestart();
         finish();
         startActivity( getIntent() );
-
     }
-
-
-
-
-
 }

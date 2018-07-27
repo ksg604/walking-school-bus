@@ -3,7 +3,6 @@ import android.content.Context;
 
 public class LocalMessageContainer {
 
-
     private String messageContent;
     private static LocalMessageContainer instance;
 

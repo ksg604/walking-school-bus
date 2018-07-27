@@ -34,13 +34,11 @@ public class ViewUserMonitoredByActivity extends AppCompatActivity {
     private static final String TAG = "ViewUserMonitoredBy";
     private User theKid;
     private List<String> kidsParentsListInfo = new ArrayList<>();
-    private List<User> userMonitoredByList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_user_monitored_by);
-
         session = Session.getInstance();
         proxy = ProxyBuilder.getProxy(getString(R.string.api_key), session.getToken());
         getFromOpenKidGroup();
@@ -53,8 +51,8 @@ public class ViewUserMonitoredByActivity extends AppCompatActivity {
 
         Call<User> caller = proxy.getUserById(userId);
         ProxyBuilder.callProxy(ViewUserMonitoredByActivity.this, caller, returnedKid -> response(returnedKid));
-
     }
+
     private void response(User theReturnedUser){
         theKid = theReturnedUser;
         Log.i("Tag98","kid name: "+theKid.getName());
@@ -62,16 +60,14 @@ public class ViewUserMonitoredByActivity extends AppCompatActivity {
         if(theKid == null){
             Log.i("Tag98","user is null");
         }
-
         Call<List<User>> getUserParentListCaller = proxy.getMonitoredByUsers(theReturnedUser.getId());
         ProxyBuilder.callProxy(ViewUserMonitoredByActivity.this, getUserParentListCaller, returnedList -> response2(returnedList));
     }
-    private void response2(List<User> theReturnedList){
 
+    private void response2(List<User> theReturnedList){
         SwipeMenuListView userMonitoredBySwipeList = (SwipeMenuListView) findViewById(R.id.userParentList);
 
         for(User parentOfKid: theReturnedList){
-
             String userInfo = getString(R.string.mykids_user_name) + " " + parentOfKid.getName() + "\n" +
                     getString(R.string.mykids_user_email) + " " + parentOfKid.getEmail();
 
@@ -103,7 +99,6 @@ public class ViewUserMonitoredByActivity extends AppCompatActivity {
            userMonitoredBySwipeList.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
                @Override
                public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
-
                    switch(index){
                        case 0:
                            Intent intentToViewInfo = ViewUserSettingsActivity.makeIntent(ViewUserMonitoredByActivity.this,theReturnedList.get(position).getId());
@@ -113,9 +108,7 @@ public class ViewUserMonitoredByActivity extends AppCompatActivity {
                }
            });
         }
-
     }
-
 
     public static Intent makeIntent(Context context, Long userIdToPass) {
         Intent intent = new Intent(context, ViewUserMonitoredByActivity.class);

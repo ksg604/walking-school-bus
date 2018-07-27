@@ -37,40 +37,28 @@ public class MonitorActivity extends AppCompatActivity {
     private static WGServerProxy proxy;
     private static String userEmail;
     private static final String TAG = "Monitor";
-
-
     private Long groupID;
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_monitor);
-
         session = Session.getInstance();
-
         // Build the server proxy
         proxy = ProxyBuilder.getProxy(getString(R.string.api_key),session.getToken());
-
         setupAddUserToGroups();
-
     }
 
     /*
      *Setup a button to add a user in the List view to a group
      */
     private void setupAddUserToGroups() {
-
         Button buttonAddUserToGroup = (Button) findViewById(R.id.btnAddUserToGroup);
         buttonAddUserToGroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 EditText groupDes = (EditText) findViewById(R.id.editTextGroupToJoin);
 
-                //extractIntent();
                 Intent neededIntent = getIntent();
                 String tempString = neededIntent.getStringExtra("E");
 
@@ -80,24 +68,17 @@ public class MonitorActivity extends AppCompatActivity {
                 ProxyBuilder.callProxy(MonitorActivity.this, caller,
                         returnedInputUser -> responseForAdd(returnedInputUser));
             }
-
-
         });
-
     }
 
     /**
      * get a response from the server, which contains list of users I monitored
      */
     private void responseForAdd(User returnedInputUser) {
-
-
         Call<List<User>> caller = proxy.addGroupMember(groupID, returnedInputUser);
         ProxyBuilder.callProxy(MonitorActivity.this,
                         caller, returnedUser -> responseMessage(returnedUser));
-
     }
-
 
     /**
      * Push a toast to user with result

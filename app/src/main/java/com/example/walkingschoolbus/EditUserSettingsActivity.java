@@ -182,7 +182,6 @@ public class EditUserSettingsActivity extends AppCompatActivity {
         Call<User> caller =proxy.editUser(thisUserID,updatedUser);
         ProxyBuilder.callProxy(EditUserSettingsActivity.this,caller,
                 returnedUser -> responseForUpdatedUser(returnedUser));
-
     }
 
     private void responseForUpdatedUser(User returnedUser) {
@@ -202,7 +201,6 @@ public class EditUserSettingsActivity extends AppCompatActivity {
             setResult(Activity.RESULT_OK, intent);
             finish();
         }
-
     }
 
     public static Intent makeIntent(Context context, long userID) {
