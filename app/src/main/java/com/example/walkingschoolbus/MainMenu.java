@@ -88,7 +88,7 @@ public class MainMenu extends AppCompatActivity {
         setupLogOutButton();
         setupOnTrackingBtn();
         setupLeaderBoardLaurel();
-        setupGameButton();
+        setupLayoutGame();
 
         setupEmergencyButton();
         setupBroadcastsButton();
@@ -526,8 +526,8 @@ public class MainMenu extends AppCompatActivity {
         }
     }
 
-    private void setupGameButton(){
-        Button game = findViewById( R.id.gameBtn );
+    private void setupLayoutGame(){
+        LinearLayout game = findViewById( R.id.linearLayoutGame );
         game.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) {

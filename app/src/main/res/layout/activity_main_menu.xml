@@ -23,183 +23,155 @@
         android:id="@+id/mainMenuWelcomeMessage"
         android:layout_width="99dp"
         android:layout_height="32dp"
-        android:layout_marginTop="120dp"
+        android:layout_marginTop="92dp"
         android:textAppearance="@android:style/TextAppearance.Material.Headline"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TableLayout
         android:id="@+id/tableLayout2"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginStart="15dp"
+        android:layout_height="200dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
         app:layout_constraintBottom_toTopOf="@+id/btnLogOut"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
         <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_width="wrap_content"
+            android:layout_height="95dp">
 
             <LinearLayout
-                android:id="@+id/linearLayoutGroup"
-                android:layout_width="164dp"
-                android:layout_height="95dp"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="4dp"
-                android:layout_marginTop="4dp"
-                android:background="#33B36F"
-                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
                 android:weightSum="3">
 
-                <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="0dp"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="8dp"
-                    android:layout_weight="1.5"
-                    android:src="@mipmap/ic_group_white_48dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_gravity="center"
+                <LinearLayout
+                    android:id="@+id/linearLayoutPermissions"
+                    android:layout_width="112dp"
+                    android:layout_height="95dp"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginEnd="2dp"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginTop="2dp"
                     android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="@string/menu_group"
-                    android:textColor="#fff"
-                    android:textSize="12sp" />
-            </LinearLayout>
+                    android:background="#F9A825"
+                    android:orientation="vertical"
+                    android:weightSum="3">
 
-            <LinearLayout
-                android:id="@+id/linearLayoutPermissions"
-                android:layout_width="164dp"
-                android:layout_height="95dp"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="4dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="4dp"
-                android:background="#F9A825"
-                android:orientation="vertical"
-                android:weightSum="3">
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="0dp"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="8dp"
+                        android:layout_weight="1.5"
+                        app:srcCompat="@mipmap/ic_done_all_white_48dp" />
 
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="0dp"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="8dp"
-                    android:layout_weight="1.5"
-                    app:srcCompat="@mipmap/ic_done_all_white_18dp" />
+                    <TextView
+                        android:id="@+id/textView11"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="@string/permissions"
+                        android:textColor="#fff"
+                        android:textSize="12sp" />
+                </LinearLayout>
 
-                <TextView
-                    android:id="@+id/textView11"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_gravity="center"
+                <LinearLayout
+                    android:id="@+id/linearLayoutGroup"
+                    android:layout_width="112dp"
+                    android:layout_height="95dp"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginEnd="2dp"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginTop="2dp"
                     android:layout_weight="1"
-                    android:gravity="center"
-                    android:textColor="#fff"
-                    android:text="@string/permissions"
-                    android:textSize="12sp" />
+                    android:background="#23ad4d"
+                    android:orientation="vertical"
+                    android:weightSum="3">
+
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="0dp"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="8dp"
+                        android:layout_weight="1.5"
+                        android:src="@mipmap/ic_group_white_48dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="@string/menu_group"
+                        android:textColor="#fff"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearLayoutGame"
+                    android:layout_width="112dp"
+                    android:layout_height="95dp"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginEnd="2dp"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_weight="1"
+                    android:background="#db4378"
+                    android:orientation="vertical"
+                    android:weightSum="3">
+
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="0dp"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="8dp"
+                        android:layout_weight="1.5"
+                        app:srcCompat="@mipmap/ic_local_play_white_48dp" />
+
+                    <TextView
+                        android:id="@+id/textView12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="@string/menu_game"
+                        android:textColor="#fff"
+                        android:textSize="12sp" />
+                </LinearLayout>
             </LinearLayout>
 
 
         </TableRow>
 
         <TableRow
-            android:layout_width="164dp"
-            android:layout_height="95dp"
-            android:orientation="vertical">
+            android:layout_width="wrap_content"
+            android:layout_height="95dp">
 
             <LinearLayout
-                android:layout_width="164dp"
+                android:layout_width="wrap_content"
                 android:layout_height="95dp"
+
                 android:orientation="horizontal"
-                android:weightSum="3">
-
-                <LinearLayout
-                    android:id="@+id/linearLayoutMyParents"
-                    android:layout_width="80dp"
-                    android:layout_height="95dp"
-                    android:layout_marginBottom="4dp"
-                    android:layout_marginEnd="2dp"
-                    android:layout_marginStart="4dp"
-                    android:layout_marginTop="8dp"
-                    android:background="#E53935"
-                    android:orientation="vertical"
-                    android:weightSum="3">
-
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="0dp"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="8dp"
-                        android:layout_weight="1.5"
-                        android:src="@mipmap/ic_supervisor_account_white_48dp" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_gravity="center"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="@string/menu_my_parents"
-                        android:textColor="#fff"
-                        android:textSize="12sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/linearLayoutMyKids"
-                    android:layout_width="80dp"
-                    android:layout_height="95dp"
-                    android:layout_marginBottom="4dp"
-                    android:layout_marginEnd="2dp"
-                    android:layout_marginStart="2dp"
-                    android:layout_marginTop="8dp"
-                    android:background="#E53935"
-                    android:orientation="vertical"
-                    android:weightSum="3">
-
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="0dp"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="8dp"
-                        android:layout_weight="1.5"
-                        android:src="@mipmap/ic_face_unlock_white_48dp" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_gravity="center"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="@string/menu_my_kids"
-                        android:textColor="#fff"
-                        android:textSize="12sp" />
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="164dp"
-                android:layout_height="95dp"
-                android:orientation="horizontal"
-                tools:layout_editor_absoluteX="48dp"
-                tools:layout_editor_absoluteY="8dp">
+                android:weightSum="4">
 
                 <LinearLayout
                     android:id="@+id/linearLayoutBroadcasts"
                     android:layout_width="80dp"
                     android:layout_height="95dp"
-                    android:layout_marginBottom="4dp"
+                    android:layout_marginBottom="2dp"
                     android:layout_marginEnd="2dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_weight="1"
                     android:background="#335CB3"
                     android:orientation="vertical"
                     android:weightSum="3">
@@ -210,7 +182,7 @@
                         android:layout_gravity="center"
                         android:layout_marginTop="8dp"
                         android:layout_weight="1.5"
-                        android:src="@mipmap/ic_volume_up_white_48dp" />
+                        android:src="@mipmap/ic_send_white_48dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -228,10 +200,11 @@
                     android:id="@+id/linearLayoutMessages"
                     android:layout_width="80dp"
                     android:layout_height="95dp"
-                    android:layout_marginBottom="4dp"
-                    android:layout_marginEnd="4dp"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginEnd="2dp"
                     android:layout_marginStart="2dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_weight="1"
                     android:background="#335CB3"
                     android:orientation="vertical"
                     android:weightSum="3">
@@ -256,6 +229,72 @@
                         android:textSize="12sp" />
 
                 </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearLayoutMyParents"
+                    android:layout_width="80dp"
+                    android:layout_height="95dp"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginEnd="2dp"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_weight="1"
+                    android:background="#e83b43"
+                    android:orientation="vertical"
+                    android:weightSum="3">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="0dp"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="8dp"
+                        android:layout_weight="1.5"
+                        android:src="@mipmap/ic_supervisor_account_white_48dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="@string/menu_my_parents"
+                        android:textColor="#fff"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearLayoutMyKids"
+                    android:layout_width="80dp"
+                    android:layout_height="95dp"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginEnd="2dp"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_weight="1"
+                    android:background="#e83b43"
+                    android:orientation="vertical"
+                    android:weightSum="3">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="0dp"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="8dp"
+                        android:layout_weight="1.5"
+                        android:src="@mipmap/ic_face_unlock_white_48dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="@string/menu_my_kids"
+                        android:textColor="#fff"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
             </LinearLayout>
 
 
@@ -294,13 +333,11 @@
         android:layout_height="48dp"
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginStart="56dp"
         android:elevation="0dp"
         android:text="@string/emergency"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btnLogOut" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
         android:id="@+id/txtViewWalkingMessage"
@@ -336,15 +373,5 @@
             android:layout_height="wrap_content"
             android:text="@string/menu_leader_board" />
     </LinearLayout>
-
-    <Button
-        android:id="@+id/gameBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="Button"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
