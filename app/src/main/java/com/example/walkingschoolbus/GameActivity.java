@@ -46,19 +46,18 @@ public class GameActivity extends AppCompatActivity {
         Call<User> caller = proxy.getUserById( user.getId() );
         ProxyBuilder.callProxy( GameActivity.this, caller, returnedUser -> responseForUserPoints( returnedUser) );
 
-
-
-
         populatePostIt();
     }
 
     private void responseForUserPoints(User returnedUser){
         if(returnedUser.getCurrentPoints() != null){
             user.setCurrentPoints( returnedUser.getCurrentPoints() );
+        }else{
+            user.setCurrentPoints( 0 );
         }
+
         if(returnedUser.getRewards() !=null) {
             user.setRewards( returnedUser.getRewards() );
-
             stickers = returnedUser.getRewards().getStickers();
             for (int rowIdx = 0; rowIdx < 7; rowIdx++) {
                 for (int colIdx = 0; colIdx < 7; colIdx++) {
@@ -68,9 +67,9 @@ public class GameActivity extends AppCompatActivity {
 
                 }
             }
-
             priceReward = priceReward + (numRewards * 25);
         }
+
 
     }
 
@@ -92,8 +91,8 @@ public class GameActivity extends AppCompatActivity {
             table.addView( tableRow );
 
             for(int col =0; col < 7; col++) {
-                final int COL_POST_IT = col;
-                final int ROW_POST_IT = row;
+                 int COL_POST_IT = col;
+                 int ROW_POST_IT = row;
 
 
 
@@ -105,7 +104,7 @@ public class GameActivity extends AppCompatActivity {
                 postIt.setLayoutParams( imagelLayoutParams );
                 postIt.setPadding( 0,0,0,0 );
 
-                if(user.getRewards() != null &&user.getRewards().getStickers()[row][col] == false){
+                if(user.getRewards() != null && user.getRewards().getStickers()[row][col] == true){
                     postIt.setVisibility( View.INVISIBLE );
                 }else {
                     postIt.setImageResource( R.drawable.new_post_it );
@@ -141,6 +140,7 @@ public class GameActivity extends AppCompatActivity {
             }
             rewards.setStickers( stickers );
             user.setRewards( rewards );
+            priceReward += 25;
 
             Call<User> caller = proxy.editUser( user.getId(), user );
             ProxyBuilder.callProxy( GameActivity.this, caller, returnedUser -> responseForUser( returnedUser ) );
@@ -161,7 +161,7 @@ public class GameActivity extends AppCompatActivity {
 
     private void responseForUser(User returnedUser){
 
-
+        session.setUser(returnedUser);
 
 
     }
