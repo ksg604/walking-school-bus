@@ -43,6 +43,7 @@ public class Session {
     private static Session instance;
     private static final String SHAREDPREF_SESSION = "user session token";
     private static int numOfUnreadMessage;
+    private static int numOfUnreadPermissions;
 
 
 
@@ -90,6 +91,14 @@ public class Session {
 
     public static int getNumOfUnreadMessage() {
         return numOfUnreadMessage;
+    }
+
+    public static int getNumOfUnreadPermissions() {
+        return numOfUnreadPermissions;
+    }
+
+    public static void setNumOfUnreadPermissions(int numOfUnreadPermissions) {
+        Session.numOfUnreadPermissions = numOfUnreadPermissions;
     }
 
     public static void setNumOfUnreadMessage(int numOfUnreadMessage) {

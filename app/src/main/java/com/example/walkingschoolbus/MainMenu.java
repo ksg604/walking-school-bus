@@ -66,7 +66,6 @@ public class MainMenu extends AppCompatActivity {
     private static Runnable runnableForGps;
     private static Runnable runnableForMessages;
     private static int zeroDistance = 0;
-    private static  String welcomeMessage;
 
     private final static String unread = "unread";
 
@@ -101,12 +100,6 @@ public class MainMenu extends AppCompatActivity {
 
         makeHandlerRunForGps();
         makeHandlerRunForMessages();
-
-
-
-
-
-
     }
 
     private void setupMessageNumber() {
@@ -124,7 +117,6 @@ public class MainMenu extends AppCompatActivity {
                counter++;
            }
        }
-        //String temp = Integer.toString(returnedMessageList.size());
         String temp = Integer.toString(counter);
         TextView messages = (TextView) findViewById( R.id.messagesMainMenu );
         String numMessages = temp + " " +getString(R.string.menu_message);
@@ -241,11 +233,11 @@ public class MainMenu extends AppCompatActivity {
         handler.postDelayed(new Runnable(){
             public void run(){
                 if (session.getName() != null) {
-                    welcomeMessage = getString( R.string.hello ) + " " + session.getName();
+                    welcome.setText(getString( R.string.hello )  +" " + session.getName());
+                    Log.i(TAG,"set name with : "+session.getName());
                 } else {
-                    welcomeMessage = getString( R.string.hello );
+                    setTextViewMessage();
                 }
-                welcome.setText( welcomeMessage );
             }
         },2000);
     }
@@ -367,17 +359,25 @@ public class MainMenu extends AppCompatActivity {
     private void responseForPermissions(List<PermissionRequest> returnedPermission) {
         int pendingPermissionNum = returnedPermission.size();
 
+        //String temp = Integer.toString(returnedMessageList.size());
+        String temp = Integer.toString(pendingPermissionNum);
+        TextView messages = (TextView) findViewById( R.id.textView11 );
+        String numMessages = temp + " " +"Permissions";
+        session.setNumberOfMessages( temp );
+        messages.setText( numMessages );
+
     }
 
-    //TODO: Reactiviate
+
     private void makeHandlerRunForMessages(){
- //       runnableForMessages = new Runnable(){
-//            public void run() {
-//                setupMessageNumber();
-//                handlerForMessages.postDelayed( this,60000 );
-//            }
-//        };
-//        handlerForMessages.post( runnableForMessages);
+          runnableForMessages = new Runnable(){
+            public void run() {
+                setupMessageNumber();
+                setupGetUnreadPermissions();
+                handlerForMessages.postDelayed( this,60000 );
+            }
+        };
+        handlerForMessages.post( runnableForMessages);
     }
 
 
