@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
+import android.widget.TextView;
 
 import com.example.walkingschoolbus.model.EarnedRewards;
 import com.example.walkingschoolbus.model.Session;
@@ -43,22 +44,32 @@ public class GameActivity extends AppCompatActivity {
         token = session.getToken();
         proxy = ProxyBuilder.getProxy(getString( R.string.api_key),token);
 
-        Call<User> caller = proxy.getUserById( user.getId() );
-        ProxyBuilder.callProxy( GameActivity.this, caller, returnedUser -> responseForUserPoints( returnedUser) );
+        getSessionUser();
 
         populatePostIt();
     }
 
-    private void responseForUserPoints(User returnedUser){
-        if(returnedUser.getCurrentPoints() != null){
-            user.setCurrentPoints( returnedUser.getCurrentPoints() );
+    private void getSessionUser(){
+
+        Call<User> sessionUserCaller = proxy.getUserById(session.getUser().getId());
+        ProxyBuilder.callProxy( GameActivity.this, sessionUserCaller, returnedSessionUser -> responseForSessionUser( returnedSessionUser) );
+    }
+
+    private void responseForSessionUser(User theSessionUser){
+        user = theSessionUser;
+        //Update layout textviews
+        TextView pointsTitle = findViewById(R.id.userPointsTxt);
+        pointsTitle.setText(getString(R.string.session_user_points) + theSessionUser.getCurrentPoints());
+
+        if(theSessionUser.getCurrentPoints() != null){
+            user.setCurrentPoints( theSessionUser.getCurrentPoints() );
         }else{
             user.setCurrentPoints( 0 );
         }
 
-        if(returnedUser.getRewards() !=null) {
-            user.setRewards( returnedUser.getRewards() );
-            stickers = returnedUser.getRewards().getStickers();
+        if(theSessionUser.getRewards() !=null) {
+            user.setRewards( theSessionUser.getRewards() );
+            stickers = theSessionUser.getRewards().getStickers();
             for (int rowIdx = 0; rowIdx < 7; rowIdx++) {
                 for (int colIdx = 0; colIdx < 7; colIdx++) {
                     if (stickers[rowIdx][colIdx] == true) {
@@ -116,6 +127,9 @@ public class GameActivity extends AppCompatActivity {
                 images[row][col] = postIt;
             }
         }
+
+
+
     }
 
     private void gridImageClicked(int col, int row) {
@@ -131,6 +145,8 @@ public class GameActivity extends AppCompatActivity {
             rewards.setStickers( stickers );
             user.setRewards( rewards );
             priceReward += 25;
+
+            Log.i(TAG,"user points after buying: "+user.getCurrentPoints());
 
             Call<User> caller = proxy.editUser( user.getId(), user );
             ProxyBuilder.callProxy( GameActivity.this, caller, returnedUser -> responseForUser( returnedUser ) );
@@ -149,7 +165,6 @@ public class GameActivity extends AppCompatActivity {
     private void responseForUser(User returnedUser){
 
         session.setUser(returnedUser);
-
 
     }
 

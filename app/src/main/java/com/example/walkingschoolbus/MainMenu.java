@@ -27,6 +27,7 @@ import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.example.walkingschoolbus.model.EarnedRewards;
 import com.example.walkingschoolbus.model.GpsLocation;
 import com.example.walkingschoolbus.model.Group;
 import com.example.walkingschoolbus.model.Message;
@@ -346,12 +347,21 @@ public class MainMenu extends AppCompatActivity {
     private void responseForPermissions(List<PermissionRequest> returnedPermission) {
         int pendingPermissionNum = returnedPermission.size();
 
+        //String temp = Integer.toString(returnedMessageList.size());
+        String temp = Integer.toString(pendingPermissionNum);
+        TextView messages = (TextView) findViewById( R.id.textView11 );
+        String numMessages = temp + " " +"Permissions";
+        session.setNumberOfMessages( temp );
+        messages.setText( numMessages );
+
     }
 
+
     private void makeHandlerRunForMessages(){
-        runnableForMessages = new Runnable(){
+          runnableForMessages = new Runnable(){
             public void run() {
                 setupMessageNumber();
+                setupGetUnreadPermissions();
                 handlerForMessages.postDelayed( this,60000 );
             }
         };
