@@ -148,9 +148,9 @@ public class MyParentsActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onRestart()
+    public void onResume()
     {
-        super.onRestart();
+        super.onResume();
         finish();
         startActivity(getIntent());
     }

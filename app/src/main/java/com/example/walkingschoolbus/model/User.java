@@ -3,6 +3,7 @@ package com.example.walkingschoolbus.model;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
@@ -32,7 +33,7 @@ import retrofit2.Call;
 // It ensures deserialization does not fail if server sends you some fields you are not expecting.
 // This is needed for the server to be able to change without breaking your app!
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class User{
+public class User {
     private String token;
 
     // Data fields for the user.
@@ -80,10 +81,10 @@ public class User{
 
     // Gamification Support
     // - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    //private Integer currentPoints;
-    //private Integer totalPointsEarned;
+    private Integer currentPoints;
+    private Integer totalPointsEarned;
     // rewards will be serialized to be the customJson
-    //private EarnedRewards rewards;
+    private EarnedRewards rewards;
 
 
     // Permissions
@@ -92,9 +93,6 @@ public class User{
 
 
     private String href;
-    /*
-    Singleton Support
-    */
 
     //Constructors
     public User() { }
@@ -155,6 +153,9 @@ public class User{
         this.leadsGroups = oldUser.getLeadsGroups();    // <-- TO BE IMPLEMENTED
 
         this.href=oldUser.getHref();
+        this.currentPoints =oldUser.getCurrentPoints();
+        this.totalPointsEarned = oldUser.getTotalPointsEarned();
+        this.rewards = oldUser.getRewards();
     }
 
     public void makeCopyOf(User oldUser){
@@ -173,6 +174,9 @@ public class User{
         this.leadsGroups = oldUser.getLeadsGroups();    // <-- TO BE IMPLEMENTED
 
         this.href=oldUser.getHref();
+        this.currentPoints =oldUser.getCurrentPoints();
+        this.totalPointsEarned = oldUser.getTotalPointsEarned();
+        this.rewards = oldUser.getRewards();
     }
 
     public Boolean getHasFullData() {
@@ -344,7 +348,7 @@ public class User{
 
 
 
-    /*
+
 
     // Rewards (custom JSON data)
     // -------------------------------------------------------------------------------------------
@@ -403,7 +407,7 @@ public class User{
     public void setRewards(EarnedRewards rewards) {
         this.rewards = rewards;
     }
-    */
+
     // Utility Functions
     // -------------------------------------------------------------------------------------------
     @Override
@@ -413,8 +417,8 @@ public class User{
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
-               // ", currentPoints=" + currentPoints +
-                //", totalPointsEarned=" + totalPointsEarned +
+                ", currentPoints=" + currentPoints +
+                ", totalPointsEarned=" + totalPointsEarned +
                 ", monitoredByUsers=" + monitoredByUsers +
                 ", monitorsUsers=" + monitorsUsers +
                 ", memberOfGroups=" + memberOfGroups +

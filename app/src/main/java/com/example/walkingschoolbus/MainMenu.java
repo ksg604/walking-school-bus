@@ -94,6 +94,7 @@ public class MainMenu extends AppCompatActivity {
         setupLayoutMyKids();
         setupLogOutButton();
         setupOnTrackingBtn();
+        setupLeaderBoardLaurel();
 
         setupEmergencyButton();
         setupBroadcastsButton();
@@ -109,18 +110,6 @@ public class MainMenu extends AppCompatActivity {
 
 
     }
-
-    private void setupPermissionTestBtn() {
-        Button btn = (Button) findViewById(R.id.btnPermissionList);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = PermissionSystem.makeIntent(MainMenu.this);
-                startActivity(intent);
-            }
-        });
-    }
-
 
     private void setupMessageNumber() {
 
@@ -195,6 +184,17 @@ public class MainMenu extends AppCompatActivity {
         });
     }
 
+    private void setupPermissionTestBtn() {
+        LinearLayout btn = (LinearLayout) findViewById(R.id.linearLayoutPermissions);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = PermissionSystem.makeIntent(MainMenu.this);
+                startActivity(intent);
+            }
+        });
+    }
+
     private void setupEmergencyButton() {
         Button btn = findViewById(R.id.btnEmergency);
         btn.setText( R.string.emergency);
@@ -209,6 +209,8 @@ public class MainMenu extends AppCompatActivity {
             }
         });
     }
+
+
 
     /**
      * setup logout button to finish this app.
@@ -318,6 +320,20 @@ public class MainMenu extends AppCompatActivity {
             walkingMessage = getString(R.string.mm_not_walking);
         }
         walking.setText(walkingMessage);
+    }
+
+
+
+    private void setupLeaderBoardLaurel() {
+        ImageView laurel = findViewById( R.id.imageLaurel );
+        laurel.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = LeaderBoardActivity.makeIntent(MainMenu.this );
+                startActivity( intent );
+            }
+        } );
+
     }
 
     public static Intent makeIntent(Context context) {

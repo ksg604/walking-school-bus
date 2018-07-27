@@ -105,10 +105,6 @@ public class PermissionSystem extends AppCompatActivity {
                    ArrayAdapter adapter = new ArrayAdapter(PermissionSystem.this, R.layout.swipe_listview, permissionsMessage);
                    permissionsList.setAdapter(adapter);
                }
-
-         //  }
-
-
         }
         SwipeMenuCreator creator = new SwipeMenuCreator() {
 
@@ -117,13 +113,13 @@ public class PermissionSystem extends AppCompatActivity {
                 // create "open" item
                 SwipeMenuItem openItem = new SwipeMenuItem( getApplicationContext());
                 // set item background
-                openItem.setBackground(new ColorDrawable(Color.rgb(0xC9, 0xC9, 0xCE)));
+                openItem.setBackground(new ColorDrawable(Color.rgb(5, 220, 5)));
                 // set item width
                 openItem.setWidth(180);
                 // set item title
-                openItem.setTitle("Aprove");
+                openItem.setTitle("Approve");
                 // set item title fontsize
-                openItem.setTitleSize(18);
+                openItem.setTitleSize(12);
                 // set item title font color
                 openItem.setTitleColor(Color.WHITE);
                 // add to menu
@@ -141,7 +137,7 @@ public class PermissionSystem extends AppCompatActivity {
                 // set item title
                 deleteItem.setTitle("Deny");
                 // set item title fontsize
-                deleteItem.setTitleSize(18);
+                deleteItem.setTitleSize(12);
                 // set item title font color
                 deleteItem.setTitleColor(Color.WHITE);
                 // add to menu

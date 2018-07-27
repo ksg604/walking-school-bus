@@ -32,6 +32,8 @@
     <string name="mm_walkingwith">Walking With: </string>
     <string name="mm_not_walking">No Group Selected</string>
     <string name="menu_broadcasts">Broadcasts</string>
+    <string name="menu_leader_board">Leader Board</string>
+    <string name="permissions">My Permissions</string>
 
     <!--Sign up-->
     <string name="name">Full Name: </string>
@@ -216,6 +218,11 @@
     <!-- send message-->
     <string name="send_emergency_message">sendEmergency</string>
     <string name="send_regular_message">SendNormal</string>
+
+    <!--leader board-->
+    <string name="user_point_total">points</string>
+    <string name="colon">: </string>
+    <string name="leader_board_title">Leader Board</string>
 
 
     <!-- Generic Permission-->
