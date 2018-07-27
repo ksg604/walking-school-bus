@@ -40,8 +40,17 @@ public class PermissionListActivity extends AppCompatActivity {
     private ArrayList<PermissionRequest> permissionsListTemp = new ArrayList<>();
     private List<String> permissionsMessage = new ArrayList<>();
     private Set<PermissionRequest.Authorizor> authorizors = new HashSet<>();
-    private Set<User> userSet = new HashSet<>();
-   // private SwipeMenuListView permissionsList;
+
+    List<String> authorizorName = new ArrayList<>();
+    List<String> authorizorStatus = new ArrayList<>();
+    List<String> authorizorEmail = new ArrayList<>();
+
+    String problem;
+
+    String permissionStatus ;
+    String permissionAction ;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,34 +63,11 @@ public class PermissionListActivity extends AppCompatActivity {
 
         proxy = ProxyBuilder.getProxy(getString(R.string.api_key),session.getToken(),true);
 
-
-
         // Make call
         Call<List<PermissionRequest>> caller = proxy.getPermissionForUser(user.getId());
 
         ProxyBuilder.callProxy(PermissionListActivity.this, caller, returnedPermissions -> response(returnedPermissions));
     }
-
-
-    private void setupPermissionDetails() {
-        /*permissionsList.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
-                Log.i("Hey! I am clicked","Hey!!!");
-                TextView textView = (TextView) findViewById(R.id.PermissionDetails);
-                String permissionStatus = permissionsListTemp.get(position).getStatus().toString();
-                String permissionAction = permissionsListTemp.get(position).getAction();
-                Set permissionUserInfo = permissionsListTemp.get(position).getAuthorizors();
-                //permissionUserInfo.
-                String totalInfo = permissionStatus + permissionAction;
-                textView.setText( totalInfo);
-                return false;
-            }
-        });*/
-
-
-    }
-
 
     private void response(List<PermissionRequest> returnedPermission) {
 
@@ -93,21 +79,7 @@ public class PermissionListActivity extends AppCompatActivity {
             permissionsMessage.add(permission.getMessage());
             authorizors = permission.getAuthorizors();
             Log.i("Testtesttest",authorizors.toString());
-/*
-            Call<com.example.walkingschoolbus.model.PermissionRequest> caller = proxy.getPermissionById(permission.getId());
 
-            ProxyBuilder.callProxy(PermissionListActivity.this, caller,
-                    new ProxyBuilder.SimpleCallback<PermissionRequest>() {
-                        @Override
-                        public void callback(PermissionRequest returnedPermissions) {
-                            Log.i("GOOOOOD", returnedPermissions.toString());
-                        }
-                    });
-
-            */
-
-
-            //userSet = authorizors
             ArrayAdapter adapter = new ArrayAdapter(PermissionListActivity.this, R.layout.swipe_listview, permissionsMessage);
             permissionsList.setAdapter(adapter);
         }
@@ -143,51 +115,26 @@ public class PermissionListActivity extends AppCompatActivity {
                 switch (index) {
                     case 0:
                         Log.i("Hey! I am clicked","Hey!!!");
-                        TextView textView = (TextView) findViewById(R.id.PermissionDetails);
-                        String permissionStatus = permissionsListTemp.get(position).getStatus().toString();
-                        String permissionAction = permissionsListTemp.get(position).getMessage();
-                        List<String> authorizorName = new ArrayList<>();
-                        List<WGServerProxy.PermissionStatus> authorizorStatus = new ArrayList<>();
-                        List<String> authorizorEmail = new ArrayList<>();
-                        String authorizorInfo;
-                        String moreInfo;
+                        //TextView textView = (TextView) findViewById(R.id.PermissionDetails);
+                        permissionStatus = permissionsListTemp.get(position).getStatus().toString();
+                        permissionAction = permissionsListTemp.get(position).getMessage();
+
                         for(PermissionRequest.Authorizor temp : permissionsListTemp.get(position).getAuthorizors()) {
-                            Log.i("Show me status!!",temp.getStatus().toString());
-                           // authorizorStatus.add(temp.getStatus());
-                            //temp.getUsers()\
-                            authorizorInfo = temp.getStatus().toString();
-                            Log.i("TEST1",authorizorInfo);
+
+                            authorizorStatus.add(temp.getStatus().toString());
+
                             for(User tempUser : temp.getUsers()) {
 
                                 Log.i("Test User ID again Here",tempUser.getId().toString());
-                                Call<User> callerForGroup = proxy.getUserById(tempUser.getId());
-                                ProxyBuilder.callProxy(PermissionListActivity.this, callerForGroup,
-                                        new ProxyBuilder.SimpleCallback<User>() {
-                                            @Override
-                                            public void callback(User user) {
+                                Call<User> caller = proxy.getUserById(tempUser.getId());
+                                ProxyBuilder.callProxy(PermissionListActivity.this, caller, returnedPermissions -> response2(returnedPermissions));
 
-                                                String userName = user.getName();
-                                                Log.i("Show me user name",userName);
-                                                //authorizorName.add(userName);
-                                                //authorizorEmail.add(user.getEmail());
-                                                String temp = user.getEmail()+user.getName() +"\n";
-                                                Log.i("TEST2",temp);
-                                            }
-
-                                        });
                             }
-                        }
-
-                        for(int iiiii= 0; iiiii < authorizorEmail.size(); iiiii++) {
-                            String s1 = authorizorName.get(iiiii);
-                            String s2 = authorizorEmail.get(iiiii);
-                            String s3 = authorizorStatus.get(iiiii).toString();
-                            Log.i("wwwwwwww", s1+s2+s3);
-                           // authorizorInfo.add(s1+s2+s3+"\n");
 
                         }
-                        String totalInfo = permissionStatus + "\n" + permissionAction;
-                        textView.setText( totalInfo);
+                        Log.i("Sssize of status",Integer.toString(authorizorStatus.size()));
+                        Log.i("Sssize of name",Integer.toString(authorizorName.size()));
+                        Log.i("Sssize of email",Integer.toString(authorizorEmail.size()));
 
                         break;
                 }
@@ -199,8 +146,24 @@ public class PermissionListActivity extends AppCompatActivity {
 
     }
 
+    private void response2(User returnedNothing) {
+        TextView textView = (TextView) findViewById(R.id.PermissionDetails);
 
+        authorizorName.add(returnedNothing.getName());
+        authorizorEmail.add(returnedNothing.getEmail());
+        if(authorizorStatus.size() == authorizorName.size()) {
+            String subInfo = "Authorizors:"+"\n";
+            for(int counter =0; counter < authorizorStatus.size(); counter++) {
+                subInfo += authorizorName.get(counter) +"("+ authorizorEmail.get(counter)+")"
+                        +":"+ authorizorStatus.get(counter) + "\n" ;
+            }
+            problem = subInfo;
+            String totalInfo = "Status: " +permissionStatus + "\n" + "Action: "+permissionAction + "\n" + problem;
+            textView.setText( totalInfo);
+            Log.i("Loop 1",problem);
 
+        }
+    }
 
 
     public static Intent makeIntent(Context context) {
