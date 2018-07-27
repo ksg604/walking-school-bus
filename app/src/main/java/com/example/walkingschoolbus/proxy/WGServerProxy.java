@@ -22,7 +22,8 @@ import retrofit2.http.Query;
  * The ProxyBuilder class will handle the apiKey and token being injected as a header to all calls
  * This is a Retrofit interface.
  */
-public interface WGServerProxy {
+public interface
+WGServerProxy {
     @GET("getApiKey")
     Call<String> getApiKey(@Query("groupName") String groupName);
 
