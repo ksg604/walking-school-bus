@@ -9,55 +9,24 @@ import java.util.List;
 
 public class EarnedRewards {
 
-
-    private String title = "Dragon slayer";
-    private List<File> possibleBackgroundFiles = new ArrayList<>();
-    private Integer selectedBackground = 1;
-    private Integer titleColor = Color.BLUE;
+    private boolean[][] stickers = new boolean[7][7];
 
     // Needed for JSON deserialization
     public EarnedRewards() {
     }
 
-    public String getTitle() {
-        return title;
+    public boolean[][] getStickers(){
+        return stickers;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public List<File> getPossibleBackgroundFiles() {
-        return possibleBackgroundFiles;
-    }
-
-    public void setPossibleBackgroundFiles(List<File> possibleBackgroundFiles) {
-        this.possibleBackgroundFiles = possibleBackgroundFiles;
-    }
-
-    public int getSelectedBackground() {
-        return selectedBackground;
-    }
-
-    public void setSelectedBackground(int selectedBackground) {
-        this.selectedBackground = selectedBackground;
-    }
-
-    public int getTitleColor() {
-        return titleColor;
-    }
-
-    public void setTitleColor(int titleColor) {
-        this.titleColor = titleColor;
+    public void setStickers(boolean[][] newStickers){
+        this.stickers = newStickers;
     }
 
     @Override
     public String toString() {
         return "EarnedRewards{" +
-                "title='" + title + '\'' +
-                ", possibleBackgroundFiles=" + possibleBackgroundFiles +
-                ", selectedBackground=" + selectedBackground +
-                ", titleColor=" + titleColor +
+                "stickers='" + stickers +
                 '}';
     }
 }
