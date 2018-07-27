@@ -242,6 +242,7 @@ public class MainMenu extends AppCompatActivity {
                 if (session.getName() != null) {
                     welcomeMessage = getString( R.string.hello ) + " " + session.getName();
                 } else {
+                    setTextViewMessage();
                     welcomeMessage = getString( R.string.hello );
                 }
                 welcome.setText( welcomeMessage );
