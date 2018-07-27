@@ -35,6 +35,7 @@ import android.widget.TextView;
 import com.example.walkingschoolbus.model.GpsLocation;
 import com.example.walkingschoolbus.model.Group;
 import com.example.walkingschoolbus.model.Message;
+import com.example.walkingschoolbus.model.PermissionRequest;
 import com.example.walkingschoolbus.model.Session;
 import com.example.walkingschoolbus.model.User;
 import com.example.walkingschoolbus.proxy.ProxyBuilder;
@@ -354,11 +355,25 @@ public class MainMenu extends AppCompatActivity {
         runnableForGps = new Runnable() {
             public void run() {
                 updateLastGpsLocation();
+                setupGetUnreadPermissions();
                 handlerForGps.postDelayed( this, 30000 );
             }
         };
     }
-//TODO: Reactiviate
+
+    private void setupGetUnreadPermissions() {
+        Call<List<PermissionRequest>> caller = proxy.getPermissionForUserPending(user.getId(),
+                WGServerProxy.PermissionStatus.PENDING);
+        Log.i("My id:::::",user.getId().toString());
+        ProxyBuilder.callProxy(MainMenu.this, caller, returnedUsers -> responseForPermissions(returnedUsers));
+    }
+
+    private void responseForPermissions(List<PermissionRequest> returnedPermission) {
+        int pendingPermissionNum = returnedPermission.size();
+
+    }
+
+    //TODO: Reactiviate
     private void makeHandlerRunForMessages(){
  //       runnableForMessages = new Runnable(){
 //            public void run() {

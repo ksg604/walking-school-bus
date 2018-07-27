@@ -105,7 +105,8 @@ public class PermissionSystem extends AppCompatActivity {
 
               // PermissionRequest permissionRequest = new PermissionRequest();
                //permissionRequest = permission;
-               if(permission.getStatus().equals(WGServerProxy.PermissionStatus.PENDING)) {
+               if(permission.getStatus().equals(WGServerProxy.PermissionStatus.PENDING)&&
+                       (!permissionsListTemp.contains(permission))) {
                    permissionsListTemp.add(permission);
 
                    permissionsMessage.add(permission.getMessage());
@@ -185,12 +186,14 @@ public class PermissionSystem extends AppCompatActivity {
         runnableCode = new Runnable(){
             public void run() {
                 setupGetUnreadPermissions();
-
+               // setupAlert();
                 handler.postDelayed(this, 30000);
             }
         };
         handler.post(runnableCode);
     }
+
+
 
     private void setupGetUnreadPermissions() {
         Call<List<PermissionRequest>> caller = proxy.getPermissionForUserPending(user.getId(),
