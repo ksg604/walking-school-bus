@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PermissionListActivity"
+    tools:layout_editor_absoluteY="81dp">
+
+
+    <EditText
+        android:id="@+id/PermissionDetails"
+        android:layout_width="376dp"
+        android:layout_height="172dp"
+        android:background="@null"
+        android:backgroundTint="@android:color/transparent"
+        android:ems="10"
+        android:focusable="false"
+        android:inputType="textMultiLine|textNoSuggestions"
+        android:longClickable="false"
+        tools:layout_editor_absoluteX="4dp"
+        tools:layout_editor_absoluteY="299dp" />
+
+    <TextView
+        android:id="@+id/textView14"
+        android:layout_width="wrap_content"
+        android:layout_height="23dp"
+        android:text="@string/permission_title_view_all"
+        android:textSize="18dp"
+        tools:layout_editor_absoluteX="93dp"
+        tools:layout_editor_absoluteY="7dp" />
+
+    <TextView
+        android:id="@+id/textView15"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:text="@string/permission_viewall_subtitle"
+        tools:layout_editor_absoluteX="122dp"
+        tools:layout_editor_absoluteY="30dp" />
+
+    <com.baoyz.swipemenulistview.SwipeMenuListView
+        android:id="@+id/permissionList"
+        android:layout_width="367dp"
+        android:layout_height="227dp"
+        tools:layout_editor_absoluteX="9dp"
+        tools:layout_editor_absoluteY="59dp">
+
+    </com.baoyz.swipemenulistview.SwipeMenuListView>
+
+</android.support.constraint.ConstraintLayout>

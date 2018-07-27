@@ -155,7 +155,7 @@ public interface WGServerProxy {
 
 
     @GET("/permissions/{id}")
-    Call<PermissionRequest> getPermissionById(@Path("id") long permissionId);
+    Call<com.example.walkingschoolbus.model.PermissionRequest> getPermissionById(@Path("id") long permissionId);
 
     @POST("/permissions/{id}")
     Call<List<com.example.walkingschoolbus.model.PermissionRequest>> approveOrDenyPermissionRequest(

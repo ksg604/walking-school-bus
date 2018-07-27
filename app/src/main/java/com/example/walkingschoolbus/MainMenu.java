@@ -30,6 +30,7 @@ import android.widget.TextView;
 import com.example.walkingschoolbus.model.GpsLocation;
 import com.example.walkingschoolbus.model.Group;
 import com.example.walkingschoolbus.model.Message;
+import com.example.walkingschoolbus.model.PermissionRequest;
 import com.example.walkingschoolbus.model.Session;
 import com.example.walkingschoolbus.model.User;
 import com.example.walkingschoolbus.proxy.ProxyBuilder;
@@ -64,6 +65,7 @@ public class MainMenu extends AppCompatActivity {
     private static Runnable runnableForGps;
     private static Runnable runnableForMessages;
     private static int zeroDistance = 0;
+    private static  String welcomeMessage;
 
     private final static String unread = "unread";
 
@@ -230,6 +232,24 @@ public class MainMenu extends AppCompatActivity {
     }
 
     /**
+     *Show welcome message to the user loggged in
+     */
+    private void setTextViewMessage() {
+        TextView welcome = (TextView) findViewById( R.id.mainMenuWelcomeMessage );
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable(){
+            public void run(){
+                if (session.getName() != null) {
+                    welcomeMessage = getString( R.string.hello ) + " " + session.getName();
+                } else {
+                    welcomeMessage = getString( R.string.hello );
+                }
+                welcome.setText( welcomeMessage );
+            }
+        },2000);
+    }
+
+    /**
      * setup linear layout to redirect to settings page on click
      */
     private void setupLayoutMessages() {
@@ -291,21 +311,6 @@ public class MainMenu extends AppCompatActivity {
         } );
     }
 
-
-    /**
-     *Show welcome message to the user loggged in
-     */
-    private void setTextViewMessage() {
-        String welcomeMessage;
-        TextView welcome = (TextView) findViewById( R.id.mainMenuWelcomeMessage );
-        if (session.getName() != null) {
-            welcomeMessage = getString( R.string.hello ) + " " + session.getName();
-        } else {
-            welcomeMessage = getString( R.string.hello );
-        }
-        welcome.setText( welcomeMessage );
-    }
-
     public void setWalkingWithMessage() {
         String walkingMessage;
         TextView walking = findViewById(R.id.txtViewWalkingMessage);
@@ -345,11 +350,25 @@ public class MainMenu extends AppCompatActivity {
         runnableForGps = new Runnable() {
             public void run() {
                 updateLastGpsLocation();
+                setupGetUnreadPermissions();
                 handlerForGps.postDelayed( this, 30000 );
             }
         };
     }
-//TODO: Reactiviate
+
+    private void setupGetUnreadPermissions() {
+        Call<List<PermissionRequest>> caller = proxy.getPermissionForUserPending(user.getId(),
+                WGServerProxy.PermissionStatus.PENDING);
+        Log.i("My id:::::",user.getId().toString());
+        ProxyBuilder.callProxy(MainMenu.this, caller, returnedUsers -> responseForPermissions(returnedUsers));
+    }
+
+    private void responseForPermissions(List<PermissionRequest> returnedPermission) {
+        int pendingPermissionNum = returnedPermission.size();
+
+    }
+
+    //TODO: Reactiviate
     private void makeHandlerRunForMessages(){
  //       runnableForMessages = new Runnable(){
 //            public void run() {

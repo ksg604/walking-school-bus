@@ -4,10 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.baoyz.swipemenulistview.SwipeMenu;
@@ -41,10 +44,15 @@ public class PermissionSystem extends AppCompatActivity {
     private ArrayList<PermissionRequest> permissionsListTemp = new ArrayList<>();
     private List<String> permissionsMessage = new ArrayList<>();
 
+    private static Handler handler = new Handler();
+    private static Runnable runnableCode;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_permission_system);
+
+        makeHandlerRun();
 
         Session.getStoredSession(this);
         session = Session.getInstance();
@@ -52,22 +60,35 @@ public class PermissionSystem extends AppCompatActivity {
         String savedToken = session.getToken();
 
         //setPermissionTextView();
+        setupPermissionListButton();
 
         proxy = ProxyBuilder.getProxy(getString(R.string.api_key),session.getToken(),true);
 
         // Make call
+        /*
         Call<List<PermissionRequest>> caller = proxy.getPermissionForUserPending(user.getId(),
                 WGServerProxy.PermissionStatus.PENDING);
         Log.i("My id:::::",user.getId().toString());
         ProxyBuilder.callProxy(PermissionSystem.this, caller, returnedUsers -> response(returnedUsers));
+        */
     }
 
-    private void setPermissionTextView() {
-//        TextView monitoringList = (TextView) findViewById( R.id.myPermissionList );
+    private void setupPermissionListButton() {
+        ImageButton btn = (ImageButton) findViewById(R.id.imageBtnPermissonLIst);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = PermissionListActivity.makeIntent(PermissionSystem.this);
+                startActivity(intent);
+            }
+        });
+    }
+
+/*//        TextView monitoringList = (TextView) findViewById( R.id.myPermissionList );
   //      String monitoring = getString(R.string.monitoring_title);
     //    monitoringList.setText( monitoring );
     }
-
+*/
 
     public static Intent makeIntent(Context context) {
         Intent intent = new Intent(context, PermissionSystem.class);
@@ -84,7 +105,8 @@ public class PermissionSystem extends AppCompatActivity {
 
               // PermissionRequest permissionRequest = new PermissionRequest();
                //permissionRequest = permission;
-               if(permission.getStatus().equals(WGServerProxy.PermissionStatus.PENDING)) {
+               if(permission.getStatus().equals(WGServerProxy.PermissionStatus.PENDING)&&
+                       (!permissionsListTemp.contains(permission))) {
                    permissionsListTemp.add(permission);
 
                    permissionsMessage.add(permission.getMessage());
@@ -111,7 +133,6 @@ public class PermissionSystem extends AppCompatActivity {
                 // add to menu
                 menu.addMenuItem(openItem);
 
-
                 // create "delete" item
                 SwipeMenuItem deleteItem = new SwipeMenuItem( getApplicationContext());
                 // set item background
@@ -128,11 +149,8 @@ public class PermissionSystem extends AppCompatActivity {
                 deleteItem.setTitleColor(Color.WHITE);
                 // add to menu
                 menu.addMenuItem(deleteItem);
-
-
             }
         };
-
         // set creator
         permissionsList.setMenuCreator(creator);
 
@@ -155,12 +173,7 @@ public class PermissionSystem extends AppCompatActivity {
                         ProxyBuilder.callProxy(PermissionSystem.this, caller2, returnedUsers -> response2(returnedUsers));
                         permissionsList.removeViewsInLayout(position,1);
                         break;
-
-
                 }
-
-
-
                 // false : close the menu; true : not close the menu
                 return false;
             }
@@ -169,6 +182,26 @@ public class PermissionSystem extends AppCompatActivity {
 
 
     }
+    private void makeHandlerRun() {
+        runnableCode = new Runnable(){
+            public void run() {
+                setupGetUnreadPermissions();
+               // setupAlert();
+                handler.postDelayed(this, 30000);
+            }
+        };
+        handler.post(runnableCode);
+    }
+
+
+
+    private void setupGetUnreadPermissions() {
+        Call<List<PermissionRequest>> caller = proxy.getPermissionForUserPending(user.getId(),
+                WGServerProxy.PermissionStatus.PENDING);
+        Log.i("My id:::::",user.getId().toString());
+        ProxyBuilder.callProxy(PermissionSystem.this, caller, returnedUsers -> response(returnedUsers));
+    }
+
     private void response2(List<PermissionRequest> returnedNothing) {
        // notifyUserViaLogAndToast(MonitoringListActivity.this.getString(R.string.notify_not_monitor));
     }
