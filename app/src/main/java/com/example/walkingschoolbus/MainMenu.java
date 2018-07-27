@@ -73,6 +73,7 @@ public class MainMenu extends AppCompatActivity {
     private static Runnable runnableForGps;
     private static Runnable runnableForMessages;
     private static int zeroDistance = 0;
+    private static  String welcomeMessage;
 
     private final static String unread = "unread";
 
@@ -235,6 +236,24 @@ public class MainMenu extends AppCompatActivity {
     }
 
     /**
+     *Show welcome message to the user loggged in
+     */
+    private void setTextViewMessage() {
+        TextView welcome = (TextView) findViewById( R.id.mainMenuWelcomeMessage );
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable(){
+            public void run(){
+                if (session.getName() != null) {
+                    welcomeMessage = getString( R.string.hello ) + " " + session.getName();
+                } else {
+                    welcomeMessage = getString( R.string.hello );
+                }
+                welcome.setText( welcomeMessage );
+            }
+        },2000);
+    }
+
+    /**
      * setup linear layout to redirect to settings page on click
      */
     private void setupLayoutMessages() {
@@ -294,21 +313,6 @@ public class MainMenu extends AppCompatActivity {
                 startActivity(intent);
             }
         } );
-    }
-
-
-    /**
-     *Show welcome message to the user loggged in
-     */
-    private void setTextViewMessage() {
-        String welcomeMessage;
-        TextView welcome = (TextView) findViewById( R.id.mainMenuWelcomeMessage );
-        if (session.getName() != null) {
-            welcomeMessage = getString( R.string.hello ) + " " + session.getName();
-        } else {
-            welcomeMessage = getString( R.string.hello );
-        }
-        welcome.setText( welcomeMessage );
     }
 
     public void setWalkingWithMessage() {

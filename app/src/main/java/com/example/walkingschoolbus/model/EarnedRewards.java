@@ -10,10 +10,6 @@ import java.util.List;
 public class EarnedRewards {
 
     private boolean[][] stickers = new boolean[7][7];
-//    private String title = "Dragon slayer";
-//    private List<File> possibleBackgroundFiles = new ArrayList<>();
-//    private Integer selectedBackground = 1;
-//    private Integer titleColor = Color.BLUE;
 
     // Needed for JSON deserialization
     public EarnedRewards() {
