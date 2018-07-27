@@ -33,6 +33,7 @@
     <string name="mm_not_walking">No Group Selected</string>
     <string name="menu_broadcasts">Broadcasts</string>
     <string name="menu_leader_board">Leader Board</string>
+    <string name="permissions">My Permissions</string>
 
     <!--Sign up-->
     <string name="name">Full Name: </string>
@@ -223,5 +224,12 @@
     <string name="colon">: </string>
     <string name="leader_board_title">Leader Board</string>
 
+    <!--Game-->
+    <string name="get_rewards_btn">Get Rewards</string>
+
+    <!-- Generic Permission-->
+    <string name="request_sent">Request Sent To:\u0020</string>
+    <string name="group_pending"></string>
+    <string name="removal_pending">Removal Pending Approval</string>
 
 </resources>

@@ -89,13 +89,10 @@ public class User {
 
     // Permissions
     // - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    //private List<PermissionRequest> pendingPermissionRequests;
+    private List<PermissionRequest> pendingPermissionRequests;
 
 
     private String href;
-    /*
-    Singleton Support
-    */
 
     //Constructors
     public User() { }
@@ -107,6 +104,13 @@ public class User {
     }
 
 
+    public List<PermissionRequest> getPendingPermissionRequests() {
+        return pendingPermissionRequests;
+    }
+
+    public void setPendingPermissionRequests(List<PermissionRequest> pendingPermissionRequests) {
+        this.pendingPermissionRequests = pendingPermissionRequests;
+    }
 
     public User(Long id){
         this.id = id;
@@ -149,6 +153,9 @@ public class User {
         this.leadsGroups = oldUser.getLeadsGroups();    // <-- TO BE IMPLEMENTED
 
         this.href=oldUser.getHref();
+        this.currentPoints =oldUser.getCurrentPoints();
+        this.totalPointsEarned = oldUser.getTotalPointsEarned();
+        this.rewards = oldUser.getRewards();
     }
 
     public void makeCopyOf(User oldUser){
@@ -167,6 +174,9 @@ public class User {
         this.leadsGroups = oldUser.getLeadsGroups();    // <-- TO BE IMPLEMENTED
 
         this.href=oldUser.getHref();
+        this.currentPoints =oldUser.getCurrentPoints();
+        this.totalPointsEarned = oldUser.getTotalPointsEarned();
+        this.rewards = oldUser.getRewards();
     }
 
     public Boolean getHasFullData() {
@@ -358,7 +368,7 @@ public class User {
 
 
 
-    /*
+
     // Setter will be called when deserializing User's JSON object; we'll automatically
     // expand it into the custom object.
 
@@ -397,7 +407,7 @@ public class User {
     public void setRewards(EarnedRewards rewards) {
         this.rewards = rewards;
     }
-    */
+
     // Utility Functions
     // -------------------------------------------------------------------------------------------
     @Override
@@ -407,8 +417,8 @@ public class User {
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
-               // ", currentPoints=" + currentPoints +
-                //", totalPointsEarned=" + totalPointsEarned +
+                ", currentPoints=" + currentPoints +
+                ", totalPointsEarned=" + totalPointsEarned +
                 ", monitoredByUsers=" + monitoredByUsers +
                 ", monitorsUsers=" + monitorsUsers +
                 ", memberOfGroups=" + memberOfGroups +

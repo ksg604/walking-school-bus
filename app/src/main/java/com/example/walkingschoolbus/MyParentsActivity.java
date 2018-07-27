@@ -60,10 +60,7 @@ public class MyParentsActivity extends AppCompatActivity {
 
         //Add parents Button
         setupAddParentsButton();
-
-
     }
-
 
     private void response(List<User> returnedUsers) {
 
@@ -120,8 +117,6 @@ public class MyParentsActivity extends AppCompatActivity {
                 return false;
             }
         });
-
-
     }
 
     private void setupAddParentsButton() {
@@ -133,38 +128,13 @@ public class MyParentsActivity extends AppCompatActivity {
 
                 Intent intent = AddNewParentsActivity.makeIntent( MyParentsActivity.this );
                 startActivity( intent);
-
-
             }
         });
 
     }
 
-    /*
-    /**
-     * put the result from PlacePickerActivity on the listview to update
-     * @param requestCode arbitrary code number in this activity to get result from the other Activity
-     * @param resultCode the result code from the other Activity
-     * @param intent intent for going to another activity
-     */
-    /*
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
-
-        switch(requestCode){
-            case REQUEST_CODE:
-                if (resultCode == Activity.RESULT_OK) {
-                    finish();
-                    startActivity(getIntent());
-
-                }
-                break;
-
-        }
-    }*/
-
     private void response(Void returnedNothing) {
-        notifyUserViaLogAndToast(MyParentsActivity.this.getString(R.string.notify_delete));
+        notifyUserViaLogAndToast(MyParentsActivity.this.getString(R.string.removal_pending));
     }
 
     public static Intent makeIntent(Context context) {
@@ -174,7 +144,7 @@ public class MyParentsActivity extends AppCompatActivity {
 
     private void notifyUserViaLogAndToast(String message) {
         Log.w(TAG, message);
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -184,7 +154,4 @@ public class MyParentsActivity extends AppCompatActivity {
         finish();
         startActivity(getIntent());
     }
-
-
-
 }

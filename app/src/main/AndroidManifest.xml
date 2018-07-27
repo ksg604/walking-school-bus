@@ -74,7 +74,10 @@
         <activity android:name=".MemberActivity" />
         <activity android:name=".ParentsDashboardActivity" />
         <activity android:name=".LeaderBoardActivity" />
-        <activity android:name=".PurchaseRewardsActivity"></activity>
+        <activity android:name=".PurchaseRewardsActivity"/>
+            <activity android:name=".GameActivity"/>
+                <activity android:name=".PermissionSystem">
+        </activity>
     </application>
 
 </manifest>

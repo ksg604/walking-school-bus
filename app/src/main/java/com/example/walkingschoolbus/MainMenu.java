@@ -4,13 +4,10 @@
 package com.example.walkingschoolbus;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -25,8 +22,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
-import android.widget.ImageButton;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
@@ -43,15 +38,11 @@ import com.example.walkingschoolbus.proxy.WGServerProxy;
 import com.google.android.gms.location.FusedLocationProviderClient;
 
 
-import org.w3c.dom.Text;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
-
-import static com.example.walkingschoolbus.model.Session.getNumOfUnreadMessage;
 
 public class MainMenu extends AppCompatActivity {
 
@@ -96,6 +87,7 @@ public class MainMenu extends AppCompatActivity {
         setupLogOutButton();
         setupOnTrackingBtn();
         setupLeaderBoardLaurel();
+        setupGameButton();
 
         setupEmergencyButton();
         setupBroadcastsButton();
@@ -103,14 +95,17 @@ public class MainMenu extends AppCompatActivity {
         setupMessageNumber();
         setWalkingWithMessage();
 
+        setupPermissionTestBtn();
+
         makeHandlerRunForGps();
         makeHandlerRunForMessages();
 
 
 
+
+
+
     }
-
-
 
     private void setupMessageNumber() {
 
@@ -185,6 +180,17 @@ public class MainMenu extends AppCompatActivity {
         });
     }
 
+    private void setupPermissionTestBtn() {
+        LinearLayout btn = (LinearLayout) findViewById(R.id.linearLayoutPermissions);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = PermissionSystem.makeIntent(MainMenu.this);
+                startActivity(intent);
+            }
+        });
+    }
+
     private void setupEmergencyButton() {
         Button btn = findViewById(R.id.btnEmergency);
         btn.setText( R.string.emergency);
@@ -200,6 +206,8 @@ public class MainMenu extends AppCompatActivity {
         });
     }
 
+
+
     /**
      * setup logout button to finish this app.
      */
@@ -209,14 +217,18 @@ public class MainMenu extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 session.deleteTokenAndVariables();
-                session.storeSession( MainMenu.this );
-                Intent intent = WelcomeScreen.makeIntent( MainMenu.this );
-                startActivity( intent );
-                finish();
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable(){
+                    public void run(){
+                        session.storeSession( MainMenu.this );
+                        Intent intent = WelcomeScreen.makeIntent( MainMenu.this );
+                        startActivity( intent );
+                        finish();
+                    }
+                },1000);
             }
         } );
     }
-
 
     /**
      * setup linear layout to redirect to settings page on click
@@ -338,15 +350,15 @@ public class MainMenu extends AppCompatActivity {
             }
         };
     }
-
+//TODO: Reactiviate
     private void makeHandlerRunForMessages(){
-        runnableForMessages = new Runnable(){
-            public void run() {
-                setupMessageNumber();
-                handlerForMessages.postDelayed( this,60000 );
-            }
-        };
-        handlerForMessages.post( runnableForMessages);
+ //       runnableForMessages = new Runnable(){
+//            public void run() {
+//                setupMessageNumber();
+//                handlerForMessages.postDelayed( this,60000 );
+//            }
+//        };
+//        handlerForMessages.post( runnableForMessages);
     }
 
 
@@ -494,5 +506,16 @@ public class MainMenu extends AppCompatActivity {
             Log.i(TAG,"group is null");
             return 0;
         }
+    }
+
+    private void setupGameButton(){
+        Button game = findViewById( R.id.gameBtn );
+        game.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = GameActivity.makeIntent( MainMenu.this );
+                startActivity( intent );
+            }
+        } );
     }
 }
