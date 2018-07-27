@@ -229,5 +229,8 @@
     <string name="request_sent">Request Sent To:\u0020</string>
     <string name="group_pending"></string>
     <string name="removal_pending">Removal Pending Approval</string>
-
+    <string name="base_title">Outstanding Permissions</string>
+    <string name="permission_viewall_subtitle">Swipe Right for details</string>
+    <string name="permission_title_view_all">All Previous Permissions</string>
+    <string name="permission_view_all">View All</string>
 </resources>
