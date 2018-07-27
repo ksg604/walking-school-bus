@@ -65,7 +65,6 @@ public class MainMenu extends AppCompatActivity {
     private static Runnable runnableForGps;
     private static Runnable runnableForMessages;
     private static int zeroDistance = 0;
-    private static  String welcomeMessage;
 
     private final static String unread = "unread";
 
@@ -100,12 +99,6 @@ public class MainMenu extends AppCompatActivity {
 
         makeHandlerRunForGps();
         makeHandlerRunForMessages();
-
-
-
-
-
-
     }
 
     private void setupMessageNumber() {
@@ -123,7 +116,6 @@ public class MainMenu extends AppCompatActivity {
                counter++;
            }
        }
-        //String temp = Integer.toString(returnedMessageList.size());
         String temp = Integer.toString(counter);
         TextView messages = (TextView) findViewById( R.id.messagesMainMenu );
         String numMessages = temp + " " +getString(R.string.menu_message);
@@ -240,12 +232,11 @@ public class MainMenu extends AppCompatActivity {
         handler.postDelayed(new Runnable(){
             public void run(){
                 if (session.getName() != null) {
-                    welcomeMessage = getString( R.string.hello ) + " " + session.getName();
+                    welcome.setText(getString( R.string.hello )  +" " + session.getName());
+                    Log.i(TAG,"set name with : "+session.getName());
                 } else {
                     setTextViewMessage();
-                    welcomeMessage = getString( R.string.hello );
                 }
-                welcome.setText( welcomeMessage );
             }
         },2000);
     }
