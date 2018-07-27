@@ -47,11 +47,8 @@ public class MessageActivity extends AppCompatActivity {
     private final static String unread = "unread";
     private final static String read = "read";
 
-
     private ExpandableListView listView;
     private ExpandableListAdapter listAdapter;
-
-
 
     List<Long>unreadMessageIdList = new ArrayList<>();
     List<Long>oldMessageIdList = new ArrayList<>();
@@ -70,13 +67,11 @@ public class MessageActivity extends AppCompatActivity {
 
     List<Message> OldMessage = new ArrayList<>();
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         listDataHeader = new ArrayList<>();
         listHash = new HashMap<>();
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message2);
         session = Session.getInstance();
@@ -84,18 +79,10 @@ public class MessageActivity extends AppCompatActivity {
         messageContainer = LocalMessageContainer.getInstance();
         proxy = ProxyBuilder.getProxy(getString(R.string.api_key),session.getToken());
         listView = (ExpandableListView)findViewById(R.id.messageList);
-
         initData();
-
         listAdapter = new com.example.walkingschoolbus.model.ExpandableListAdapter(this,listDataHeader,listHash);
         listView.setAdapter(listAdapter);
-
-
-
-        //setupGetUnReadMessage();
-
         makeHandlerRun();
-
         setupGetReadMessage();
 
         listView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
@@ -115,14 +102,8 @@ public class MessageActivity extends AppCompatActivity {
                     startActivity(intent);
                     updateReadList(childPosition, tempMessageID);
                 }
-
-                if(groupPosition == 1) {
-
-
-                }
-                
+                if(groupPosition == 1) { }
                 return false;
-
             }
         });
     }
@@ -147,10 +128,6 @@ public class MessageActivity extends AppCompatActivity {
 
     }
 
-
-
-
-
     private void setupGetReadMessage() {
         Call<List<Message>> callerForOldMessage = proxy.getMessageNotRead(user.getId(), read);
         ProxyBuilder.callProxy(MessageActivity.this, callerForOldMessage,
@@ -164,12 +141,9 @@ public class MessageActivity extends AppCompatActivity {
                 returnedMessageList -> responseForUnreadMessage(returnedMessageList));
     }
 
-
-
     private void responseForOldMessage(List<Message> returnedOldMessageList) {
 
         for (Message message : returnedOldMessageList) {
-
             OldMessage.add(message);
             if(!(oldMessageIdList.contains(message.getId()))){
                 oldMessageIdList.add(message.getId());
@@ -179,8 +153,6 @@ public class MessageActivity extends AppCompatActivity {
                 ProxyBuilder.callProxy(MessageActivity.this, callerForGroup,
                         anotherUser-> responseForMessageSender(anotherUser, message));
             }
-
-
             listHash.put(listDataHeader.get(1), OldMessageString);
             listAdapter = new com.example.walkingschoolbus.model.ExpandableListAdapter(this,listDataHeader,listHash);
             listView.setAdapter(listAdapter);
@@ -188,7 +160,6 @@ public class MessageActivity extends AppCompatActivity {
 
         }
     }
-
 
     private void responseForUnreadMessage(List<Message> returnedMessageList) {
        // Log.i("Test 1:","Code reach here");
@@ -213,10 +184,7 @@ public class MessageActivity extends AppCompatActivity {
         listHash.put(listDataHeader.get(0), NewMessageStringList);
         listAdapter = new com.example.walkingschoolbus.model.ExpandableListAdapter(this,listDataHeader,listHash);
         listView.setAdapter(listAdapter);
-
     }
-
-
 
     private void responseForMessageSender(User anotherUser, Message message) {
         User tempuser = new User();
@@ -229,7 +197,6 @@ public class MessageActivity extends AppCompatActivity {
         // listHash.put(listDataHeader.get(1), OldMessageString);
 
     }
-
 
     private void makeHandlerRun() {
         runnableCode = new Runnable(){
@@ -244,9 +211,7 @@ public class MessageActivity extends AppCompatActivity {
 
     private void sendUnreadMessageNumberToMainpage() {
         Intent intent = MainMenu.makeIntent(MessageActivity.this, 5);
-
     }
-
 
     private void initData() {
         listDataHeader.add("New Message");
@@ -259,9 +224,5 @@ public class MessageActivity extends AppCompatActivity {
         return intent;
     }
 
-    private void responseForReadMark(Message returnedMessage) {
-
-    }
-
-
+    private void responseForReadMark(Message returnedMessage) { }
 }

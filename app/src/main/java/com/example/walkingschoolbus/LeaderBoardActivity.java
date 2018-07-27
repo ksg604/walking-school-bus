@@ -41,14 +41,8 @@ public class LeaderBoardActivity extends AppCompatActivity {
         user = new User();
         proxy = ProxyBuilder.getProxy(getString( R.string.api_key),userToken);
 
-
         Call<List<User>> caller = proxy.getUsers();
         ProxyBuilder.callProxy(LeaderBoardActivity.this, caller, returnedUsers-> responseForList(returnedUsers));
-
-
-
-
-
     }
 
     private void responseForList(List<User> returnedUsers) {
@@ -58,7 +52,6 @@ public class LeaderBoardActivity extends AppCompatActivity {
             if (user.getTotalPointsEarned() == null){
                 user.setTotalPointsEarned( 0 );
             }
-            
         }
         
         Collections.sort(listUsersSortedByPoints, new Comparator<User>() {
@@ -77,7 +70,6 @@ public class LeaderBoardActivity extends AppCompatActivity {
             if( i <100) {
                 user = userList.get( i );
                 String userName = user.getName();
-
 
                 StringTokenizer stringToken = new StringTokenizer(userName);
                 int flag = 0;
@@ -104,19 +96,15 @@ public class LeaderBoardActivity extends AppCompatActivity {
             }else{
                 break;
             }
-
         }
         ArrayAdapter<String> adapterForLeaderBoard = new ArrayAdapter<String>(this, R.layout.swipe_listview, listSortedStringUserInfo);
 
         //Configure the list view
         ListView list = (ListView) findViewById( R.id.listViewForLeaderBoard );
         list.setAdapter( adapterForLeaderBoard);
-
     }
 
     public static Intent makeIntent(Context context) {
         return new Intent( context, LeaderBoardActivity.class );
     }
-
-
 }

@@ -18,7 +18,6 @@ public class Message extends IdItemBase {
     private User fromUser;
     private User toUser;
 
-
     public boolean isEmergency() {
         return isEmergency;
     }
@@ -66,8 +65,6 @@ public class Message extends IdItemBase {
     public void setIsRead(Boolean read) {
         this.read = read;
     }
-
-
 
     @Override
     public String toString() {

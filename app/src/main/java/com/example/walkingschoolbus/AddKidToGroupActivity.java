@@ -84,12 +84,10 @@ public class AddKidToGroupActivity extends FragmentActivity implements OnMapRead
     WGServerProxy proxy;
     private Session token = Session.getInstance();
     private User kidUser;
-
     private Marker groupFinalLocationMarker;
     private Map<Marker, Long> markerLongHashMapMap = new HashMap<Marker, Long>();
     private static final int REQUEST_CODE = 3333;
     private static final String TAG = "AddKidToGroupActivity";
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -160,7 +158,6 @@ public class AddKidToGroupActivity extends FragmentActivity implements OnMapRead
         mapFragment.getMapAsync(this);
 
     }
-
 
     /**
      * Manipulates the map once available.
@@ -294,8 +291,6 @@ public class AddKidToGroupActivity extends FragmentActivity implements OnMapRead
                 }
         }
     }
-
-
 
     public static Intent makeIntent(Context context){
         Intent intent = new Intent(context, AddKidToGroupActivity.class);

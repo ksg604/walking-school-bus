@@ -64,13 +64,10 @@ public class GameActivity extends AppCompatActivity {
                     if (stickers[rowIdx][colIdx] == true) {
                         numRewards++;
                     }
-
                 }
             }
             priceReward = priceReward + (numRewards * 25);
         }
-
-
     }
 
     private void populatePostIt() {
@@ -86,15 +83,11 @@ public class GameActivity extends AppCompatActivity {
             tableRow.setLayoutParams( tableRowLayoutParams );
             tableRow.setPadding( 0,0,0,0 );
 
-
-
             table.addView( tableRow );
 
             for(int col =0; col < 7; col++) {
                  int COL_POST_IT = col;
                  int ROW_POST_IT = row;
-
-
 
                 ImageView postIt = new ImageView(this);
                 TableRow.LayoutParams imagelLayoutParams =  new TableRow.LayoutParams(
@@ -123,9 +116,6 @@ public class GameActivity extends AppCompatActivity {
                 images[row][col] = postIt;
             }
         }
-
-
-
     }
 
     private void gridImageClicked(int col, int row) {
@@ -156,9 +146,6 @@ public class GameActivity extends AppCompatActivity {
         return true;
     }
 
-
-
-
     private void responseForUser(User returnedUser){
 
         session.setUser(returnedUser);
@@ -166,12 +153,8 @@ public class GameActivity extends AppCompatActivity {
 
     }
 
-
     public static Intent makeIntent(Context context){
         Intent intent = new Intent(context, GameActivity.class);
         return intent;
     }
-
-
-
 }

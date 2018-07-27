@@ -37,16 +37,10 @@ public class OnMarkerClickActivity extends AppCompatActivity {
         String tokenValue = session.getToken();
         proxy = ProxyBuilder.getProxy(getString(R.string.api_key),tokenValue);
         getGroupDetails();
-
         TextView prompt = findViewById(R.id.markerClickPrompt);
-
-
         prompt.setText( R.string.prompt_join );
         setupNoBtn();
         setupYesBtn();
-
-
-
     }
 
     private void getGroupDetails(){
@@ -54,7 +48,6 @@ public class OnMarkerClickActivity extends AppCompatActivity {
         Long groupId = intent.getExtras().getLong("id");
         Call<Group> groupCaller = proxy.getGroupById( groupId );
         ProxyBuilder.callProxy( OnMarkerClickActivity.this, groupCaller, group -> response( group ) );
-
     }
 
     private void response(Group returnedGroup){
@@ -67,10 +60,7 @@ public class OnMarkerClickActivity extends AppCompatActivity {
 
         if (returnedGroup.getLeader().getId() == user.getId()){
             OnMarkerClickActivity.this.finish();
-
         }
-
-
     }
 
     private void setupYesBtn(){

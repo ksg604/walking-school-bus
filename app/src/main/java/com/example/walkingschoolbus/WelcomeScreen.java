@@ -52,7 +52,6 @@ public class WelcomeScreen extends AppCompatActivity {
             Log.i(TAG, "No Existing token found. No auto login ");
         }
         proxy = ProxyBuilder.getProxy(getString(R.string.api_key), null);
-
         setupSignUpButton();
         setupSignInButton();
     }
@@ -84,7 +83,6 @@ public class WelcomeScreen extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // Build new user
-                //EditText userName = (EditText) findViewById( R.id.nameInput );
                 EditText userEmail = (EditText) findViewById( R.id.emailInput);
                 EditText userPassword = (EditText) findViewById( R.id.passwordInput );
                 //create user for the log-in call
@@ -93,7 +91,6 @@ public class WelcomeScreen extends AppCompatActivity {
 
                 // Register for token received:
                 ProxyBuilder.setOnTokenReceiveCallback( token -> onReceiveToken(token));
-                //setupSignUpButton();
                 // Make call
                 Call<Void> caller = proxy.login(loginUser);
                 ProxyBuilder.callProxy(WelcomeScreen.this, caller, returnedNothing -> response(returnedNothing));
@@ -123,7 +120,6 @@ public class WelcomeScreen extends AppCompatActivity {
         ProxyBuilder.callProxy(WelcomeScreen.this,caller,returnedUser ->
                 responseForUser(returnedUser, token));
         Log.i(TAG, "pull user");
-      //  moveToMainMenu();
     }
 
     /**
@@ -136,7 +132,7 @@ public class WelcomeScreen extends AppCompatActivity {
         String email =returnedUser.getEmail();
 
         //set singleton user to point to user pulled from server
-        session.setUser(returnedUser); //set singleton user to logged in user.
+        session.setUser(returnedUser);
         Log.i(TAG, "set user to: "+ returnedUser.getName());
 
         //set and save session data
@@ -144,10 +140,7 @@ public class WelcomeScreen extends AppCompatActivity {
         session.storeSession(this);
         Log.i(TAG,"responseForUser ||"+ email);
 
-      //  if(autoLogInFlag){
-            // if not first time logging in move directly to main menu
-            moveToMainMenu();
-     //   }
+        moveToMainMenu();
     }
 
     /**
@@ -158,7 +151,6 @@ public class WelcomeScreen extends AppCompatActivity {
     private void response(Void returnedNothing) {
         notifyUserViaLogAndToast(WelcomeScreen.this.getString(R.string.login_success));
     }
-
 
     /**
      * Push a toast to user with result

@@ -44,7 +44,6 @@ public class ViewUserSettingsActivity extends AppCompatActivity {
     private User sessionUser = session.getUser();
     private List<User> children = sessionUser.getMonitorsUsers();
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,9 +69,7 @@ public class ViewUserSettingsActivity extends AppCompatActivity {
         Call<User> caller = proxy.getUserById(thisUserID);
         ProxyBuilder.callProxy(ViewUserSettingsActivity.this,caller,
                 returnedUser ->responseForUser(returnedUser));
-
         setupMonitorsButton();
-
     }
 
     private void responseForUser(User user){
@@ -103,7 +100,6 @@ public class ViewUserSettingsActivity extends AppCompatActivity {
         } catch(NullPointerException e){
             Log.e(TAG,"exception: ", e);
         }
-
         switch(monthOfBirth){
             case 1:
                 monthText = "Jan";          break;
@@ -134,7 +130,6 @@ public class ViewUserSettingsActivity extends AppCompatActivity {
 
         setEditable();
     }
-
 
     private void setEditable() {
         try {
@@ -173,18 +168,16 @@ public class ViewUserSettingsActivity extends AppCompatActivity {
     }
 
     private void setupMonitorsButton() {
-    Button btn = findViewById(R.id.btnUserMonitors);
-    btn.setOnClickListener(new View.OnClickListener(){
-        @Override
-        public void onClick(View v) {
-            Intent intent = ViewUserMonitoredByActivity.makeIntent(
+        Button btn = findViewById(R.id.btnUserMonitors);
+        btn.setOnClickListener(new View.OnClickListener(){
+         @Override
+         public void onClick(View v) {
+                Intent intent = ViewUserMonitoredByActivity.makeIntent(
                     ViewUserSettingsActivity.this,thisUserID);
-            startActivity(intent);
-        }
-    });
-
+                startActivity(intent);
+            }
+        });
     }
-
 
     public static Intent makeIntent(Context context, long userID){
         Log.i(TAG,"makeIntent");

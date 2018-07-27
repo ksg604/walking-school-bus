@@ -19,7 +19,6 @@ public class PermissionRequest extends IdItemBase {
     private Set<Authorizor> authorizors;
     private String message;
 
-
     public String getAction() {
         return action;
     }
@@ -129,7 +128,6 @@ public class PermissionRequest extends IdItemBase {
             this.whoApprovedOrDenied = whoApprovedOrDenied;
         }
     }
-
 
     @Override
     public String toString() {

@@ -37,7 +37,6 @@ public class MonitoringListActivity extends AppCompatActivity {
     private Session session;
     private User user;
     private static WGServerProxy proxy;
-
     private ArrayList<String> monitoringUser = new ArrayList<>();
 
     @Override
@@ -60,8 +59,6 @@ public class MonitoringListActivity extends AppCompatActivity {
     }
 
     private void response(List<User> returnedUsers) {
-
-
         SwipeMenuListView monitoringList = (SwipeMenuListView) findViewById(R.id.myKidsList);
 
         for (User user : returnedUsers) {
@@ -72,7 +69,6 @@ public class MonitoringListActivity extends AppCompatActivity {
             monitoringUser.add(userInfo);
             ArrayAdapter adapter = new ArrayAdapter(MonitoringListActivity.this, R.layout.swipe_listview, monitoringUser);
             monitoringList.setAdapter(adapter);
-
         }
         SwipeMenuCreator creator = new SwipeMenuCreator() {
 
@@ -93,7 +89,6 @@ public class MonitoringListActivity extends AppCompatActivity {
                 // add to menu
                 menu.addMenuItem(openItem);
 
-
                 // create "delete" item
                 SwipeMenuItem deleteItem = new SwipeMenuItem( getApplicationContext());
                 // set item background
@@ -110,7 +105,6 @@ public class MonitoringListActivity extends AppCompatActivity {
                 deleteItem.setTitleColor(Color.WHITE);
                 // add to menu
                 menu.addMenuItem(deleteItem);
-
 
                 // create "group" list item
                 SwipeMenuItem goGroup = new SwipeMenuItem( getApplicationContext());
@@ -150,18 +144,14 @@ public class MonitoringListActivity extends AppCompatActivity {
                         Intent intentForAdd = MonitorActivity.makeIntent(MonitoringListActivity.this,
                                 returnedUsers.get(position).getEmail());
                         startActivity(intentForAdd);
-
                         break;
 
                     case 2:
                         Intent intentForRemove = RemoveMonitoringUserFromGroup.makeIntentWithEmailToPass(MonitoringListActivity.this,
                                 returnedUsers.get(position).getEmail());
                         startActivity(intentForRemove);
-
                         break;
-
                 }
-
                 // false : close the menu; true : not close the menu
                 return false;
             }
@@ -174,11 +164,8 @@ public class MonitoringListActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 Intent intentAdd = AddNewParentsActivity.makeIntent( MonitoringListActivity.this );
                 startActivity(intentAdd);
-
             }
         });
     }
@@ -192,9 +179,7 @@ public class MonitoringListActivity extends AppCompatActivity {
         TextView monitoringList = (TextView) findViewById( R.id.monitoringListText );
         String monitoring = getString(R.string.monitoring_title);
         monitoringList.setText( monitoring );
-
     }
-
 
     public static Intent makeIntent(Context context) {
         Intent intent = new Intent(context, MonitoringListActivity.class);

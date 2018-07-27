@@ -49,7 +49,6 @@ public class LeaderActivity extends AppCompatActivity {
     private GpsLocation schoolGpsLocation = new GpsLocation();
     private String userToken;
     private static WGServerProxy proxy;
-
     private static final String TAG = "LeaderActivity";
 
     @Override
@@ -65,18 +64,12 @@ public class LeaderActivity extends AppCompatActivity {
         user = tokenSession.getUser();
         group = Group.getInstance();
         getGroupInfo();
-
         //set Walking With This Group Button
         setWalkWithThisGroupBtn();
-
 
         //Make call for a list of member
         Call<List<User>> caller = proxy.getGroupMembers(group.getId());
         ProxyBuilder.callProxy(LeaderActivity.this, caller, returnedUsers-> responseForList(returnedUsers));
-
-
-
-
     }
     /**
      * get response from the server to get a group member list as a leader
@@ -99,7 +92,6 @@ public class LeaderActivity extends AppCompatActivity {
             ArrayAdapter adapter = new ArrayAdapter( LeaderActivity.this, R.layout.swipe_listview, stringUserList );
 
             userListView.setAdapter( adapter );
-
         }
 
         SwipeMenuCreator creator = new SwipeMenuCreator() {
@@ -136,13 +128,11 @@ public class LeaderActivity extends AppCompatActivity {
                 deleteItem.setTitleColor(Color.WHITE);
                 // add to menu
                 menu.addMenuItem(deleteItem);
-
             }
         };
 
         // set creator
         userListView.setMenuCreator(creator);
-
         userListView.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {

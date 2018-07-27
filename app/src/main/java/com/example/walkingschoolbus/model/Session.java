@@ -44,8 +44,6 @@ public class Session {
     private static final String SHAREDPREF_SESSION = "user session token";
     private static int numOfUnreadMessage;
 
-
-
     private boolean mLocationPermissionsGranted;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 0;
     private GpsLocation lastGpsLocation;
@@ -95,7 +93,6 @@ public class Session {
     public static void setNumOfUnreadMessage(int numOfUnreadMessage) {
         Session.numOfUnreadMessage = numOfUnreadMessage;
     }
-
 
     public Long getid(){return user.getId();}
 
@@ -158,7 +155,6 @@ public class Session {
         instance = gson.fromJson(json, Session.class);
         Log.i(TAG,"Session grabbed");
     }
-
 
     public String getNumberOfMessages() {
         return numberOfMessages;

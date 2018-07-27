@@ -33,7 +33,6 @@ public class SignUpActivity extends AppCompatActivity {
         proxy = ProxyBuilder.getProxy(getString(R.string.api_key),null);
         setupNewUserButton();
         setSignUpTextView();
-
     }
 
     public static Intent makeIntent(Context context){
@@ -56,36 +55,26 @@ public class SignUpActivity extends AppCompatActivity {
                 user.setName(name.getText().toString());
                 user.setEmail(email.getText().toString());
                 user.setPassword(password.getText().toString());
-               // user.setCurrentPoints(100);
-               // user.setTotalPointsEarned(2500);
-               // user.setRewards(new EarnedRewards());
-
 
                 // Make call
-
                 Call<User> caller = proxy.createUser(user);
                 ProxyBuilder.callProxy(SignUpActivity.this, caller, returnedUser -> response(returnedUser));
 
                 //switch
-
                 Intent intent = WelcomeScreen.makeIntent(SignUpActivity.this);
                 startActivity(intent);
             }
         });
     }
 
-
     /*
      *Set signup text view to show title
      */
-
     private void setSignUpTextView() {
         TextView signup = (TextView) findViewById( R.id.signUpText );
         String signUp = getString(R.string.sign_up);
         signup.setText( signUp );
-
     }
-
 
     private void response(User user) {  }
 

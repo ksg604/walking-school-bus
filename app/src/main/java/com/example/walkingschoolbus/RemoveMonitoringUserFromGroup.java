@@ -35,15 +35,9 @@ public class RemoveMonitoringUserFromGroup extends AppCompatActivity {
     private static WGServerProxy proxy;
     private static Long userId;
     private static final String TAG = "Monitor";
-
     private List<String> stringMemberGroupList = new ArrayList< >( );
-
     private List<Group> groupListOfThisMember = new ArrayList<>();
-
     private List<Long> groupIdMemberList = new ArrayList<>();
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,12 +45,9 @@ public class RemoveMonitoringUserFromGroup extends AppCompatActivity {
         setContentView(R.layout.activity_remove_monitoring_user_from_group);
 
         session = Session.getInstance();
-
         // Build the server proxy
         proxy = ProxyBuilder.getProxy(getString(R.string.api_key),session.getToken());
-
         //get user info from previous activity
-
         Intent neededIntent = getIntent();
         String tempString = neededIntent.getStringExtra("Email");
 
@@ -64,17 +55,11 @@ public class RemoveMonitoringUserFromGroup extends AppCompatActivity {
 
         ProxyBuilder.callProxy(RemoveMonitoringUserFromGroup.this, caller,
                 returnedInputUser -> responseForRemove(returnedInputUser));
-
     }
 
-
-
     private void responseForRemove(User returnedInputUser) {
-
         groupListOfThisMember = returnedInputUser.getMemberOfGroups();
-
-         userId = returnedInputUser.getId();
-
+        userId = returnedInputUser.getId();
 
         for (Group group : groupListOfThisMember) {
             groupIdMemberList.add(group.getId());
@@ -84,23 +69,15 @@ public class RemoveMonitoringUserFromGroup extends AppCompatActivity {
                 caller, returnedGroupList -> responseForGroup(returnedGroupList));
     }
 
-
-
-
-
     private void responseForGroup(List<Group> returnedGroups) {
         // modifiedGroupMemberList.add(group);
         SwipeMenuListView userGroups = (SwipeMenuListView) findViewById(R.id.listOfGroups);
 
-
         for(Group group : returnedGroups) {
             if(groupIdMemberList.contains(group.getId())){
-
                 String groupInfo = getString( R.string.group_list) + " " + group.getGroupDescription();
                 stringMemberGroupList.add(groupInfo);
             }
-
-
         }
 
         ArrayAdapter adapterLeader = new ArrayAdapter( RemoveMonitoringUserFromGroup.this,
@@ -112,7 +89,6 @@ public class RemoveMonitoringUserFromGroup extends AppCompatActivity {
 
             @Override
             public void create(SwipeMenu menu) {
-
                 // create "delete" item
                 SwipeMenuItem deleteItem = new SwipeMenuItem( getApplicationContext());
                 // set item background
@@ -127,26 +103,20 @@ public class RemoveMonitoringUserFromGroup extends AppCompatActivity {
                 deleteItem.setTitleColor(Color.WHITE);
                 // add to menu
                 menu.addMenuItem(deleteItem);
-
             }
         };
-
         // set creatorForLeader
         userGroups.setMenuCreator(creatorForLeader);
-
 
         userGroups.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
                 switch (index) {
-
                     case 0:
                         Call<Void> caller = proxy.removeGroupMember(groupListOfThisMember.get(position).getId(), userId);
                         ProxyBuilder.callProxy(RemoveMonitoringUserFromGroup.this, caller, returnedNothing -> response(returnedNothing));
                         userGroups.removeViewsInLayout(position,1);
-
                         break;
-
                 }
                 // false : close the menu; true : not close the menu
                 return false;
@@ -158,22 +128,18 @@ public class RemoveMonitoringUserFromGroup extends AppCompatActivity {
         notifyUserViaLogAndToast( getString( R.string.delete_message));
     }
 
-
     private void notifyUserViaLogAndToast(String message) {
         Log.w(TAG, message);
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 
+    private void responseMessage(List<User> returnedUser) { }
 
-    private void responseMessage(List<User> returnedUser) {
-
-    }
     public static Intent makeIntentWithEmailToPass(Context context, String userEmailToPass){
         Intent intent = new Intent(context, RemoveMonitoringUserFromGroup.class);
         intent.putExtra("Email",userEmailToPass);
         return intent;
     }
-
 
     public static Intent makeIntent(Context context){
         Intent intent = new Intent(context, RemoveMonitoringUserFromGroup.class);

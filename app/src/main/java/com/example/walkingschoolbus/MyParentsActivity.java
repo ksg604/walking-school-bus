@@ -31,50 +31,37 @@ import java.util.List;
 import retrofit2.Call;
 
 public class MyParentsActivity extends AppCompatActivity {
-
-
     private static final String TAG = "MyParentsActivity";
-
-
     private User user;
     private static WGServerProxy proxy;
     private Session session;
     private static final int REQUEST_CODE = 5959;
-
     private ArrayList<String> myParentsStringList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_my_parents );
-
         session = Session.getInstance();
         user = session.getUser();
-
         // Build the server proxy
         proxy = ProxyBuilder.getProxy(getString(R.string.api_key),session.getToken());
-
         // Make call
         Call<List<User>> caller = proxy.getMonitoredByUsers(user.getId());
         ProxyBuilder.callProxy(MyParentsActivity.this, caller, returnedUsers -> response(returnedUsers));
-
         //Add parents Button
         setupAddParentsButton();
     }
 
     private void response(List<User> returnedUsers) {
-
         SwipeMenuListView monitoredList = (SwipeMenuListView) findViewById(R.id.monitoredList );
-
         for (User user : returnedUsers) {
             Log.w(TAG, "    User: " + user.toString());
             String userInfo =  getString( R.string.user_name_list )+ " " + user.getName()+"\n" + getString(R.string.user_email_list) + user.getEmail();
-
             myParentsStringList.add(userInfo);
         }
         ArrayAdapter adapter = new ArrayAdapter(MyParentsActivity.this, R.layout.swipe_listview, myParentsStringList);
         monitoredList.setAdapter(adapter);
-
         SwipeMenuCreator creator = new SwipeMenuCreator() {
 
             @Override
@@ -94,7 +81,6 @@ public class MyParentsActivity extends AppCompatActivity {
                 deleteItem.setTitleColor(Color.WHITE);
                 // add to menu
                 menu.addMenuItem(deleteItem);
-
             }
         };
 
@@ -120,17 +106,14 @@ public class MyParentsActivity extends AppCompatActivity {
     }
 
     private void setupAddParentsButton() {
-
         Button button = (Button) findViewById(R.id.addNewParentsBtn );
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent intent = AddNewParentsActivity.makeIntent( MyParentsActivity.this );
                 startActivity( intent);
             }
         });
-
     }
 
     private void response(Void returnedNothing) {

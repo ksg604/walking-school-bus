@@ -15,7 +15,6 @@ public class GpsLocation {
     private Double lng;
     private String timestamp;
 
-
     public Double getLat() {
         return lat;
     }
@@ -36,9 +35,6 @@ public class GpsLocation {
     public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
     }
-
-
-
 
     @Override
     public String toString() {
