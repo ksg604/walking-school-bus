@@ -4,13 +4,10 @@
 package com.example.walkingschoolbus;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -25,8 +22,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
-import android.widget.ImageButton;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
@@ -43,15 +38,11 @@ import com.example.walkingschoolbus.proxy.WGServerProxy;
 import com.google.android.gms.location.FusedLocationProviderClient;
 
 
-import org.w3c.dom.Text;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
-
-import static com.example.walkingschoolbus.model.Session.getNumOfUnreadMessage;
 
 public class MainMenu extends AppCompatActivity {
 
@@ -97,6 +88,7 @@ public class MainMenu extends AppCompatActivity {
         setupLogOutButton();
         setupOnTrackingBtn();
         setupLeaderBoardLaurel();
+        setupGameButton();
 
         setupEmergencyButton();
         setupBroadcastsButton();
@@ -108,6 +100,9 @@ public class MainMenu extends AppCompatActivity {
 
         makeHandlerRunForGps();
         makeHandlerRunForMessages();
+
+
+
 
 
 
@@ -529,5 +524,16 @@ public class MainMenu extends AppCompatActivity {
             Log.i(TAG,"group is null");
             return 0;
         }
+    }
+
+    private void setupGameButton(){
+        Button game = findViewById( R.id.gameBtn );
+        game.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = GameActivity.makeIntent( MainMenu.this );
+                startActivity( intent );
+            }
+        } );
     }
 }

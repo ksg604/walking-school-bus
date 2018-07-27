@@ -224,6 +224,8 @@
     <string name="colon">: </string>
     <string name="leader_board_title">Leader Board</string>
 
+    <!--Game-->
+    <string name="get_rewards_btn">Get Rewards</string>
 
     <!-- Generic Permission-->
     <string name="request_sent">Request Sent To:\u0020</string>
