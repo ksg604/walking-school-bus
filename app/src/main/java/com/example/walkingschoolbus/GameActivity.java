@@ -92,6 +92,15 @@ public class GameActivity extends AppCompatActivity {
         postIt.setVisibility( View.INVISIBLE );
 
         Call<User> caller = proxy.editUser(user.getId(), user);
+        ProxyBuilder.callProxy(GameActivity.this, caller, returnedUser -> responseForUser(returnedUser));
+
+
+    }
+
+    private void responseForUser(User user){
+        
+
+
 
     }
 
