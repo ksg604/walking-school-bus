@@ -67,7 +67,7 @@ public class LeaderBoardActivity extends AppCompatActivity {
     private void populateListView(List<User> userList) {
 
         for ( int i = 0; i < userList.size(); i++ ) {
-            if( i <100) {
+            if( i < 100) {
                 user = userList.get( i );
                 String userName = user.getName();
 
@@ -83,13 +83,28 @@ public class LeaderBoardActivity extends AppCompatActivity {
                     flag++;
                 }
                 int order = i+1;
+                String orderNum;
+                if (order == 1 || order == 21 || order == 31 || order == 41 || order == 51 || order == 61 || order == 71
+                        || order == 81 || order == 91){
+                    orderNum = order + getString( R.string.st );
+                }else if( order == 2 || order == 22 || order == 32 || order == 42 || order == 52 || order == 62 || order == 72
+                        || order == 82 || order == 92){
+                    orderNum = order + getString( R.string.nd );
+                }else if( order == 3 || order == 23 || order == 33 || order == 43 || order == 53 || order == 63 || order == 73
+                        || order == 83 || order == 93){
+                    orderNum = order + getString( R.string.rd );
+                }else{
+                    orderNum = order + getString( R.string.th );
+                }
+
+
                 String stringForList;
                 if(flag > 1) {
-                    stringForList = order + " " + userFirstName + " " + userLastName.charAt( 0 ) + getString(R.string.colon)+ " "
+                    stringForList = orderNum  + " " + userFirstName + " " + userLastName.charAt( 0 ) + getString(R.string.colon)+ " "
                             + user.getTotalPointsEarned()+ " " + getString(R.string.user_point_total);
                 }
                 else{
-                    stringForList = order + " " + userFirstName + getString(R.string.colon)+ "  " + user.getTotalPointsEarned()
+                    stringForList = orderNum + " " + userFirstName + getString(R.string.colon)+ "  " + user.getTotalPointsEarned()
                             +" " + getString(R.string.user_point_total) ;
                 }
                 listSortedStringUserInfo.add( stringForList );

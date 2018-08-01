@@ -223,7 +223,10 @@
     <string name="user_point_total">points</string>
     <string name="colon">: </string>
     <string name="leader_board_title">Leader Board</string>
-
+    <string name="st">st.\u0020</string>
+    <string name="nd">nd.\u0020</string>
+    <string name="rd">rd.\u0020</string>
+    <string name="th">th.\u0020</string>
     <!--Game-->
     <string name="get_rewards_btn">Get Rewards</string>
     <string name="session_user_points">My Points:\u0020</string>
@@ -231,8 +234,7 @@
     <string name="current_num_rewards">I\'ve got rid of\u0020</string>
     <string name="stickers">\u0020post-it stickers.</string>
     <string name="toast_not_enough">Not enough points to remove stickers!</string>
-    <string name="width">width</string>
-    <string name="height">height</string>
+
 
     <!-- Generic Permission-->
     <string name="request_sent">Request Sent To:\u0020</string>
