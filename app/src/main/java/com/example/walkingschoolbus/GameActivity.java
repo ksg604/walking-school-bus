@@ -2,6 +2,11 @@ package com.example.walkingschoolbus;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.v4.widget.ImageViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.walkingschoolbus.model.EarnedRewards;
 import com.example.walkingschoolbus.model.Session;
@@ -27,6 +33,8 @@ public class GameActivity extends AppCompatActivity {
 
     private Session session = Session.getInstance();
     private ImageView[][] images = new ImageView[7][7];
+    private static int postItNewWidth;
+    private static int postItNewHeight;
     private User user;
     private static WGServerProxy proxy;
     private String token;
@@ -35,6 +43,7 @@ public class GameActivity extends AppCompatActivity {
     int priceReward = 500;
     EarnedRewards rewards = new EarnedRewards();
     private static final String TAG = "GameActivity";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +54,6 @@ public class GameActivity extends AppCompatActivity {
         proxy = ProxyBuilder.getProxy(getString( R.string.api_key),token);
 
         getSessionUser();
-
         populatePostIt();
     }
 
@@ -59,12 +67,13 @@ public class GameActivity extends AppCompatActivity {
         user = theSessionUser;
         //Update layout textviews
         TextView pointsTitle = findViewById(R.id.userPointsTxt);
-        pointsTitle.setText(getString(R.string.session_user_points) + theSessionUser.getCurrentPoints());
-
         if(theSessionUser.getCurrentPoints() != null){
             user.setCurrentPoints( theSessionUser.getCurrentPoints() );
+            pointsTitle.setText( getString( R.string.session_user_points ) + theSessionUser.getCurrentPoints() );
+
         }else{
             user.setCurrentPoints( 0 );
+            pointsTitle.setText (getString( R.string.session_user_points ) + 0 );
         }
 
         if(theSessionUser.getRewards() !=null) {
@@ -78,7 +87,13 @@ public class GameActivity extends AppCompatActivity {
                 }
             }
             priceReward = priceReward + (numRewards * 25);
+
         }
+        TextView price = findViewById( R.id.currentPriceTxt );
+        TextView rewardsOwned = findViewById( R.id.rewardUserGetTxt );
+        price.setText( getString(R.string.current_price) + priceReward );
+        rewardsOwned.setText ( getString(R.string.current_num_rewards ) + numRewards + getString(R.string.stickers));
+
     }
 
     private void populatePostIt() {
@@ -100,43 +115,44 @@ public class GameActivity extends AppCompatActivity {
                  int COL_POST_IT = col;
                  int ROW_POST_IT = row;
 
-                ImageView postIt = new ImageView(this);
-                TableRow.LayoutParams imagelLayoutParams =  new TableRow.LayoutParams(
+                ImageView postItForGrid = new ImageView(this);
+                TableRow.LayoutParams imageLayoutParams =  new TableRow.LayoutParams(
                         TableRow.LayoutParams.MATCH_PARENT,
                         TableRow.LayoutParams.MATCH_PARENT,1.0f);
-                imagelLayoutParams.setMargins(0,0,0,0 );
-                postIt.setLayoutParams( imagelLayoutParams );
-                postIt.setPadding( 0,0,0,0 );
+                imageLayoutParams.setMargins(0,0,0,0 );
+                postItForGrid.setLayoutParams( imageLayoutParams );
+                postItForGrid.setPadding( 0,0,0,0 );
+
+                postItForGrid.setImageResource( R.drawable.new_post_it);
 
                 if(user.getRewards() != null && user.getRewards().getStickers()[row][col] == true){
-                    postIt.setVisibility( View.INVISIBLE );
-                }else {
-                    postIt.setImageResource( R.drawable.new_post_it );
 
-                    postIt.setOnClickListener( new View.OnClickListener() {
+                    postItForGrid.setVisibility( View.INVISIBLE );
+
+                }else {
+                    postItForGrid.setVisibility( View.VISIBLE);
+
+                    postItForGrid.setOnClickListener( new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-
                             gridImageClicked( COL_POST_IT, ROW_POST_IT );
-
                         }
                     } );
 
                 }
-                tableRow.addView( postIt );
-                images[row][col] = postIt;
+                tableRow.addView( postItForGrid );
+                images[row][col] = postItForGrid;
             }
         }
-
-
-
     }
 
     private void gridImageClicked(int col, int row) {
 
         if (checkSpendPoints()){
+
             ImageView postIt = images[row][col];
             postIt.setVisibility( View.INVISIBLE );
+
             user.setCurrentPoints( user.getCurrentPoints()-priceReward );
             stickers[row][col] = true;
             if (user.getRewards() != null){
@@ -144,8 +160,9 @@ public class GameActivity extends AppCompatActivity {
             }
             rewards.setStickers( stickers );
             user.setRewards( rewards );
+            numRewards++;
             priceReward += 25;
-
+            updateTextView();
             Log.i(TAG,"user points after buying: "+user.getCurrentPoints());
 
             Call<User> caller = proxy.editUser( user.getId(), user );
@@ -157,13 +174,24 @@ public class GameActivity extends AppCompatActivity {
     private boolean checkSpendPoints() {
         if (user.getCurrentPoints() < priceReward) {
             Log.i( TAG, "NO TRY TO GET REWARDS" );
+            Toast.makeText(GameActivity.this,getString(R.string.toast_not_enough),Toast.LENGTH_SHORT ).show();
             return false;
         }
         return true;
     }
 
-    private void responseForUser(User returnedUser){
 
+    private void updateTextView() {
+        TextView pointsTitle = findViewById(R.id.userPointsTxt);
+        TextView price = findViewById( R.id.currentPriceTxt );
+        TextView rewardsOwned = findViewById( R.id.rewardUserGetTxt );
+        pointsTitle.setText( getString( R.string.session_user_points ) + user.getCurrentPoints() );
+        price.setText( getString(R.string.current_price) + priceReward );
+        rewardsOwned.setText ( getString(R.string.current_num_rewards ) + numRewards + getString(R.string.stickers));
+
+    }
+
+    private void responseForUser(User returnedUser){
         session.setUser(returnedUser);
 
     }

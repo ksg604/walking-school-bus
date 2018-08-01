@@ -8,8 +8,8 @@
 
     <TextView
         android:id="@+id/LeaderBoardTxt"
-        android:layout_width="143dp"
-        android:layout_height="32dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="33dp"
         android:layout_marginEnd="216dp"
         android:layout_marginStart="25dp"
@@ -18,20 +18,23 @@
         android:textAppearance="@android:style/TextAppearance.Material.Headline"
         app:layout_constraintBottom_toTopOf="@+id/listViewForLeaderBoard"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ListView
         android:id="@+id/listViewForLeaderBoard"
         android:layout_width="0dp"
-        android:layout_height="386dp"
-        android:layout_marginBottom="36dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="32dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="29dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/LeaderBoardTxt" />
 
 
 </android.support.constraint.ConstraintLayout>
