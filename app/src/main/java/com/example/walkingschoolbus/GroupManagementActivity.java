@@ -59,7 +59,7 @@ public class GroupManagementActivity extends AppCompatActivity {
         //get token from session
         userToken = session.getToken();
         // Build the server proxy
-        proxy = ProxyBuilder.getProxy(getString( R.string.api_key),userToken);
+        proxy = ProxyBuilder.getProxy(getString( R.string.api_key),userToken,true);
 
         user = session.getUser();
 

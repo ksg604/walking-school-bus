@@ -80,7 +80,7 @@ public class ProxyBuilder {
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient client = new OkHttpClient.Builder()
                 .addInterceptor(logging)
-                .addInterceptor(new AddHeaderInterceptor(apiKey, token,false))
+                .addInterceptor(new AddHeaderInterceptor(apiKey, token,true))
                 .build();
 
         // Build Retrofit proxy object for server

@@ -103,8 +103,19 @@ public class MonitoredListActivity extends AppCompatActivity {
                     case 0:
                         // Make call
                         Call<Void> caller = proxy.removeFromMonitoredByUsers(user.getId(), returnedUsers.get(position).getId());
-                        ProxyBuilder.callProxy(MonitoredListActivity.this, caller, returnedNothing -> response(returnedNothing));
-                        monitoredList.removeViewsInLayout(position,1);
+                       // ProxyBuilder.callProxy(MonitoredListActivity.this, caller, returnedNothing -> response(returnedNothing));
+
+                        ProxyBuilder.callProxy(MonitoredListActivity.this, caller,
+                                new ProxyBuilder.SimpleCallback<Void>() {
+                                    @Override
+                                    public void callback(Void user) {
+                                       // monitoredList.removeViewsInLayout(position, 1);
+                                        notifyUserViaLogAndToast("Your request has been sent.");
+                                    }
+                                });
+
+
+
 
                         break;
                 }
@@ -128,6 +139,7 @@ public class MonitoredListActivity extends AppCompatActivity {
 
     private void response(Void returnedNothing) {
         notifyUserViaLogAndToast(MonitoredListActivity.this.getString(R.string.notify_delete));
+
     }
 
     public static Intent makeIntent(Context context) {
