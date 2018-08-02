@@ -95,7 +95,7 @@ public class AddNewKidActivity extends AppCompatActivity {
         List<PermissionRequest> permissionList = new ArrayList<>();
         permissionList = returnedKid.getPendingPermissionRequests();
         for(PermissionRequest permissions : permissionList) {
-            Log.i("Show permission details", permissions.getAction());
+//            Log.i("Show permission details", permissions.getAction());
         }
         ProxyBuilder.callProxy(AddNewKidActivity.this, caller, updatedMonitorsList -> response2(updatedMonitorsList));
     }

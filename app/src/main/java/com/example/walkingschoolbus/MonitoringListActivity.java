@@ -53,6 +53,7 @@ public class MonitoringListActivity extends AppCompatActivity {
 
         proxy = ProxyBuilder.getProxy(getString(R.string.api_key),session.getToken());
 
+        //setupAddKidsButton();
         // Make call
         Call<List<User>> caller = proxy.getMonitorsUsers(user.getId());
         ProxyBuilder.callProxy(MonitoringListActivity.this, caller, returnedUsers -> response(returnedUsers));
