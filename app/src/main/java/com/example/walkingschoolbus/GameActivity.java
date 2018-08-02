@@ -38,7 +38,7 @@ public class GameActivity extends AppCompatActivity {
     private User user;
     private static WGServerProxy proxy;
     private String token;
-    private static boolean[][] stickers = new boolean[7][7];
+    private boolean[][] stickers = new boolean[7][7];
     int numRewards = 0;
     int priceReward = 500;
     EarnedRewards rewards = new EarnedRewards();
@@ -54,7 +54,7 @@ public class GameActivity extends AppCompatActivity {
         proxy = ProxyBuilder.getProxy(getString( R.string.api_key),token);
 
         getSessionUser();
-        populatePostIt();
+
     }
 
     private void getSessionUser(){
@@ -88,12 +88,16 @@ public class GameActivity extends AppCompatActivity {
             }
             priceReward = priceReward + (numRewards * 25);
 
+        }else{
+            EarnedRewards newReward = new EarnedRewards();
+            newReward.setStickers( stickers );
+            user.setRewards( newReward);
         }
         TextView price = findViewById( R.id.currentPriceTxt );
         TextView rewardsOwned = findViewById( R.id.rewardUserGetTxt );
         price.setText( getString(R.string.current_price) + priceReward );
         rewardsOwned.setText ( getString(R.string.current_num_rewards ) + numRewards + getString(R.string.stickers));
-
+        populatePostIt();
     }
 
     private void populatePostIt() {
@@ -125,7 +129,7 @@ public class GameActivity extends AppCompatActivity {
 
                 postItForGrid.setImageResource( R.drawable.new_post_it);
 
-                if(user.getRewards() != null && user.getRewards().getStickers()[row][col] == true){
+                if( user.getRewards().getStickers()[row][col] == true){
 
                     postItForGrid.setVisibility( View.INVISIBLE );
 
@@ -144,6 +148,8 @@ public class GameActivity extends AppCompatActivity {
                 images[row][col] = postItForGrid;
             }
         }
+        ImageView theFace = findViewById( R.id.theFace );
+        theFace.setImageResource( R.drawable.dr_brian_fraser );
     }
 
     private void gridImageClicked(int col, int row) {
