@@ -400,7 +400,7 @@ public class User {
                 ", monitorsUsers=" + monitorsUsers +
                 ", memberOfGroups=" + memberOfGroups +
                 ", leadsGroups=" + leadsGroups +
-                ", rewards" + rewards +
+                ", rewards=" + rewards +
                 ", hasFullData=" + hasFullData +
                 ", href='" + href + '\'' +
                 '}';
