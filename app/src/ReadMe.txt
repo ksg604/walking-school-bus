@@ -1,21 +1,23 @@
 ReadMe:
 
-[15] User Information
-   - Able to see and edit info on self
-[click gear on top right hand side]
+[15] 
+User Information: 
+able to see and edit info on self
+[click gear on the top right to see and edit user information]
 
-   - Able to see and edit info on my children
-[click "my kids", swipe left, click open, select update in bottom left]
+able to see and edit info on my children
+[click "my kids", then swipe left. Click open again to select update at bottom left]
 
-[15] Walking Groups
-   App supports the following two features, for the below list of users:
-   a) can see names of members of group, and 
-[navigate to groups, swipe left click open, can view group members]
+[15] 
+Walking Groups:
+App supports the following two features, for the below list of users:
+a) can see names of members of group, and 
+[navigate to groups and swipe left to click open, user can view group members from there.]
 
-   b) can see detailed info (names, phone number, ...) of parents of children in the group.
-[swipe left on a member's name click open, on bottom left click view monitors to view parents']
+b) can see detailed info (names, phone number, ...) of parents of children in the group.
+[User can swipe left on a member's name. Then click open, user could find it on bottom left. Click view monitors to view parents']
 
-[this can ALSO be navigated to similiarily from the "my kids menu"]
+[this can ALSO be navigated to similarly from the "my kids menu"]
 
 
 [30] On Walk Features
