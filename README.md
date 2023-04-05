@@ -6,7 +6,7 @@ Development include using Android Studio for the frontend including all UI eleme
 
 ## Requirements
 
-* Android Studio Electric Eel or newer
+* Android Studio Electric Eel or newer (download at https://developer.android.com/)
 
 # How to setup Local Development
 
@@ -38,5 +38,5 @@ If you don't want to use an emulator, you can plug in a physical Android device 
 
 ![open](./readme_images/personal_device.png)
 
-Mole Seeker should then be installed and run automatically on your device
+Walking School Bus should then be installed and run automatically on your device
 
