@@ -51,7 +51,7 @@ public class WelcomeScreen extends AppCompatActivity {
         } else{
             Log.i(TAG, "No Existing token found. No auto login ");
         }
-        proxy = ProxyBuilder.getProxy(getString(R.string.api_key), null);
+        //proxy = ProxyBuilder.getProxy(getString(R.string.api_key), null);
         setupSignUpButton();
         setupSignInButton();
     }
@@ -89,11 +89,25 @@ public class WelcomeScreen extends AppCompatActivity {
                 loginUser = new User(userEmail.getText().toString(),
                         userPassword.getText().toString());
 
-                // Register for token received:
-                ProxyBuilder.setOnTokenReceiveCallback( token -> onReceiveToken(token));
-                // Make call
-                Call<Void> caller = proxy.login(loginUser);
-                ProxyBuilder.callProxy(WelcomeScreen.this, caller, returnedNothing -> response(returnedNothing));
+                //set variables for session object
+                String email = userEmail.getText().toString();
+
+                //set singleton user to point to user pulled from server
+                session.setUser(loginUser);
+                Log.i(TAG, "set user to: "+ loginUser.getName());
+
+                //set and save session data
+                session.setSession(loginUser,"some token");
+                //session.storeSession(this);
+                Log.i(TAG,"responseForUser ||"+ email);
+
+                moveToMainMenu();
+
+//                // Register for token received:
+//                ProxyBuilder.setOnTokenReceiveCallback( token -> onReceiveToken(token));
+//                // Make call
+//                Call<Void> caller = proxy.login(loginUser);
+//                ProxyBuilder.callProxy(WelcomeScreen.this, caller, returnedNothing -> response(returnedNothing));
             }
         });
     }

@@ -52,16 +52,16 @@ public class MyKidsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_kids);
-        session = Session.getInstance();
-        userToken = session.getToken();
-        sessionID = session.getid();
-        user = session.getUser();
-        setupMyKidsTextView();
-        proxy = ProxyBuilder.getProxy(getString(R.string.api_key), session.getToken());
-        Call<List<User>> caller = proxy.getMonitorsUsers(sessionID);
-        ProxyBuilder.callProxy(MyKidsActivity.this, caller, returnedKids -> response(returnedKids));
+        // session = Session.getInstance();
+        // userToken = session.getToken();
+        // sessionID = session.getid();
+        // user = session.getUser();
+        // setupMyKidsTextView();
+        // proxy = ProxyBuilder.getProxy(getString(R.string.api_key), session.getToken());
+        // Call<List<User>> caller = proxy.getMonitorsUsers(sessionID);
+        // ProxyBuilder.callProxy(MyKidsActivity.this, caller, returnedKids -> response(returnedKids));
         setupAddNewKidBtn();
-        makeHandlerRun();
+        //makeHandlerRun();
         setupLinearLayoutMessages();
 
     }

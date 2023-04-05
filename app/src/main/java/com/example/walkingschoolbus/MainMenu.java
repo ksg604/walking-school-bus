@@ -331,7 +331,7 @@ public class MainMenu extends AppCompatActivity {
         runnableForGps = new Runnable() {
             public void run() {
                 updateLastGpsLocation();
-                setupGetUnreadPermissions();
+                //setupGetUnreadPermissions();
                 handlerForGps.postDelayed( this, 30000 );
             }
         };
@@ -361,7 +361,7 @@ public class MainMenu extends AppCompatActivity {
           runnableForMessages = new Runnable(){
             public void run() {
                 setupMessageNumber();
-                setupGetUnreadPermissions();
+                //setupGetUnreadPermissions();
                 handlerForMessages.postDelayed( this,60000 );
             }
         };
